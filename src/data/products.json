@@ -1,0 +1,300 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "name": "Canon EOS R5",
+            "description": "Canon EOS R5 is a powerful full-frame mirrorless camera designed for professional photographers and videographers, featuring exceptional image quality and innovative features.",
+            "price": 3899,
+            "discount_price": 3699,
+            "product_count": 1,
+            "sku": "CNEOSR5001",
+            "sale_price": 3799,
+            "currency": "USD",
+            "image": "/assets/img/inner-pages/product-img1.jpg",
+            "image_details": [
+                "/assets/img/inner-pages/product-dt-img1.jpg",
+                "/assets/img/inner-pages/product-dt-img2.jpg",
+                "/assets/img/inner-pages/product-dt-img3.jpg",
+                "/assets/img/inner-pages/product-dt-img4.jpg"
+            ],
+            "reviews": [
+                {
+                    "review_number": 1,
+                    "reviewer_name": "John Smith",
+                    "review_date": "15 March, 2024",
+                    "review_content": "The Canon EOS R5 is a game-changer. Its 45MP sensor and 8K video capabilities are truly impressive. Highly recommended for professionals.",
+                    "replies": []
+                }
+            ],
+            "total_reviews": 1,
+            "quantity": 1,
+            "stock": 15,
+            "rating": 4.9,
+            "category": "Cameras",
+            "tags": [
+                "Canon",
+                "Mirrorless",
+                "Full-frame"
+            ],
+            "weight": "738 g",
+            "dimensions": "138 × 97.5 × 88 mm",
+            "brand": "Canon"
+        },
+        {
+            "id": 2,
+            "name": "DJI Mavic 3 Pro",
+            "description": "The DJI Mavic 3 Pro is a high-end consumer drone with a Hasselblad camera, offering exceptional image quality and long flight time.",
+            "price": 2199,
+            "discount_price": 2099,
+            "product_count": 1,
+            "sku": "DJIMAV3P002",
+            "sale_price": 2149,
+            "currency": "USD",
+            "image": "/assets/img/inner-pages/product-img2.jpg",
+            "image_details": [
+                "/assets/img/inner-pages/product-dt-img1.jpg",
+                "/assets/img/inner-pages/product-dt-img2.jpg",
+                "/assets/img/inner-pages/product-dt-img3.jpg",
+                "/assets/img/inner-pages/product-dt-img4.jpg"
+            ],
+            "reviews": [],
+            "total_reviews": 0,
+            "quantity": 1,
+            "stock": 8,
+            "rating": 4.8,
+            "category": "Drones",
+            "tags": [
+                "DJI",
+                "Drone",
+                "4K"
+            ],
+            "weight": "895 g",
+            "dimensions": "347.5 × 283 × 107.7 mm",
+            "brand": "DJI"
+        },
+        {
+            "id": 3,
+            "name": "Sony WH-1000XM4",
+            "description": "Sony WH-1000XM4 wireless noise-cancelling headphones offer industry-leading sound quality and adaptive noise cancellation.",
+            "price": 349,
+            "discount_price": 299,
+            "product_count": 1,
+            "sku": "SONWH1KX4003",
+            "sale_price": 329,
+            "currency": "USD",
+            "image": "/assets/img/inner-pages/product-img3.jpg",
+            "image_details": [
+                "/assets/img/inner-pages/product-dt-img1.jpg",
+                "/assets/img/inner-pages/product-dt-img2.jpg",
+                "/assets/img/inner-pages/product-dt-img3.jpg",
+                "/assets/img/inner-pages/product-dt-img4.jpg"
+            ],
+            "reviews": [],
+            "total_reviews": 0,
+            "quantity": 1,
+            "stock": 25,
+            "rating": 4.7,
+            "category": "Audio",
+            "tags": [
+                "Sony",
+                "Headphones",
+                "Wireless"
+            ],
+            "weight": "254 g",
+            "dimensions": "187 × 81 × 285 mm",
+            "brand": "Sony"
+        },
+        {
+            "id": 4,
+            "name": "Apple MacBook Pro 16-inch",
+            "description": "The 16-inch MacBook Pro features a stunning Retina display, powerful M1 Pro chip, and long battery life, perfect for professionals and creatives.",
+            "price": 2499,
+            "discount_price": 2399,
+            "product_count": 1,
+            "sku": "APLMBP16004",
+            "sale_price": 2449,
+            "currency": "USD",
+            "image": "/assets/img/inner-pages/product-img4.jpg",
+            "image_details": [
+                "/assets/img/inner-pages/product-dt-img1.jpg",
+                "/assets/img/inner-pages/product-dt-img2.jpg",
+                "/assets/img/inner-pages/product-dt-img3.jpg",
+                "/assets/img/inner-pages/product-dt-img4.jpg"
+            ],
+            "reviews": [],
+            "total_reviews": 0,
+            "quantity": 1,
+            "stock": 12,
+            "rating": 4.8,
+            "category": "Computers",
+            "tags": [
+                "Apple",
+                "Laptop",
+                "MacOS"
+            ],
+            "weight": "2.1 kg",
+            "dimensions": "355.7 × 248.1 × 16.8 mm",
+            "brand": "Apple"
+        },
+        {
+            "id": 5,
+            "name": "Samsung 65\" QLED 4K Smart TV",
+            "description": "Experience stunning picture quality and smart features with this Samsung 65-inch QLED 4K Smart TV, perfect for home entertainment.",
+            "price": 1299,
+            "discount_price": 1199,
+            "product_count": 1,
+            "sku": "SAMQLED65005",
+            "sale_price": 1249,
+            "currency": "USD",
+            "image": "/assets/img/inner-pages/product-img5.jpg",
+            "image_details": [
+                "/assets/img/inner-pages/product-dt-img1.jpg",
+                "/assets/img/inner-pages/product-dt-img2.jpg",
+                "/assets/img/inner-pages/product-dt-img3.jpg",
+                "/assets/img/inner-pages/product-dt-img4.jpg"
+            ],
+            "reviews": [],
+            "total_reviews": 0,
+            "quantity": 1,
+            "stock": 10,
+            "rating": 4.6,
+            "category": "TVs",
+            "tags": [
+                "Samsung",
+                "QLED",
+                "4K"
+            ],
+            "weight": "25.3 kg",
+            "dimensions": "1446.3 × 829.3 × 25.7 mm",
+            "brand": "Samsung"
+        },
+        {
+            "id": 6,
+            "name": "Bose QuietComfort Earbuds II",
+            "description": "Bose QuietComfort Earbuds II offer personalized noise cancellation and high-fidelity audio in a compact, wireless design.",
+            "price": 299,
+            "discount_price": 279,
+            "product_count": 1,
+            "sku": "BOSQCE2006",
+            "sale_price": 289,
+            "currency": "USD",
+            "image": "/assets/img/inner-pages/product-img6.jpg",
+            "image_details": [
+                "/assets/img/inner-pages/product-dt-img1.jpg",
+                "/assets/img/inner-pages/product-dt-img2.jpg",
+                "/assets/img/inner-pages/product-dt-img3.jpg",
+                "/assets/img/inner-pages/product-dt-img4.jpg"
+            ],
+            "reviews": [],
+            "total_reviews": 0,
+            "quantity": 1,
+            "stock": 20,
+            "rating": 4.7,
+            "category": "Audio",
+            "tags": [
+                "Bose",
+                "Earbuds",
+                "Wireless"
+            ],
+            "weight": "6.2 g per earbud",
+            "dimensions": "17.2 × 30.5 × 22.4 mm per earbud",
+            "brand": "Bose"
+        },
+        {
+            "id": 7,
+            "name": "Nikon Z6 II",
+            "description": "The Nikon Z6 II is a versatile full-frame mirrorless camera with fast performance and excellent low-light capabilities, suitable for both stills and video.",
+            "price": 1999,
+            "discount_price": 1899,
+            "product_count": 1,
+            "sku": "NKNZ6II007",
+            "sale_price": 1949,
+            "currency": "USD",
+            "image": "/assets/img/inner-pages/product-img7.jpg",
+            "details_image": [
+                "/assets/img/inner-pages/product-dt-img1.jpg",
+                "/assets/img/inner-pages/product-dt-img2.jpg",
+                "/assets/img/inner-pages/product-dt-img3.jpg",
+                "/assets/img/inner-pages/product-dt-img4.jpg"
+                ],
+            "reviews": [],
+            "total_reviews": 0,
+            "quantity": 1,
+            "stock": 18,
+            "rating": 4.8,
+            "category": "Cameras",
+            "tags": [
+                "Nikon",
+                "Mirrorless",
+                "Full-frame"
+            ],
+            "weight": "705 g",
+            "dimensions": "134 × 100.5 × 69.5 mm",
+            "brand": "Nikon"
+        },
+        {
+            "id": 8,
+            "name": "LG 34\" UltraWide Monitor",
+            "description": "Enhance your productivity with this LG 34-inch UltraWide Monitor, featuring a panoramic display and vibrant colors.",
+            "price": 799,
+            "discount_price": 749,
+            "product_count": 1,
+            "sku": "LGUW34008",
+            "sale_price": 779,
+            "currency": "USD",
+            "image": "/assets/img/inner-pages/product-img8.jpg",
+            "image_details": [
+                "/assets/img/inner-pages/product-dt-img1.jpg",
+                "/assets/img/inner-pages/product-dt-img2.jpg",
+                "/assets/img/inner-pages/product-dt-img3.jpg",
+                "/assets/img/inner-pages/product-dt-img4.jpg"
+            ],
+            "reviews": [],
+            "total_reviews": 0,
+            "quantity": 1,
+            "stock": 14,
+            "rating": 4.6,
+            "category": "Monitors",
+            "tags": [
+                "LG",
+                "UltraWide",
+                "Monitor"
+            ],
+            "weight": "8.5 kg",
+            "dimensions": "816.7 × 364.8 × 222.6 mm",
+            "brand": "LG"
+        },
+        {
+            "id": 9,
+            "name": "GoPro HERO10 Black",
+            "description": "The GoPro HERO10 Black is a versatile action camera with 5.3K video, 23MP photos, and advanced stabilization for capturing your adventures.",
+            "price": 449,
+            "discount_price": 399,
+            "product_count": 1,
+            "sku": "GPROH10B009",
+            "sale_price": 429,
+            "currency": "USD",
+            "image": "/assets/img/inner-pages/product-img9.jpg",
+            "image_details": [
+                "/assets/img/inner-pages/product-dt-img1.jpg",
+                "/assets/img/inner-pages/product-dt-img2.jpg",
+                "/assets/img/inner-pages/product-dt-img3.jpg",
+                "/assets/img/inner-pages/product-dt-img4.jpg"
+            ],
+            "reviews": [],
+            "total_reviews": 0,
+            "quantity": 1,
+            "stock": 22,
+            "rating": 4.7,
+            "category": "Cameras",
+            "tags": [
+                "GoPro",
+                "Action Camera",
+                "Waterproof"
+            ],
+            "weight": "153 g",
+            "dimensions": "71.8 × 50.8 × 33.6 mm",
+            "brand": "GoPro"
+        }
+    ]
+}

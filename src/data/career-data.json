@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "position": "Senior UX Designer",
+    "department": "Design",
+    "location": "New York, USA",
+    "type": "Full Time",
+    "experience": "3-5 Years",
+    "salary": "$80k - $120k",
+    "description": "We are seeking a talented Senior UX Designer to join our team and help create exceptional user experiences for our products.",
+    "responsibilities": [
+      "Lead the UX design process from concept to implementation",
+      "Conduct user research and usability testing",
+      "Create wireframes, prototypes, and high-fidelity designs",
+      "Collaborate with cross-functional teams to deliver cohesive designs"
+    ],
+    "requirements": [
+      "Bachelor's degree in Design, HCI, or related field",
+      "5+ years of experience in UX design",
+      "Proficiency in design tools such as Figma, Sketch, and Adobe Creative Suite",
+      "Strong portfolio demonstrating UX design skills"
+    ]
+  },
+  {
+    "id": 2,
+    "position": "Full Stack Developer",
+    "department": "Engineering",
+    "location": "San Francisco, USA",
+    "type": "Full Time",
+    "experience": "4-6 Years",
+    "salary": "$100k - $150k",
+    "description": "We're looking for an experienced Full Stack Developer to join our engineering team and help build scalable web applications.",
+    "responsibilities": [
+      "Develop and maintain web applications using modern technologies",
+      "Work on both front-end and back-end development tasks",
+      "Optimize applications for maximum speed and scalability",
+      "Collaborate with the design team to implement user-friendly interfaces"
+    ],
+    "requirements": [
+      "Bachelor's degree in Computer Science or related field",
+      "4+ years of experience in full stack development",
+      "Proficiency in JavaScript, React, Node.js, and SQL",
+      "Experience with cloud platforms (AWS, Azure, or GCP)"
+    ]
+  },
+  {
+    "id": 3,
+    "position": "Marketing Manager",
+    "department": "Marketing",
+    "location": "London, UK",
+    "type": "Full Time",
+    "experience": "5-7 Years",
+    "salary": "£60k - £80k",
+    "description": "We are seeking a creative and data-driven Marketing Manager to lead our marketing efforts and drive growth.",
+    "responsibilities": [
+      "Develop and implement marketing strategies across various channels",
+      "Manage and optimize digital marketing campaigns",
+      "Analyze marketing data and provide insights to improve performance",
+      "Collaborate with product and sales teams to align marketing efforts"
+    ],
+    "requirements": [
+      "Bachelor's degree in Marketing, Business, or related field",
+      "5+ years of experience in digital marketing",
+      "Strong analytical skills and experience with marketing analytics tools",
+      "Excellent communication and project management skills"
+    ]
+  }
+]
