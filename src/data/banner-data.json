@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "image": "assets/img/home1/home1-banner-img1.jpg",
+    "title": "Al Faisal Tower - Sharjah's New Landmark",
+    "subtitle": "Premium Residential Apartments Now Available",
+    "description": "Experience luxury living in GUPD's flagship development - Al Faisal Tower. Modern apartments with spacious layouts, premium amenities, and strategic location in the heart of Sharjah. Your dream home awaits.",
+    "ctaText": "View Apartments",
+    "ctaLink": "/property"
+  },
+  {
+    "id": 2,
+    "image": "assets/img/home1/home1-banner-img2.jpg",
+    "title": "Invest in Sharjah's Skyline",
+    "subtitle": "High-Rise Living at Its Finest",
+    "description": "Join the elite community of Al Faisal Tower residents. Our modern residential tower offers premium apartments with stunning city views, world-class facilities, and unmatched convenience in Sharjah's prime location.",
+    "ctaText": "Book Your Unit",
+    "ctaLink": "/contact"
+  },
+  {
+    "id": 3,
+    "image": "assets/img/home1/home1-banner-img3.jpg",
+    "title": "Building Trust Since 2005",
+    "subtitle": "GUPD - Shaping Communities, Delivering Excellence",
+    "description": "With over 18 years of experience, GUPD has established itself as a trusted name in property development. Al Faisal Tower represents our commitment to innovation, quality, and customer satisfaction in every apartment we build.",
+    "ctaText": "Learn More",
+    "ctaLink": "/about"
+  },
+  {
+    "id": 4,
+    "image": "assets/img/home1/home1-banner-img4.jpg",
+    "title": "Modern Tower Living Redefined",
+    "subtitle": "Premium Amenities & Strategic Location",
+    "description": "Al Faisal Tower sets a new standard for residential living in Sharjah. Featuring spacious apartment layouts, premium amenities, and excellent connectivity - it's more than a home, it's a lifestyle choice for discerning residents.",
+    "ctaText": "Schedule Tour",
+    "ctaLink": "/contact"
+  }
+]

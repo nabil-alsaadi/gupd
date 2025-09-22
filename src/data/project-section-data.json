@@ -1,0 +1,69 @@
+{
+  "sectionTitle": {
+    "span": "Al Faisal Tower",
+    "heading": "Discover Our Flagship Development",
+    "description": "Experience the pinnacle of luxury living in Sharjah with Al Faisal Tower - our premier residential development that combines stunning architecture, prime lakefront location, and world-class amenities designed for the ultimate lifestyle."
+  },
+  "projects": [
+    {
+      "id": 1,
+      "image": "assets/img/home3/project-img1.jpg",
+      "client": "GUPD Development",
+      "title": "Prime Location by Sharjah Lake",
+      "subtitle": "Where City Meets Waterfront",
+      "description": "Al Faisal Tower enjoys an enviable location just minutes from the beautiful Khalid Lagoon (Sharjah Lake), offering residents breathtaking waterfront views and easy access to the city's most scenic areas. Wake up to stunning lake views and enjoy peaceful evenings by the water from your private balcony.",
+      "categories": ["Prime Location", "Lake Views", "Waterfront Living"],
+      "link": "/project/al-faisal-tower-location",
+      "features": [
+        "5-minute walk to Khalid Lagoon",
+        "Panoramic lake and city views",
+        "Walking distance to Al Majaz Waterfront",
+        "Direct access to Corniche Road"
+      ],
+      "status": "Completed",
+      "year": "2024",
+      "floors": "35",
+      "units": "280"
+    },
+    {
+      "id": 2,
+      "image": "assets/img/home3/project-img2.jpg",
+      "client": "GUPD Development",
+      "title": "Architectural Excellence & Design",
+      "subtitle": "Modern Living Redefined",
+      "description": "Designed with summer comfort in mind, Al Faisal Tower features innovative architecture that maximizes natural light while providing shade and cooling. The stunning interior lobby welcomes residents with its elegant design, while the rooftop swimming pools offer the perfect escape from Sharjah's warm climate with beautiful lake views.",
+      "categories": ["Architecture", "Interior Design", "Swimming Pools"],
+      "link": "/project/al-faisal-tower-design",
+      "features": [
+        "Climate-responsive architectural design",
+        "Luxurious interior lobby with cooling systems",
+        "Multiple swimming pools with lake views",
+        "Smart shading and ventilation systems"
+      ],
+      "status": "Completed",
+      "year": "2024",
+      "floors": "35",
+      "units": "280"
+    },
+    {
+      "id": 3,
+      "image": "assets/img/home3/project-img3.jpg",
+      "client": "GUPD Development",
+      "title": "Summer-Ready Amenities",
+      "subtitle": "Designed for Sharjah's Climate",
+      "description": "Every aspect of Al Faisal Tower is thoughtfully designed for Sharjah's summer climate. From the temperature-controlled lobby to the shaded outdoor areas and refreshing swimming pools, residents can enjoy comfort year-round. The building's orientation and materials ensure optimal cooling and energy efficiency.",
+      "categories": ["Summer Amenities", "Climate Control", "Energy Efficient"],
+      "link": "/project/al-faisal-tower-amenities",
+      "features": [
+        "Temperature-controlled common areas",
+        "Shaded outdoor recreational spaces",
+        "Energy-efficient cooling systems",
+        "Refreshing pool areas with misting systems"
+      ],
+      "status": "Completed",
+      "year": "2024",
+      "floors": "35",
+      "units": "280"
+    }
+  ]
+}
