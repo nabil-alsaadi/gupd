@@ -111,7 +111,7 @@ Version: 1.0
     // Colors ---------------
     --primary-color: #000000;
     --primary-color-opc: 0, 0, 0;
-    --primary-color2: #F94834;
+    --primary-color2: #612C7C;
     --primary-color2-opc: 249, 72, 52;
     --title-color: #000000;
     --title-color-opc: 0, 0, 0;
@@ -1807,7 +1807,7 @@ header.style-1 {
         right: -30px;
         width: 2px;
         height: 18px;
-        background-color: #F94834;
+        background-color: #612C7C;
         @include xl-down-device(){
           right: -13px;
         }
@@ -2469,7 +2469,7 @@ header.style-2 {
         right: -30px;
         width: 2px;
         height: 18px;
-        background-color: #F94834;
+        background-color: #612C7C;
         @include xl-down-device(){
           right: -13px;
         }
@@ -3134,7 +3134,7 @@ header.style-3 {
       transform: translate(-50%, -50%);
       width: 2px;
       height: 18px;
-      background-color: #F94834;
+      background-color: #612C7C;
       @include md-down-device(){
         display: none;
       }

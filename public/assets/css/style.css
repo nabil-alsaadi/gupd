@@ -107,7 +107,7 @@ Version: 1.0
   --font-inter: "Inter", sans-serif;
   --primary-color: #000000;
   --primary-color-opc: 0, 0, 0;
-  --primary-color2: #F94834;
+  --primary-color2: #B149ED;
   --primary-color2-opc: 249, 72, 52;
   --title-color: #000000;
   --title-color-opc: 0, 0, 0;
@@ -1872,7 +1872,7 @@ header.style-1 .nav-right .right-sidebar-button::after {
   right: -30px;
   width: 2px;
   height: 18px;
-  background-color: #F94834;
+  background-color: #B149ED;
 }
 @media (max-width: 1199px) {
   header.style-1 .nav-right .right-sidebar-button::after {
@@ -2502,7 +2502,7 @@ header.style-2 .nav-right .right-sidebar-button::after {
   right: -30px;
   width: 2px;
   height: 18px;
-  background-color: #F94834;
+  background-color: #B149ED;
 }
 @media (max-width: 1199px) {
   header.style-2 .nav-right .right-sidebar-button::after {
@@ -3122,7 +3122,7 @@ header.style-3 .nav-right::before {
   transform: translate(-50%, -50%);
   width: 2px;
   height: 18px;
-  background-color: #F94834;
+  background-color: #B149ED;
 }
 @media (max-width: 767px) {
   header.style-3 .nav-right::before {

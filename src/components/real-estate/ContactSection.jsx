@@ -4,7 +4,7 @@ import React from 'react'
 const ContactSection = () => {
   return (
     <>
-     <div className="home2-calculate-section mb-120">
+     {/* <div className="home2-calculate-section mb-120">
         <div className="container">
           <div className="row g-4 align-items-center justify-content-between mb-70">
             <div className="col-lg-5 col-md-6 wow animate fadeInDown" data-wow-delay="200ms" data-wow-duration="1500ms">
@@ -87,7 +87,7 @@ const ContactSection = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 <div className="home2-contact-section mb-120">
         <div className="container">
           <div className="row justify-content-center">

@@ -12,6 +12,10 @@ import Home1Support from "@/components/supports/Home1Support";
 import Home1Banner2 from "@/components/banner/Home1Banner2";
 import Home1FooterTop from "@/components/Footer/Home1FooterTop";
 import Home1Team from "@/components/team-section/Home1Team";
+import TeamSection from "@/components/real-estate/TeamSection";
+import ContactSection from "@/components/real-estate/ContactSection";
+import ProjectSection from "@/components/architecture/ProjectSection";
+
 
 export default function Home() {
   return (
@@ -20,15 +24,20 @@ export default function Home() {
       <Header1 fluid="container-fluid" />
       <Home1Banner />
       <Home1About />
-      <Home1Service />
-      <Home1WhyChooseus />
-      <Home1Project />
-      <Home1Support />
+      {/* <Home1Service /> */}
+      {/* <Home1WhyChooseus /> */}
+      {/* <Home1Project /> */}
       <Home1Banner2 />
-      <Home1Team/>
-      <Home1Testimonial />
-      <Home1Faq />
-      <Home1blog />
+      <ProjectSection />
+      {/* <Home1Support /> */}
+      
+      
+      {/* <Home1Team/> */}
+      <TeamSection />
+      {/* <Home1Testimonial /> */}
+      {/* <Home1Faq /> */}
+      {/* <Home1blog /> */}
+      <ContactSection />
       <Home1FooterTop />
       <Footer1 />
     </>
