@@ -15,6 +15,7 @@ import Home1Team from "@/components/team-section/Home1Team";
 import TeamSection from "@/components/real-estate/TeamSection";
 import ContactSection from "@/components/real-estate/ContactSection";
 import ProjectSection from "@/components/architecture/ProjectSection";
+import ProcessSection from "@/components/architecture/ProcessSection";
 
 
 export default function Home() {
@@ -29,8 +30,11 @@ export default function Home() {
       {/* <Home1Project /> */}
       <Home1Banner2 />
       <ProjectSection />
-      <Home1Team/>
+      
       <Home1Support />
+      <ProcessSection/>
+      <Home1Team/>
+      
       
       {/* <ContactSection /> */}
       
