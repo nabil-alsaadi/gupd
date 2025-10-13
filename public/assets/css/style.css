@@ -11290,7 +11290,7 @@ header.style-3.two.sticky {
   }
 }
 .project-card2 .project-content-wrap .project-content span {
-  color: var(--paragraph-color);
+  color: var(--white-color);
   font-family: var(--font-inter);
   font-size: 13px;
   font-weight: 500;

@@ -7,7 +7,7 @@
   "projects": [
     {
       "id": 1,
-      "image": "assets/img/home3/project-img1.jpg",
+      "image": "assets/img/new/sharja-lake.jpg",
       "client": "GUPD Development",
       "title": "Prime Location by Sharjah Lake",
       "subtitle": "Where City Meets Waterfront",
@@ -27,7 +27,7 @@
     },
     {
       "id": 2,
-      "image": "assets/img/home3/project-img2.jpg",
+      "image": "assets/img/new/project-img2.jpg",
       "client": "GUPD Development",
       "title": "Architectural Excellence & Design",
       "subtitle": "Modern Living Redefined",
@@ -47,7 +47,7 @@
     },
     {
       "id": 3,
-      "image": "assets/img/home3/project-img3.jpg",
+      "image": "assets/img/new/project-img3.jpg",
       "client": "GUPD Development",
       "title": "Summer-Ready Amenities",
       "subtitle": "Designed for Sharjah's Climate",

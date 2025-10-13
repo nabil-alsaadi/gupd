@@ -98,7 +98,7 @@ const Footer1 = () => {
                         <div className="footer-address-and-menu-area">
                             <div className="row gy-xl-0 gy-5">
                                 <div className="col-lg-12 order-xl-1 order-2">
-                                    <ul className="address-area">
+                                    {/* <ul className="address-area">
                                         <li className="single-address">
                                             <span>NEW YORK</span>
                                             <a href="#">8204 Glen Ridge DriveEndicott, NY 13760</a>
@@ -111,7 +111,7 @@ const Footer1 = () => {
                                             <span>NEW JERSEY</span>
                                             <a href="#">8204 Glen Ridge DriveEndicott, NY 13760</a>
                                         </li>
-                                    </ul>
+                                    </ul> */}
                                 </div>
                                 <div className="col-lg-12 order-xl-2 order-1">
                                     <div className="footer-menu">
@@ -164,7 +164,7 @@ const Footer1 = () => {
                 <div className="container">
                     <div className="footer-bottom">
                         <div className="copyright-area">
-                            <p>Copyright 2025 <Link href="/">Vernex</Link> | Design By <a href="https://www.egenslab.com/">Egens Lab</a></p>
+                            <p>Copyright 2025 <Link href="/">GUPD</Link> | Powered By <a href="https://www.nabilalsaadi.com/">Nabil Alsaadi</a></p>
                         </div>
                         <div className="footer-bottom-right">
                             <ul>

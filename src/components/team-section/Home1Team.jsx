@@ -1,5 +1,6 @@
 "use client"
 import React, { useMemo } from "react";
+import teamData from "../../data/team-data.json";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, {
@@ -56,8 +57,8 @@ const Home1Team = () => {
           <div className="row gy-5 align-items-center justify-content-between mb-70">
             <div className="col-lg-4 wow animate fadeInLeft" data-wow-delay="200ms" data-wow-duration="1500ms">
               <div className="section-title">
-                <span>Our Creative Team</span>
-                <h2>Meet Our Nice Team.</h2>
+                <span>{teamData.team.sectionTitle.tagline}</span>
+                <h2>{teamData.team.sectionTitle.title}</h2>
               </div>
               <div className="slider-btn-grp d-lg-flex d-none">
                 <div className="slider-btn team-slider-prev">
@@ -71,13 +72,13 @@ const Home1Team = () => {
             <div className="col-xxl-7 col-lg-8 wow animate fadeInRight" data-wow-delay="200ms" data-wow-duration="1500ms">
               <div className="founder-card">
                 <div className="founder-img">
-                  <img src="assets/img/home1/home1-team-founder-img.png" alt="" />
+                  <img src={teamData.team.founder.image} alt="" />
                 </div>
                 <div className="founder-content">
-                  <p>“We understand your needs and deliver digitaloi marketing through unique selling oneto homeles proposition Our team of expert”.</p>
+                  <p>"{teamData.team.founder.quote}".</p>
                   <div className="name-and-desig">
-                    <span>Founder at, Vernex</span>
-                    <h5>Nathan Joshua</h5>
+                    <span>{teamData.team.founder.position}</span>
+                    <h5>{teamData.team.founder.name}</h5>
                   </div>
                 </div>
               </div>
@@ -95,72 +96,19 @@ const Home1Team = () => {
             <div className="col-lg-12">
               <Swiper {...settings} className="swiper home1-team-slider">
                 <div className="swiper-wrapper">
-                  <SwiperSlide className="swiper-slide">
-                    <div className="team-card">
-                      <div className="team-img">
-                        <img src="assets/img/home1/team-img1.png" alt="" />
+                  {teamData.team.members.map((member) => (
+                    <SwiperSlide key={member.id} className="swiper-slide">
+                      <div className="team-card">
+                        <div className="team-img">
+                          <img src={member.image} alt="" />
+                        </div>
+                        <div className="team-content">
+                          <span>{member.position}</span>
+                          <h5>{member.name}</h5>
+                        </div>
                       </div>
-                      <div className="team-content">
-                        <span>Project Manager</span>
-                        <h5>Olivern James</h5>
-                      </div>
-                    </div>
-                  </SwiperSlide>
-                  <SwiperSlide className="swiper-slide">
-                    <div className="team-card">
-                      <div className="team-img">
-                        <img src="assets/img/home1/team-img2.png" alt="" />
-                      </div>
-                      <div className="team-content">
-                        <span>Architects</span>
-                        <h5>Mateob Henry</h5>
-                      </div>
-                    </div>
-                  </SwiperSlide>
-                  <SwiperSlide className="swiper-slide">
-                    <div className="team-card">
-                      <div className="team-img">
-                        <img src="assets/img/home1/team-img3.png" alt="" />
-                      </div>
-                      <div className="team-content">
-                        <span>Engineers</span>
-                        <h5>Eliason Jacob</h5>
-                      </div>
-                    </div>
-                  </SwiperSlide>
-                  <SwiperSlide className="swiper-slide">
-                    <div className="team-card">
-                      <div className="team-img">
-                        <img src="assets/img/home1/team-img4.png" alt="" />
-                      </div>
-                      <div className="team-content">
-                        <span>Safety Officers</span>
-                        <h5>Caleb Cooper</h5>
-                      </div>
-                    </div>
-                  </SwiperSlide>
-                  <SwiperSlide className="swiper-slide">
-                    <div className="team-card">
-                      <div className="team-img">
-                        <img src="assets/img/home1/team-img5.png" alt="" />
-                      </div>
-                      <div className="team-content">
-                        <span>Project Manager</span>
-                        <h5>Olivern James</h5>
-                      </div>
-                    </div>
-                  </SwiperSlide>
-                  <SwiperSlide className="swiper-slide">
-                    <div className="team-card">
-                      <div className="team-img">
-                        <img src="assets/img/home1/team-img6.png" alt="" />
-                      </div>
-                      <div className="team-content">
-                        <span>Architects</span>
-                        <h5>Mateob Henry</h5>
-                      </div>
-                    </div>
-                  </SwiperSlide>
+                    </SwiperSlide>
+                  ))}
                 </div>
               </Swiper>
             </div>

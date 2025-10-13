@@ -29,16 +29,17 @@ export default function Home() {
       {/* <Home1Project /> */}
       <Home1Banner2 />
       <ProjectSection />
-      {/* <Home1Support /> */}
+      <Home1Team/>
+      <Home1Support />
       
+      {/* <ContactSection /> */}
       
-      {/* <Home1Team/> */}
-      <TeamSection />
+      {/* <TeamSection /> */}
       {/* <Home1Testimonial /> */}
       {/* <Home1Faq /> */}
       {/* <Home1blog /> */}
-      <ContactSection />
-      <Home1FooterTop />
+      
+      {/* <Home1FooterTop /> */}
       <Footer1 />
     </>
   );

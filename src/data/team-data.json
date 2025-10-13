@@ -1,0 +1,52 @@
+{
+  "team": {
+    "sectionTitle": {
+      "tagline": "Our Creative Team",
+      "title": "Meet Our Nice Team."
+    },
+    "founder": {
+      "image": "assets/img/new/ShaikhFaisal.jpg",
+      "quote": "We understand your needs and deliver digitaloi marketing through unique selling oneto homeles proposition Our team of expert",
+      "position": "Founder at, Vernex",
+      "name": "H.E. Sheikh Faisal Al Qassemi"
+    },
+    "members": [
+      {
+        "id": 1,
+        "image": "assets/img/home1/team-img1.png",
+        "position": "Project Manager",
+        "name": "Olivern James"
+      },
+      {
+        "id": 2,
+        "image": "assets/img/home1/team-img2.png",
+        "position": "Architects",
+        "name": "Mateob Henry"
+      },
+      {
+        "id": 3,
+        "image": "assets/img/home1/team-img3.png",
+        "position": "Engineers",
+        "name": "Eliason Jacob"
+      },
+      {
+        "id": 4,
+        "image": "assets/img/home1/team-img4.png",
+        "position": "Safety Officers",
+        "name": "Caleb Cooper"
+      },
+      {
+        "id": 5,
+        "image": "assets/img/home1/team-img5.png",
+        "position": "Project Manager",
+        "name": "Olivern James"
+      },
+      {
+        "id": 6,
+        "image": "assets/img/home1/team-img6.png",
+        "position": "Architects",
+        "name": "Mateob Henry"
+      }
+    ]
+  }
+}

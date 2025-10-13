@@ -35,7 +35,7 @@ const Home1Support = () => {
           </div>
           <div className="col-lg-6 d-lg-block d-none">
             <div className="support-img magnetic-item">
-              <img src="assets/img/home1/home1-support-img.jpg" alt="Contact GUPD" />
+              <img src="assets/img/new/contact.jpg" alt="Contact GUPD" />
             </div>
           </div>
         </div>

@@ -33,7 +33,7 @@ const Home1Banner2 = () => {
                 </div>
                 <Modal/>
             </div>
-            <div className="logo-section mb-130">
+            {/* <div className="logo-section mb-130">
                 <div className="container-fluid">
                     <div className="logo-wrap">
                         <div className="logo-title">
@@ -59,7 +59,7 @@ const Home1Banner2 = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
 
         </>
