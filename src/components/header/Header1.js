@@ -182,7 +182,13 @@ const Header1 = ({ style = "", fluid }) => {
             <header className={`header-area style-1 ${style} ${state.scrollY > 20 ? "sticky" : ""}`}>
                 <div className={`${fluid} d-flex flex-nowrap align-items-center justify-content-between`}>
                     <div className="header-logo">
-                        <Link href={"/"}><img alt="image" className="img-fluid" src="/assets/img/header-logo.svg" /></Link>
+                        <Link href={"/"}>
+                            <img 
+                                alt="image" 
+                                className="img-fluid" 
+                                src={state.scrollY > 20 ? "/assets/img/header-logo-white.svg" : "/assets/img/header-logo.svg"} 
+                            />
+                        </Link>
                     </div>
                     <div className={`main-menu ${state.isSidebarOpen ? "show-menu" : ""}`}>
                         <div className="mobile-logo-area d-lg-none d-flex align-items-center justify-content-between">

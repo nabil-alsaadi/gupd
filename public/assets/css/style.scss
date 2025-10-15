@@ -3025,9 +3025,22 @@ header.style-3 {
     left: 0;
     width: 100%;
     box-sizing: border-box;
-    background-color: var(--white-color);
+    background-color: var(--primary-light);
     box-shadow: 5px 3px 40px rgba(0, 72, 88, 0.1);
     z-index: 999;
+
+    .main-menu ul > li > a,
+    .main-menu ul > li > .drop-down,
+    .right-sidebar-button span,
+    .nav-right a,
+    .nav-right .content span,
+    .nav-right .content a {
+      color: #fff !important;
+    }
+    .right-sidebar-button svg path,
+    .right-sidebar-button svg rect {
+      fill: #fff;
+    }
 
     @keyframes smooth-header {
       0% {
@@ -3663,10 +3676,22 @@ header.style-3 {
       left: 0;
       width: 100%;
       box-sizing: border-box;
-      background-color: rgba(#fff, 0.5);
+      background-color: var(--primary-light);
       backdrop-filter: blur(6px);
       box-shadow: 5px 3px 40px rgba(0, 72, 88, 0.1);
       z-index: 999;
+
+      .main-menu ul > li > a,
+      .main-menu ul > li > .drop-down,
+      .right-sidebar-button svg path,
+      .nav-right a,
+      .nav-right .content span,
+      .nav-right .content a {
+        color: #fff !important;
+      }
+      .right-sidebar-button svg path {
+        fill: #fff;
+      }
   
       @keyframes smooth-header {
         0% {

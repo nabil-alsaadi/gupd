@@ -109,6 +109,7 @@ Version: 1.0
   --primary-color-opc: 0, 0, 0;
   --primary-color2: #B149ED;
   --primary-color2-opc: 249, 72, 52;
+  --primary-light: #612C7C;
   --title-color: #000000;
   --title-color-opc: 0, 0, 0;
   --white-color: #fff;
@@ -1738,6 +1739,7 @@ header.style-1 {
   transition: all 0.8s ease-out 0s;
   background-color: transparent;
   padding: 0 5.5%;
+  height: 100px;
 }
 @media (min-width: 1400px) and (max-width: 1599px) {
   header.style-1 {
@@ -1772,9 +1774,21 @@ header.style-1.sticky {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
   box-sizing: border-box;
-  background-color: var(--white-color);
+  background-color: var(--primary-light);
   box-shadow: 5px 3px 40px rgba(0, 72, 88, 0.1);
   z-index: 9999;
+}
+header.style-1.sticky .main-menu ul > li > a,
+header.style-1.sticky .main-menu ul > li > .drop-down,
+header.style-1.sticky .right-sidebar-button span,
+header.style-1.sticky .nav-right a,
+header.style-1.sticky .nav-right .content span,
+header.style-1.sticky .nav-right .content a {
+  color: #fff !important;
+}
+header.style-1.sticky .right-sidebar-button svg path,
+header.style-1.sticky .right-sidebar-button svg rect {
+  fill: #fff;
 }
 @keyframes smooth-header {
   0% {
@@ -1791,6 +1805,7 @@ header.style-1.sticky {
 }
 header.style-1 .header-logo a img {
   width: 150px;
+  padding: 10px;
 }
 @media (min-width: 992px) and (max-width: 1199px) {
   header.style-1 .header-logo a img {
@@ -2418,8 +2433,22 @@ header.style-2.sticky {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
   box-sizing: border-box;
-  background-color: var(--primary-color);
+  background-color: var(--primary-light);
   z-index: 9999;
+}
+header.style-2.sticky .main-menu ul > li > a,
+header.style-2.sticky .main-menu ul > li > .drop-down,
+header.style-2.sticky .right-sidebar-button svg path,
+header.style-2.sticky .nav-right a,
+header.style-2.sticky .nav-right .content span,
+header.style-2.sticky .nav-right .content a {
+  color: #fff !important;
+}
+header.style-2.sticky .contact-area .icon svg path {
+  fill: #fff;
+}
+header.style-2.sticky .right-sidebar-button svg path {
+  fill: #fff;
 }
 @keyframes smooth-header {
   0% {
@@ -3010,9 +3039,21 @@ header.style-3.sticky {
   left: 0;
   width: 100%;
   box-sizing: border-box;
-  background-color: var(--white-color);
+  background-color: var(--primary-light);
   box-shadow: 5px 3px 40px rgba(0, 72, 88, 0.1);
   z-index: 999;
+}
+header.style-3.sticky .main-menu ul > li > a,
+header.style-3.sticky .main-menu ul > li > .drop-down,
+header.style-3.sticky .right-sidebar-button span,
+header.style-3.sticky .nav-right a,
+header.style-3.sticky .nav-right .content span,
+header.style-3.sticky .nav-right .content a {
+  color: #fff !important;
+}
+header.style-3.sticky .right-sidebar-button svg path,
+header.style-3.sticky .right-sidebar-button svg rect {
+  fill: #fff;
 }
 @keyframes smooth-header {
   0% {
@@ -3597,11 +3638,22 @@ header.style-3.two.sticky {
   left: 0;
   width: 100%;
   box-sizing: border-box;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: var(--primary-light);
   -webkit-backdrop-filter: blur(6px);
           backdrop-filter: blur(6px);
   box-shadow: 5px 3px 40px rgba(0, 72, 88, 0.1);
   z-index: 999;
+}
+header.style-3.two.sticky .main-menu ul > li > a,
+header.style-3.two.sticky .main-menu ul > li > .drop-down,
+header.style-3.two.sticky .right-sidebar-button svg path,
+header.style-3.two.sticky .nav-right a,
+header.style-3.two.sticky .nav-right .content span,
+header.style-3.two.sticky .nav-right .content a {
+  color: #fff !important;
+}
+header.style-3.two.sticky .right-sidebar-button svg path {
+  fill: #fff;
 }
 @keyframes smooth-header {
   0% {
