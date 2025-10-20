@@ -16518,11 +16518,11 @@ header.style-3.two.sticky .right-sidebar-button svg path {
 }
 .home6-sketch-section .home6-sketch-bg {
   overflow: hidden;
-  background-image: url(../img/home6/home6-sketch-img.png);
+  background-image: url(../img/new/building_art.png);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  min-height: 724px;
+  min-height: 1200px;
   position: relative;
 }
 @media (min-width: 1400px) and (max-width: 1599px) {

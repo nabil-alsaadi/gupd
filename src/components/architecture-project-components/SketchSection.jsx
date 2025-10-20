@@ -14,10 +14,10 @@ const SketchSection = () => {
     return (
         <>
             <div className="home6-sketch-section">
-                <div className="title-area wow animate fadeInRight" data-wow-delay="200ms" data-wow-duration="1500ms">
+                {/* <div className="title-area wow animate fadeInRight" data-wow-delay="200ms" data-wow-duration="1500ms">
                     <h2>Sketch to real home transfer your hand</h2>
-                    <img src="assets/img/home6/home6-sketch-section-vector.svg" alt="" className="vector" />
-                </div>
+                    <img src="/assets/img/home6/home6-sketch-section-vector.svg" alt="" className="vector" />
+                </div> */}
                 <div className="home6-sketch-bg wow animate fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
                     <div className="indicator-area">
                         <ul>
@@ -33,8 +33,8 @@ const SketchSection = () => {
                                     </div>
                                 </div>
                                 <div className="single-item">
-                                    <img src="assets/img/home6/sketch-item-img1.png" alt="" />
-                                    <span>Bedroom</span>
+                                    <img src="/assets/img/home6/sketch-item-img1.png" alt="" />
+                                    <span>Layout 1</span>
                                 </div>
                             </li>
                             <li onMouseEnter={() => handleMouseEnter(2)}
@@ -49,8 +49,8 @@ const SketchSection = () => {
                                     </div>
                                 </div>
                                 <div className="single-item">
-                                    <img src="assets/img/home6/sketch-item-img2.png" alt="" />
-                                    <span>Guest Room</span>
+                                    <img src="/assets/img/home6/sketch-item-img2.png" alt="" />
+                                    <span>Layout 2</span>
                                 </div>
                             </li>
                             <li onMouseEnter={() => handleMouseEnter(3)}
@@ -65,8 +65,8 @@ const SketchSection = () => {
                                     </div>
                                 </div>
                                 <div className="single-item">
-                                    <img src="assets/img/home6/sketch-item-img3.png" alt="" />
-                                    <span>Master Bed</span>
+                                    <img src="/assets/img/home6/sketch-item-img3.png" alt="" />
+                                    <span>Layoit 3</span>
                                 </div>
                             </li>
                             <li onMouseEnter={() => handleMouseEnter(4)}
@@ -81,7 +81,7 @@ const SketchSection = () => {
                                     </div>
                                 </div>
                                 <div className="single-item">
-                                    <img src="assets/img/home6/sketch-item-img4.png" alt="" />
+                                    <img src="/assets/img/home6/sketch-item-img4.png" alt="" />
                                     <span>Kitchen</span>
                                 </div>
                             </li>
@@ -97,7 +97,7 @@ const SketchSection = () => {
                                     </div>
                                 </div>
                                 <div className="single-item">
-                                    <img src="assets/img/home6/sketch-item-img5.png" alt="" />
+                                    <img src="/assets/img/home6/sketch-item-img5.png" alt="" />
                                     <span>Dining Room</span>
                                 </div>
                             </li>
@@ -113,7 +113,7 @@ const SketchSection = () => {
                                     </div>
                                 </div>
                                 <div className="single-item">
-                                    <img src="assets/img/home6/sketch-item-img6.png" alt="" />
+                                    <img src="/assets/img/home6/sketch-item-img6.png" alt="" />
                                     <span>Parking</span>
                                 </div>
                             </li>

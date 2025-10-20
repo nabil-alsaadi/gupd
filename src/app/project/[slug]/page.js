@@ -5,6 +5,7 @@ import Header1 from '@/components/header/Header1'
 import Link from 'next/link'
 import React from 'react'
 import projectData from '@/data/project-section-data.json'
+import SketchSection from '@/components/architecture-project-components/SketchSection'
 // test 2
 // Generate static paths for all project sections
 export function generateStaticParams() {
@@ -56,6 +57,7 @@ const ProjectDetailsPage = ({ params }) => {
         <div className="container">
           <div className="row g-lg-4 gy-5 mb-120">
             <div className="col-lg-8">
+             
               <div className="project-details-thumb mb-50">
                 <img src={`/${foundSection.image}`} alt={foundSection.title} />
               </div>
@@ -135,6 +137,7 @@ const ProjectDetailsPage = ({ params }) => {
                 <span className="line-break" />
                 <p>{foundProject.name} represents the pinnacle of modern residential development in Sharjah. {foundSection.description}</p>
               </div>
+              <SketchSection />
             </div>
             <div className="col-lg-4">
               <div className="project-details-sidebar">
@@ -227,48 +230,14 @@ const ProjectDetailsPage = ({ params }) => {
               </div>
             </div>
           </div>
+          
           <div className="row">
-            <div className="col-lg-12">
-              <div className="details-navigation">
-                {/* Find previous and next sections */}
-                {(() => {
-                  const sections = foundProject.sections;
-                  const currentIndex = sections.findIndex(s => s.slug === foundSection.slug);
-                  const prevSection = currentIndex > 0 ? sections[currentIndex - 1] : sections[sections.length - 1];
-                  const nextSection = currentIndex < sections.length - 1 ? sections[currentIndex + 1] : sections[0];
-                  
-                  return (
-                    <>
-                      <div className="single-navigation">
-                        <Link href={`/project/${prevSection.slug}`} className="nav-btn">
-                          <svg width={11} height={10} viewBox="0 0 11 10" xmlns="http://www.w3.org/2000/svg">
-                            <path fillRule="evenodd" clipRule="evenodd" d="M1.67118 2.22814C3.3038 3.17073 5.66169 2.52309 6.61781 0.867041L7.00966 0.188334L8.34898 0.961587L7.95712 1.64029C7.26198 2.84432 6.08894 3.6729 4.79245 4.03021L10.0419 7.06097L9.25818 8.41838L4.00874 5.38762C4.34755 6.68907 4.2165 8.11924 3.52136 9.32327L3.12951 10.002L1.79019 9.22872L2.18204 8.55001C3.13777 6.89464 2.5201 4.52815 0.887474 3.58555L0.217818 3.19893L1.00152 1.84151L1.67118 2.22814Z" />
-                          </svg>
-                          PRV ASPECT
-                        </Link>
-                        <div className="content">
-                          <h6><Link href={`/project/${prevSection.slug}`}>{prevSection.title}</Link></h6>
-                        </div>
-                      </div>
-                      <div className="single-navigation two">
-                        <div className="content">
-                          <h6><Link href={`/project/${nextSection.slug}`}>{nextSection.title}</Link></h6>
-                        </div>
-                        <Link href={`/project/${nextSection.slug}`} className="nav-btn">
-                          NXT ASPECT
-                          <svg width={11} height={10} viewBox="0 0 11 10" xmlns="http://www.w3.org/2000/svg">
-                            <path fillRule="evenodd" clipRule="evenodd" d="M8.97921 2.22814C7.34659 3.17073 4.9887 2.52309 4.03258 0.867041L3.64073 0.188334L2.30142 0.961587L2.69327 1.64029C3.38841 2.84432 4.56145 3.6729 5.85794 4.03021L0.608508 7.06097L1.39221 8.41838L6.64165 5.38762C6.30284 6.68907 6.43389 8.11924 7.12903 9.32327L7.52088 10.002L8.8602 9.22872L8.46835 8.55001C7.51262 6.89464 8.13029 4.52815 9.76292 3.58555L10.4326 3.19893L9.64887 1.84151L8.97921 2.22814Z" />
-                          </svg>
-                        </Link>
-                      </div>
-                    </>
-                  );
-                })()}
-              </div>
-            </div>
+            
+            
           </div>
         </div>
       </div>
+     
 
       <Home1FooterTop />
       <Footer1 />
