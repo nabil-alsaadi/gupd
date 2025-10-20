@@ -186,7 +186,7 @@ const Header1 = ({ style = "", fluid }) => {
                             <img 
                                 alt="image" 
                                 className="img-fluid" 
-                                src={state.scrollY > 20 ? "/assets/img/header-logo-white.svg" : "/assets/img/header-logo.svg"} 
+                                src={state.scrollY > 20 ? "/assets/img/new/logo_en_white.svg" : "/assets/img/new/logo_en.svg"} 
                             />
                         </Link>
                     </div>

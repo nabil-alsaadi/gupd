@@ -16,6 +16,7 @@ import TeamSection from "@/components/real-estate/TeamSection";
 import ContactSection from "@/components/real-estate/ContactSection";
 import ProjectSection from "@/components/architecture/ProjectSection";
 import ProcessSection from "@/components/architecture/ProcessSection";
+import ChairmanMessage from "@/components/chairman/ChairmanMessage";
 
 
 export default function Home() {
@@ -33,6 +34,7 @@ export default function Home() {
       
       <Home1Support />
       <ProcessSection/>
+      <ChairmanMessage />
       <Home1Team/>
       
       
@@ -43,7 +45,7 @@ export default function Home() {
       {/* <Home1Faq /> */}
       {/* <Home1blog /> */}
       
-      {/* <Home1FooterTop /> */}
+      <Home1FooterTop />
       <Footer1 />
     </>
   );

@@ -1,47 +1,9 @@
 [
     {
         "id": "1",
-        "label": "COMPANY",
+        "label": "Home",
         "link": "/",
-        "icon": true,
-        "subMenu": [
-            {
-                "id": "1",
-                "label": "Construction",
-                "link": "/",
-                "icon": false
-            },
-            {
-                "id": "2",
-                "label": "Real Estate",
-                "link": "/real-estate",
-                "icon": false
-            },
-            {
-                "id": "3",
-                "label": "Architecture",
-                "link": "/architecture",
-                "icon": false
-            },
-            {
-                "id": "4",
-                "label": "Rnovation",
-                "link": "/rnovation",
-                "icon": false
-            },
-            {
-                "id": "5",
-                "label": "Interior",
-                "link": "/interior",
-                "icon": false
-            },
-            {
-                "id": "6",
-                "label": "Architecture Project",
-                "link": "/architecture-project",
-                "icon": false
-            }
-        ]
+        "icon": false
     },
     {
         "id": "2",
@@ -72,40 +34,8 @@
     {
         "id": "4",
         "label": "PROJECT",
-        "link": "/project",
-        "icon": true,
-        "subMenu": [
-            {
-                "id": "1",
-                "icon": false,
-                "label": "Project Grid",
-                "link": "/project"
-            },
-            {
-                "id": "2",
-                "icon": false,
-                "label": "Project Masonary",
-                "link": "/project/project-masonary"
-            },
-            {
-                "id": "3",
-                "icon": false,
-                "label": "Project Info flow",
-                "link": "/project/project-info-flow"
-            },
-            {
-                "id": "4",
-                "icon": false,
-                "label": "Project Single",
-                "link": "/project/project-single"
-            },
-            {
-                "id": "5",
-                "icon": false,
-                "label": "Project Details",
-                "link": "/project/project-details"
-            }
-        ]
+        "link": "/project/al-faisal-tower-location",
+        "icon": false
     },
     {
         "id": "5",
