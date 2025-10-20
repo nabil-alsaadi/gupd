@@ -5,7 +5,7 @@ import Header1 from '@/components/header/Header1'
 import Link from 'next/link'
 import React from 'react'
 import projectData from '@/data/project-section-data.json'
-
+// test
 // Generate static paths for all project sections
 export function generateStaticParams() {
   const params = [];
