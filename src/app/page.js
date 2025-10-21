@@ -21,7 +21,7 @@ import ChairmanMessage from "@/components/chairman/ChairmanMessage";
 
 export default function Home() {
   return (
-    <>
+    <> 
      
       <Header1 fluid="container-fluid" />
       <Home1Banner />
