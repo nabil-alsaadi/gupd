@@ -316,10 +316,18 @@ export default function RootLayout({ children }) {
         <meta name="keywords" content="next.js, SEO, meta tags" />
         <title>Vernex- Architecture & Construction Website Template.</title>
 
+        {/* jQuery */}
+        <Script src="/assets/js/jquery-3.7.1.min.js" strategy="beforeInteractive" />
+        
         {/* GSAP Scripts */}
         <Script src="/assets/js/gsap.min.js" strategy="beforeInteractive" onLoad={() => { window.gsap.registerPlugin(window.ScrollTrigger); }} />
         <Script src="/assets/js/ScrollTrigger.min.js" strategy="beforeInteractive" />
         <Script src="/assets/js/SplitText.min.js" strategy="beforeInteractive" />
+        
+        {/* Fancybox for image gallery */}
+        <link rel="stylesheet" href="/assets/css/jquery.fancybox.min.css" />
+        <Script src="/assets/js/jquery.fancybox.min.js" strategy="afterInteractive" />
+        <Script src="/assets/js/main.js" strategy="lazyOnload" />
       </head>
       <body id="body" className={`tt-magic-cursor ${inter.variable} ${kanit.variable}`}>
         <div id="magic-cursor">

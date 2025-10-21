@@ -29,12 +29,12 @@ const ProjectSection = () => {
             <div className="project-content-wrap">
               <div className="project-content">
                 <span>Client: {project.client}</span>
-                <h2><Link href={`/project/${sections[0].slug}`}>{sections[0].title}</Link></h2>
+                <h2><Link href={`/project/${project.slug}`}>{sections[0].title}</Link></h2>
                 <h3 className="project-subtitle">{sections[0].subtitle}</h3>
                 <p className="project-description">{sections[0].description}</p>
                 <ul>
                   {sections[0].categories.map((category, index) => (
-                    <li key={index}><Link href={`/project/${sections[0].slug}`}>{category}</Link></li>
+                    <li key={index}><Link href={`/project/${project.slug}`}>{category}</Link></li>
                   ))}
                 </ul>
                 <div className="project-stats">
@@ -44,7 +44,7 @@ const ProjectSection = () => {
                 </div>
               </div>
               <div className="button-area">
-                <Link href={`/project/${sections[0].slug}`} className="primary-btn">
+                <Link href={`/project/${project.slug}`} className="primary-btn">
                   {sections[0].buttonText}
                   <svg viewBox="0 0 13 20">
                     <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5" />
@@ -73,12 +73,12 @@ const ProjectSection = () => {
             <div className="project-content-wrap">
               <div className="project-content">
                 <span>Client: {project.client}</span>
-                <h2><Link href={`/project/${sections[1].slug}`}>{sections[1].title}</Link></h2>
+                <h2><Link href={`/project/${project.slug}`}>{sections[1].title}</Link></h2>
                 <h3 className="project-subtitle">{sections[1].subtitle}</h3>
                 <p className="project-description">{sections[1].description}</p>
                 <ul>
                   {sections[1].categories.map((category, index) => (
-                    <li key={index}><Link href={`/project/${sections[1].slug}`}>{category}</Link></li>
+                    <li key={index}><Link href={`/project/${project.slug}`}>{category}</Link></li>
                   ))}
                 </ul>
                 <div className="project-stats">
@@ -88,7 +88,7 @@ const ProjectSection = () => {
                 </div>
               </div>
               <div className="button-area">
-                <Link href={`/project/${sections[1].slug}`} className="primary-btn">
+                <Link href={`/project/${project.slug}`} className="primary-btn">
                   {sections[1].buttonText}
                   <svg viewBox="0 0 13 20">
                     <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5" />
@@ -107,12 +107,12 @@ const ProjectSection = () => {
             <div className="project-content-wrap">
               <div className="project-content">
                 <span>Client: {project.client}</span>
-                <h2><Link href={`/project/${sections[2].slug}`}>{sections[2].title}</Link></h2>
+                <h2><Link href={`/project/${project.slug}`}>{sections[2].title}</Link></h2>
                 <h3 className="project-subtitle">{sections[2].subtitle}</h3>
                 <p className="project-description">{sections[2].description}</p>
                 <ul>
                   {sections[2].categories.map((category, index) => (
-                    <li key={index}><Link href={`/project/${sections[2].slug}`}>{category}</Link></li>
+                    <li key={index}><Link href={`/project/${project.slug}`}>{category}</Link></li>
                   ))}
                 </ul>
                 <div className="project-stats">
@@ -122,7 +122,7 @@ const ProjectSection = () => {
                 </div>
               </div>
               <div className="button-area">
-                <Link href={`/project/${sections[2].slug}`} className="primary-btn">
+                <Link href={`/project/${project.slug}`} className="primary-btn">
                   {sections[2].buttonText}
                   <svg viewBox="0 0 13 20">
                     <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5" />
@@ -141,7 +141,7 @@ const ProjectSection = () => {
 
       <div className="row pt-80 bounce_up">
         <div className="col-lg-12 d-flex justify-content-center">
-          <Link href={`/project/${sections[0].slug}`} className="primary-btn2">
+          <Link href={`/project/${project.slug}`} className="primary-btn2">
             <span>
               View All Project Details
               <svg viewBox="0 0 13 20">

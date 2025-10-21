@@ -16407,7 +16407,7 @@ header.style-3.two.sticky .right-sidebar-button svg path {
  66. Home6 Sketch Section 
 ========================================*/
 .home6-sketch-section {
-  margin-bottom: 120px;
+  /* margin-bottom: 120px; */
 }
 @media (min-width: 992px) and (max-width: 1199px) {
   .home6-sketch-section {
@@ -16522,7 +16522,7 @@ header.style-3.two.sticky .right-sidebar-button svg path {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  min-height: 1200px;
+  min-height: 1100px;
   position: relative;
 }
 @media (min-width: 1400px) and (max-width: 1599px) {
@@ -16593,8 +16593,8 @@ header.style-3.two.sticky .right-sidebar-button svg path {
   }
 }
 .home6-sketch-section .home6-sketch-bg .indicator-area ul li:nth-child(2) {
-  top: 7%;
-  left: 39%;
+  top: 10%;
+  left: 42%;
 }
 @media (max-width: 1799px) {
   .home6-sketch-section .home6-sketch-bg .indicator-area ul li:nth-child(2) {
@@ -16685,7 +16685,7 @@ header.style-3.two.sticky .right-sidebar-button svg path {
 }
 .home6-sketch-section .home6-sketch-bg .indicator-area ul li:nth-child(5) {
   bottom: 35%;
-  left: 47%;
+  left: 53%;
 }
 @media (max-width: 1399px) {
   .home6-sketch-section .home6-sketch-bg .indicator-area ul li:nth-child(5) {
@@ -16699,7 +16699,7 @@ header.style-3.two.sticky .right-sidebar-button svg path {
 }
 .home6-sketch-section .home6-sketch-bg .indicator-area ul li:nth-child(6) {
   bottom: 40%;
-  right: 31%;
+  right: 34%;
 }
 @media (max-width: 1799px) {
   .home6-sketch-section .home6-sketch-bg .indicator-area ul li:nth-child(6) {

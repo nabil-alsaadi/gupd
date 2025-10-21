@@ -1,15 +1,25 @@
 "use client"
 import React, { useState } from 'react'
 
-const SketchSection = () => {
-    const [activeIndex, setActiveIndex] = useState(1);
+const SketchSection = ({ externalActiveIndex = null, onLayoutChange = null }) => {
+    const [internalActiveIndex, setInternalActiveIndex] = useState(1);
+    
+    // Use external index if provided, otherwise use internal state
+    const activeIndex = externalActiveIndex !== null ? externalActiveIndex : internalActiveIndex;
 
     const handleMouseEnter = (index) => {
-        setActiveIndex(index);
+        if (externalActiveIndex === null) {
+            setInternalActiveIndex(index);
+        }
+        if (onLayoutChange) {
+            onLayoutChange(index);
+        }
     };
 
     const handleMouseLeave = () => {
-        setActiveIndex(1); // Set back to 1 for initial first item active
+        if (externalActiveIndex === null) {
+            setInternalActiveIndex(1); // Set back to 1 for initial first item active
+        }
     };
     return (
         <>
@@ -66,7 +76,7 @@ const SketchSection = () => {
                                 </div>
                                 <div className="single-item">
                                     <img src="/assets/img/home6/sketch-item-img3.png" alt="" />
-                                    <span>Layoit 3</span>
+                                    <span>Layout 3</span>
                                 </div>
                             </li>
                             <li onMouseEnter={() => handleMouseEnter(4)}
@@ -82,7 +92,7 @@ const SketchSection = () => {
                                 </div>
                                 <div className="single-item">
                                     <img src="/assets/img/home6/sketch-item-img4.png" alt="" />
-                                    <span>Kitchen</span>
+                                    <span>Layout 4</span>
                                 </div>
                             </li>
                             <li onMouseEnter={() => handleMouseEnter(5)}
@@ -98,7 +108,7 @@ const SketchSection = () => {
                                 </div>
                                 <div className="single-item">
                                     <img src="/assets/img/home6/sketch-item-img5.png" alt="" />
-                                    <span>Dining Room</span>
+                                    <span>Layout 5</span>
                                 </div>
                             </li>
                             <li onMouseEnter={() => handleMouseEnter(6)}
@@ -114,7 +124,7 @@ const SketchSection = () => {
                                 </div>
                                 <div className="single-item">
                                     <img src="/assets/img/home6/sketch-item-img6.png" alt="" />
-                                    <span>Parking</span>
+                                    <span>Layout 6</span>
                                 </div>
                             </li>
                         </ul>

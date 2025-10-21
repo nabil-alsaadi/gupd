@@ -5,26 +5,7 @@
         "link": "/",
         "icon": false
     },
-    {
-        "id": "2",
-        "label": "SOLUTION",
-        "link": "/services",
-        "icon": true,
-        "subMenu": [
-            {
-                "id": "1",
-                "icon": false,
-                "label": "Services",
-                "link": "/services"
-            },
-            {
-                "id": "2",
-                "icon": false,
-                "label": "Service Details",
-                "link": "/services/service-details"
-            }
-        ]
-    },
+    
     {
         "id": "3",
         "label": "ABOUT",
@@ -34,7 +15,7 @@
     {
         "id": "4",
         "label": "PROJECT",
-        "link": "/project/al-faisal-tower-location",
+        "link": "/project/al-faisal-tower",
         "icon": false
     },
     {

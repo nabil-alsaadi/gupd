@@ -1,40 +1,37 @@
+"use client"
 import Breadcrum from '@/components/common/Breadcrum'
 import Footer1 from '@/components/Footer/Footer1'
 import Home1FooterTop from '@/components/Footer/Home1FooterTop'
 import Header1 from '@/components/header/Header1'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import projectData from '@/data/project-section-data.json'
 import SketchSection from '@/components/architecture-project-components/SketchSection'
-// test 2
-// Generate static paths for all project sections
-export function generateStaticParams() {
-  const params = [];
-  projectData.projects.forEach((project) => {
-    project.sections.forEach((section) => {
-      params.push({
-        slug: section.slug,
-      });
-    });
-  });
-  return params;
-}
+import WhatsNearby from '@/components/common/WhatsNearby'
+import PropertyAttachment from '@/components/common/PropertyAttachment'
 
 const ProjectDetailsPage = ({ params }) => {
-  // Find the section based on the slug
-  let foundSection = null;
-  let foundProject = null;
+  const [activeLayoutIndex, setActiveLayoutIndex] = useState(1);
+  
+  // Find the project based on the slug
+  const foundProject = projectData.projects.find(p => p.slug === params.slug);
 
-  projectData.projects.forEach((project) => {
-    const section = project.sections.find(s => s.slug === params.slug);
-    if (section) {
-      foundSection = section;
-      foundProject = project;
-    }
-  });
+  // Re-initialize fancybox after component mounts
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (window.$ && window.$.fancybox) {
+        window.$('[data-fancybox="gallery"]').fancybox({
+          buttons: ["zoom", "slideShow", "fullScreen", "thumbs", "close"],
+          loop: true
+        });
+      }
+    }, 1500);
+    
+    return () => clearTimeout(timer);
+  }, []);
 
-  // If section not found, show default content
-  if (!foundSection || !foundProject) {
+  // If project not found, show default content
+  if (!foundProject) {
     return (
       <>
         <Header1 fluid={"container-fluid"} />
@@ -52,28 +49,56 @@ const ProjectDetailsPage = ({ params }) => {
   return (
     <>
       <Header1 fluid={"container-fluid"} />
-      <Breadcrum content={foundSection.title} pageTitle={'Project Details'} pagename={'Project'} />
+      <Breadcrum content={foundProject.name} pageTitle={'Project Details'} pagename={'Project'} />
       <div className="project-details-page pt-120 mb-120">
         <div className="container">
           <div className="row g-lg-4 gy-5 mb-120">
             <div className="col-lg-8">
-             
+              {/* Main Project Image */}
               <div className="project-details-thumb mb-50">
-                <img src={`/${foundSection.image}`} alt={foundSection.title} />
+                <img src={`/${foundProject.mainImage}`} alt={foundProject.name} />
               </div>
+
               <div className="details-content-wrapper">
-                <h3>{foundSection.title}</h3>
-                <h4 className="project-subtitle mb-4">{foundSection.subtitle}</h4>
-                <span className="line-break" />
-                <p>{foundSection.description}</p>
+                <h2>{foundProject.name}</h2>
                 <span className="line-break" />
                 <span className="line-break" />
+
+                {/* Display all sections */}
+                {foundProject.sections.map((section, sectionIndex) => (
+                  <div key={sectionIndex} className="project-section-details mb-5">
+                    <h3>{section.title}</h3>
+                    <h4 className="project-subtitle mb-4">{section.subtitle}</h4>
+                    <span className="line-break" />
+                    <p>{section.description}</p>
+                    <span className="line-break" />
+
+                    {/* Section Image */}
+                    <div className="project-details-thumb mb-30">
+                      <img src={`/${section.image}`} alt={section.title} />
+                    </div>
+
+                    {/* Section Categories */}
+                    <h5>Categories</h5>
+                    <ul className="mb-4">
+                      {section.categories.map((category, catIndex) => (
+                        <li key={catIndex}>
+                          <svg xmlns="http://www.w3.org/2000/svg" width={15} height={15} viewBox="0 0 15 15">
+                            <path d="M0.376831 8.16821C-0.247095 8.54593 -0.0579659 9.49862 0.662688 9.60837C1.24211 9.69666 1.52052 10.3701 1.17304 10.8431C0.740845 11.4312 1.27942 12.2389 1.98713 12.0639C2.55609 11.9231 3.07065 12.4387 2.9302 13.0088C2.75556 13.718 3.56158 14.2577 4.14855 13.8246C4.62054 13.4764 5.29275 13.7554 5.38073 14.336C5.49024 15.0581 6.44099 15.2476 6.81798 14.6224C7.12107 14.1198 7.84864 14.1198 8.15171 14.6224C8.52867 15.2476 9.47943 15.0581 9.58896 14.336C9.67707 13.7554 10.3492 13.4764 10.8211 13.8246C11.4081 14.2577 12.2142 13.718 12.0395 13.0088C11.899 12.4387 12.4136 11.9231 12.9826 12.0639C13.6903 12.2389 14.2289 11.4312 13.7967 10.8431C13.4492 10.3701 13.7276 9.69653 14.307 9.60837C15.0276 9.49864 15.2168 8.54597 14.5929 8.16821C14.0912 7.86452 14.0912 7.13547 14.5929 6.83178C15.2168 6.45407 15.0277 5.50138 14.307 5.39162C13.7276 5.30334 13.4492 4.62989 13.7967 4.15695C14.2289 3.56879 13.6903 2.76112 12.9826 2.93613C12.4136 3.07687 11.8991 2.5613 12.0395 1.99115C12.2141 1.28199 11.4081 0.742345 10.8211 1.17541C10.3492 1.52356 9.67695 1.2446 9.58896 0.664029C9.47945 -0.0580599 8.5287 -0.247606 8.15171 0.377594C7.84863 0.880237 7.12106 0.880237 6.81798 0.377594C6.44103 -0.247596 5.49027 -0.0580833 5.38073 0.664029C5.29263 1.24462 4.62054 1.5236 4.14855 1.17541C3.56158 0.742345 2.75554 1.28201 2.9302 1.99115C3.07065 2.56126 2.55612 3.07686 1.98713 2.93613C1.2794 2.76113 0.740845 3.56879 1.17304 4.15695C1.52049 4.62989 1.24209 5.30346 0.662688 5.39162C-0.0579425 5.50136 -0.247105 6.45403 0.376831 6.83178C0.878459 7.13548 0.878459 7.86453 0.376831 8.16821Z" />
+                          </svg>
+                          {category}
+                        </li>
+                      ))}
+                    </ul>
+                    <span className="line-break" />
+                    <span className="line-break" />
+                  </div>
+                ))}
+
                 <span className="line-break" />
-                <h4>Key Features</h4>
-                <span className="line-break" />
+                <h3>Key Features</h3>
                 <span className="line-break" />
                 <p>Discover the exceptional features that make {foundProject.name} a premier residential development in Sharjah.</p>
-                <span className="line-break" />
                 <span className="line-break" />
                 <ul>
                   {foundProject.features.map((feature, index) => (
@@ -87,57 +112,10 @@ const ProjectDetailsPage = ({ params }) => {
                 </ul>
                 <span className="line-break" />
                 <span className="line-break" />
-                <span className="line-break" />
-                <div className="project-details-img-grp">
-                  <div className="row g-4">
-                    <div className="col-md-6">
-                      <img src={`/${foundSection.image}`} alt={`${foundSection.title} - View 1`} />
-                    </div>
-                    <div className="col-md-6">
-                      <img src={`/${foundSection.image}`} alt={`${foundSection.title} - View 2`} />
-                    </div>
-                  </div>
-                </div>
-                <span className="line-break" />
-                <span className="line-break" />
-                <span className="line-break" />
-                <h4>Project Categories</h4>
-                <span className="line-break" />
-                <span className="line-break" />
-                <p>This aspect encompasses multiple categories of modern residential development:</p>
-                <span className="line-break" />
-                <span className="line-break" />
-                <ul>
-                  {foundSection.categories.map((category, index) => (
-                    <li key={index}>
-                      <svg xmlns="http://www.w3.org/2000/svg" width={15} height={15} viewBox="0 0 15 15">
-                        <path d="M0.376831 8.16821C-0.247095 8.54593 -0.0579659 9.49862 0.662688 9.60837C1.24211 9.69666 1.52052 10.3701 1.17304 10.8431C0.740845 11.4312 1.27942 12.2389 1.98713 12.0639C2.55609 11.9231 3.07065 12.4387 2.9302 13.0088C2.75556 13.718 3.56158 14.2577 4.14855 13.8246C4.62054 13.4764 5.29275 13.7554 5.38073 14.336C5.49024 15.0581 6.44099 15.2476 6.81798 14.6224C7.12107 14.1198 7.84864 14.1198 8.15171 14.6224C8.52867 15.2476 9.47943 15.0581 9.58896 14.336C9.67707 13.7554 10.3492 13.4764 10.8211 13.8246C11.4081 14.2577 12.2142 13.718 12.0395 13.0088C11.899 12.4387 12.4136 11.9231 12.9826 12.0639C13.6903 12.2389 14.2289 11.4312 13.7967 10.8431C13.4492 10.3701 13.7276 9.69653 14.307 9.60837C15.0276 9.49864 15.2168 8.54597 14.5929 8.16821C14.0912 7.86452 14.0912 7.13547 14.5929 6.83178C15.2168 6.45407 15.0277 5.50138 14.307 5.39162C13.7276 5.30334 13.4492 4.62989 13.7967 4.15695C14.2289 3.56879 13.6903 2.76112 12.9826 2.93613C12.4136 3.07687 11.8991 2.5613 12.0395 1.99115C12.2141 1.28199 11.4081 0.742345 10.8211 1.17541C10.3492 1.52356 9.67695 1.2446 9.58896 0.664029C9.47945 -0.0580599 8.5287 -0.247606 8.15171 0.377594C7.84863 0.880237 7.12106 0.880237 6.81798 0.377594C6.44103 -0.247596 5.49027 -0.0580833 5.38073 0.664029C5.29263 1.24462 4.62054 1.5236 4.14855 1.17541C3.56158 0.742345 2.75554 1.28201 2.9302 1.99115C3.07065 2.56126 2.55612 3.07686 1.98713 2.93613C1.2794 2.76113 0.740845 3.56879 1.17304 4.15695C1.52049 4.62989 1.24209 5.30346 0.662688 5.39162C-0.0579425 5.50136 -0.247105 6.45403 0.376831 6.83178C0.878459 7.13548 0.878459 7.86453 0.376831 8.16821Z" />
-                      </svg>
-                      {category}
-                    </li>
-                  ))}
-                </ul>
-                <span className="line-break" />
-                <span className="line-break" />
-                <span className="line-break" />
-                <div className="project-details-img-grp">
-                  <div className="row g-4">
-                    <div className="col-md-6">
-                      <img src={`/${foundSection.image}`} alt={`${foundSection.title} - View 3`} />
-                    </div>
-                    <div className="col-md-6">
-                      <img src={`/${foundSection.image}`} alt={`${foundSection.title} - View 4`} />
-                    </div>
-                  </div>
-                </div>
-                <span className="line-break" />
-                <span className="line-break" />
-                <span className="line-break" />
-                <h3>About {foundProject.name}</h3>
-                <span className="line-break" />
-                <p>{foundProject.name} represents the pinnacle of modern residential development in Sharjah. {foundSection.description}</p>
               </div>
-              <SketchSection />
+
+              {/* What's Nearby Section - Inside col-lg-8 */}
+             
             </div>
             <div className="col-lg-4">
               <div className="project-details-sidebar">
@@ -215,7 +193,7 @@ const ProjectDetailsPage = ({ params }) => {
                   <img src="/assets/img/inner-pages/project-sidebar-banner-img.jpg" alt="" />
                   <div className="banner-content-wrap">
                     <div className="banner-content">
-                      <h2>Ready to <span>work with us?</span></h2>
+                      <h2>Ready to <span>Get Your Dream Home?</span></h2>
                       <Link href="/contact" className="primary-btn2 white-bg">
                         <span>
                           Get a quote
@@ -230,14 +208,208 @@ const ProjectDetailsPage = ({ params }) => {
               </div>
             </div>
           </div>
-          
-          <div className="row">
-            
-            
+
+          {/* Floor Plans and Layouts Section - Full Width */}
+          <div className="row g-lg-4 gy-5 mt-5">
+            {/* Left: SketchSection */}
+            <div className="col-lg-6">
+              <SketchSection 
+                externalActiveIndex={activeLayoutIndex}
+                onLayoutChange={setActiveLayoutIndex}
+              />
+            </div>
+
+            {/* Right: Available Unit Layouts */}
+            <div className="col-lg-6">
+              {foundProject.layouts && foundProject.layouts.length > 0 && (
+                <div className="layouts-section">
+                  <h3>Available Unit Layouts</h3>
+                  <span className="line-break" />
+                  <p className="mb-4">Choose from our carefully designed layouts for your perfect home.</p>
+
+                  <div className="layouts-grid">
+                    {foundProject.layouts.map((layout, layoutIndex) => (
+                      <div 
+                        key={layoutIndex} 
+                        className="layout-card mb-3 p-3 rounded"
+                        onMouseEnter={() => setActiveLayoutIndex(layoutIndex + 1)}
+                        style={{ 
+                          cursor: 'pointer', 
+                          transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                          border: activeLayoutIndex === layoutIndex + 1 
+                            ? '2px solid var(--primary-color2)' 
+                            : '1px solid rgba(var(--primary-color-opc), 0.1)',
+                          boxShadow: activeLayoutIndex === layoutIndex + 1 
+                            ? '0 4px 12px rgba(var(--primary-color2-opc), 0.15)' 
+                            : 'none',
+                          transform: activeLayoutIndex === layoutIndex + 1 ? 'translateY(-2px)' : 'translateY(0)'
+                        }}
+                      >
+                        <div className="d-flex gap-3 align-items-center">
+                          <div className="layout-image flex-shrink-0" style={{ width: '90px', height: '90px' }}>
+                            <img src={`/${layout.image}`} alt={layout.name} className="w-100 h-100 rounded" style={{ objectFit: 'cover' }} />
+                          </div>
+                          <div className="flex-grow-1">
+                            <h5 className="mb-2">{layout.name}</h5>
+                            <div className="layout-specs">
+                              <div className="d-flex flex-wrap gap-2 mb-2">
+                                <span><strong>{layout.area}</strong></span>
+                                <span>•</span>
+                                <span>{layout.bedrooms} Bed</span>
+                                <span>•</span>
+                                <span>{layout.bathrooms} Bath</span>
+                              </div>
+                            </div>
+                            <div className="layout-features small">
+                              <ul className="mb-0 ps-3">
+                                {layout.features.slice(0, 2).map((feature, featureIdx) => (
+                                  <li key={featureIdx} style={{ fontSize: '13px' }}>{feature}</li>
+                                ))}
+                              </ul>
+                            </div>
+                          </div>
+                          <div className="layout-price flex-shrink-0 text-end">
+                            <strong className="d-block" style={{ fontSize: '15px', whiteSpace: 'nowrap', color: 'var(--primary-color2)' }}>{layout.price}</strong>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
+
+          {/* What's Nearby Section */}
+          {foundProject.nearby && foundProject.nearby.length > 0 && (
+            <div className="row mt-5">
+              <div className="col-12">
+                <div className="property-details-page">
+                  <WhatsNearby 
+                    title="What's Nearby"
+                    description="Discover the convenience of Al Faisal Tower's prime location with easy access to Sharjah's key destinations and amenities."
+                    places={foundProject.nearby}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Location Map - Full Width */}
+          {foundProject.locationMap && (
+            <div className="row mt-5">
+              <div className="col-12">
+                <div className="location-map-section">
+                  <h3 className="mb-4">Location Map</h3>
+                  <div className="location-map-wrapper">
+                    <img 
+                      src={`/${foundProject.locationMap}`}
+                      alt={`${foundProject.name} Location Map`}
+                      className="w-100 rounded shadow-sm"
+                      style={{ 
+                        objectFit: 'cover',
+                        maxHeight: '600px'
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Property Attachment Section */}
+          {foundProject.attachments && foundProject.attachments.length > 0 && (
+            <div className="row mt-5">
+              <div className="col-12">
+                <div className="property-details-page">
+                  <div className="property-details-content-wrap">
+                    <PropertyAttachment 
+                      title="Project Documents"
+                      description="Download our comprehensive project brochure, floor plans, and payment plan details."
+                      attachments={foundProject.attachments}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Project Gallery - Full Width */}
+          {foundProject.gallery && foundProject.gallery.length > 0 && (
+            <div className="row mt-5">
+              <div className="col-12">
+                <div className="project-gallery-section">
+                  <h3 className="mb-4">Project Gallery</h3>
+                  <p className="mb-5">Explore stunning visuals of Al Faisal Tower showcasing architecture, interiors, amenities, and more.</p>
+                  
+                  <div className="row g-4">
+                    {foundProject.gallery.map((item, index) => (
+                      <div key={index} className="col-lg-4 col-md-6">
+                        <a 
+                          href={`/${item.image}`}
+                          data-fancybox="gallery"
+                          data-caption={`${item.category} - ${item.title}`}
+                          className="gallery-item position-relative overflow-hidden rounded d-block"
+                          style={{ 
+                            height: '300px',
+                            transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.transform = 'translateY(-5px)';
+                            e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.15)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.transform = 'translateY(0)';
+                            e.currentTarget.style.boxShadow = 'none';
+                          }}
+                        >
+                          <img 
+                            src={`/${item.image}`}
+                            alt={item.title}
+                            className="w-100 h-100"
+                            style={{ 
+                              objectFit: 'cover',
+                              transition: 'transform 0.5s ease'
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.transform = 'scale(1.1)';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.transform = 'scale(1)';
+                            }}
+                          />
+                          <div 
+                            className="gallery-overlay position-absolute w-100 h-100 top-0 start-0 d-flex flex-column justify-content-end p-4"
+                            style={{
+                              background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%)',
+                              pointerEvents: 'none'
+                            }}
+                          >
+                            <span 
+                              className="badge mb-2"
+                              style={{
+                                backgroundColor: 'var(--primary-color2)',
+                                fontSize: '12px',
+                                width: 'fit-content'
+                              }}
+                            >
+                              {item.category}
+                            </span>
+                            <h5 className="text-white mb-0">{item.title}</h5>
+                          </div>
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
-     
+      
+
+      
 
       <Home1FooterTop />
       <Footer1 />
