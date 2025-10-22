@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
+import companyData from '../../data/companyData.json'
+import SocialMedia from '../common/SocialMedia'
 
 const Footer = () => {
   return (
@@ -11,36 +13,11 @@ const Footer = () => {
             <div className="footer-logo-and-contact-area">
               <div className="footer-logo-area">
                 <Link href="/" className="footer-logo">
-                  <img src="assets/img/footer-logo.svg" alt="" />
+                  <img src={companyData.company.logo.footer} alt="" />
                 </Link>
                 <div className="footer-content">
-                  <p>Welcome to Vernex, where innovation meet our passion in a journey that started dream.</p>
-                  <ul className="social-list">
-                    <li>
-                      <a href="https://www.linkedin.com/">
-                        <i className="bi bi-linkedin" />
-                        <span>LinkedIn</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="https://www.facebook.com/">
-                        <i className="bi bi-facebook" />
-                        <span>Facebook</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="https://twitter.com/">
-                        <i className="bi bi-twitter-x" />
-                        <span>Twitter</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="https://www.instagram.com/">
-                        <i className="bi bi-instagram" />
-                        <span>Instagram</span>
-                      </a>
-                    </li>
-                  </ul>
+                  <p>{companyData.footer.description}</p>
+                  <SocialMedia />
                 </div>
               </div>
               <ul className="contact-area">
@@ -55,7 +32,7 @@ const Footer = () => {
                     </div>
                     <div className="content">
                       <span>CALL ANY TIME</span>
-                      <h6><a href="tel:29658718617">2-965-871-8617</a></h6>
+                      <h6><a href={companyData.contact.phone.link}>{companyData.contact.phone.display}</a></h6>
                     </div>
                   </div>
                   <svg className="arrow" width={8} height={29} viewBox="0 0 8 29" xmlns="http://www.w3.org/2000/svg">
@@ -72,7 +49,7 @@ const Footer = () => {
                     </div>
                     <div className="content">
                       <span>ADDRESS</span>
-                      <h6><a href="#">Dhaka, Bangladesh</a></h6>
+                      <h6><a href="#">{companyData.contact.address.primary}</a></h6>
                     </div>
                   </div>
                   <svg className="arrow" width={8} height={29} viewBox="0 0 8 29" xmlns="http://www.w3.org/2000/svg">
@@ -88,7 +65,7 @@ const Footer = () => {
                     </div>
                     <div className="content">
                       <span>SAY HELLO</span>
-                      <h6><a href="mailto:info@example.com">info@example.com</a></h6>
+                      <h6><a href={companyData.contact.email.link}>{companyData.contact.email.display}</a></h6>
                     </div>
                   </div>
                 </li>
@@ -152,12 +129,12 @@ const Footer = () => {
                         <div className="footer-widget">
                           <ul className="address-area">
                             <li className="single-address">
-                              <span>NEW YORK</span>
-                              <a href="#">8204 Glen Ridge DriveEndicott, NY 13760</a>
+                              <span>SHARJAH</span>
+                              <a href="#">{companyData.contact.address.secondary}</a>
                             </li>
                             <li className="single-address">
-                              <span>WASHINGTON DC</span>
-                              <a href="#">8204 Glen Ridge DriveEndicott, NY 13760</a>
+                              <span>UAE</span>
+                              <a href="#">Gulf Universal Property Development</a>
                             </li>
                           </ul>
                         </div>
@@ -174,7 +151,7 @@ const Footer = () => {
         <div className="container">
           <div className="footer-bottom">
             <div className="copyright-area">
-              <p>Copyright 2025 <Link href="/">Vernex</Link> | Design By <a href="https://www.egenslab.com/">Egens Lab</a></p>
+              <p>{companyData.footer.copyright}</p>
             </div>
             <div className="footer-bottom-right">
               <ul>

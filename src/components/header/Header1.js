@@ -1,6 +1,7 @@
 "use client"
 import React, { useEffect, useReducer, useRef } from 'react'
 import navData from "../../data/nav.json"
+import companyData from "../../data/companyData.json"
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 const initialState = {
@@ -61,6 +62,24 @@ const Header1 = ({ style = "", fluid }) => {
     const handleScroll = () => {
         const { scrollY } = window;
         dispatch({ type: "setScrollY", payload: scrollY });
+        
+        // Add smooth transition class when becoming sticky
+        const header = headerRef.current;
+        const body = document.body;
+        
+        if (header) {
+            // Use a threshold to prevent flickering
+            const threshold = 20;
+            const isSticky = scrollY > threshold;
+            
+            if (isSticky) {
+                header.classList.add('sticky-transition');
+                body.classList.add('header-sticky');
+            } else {
+                header.classList.remove('sticky-transition');
+                body.classList.remove('header-sticky');
+            }
+        }
     };
 
     // Debounce the scroll event to reduce the frequency of dispatches
@@ -77,6 +96,8 @@ const Header1 = ({ style = "", fluid }) => {
         window.addEventListener("scroll", debouncedHandleScroll);
         return () => {
             window.removeEventListener("scroll", debouncedHandleScroll);
+            // Cleanup: remove body class when component unmounts
+            document.body.classList.remove('header-sticky');
         };
     }, []);
     const toggleMenu = (menu) => {
@@ -102,7 +123,7 @@ const Header1 = ({ style = "", fluid }) => {
 
                 <div className="sidebar-logo-area d-flex justify-content-between align-items-center">
                     <div className="sidebar-logo-wrap">
-                        <Link href="/"><img alt="image" src="/assets/img/header-logo.svg" /></Link>
+                        <Link href="/"><img alt="image" src={companyData.company.logo.default} style={{width: '30%'}}/></Link>
                     </div>
                     <div className="right-sidebar-close-btn" onClick={toggleRightSidebar}>
                         <i className="bi bi-x" />
@@ -110,9 +131,9 @@ const Header1 = ({ style = "", fluid }) => {
                 </div>
                 <div className="sidebar-content-wrap">
                     <div className="title-area">
-                        <span>Get In Touch With Us</span>
-                        <h2>Connect With Vernex</h2>
-                        <p>Ready to take the first step towards unlocking opportunity realizing goals, and embracing innovation?</p>
+                        <span>{companyData.navigation.sidebar.title}</span>
+                        <h2>{companyData.navigation.sidebar.subtitle}</h2>
+                        <p>{companyData.navigation.sidebar.description}</p>
                     </div>
                     <ul className="contact-area">
                         <li>
@@ -126,7 +147,7 @@ const Header1 = ({ style = "", fluid }) => {
                                 </div>
                                 <div className="content">
                                     <span>CALL ANY TIME</span>
-                                    <h6><a href="tel:29658718617">2-965-871-8617</a></h6>
+                                    <h6><a href={companyData.contact.phone.link}>{companyData.contact.phone.display}</a></h6>
                                 </div>
                             </div>
                             <svg className="arrow" width={8} height={29} viewBox="0 0 8 29" xmlns="http://www.w3.org/2000/svg">
@@ -143,7 +164,7 @@ const Header1 = ({ style = "", fluid }) => {
                                 </div>
                                 <div className="content">
                                     <span>ADDRESS</span>
-                                    <h6><a href="#">Dhaka, Bangladesh</a></h6>
+                                    <h6><a href="#">{companyData.contact.address.primary}</a></h6>
                                 </div>
                             </div>
                             <svg className="arrow" width={8} height={29} viewBox="0 0 8 29" xmlns="http://www.w3.org/2000/svg">
@@ -159,41 +180,44 @@ const Header1 = ({ style = "", fluid }) => {
                                 </div>
                                 <div className="content">
                                     <span>SAY HELLO</span>
-                                    <h6><a href="mailto:info@example.com">info@example.com</a></h6>
+                                    <h6><a href={companyData.contact.email.link}>{companyData.contact.email.display}</a></h6>
                                 </div>
                             </div>
                         </li>
                     </ul>
                     <ul className="address-area">
                         <li className="single-address">
-                            <span>NEW YORK</span>
-                            <p>8204 Glen Ridge DriveEndicott, NY 13760</p>
+                            <span>SHARJAH</span>
+                            <p>{companyData.contact.address.secondary}</p>
                         </li>
                         <li className="single-address">
-                            <span>WASHINGTON DC</span>
-                            <p>8204 Glen Ridge DriveEndicott, NY 13760</p>
+                            <span>UAE</span>
+                            <p>Gulf Universal Property Development</p>
                         </li>
                     </ul>
                 </div>
                 <div className="sidebar-bottom-area">
-                    <p>Copyright 2025 <Link href="/">Vernex</Link> | Design By <a href="https://www.egenslab.com/">Egens Lab</a></p>
+                    <p>{companyData.footer.copyright}</p>
                 </div>
             </div>
-            <header className={`header-area style-1 ${style} ${state.scrollY > 20 ? "sticky" : ""}`}>
+            <header 
+                ref={headerRef}
+                className={`header-area style-1 ${style} ${state.scrollY > 20 ? "sticky" : ""}`}
+            >
                 <div className={`${fluid} d-flex flex-nowrap align-items-center justify-content-between`}>
                     <div className="header-logo">
                         <Link href={"/"}>
                             <img 
                                 alt="image" 
                                 className="img-fluid" 
-                                src={state.scrollY > 20 ? "/assets/img/new/logo_en_white.svg" : "/assets/img/new/logo_en.svg"} 
+                                src={state.scrollY > 20 ? companyData.company.logo.white : companyData.company.logo.default} 
                             />
                         </Link>
                     </div>
                     <div className={`main-menu ${state.isSidebarOpen ? "show-menu" : ""}`}>
                         <div className="mobile-logo-area d-lg-none d-flex align-items-center justify-content-between">
                             <div className="mobile-logo-wrap">
-                                <Link href="/"><img alt="image" src="/assets/img/header-logo.svg" /></Link>
+                                <Link href="/"><img alt="image" src={companyData.company.logo.default} /></Link>
                             </div>
                             <div className="menu-close-btn" onClick={toggleSidebar}>
                                 <i className="bi bi-x" />
@@ -268,8 +292,8 @@ const Header1 = ({ style = "", fluid }) => {
                             }
                         </ul>
                         <div className="btn-area d-lg-none d-flex justify-content-center">
-                            <Link href="/contact" className="primary-btn">
-                                Start A Project
+                            <Link href={companyData.navigation.cta.link} className="primary-btn">
+                                {companyData.navigation.cta.text}
                                 <svg viewBox="0 0 13 20">
                                     <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5" />
                                 </svg>
@@ -285,8 +309,8 @@ const Header1 = ({ style = "", fluid }) => {
                             </svg>
                             <span>GET IN TOUCH</span>
                         </div>
-                        <Link href="/contact" className="primary-btn d-lg-flex d-none">
-                            Start A Project
+                        <Link href={companyData.navigation.cta.link} className="primary-btn d-lg-flex d-none">
+                            {companyData.navigation.cta.text}
                             <svg viewBox="0 0 13 20">
                                 <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5" />
                             </svg>

@@ -5,22 +5,79 @@
         "link": "/",
         "icon": false
     },
-    
     {
-        "id": "3",
-        "label": "ABOUT",
+        "id": "2",
+        "label": "About",
         "link": "/about",
-        "icon": true
-    },
-    {
-        "id": "4",
-        "label": "PROJECT",
-        "link": "/project/al-faisal-tower",
         "icon": false
     },
     {
+        "id": "3",
+        "label": "Projects",
+        "link": "/project",
+        "icon": true,
+        "subMenu": [
+            {
+                "id": "1",
+                "icon": false,
+                "label": "All Projects",
+                "link": "/project"
+            },
+            {
+                "id": "2",
+                "icon": false,
+                "label": "Al Faisal Tower",
+                "link": "/project/al-faisal-tower"
+            },
+            {
+                "id": "3",
+                "icon": false,
+                "label": "Residential Projects",
+                "link": "/project/residential"
+            },
+            {
+                "id": "4",
+                "icon": false,
+                "label": "Commercial Projects",
+                "link": "/project/commercial"
+            }
+        ]
+    },
+    {
+        "id": "4",
+        "label": "Services",
+        "link": "/services",
+        "icon": true,
+        "subMenu": [
+            {
+                "id": "1",
+                "icon": false,
+                "label": "Property Development",
+                "link": "/services/development"
+            },
+            {
+                "id": "2",
+                "icon": false,
+                "label": "Investment Opportunities",
+                "link": "/services/investment"
+            },
+            {
+                "id": "3",
+                "icon": false,
+                "label": "Property Management",
+                "link": "/services/management"
+            },
+            {
+                "id": "4",
+                "icon": false,
+                "label": "Consultation",
+                "link": "/services/consultation"
+            }
+        ]
+    },
+    {
         "id": "5",
-        "label": "PAGES",
+        "label": "Pages",
         "link": "#",
         "icon": true,
         "subMenu": [
@@ -32,23 +89,9 @@
             },
             {
                 "id": "2",
-                "icon": true,
+                "icon": false,
                 "label": "Properties",
-                "link": "/property",
-                "subMenu": [
-                    {
-                        "id": "1",
-                        "icon": false,
-                        "label": "Properties",
-                        "link": "/property"
-                    },
-                    {
-                        "id": "2",
-                        "icon": false,
-                        "label": "Property Details",
-                        "link": "/property/property-details"
-                    }
-                ]
+                "link": "/property"
             },
             {
                 "id": "3",
@@ -83,61 +126,16 @@
                 ]
             },
             {
-                "id": "8",
-                "label": "Shop",
-                "link": "/shop",
-                "icon": true,
-                "subMenu": [
-                    {
-                        "id": "1",
-                        "icon": false,
-                        "label": "Shop",
-                        "link": "/shop"
-                    },
-                    {
-                        "id": "2",
-                        "icon": false,
-                        "label": "Product Details",
-                        "link": "/shop/product-details"
-                    },
-                    {
-                        "id": "3",
-                        "icon": false,
-                        "label": "Cart",
-                        "link": "/shop/cart"
-                    },
-                    {
-                        "id": "4",
-                        "icon": false,
-                        "label": "Checkout",
-                        "link": "/shop/checkout"
-                    }
-                ]
-            },
-            {
                 "id": "4",
-                "label": "Brand",
-                "link": "/brand",
-                "icon": false
-            },
-          
-            {
-                "id": "5",
                 "label": "FAQs",
                 "link": "/faq",
                 "icon": false
             },
             {
-                "id": "9",
+                "id": "5",
                 "icon": false,
                 "label": "Contact",
                 "link": "/contact"
-            },
-            {
-                "id": "7",
-                "icon": false,
-                "label": "Error 404",
-                "link": "/error-404"
             }
         ]
     }

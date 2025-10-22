@@ -12,23 +12,87 @@ import PropertyAttachment from '@/components/common/PropertyAttachment'
 
 const ProjectDetailsPage = ({ params }) => {
   const [activeLayoutIndex, setActiveLayoutIndex] = useState(1);
-  
+  const [activeTab, setActiveTab] = useState('layouts');
+
   // Find the project based on the slug
   const foundProject = projectData.projects.find(p => p.slug === params.slug);
 
-  // Re-initialize fancybox after component mounts
+  // Navigation tabs configuration
+  const navigationTabs = [
+    { id: 'layouts', label: 'Unit Layouts', icon: '/assets/img/icons/icons8-building-50.png' },
+    { id: 'location', label: 'Location Map', icon: '/assets/img/icons/icons8-location-50.png' },
+    { id: 'gallery', label: 'Photo Gallery', icon: '/assets/img/icons/icons8-gallery-48.png' }
+  ];
+
+  // Smooth scroll to section
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+      setActiveTab(sectionId);
+    }
+  };
+
+  // Track scroll position to update active tab
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (window.$ && window.$.fancybox) {
-        window.$('[data-fancybox="gallery"]').fancybox({
-          buttons: ["zoom", "slideShow", "fullScreen", "thumbs", "close"],
-          loop: true
-        });
+    const handleScroll = () => {
+      const sections = navigationTabs.map(tab => document.getElementById(tab.id));
+      const scrollPosition = window.scrollY + 100;
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i];
+        if (section && section.offsetTop <= scrollPosition) {
+          setActiveTab(navigationTabs[i].id);
+          break;
+        }
       }
-    }, 1500);
-    
-    return () => clearTimeout(timer);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Initialize fancybox for gallery
+  useEffect(() => {
+    // Wait for jQuery and fancybox to be available
+    const initFancybox = () => {
+      if (typeof window !== 'undefined' && window.$ && window.$.fancybox) {
+        // Destroy existing fancybox instances to avoid conflicts
+        if (window.$('[data-fancybox="gallery"]').length) {
+          window.$('[data-fancybox="gallery"]').each(function () {
+            window.$(this).off('click.fb-start');
+          });
+        }
+
+        // Initialize fancybox
+        window.$('[data-fancybox="gallery"]').fancybox({
+          buttons: [
+            "zoom",
+            "slideShow",
+            "fullScreen",
+            "thumbs",
+            "close"
+          ],
+          loop: true,
+          protect: true,
+          animationEffect: "zoom-in-out",
+          transitionEffect: "slide",
+          clickContent: function (current, event) {
+            return current.type === 'image' ? 'zoom' : false;
+          }
+        });
+      } else {
+        // Retry after a short delay if not ready
+        setTimeout(initFancybox, 200);
+      }
+    };
+
+    const timer = setTimeout(initFancybox, 500);
+    return () => clearTimeout(timer);
+  }, [foundProject]);
 
   // If project not found, show default content
   if (!foundProject) {
@@ -50,6 +114,27 @@ const ProjectDetailsPage = ({ params }) => {
     <>
       <Header1 fluid={"container-fluid"} />
       <Breadcrum content={foundProject.name} pageTitle={'Project Details'} pagename={'Project'} />
+      
+      {/* Navigation Tabs */}
+      <div className="project-navigation-tabs">
+        <div className="container">
+          <div className="nav-tabs-wrapper">
+            <div className="nav-tabs-container">
+              {navigationTabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  className={`nav-tab ${activeTab === tab.id ? 'active' : ''}`}
+                  onClick={() => scrollToSection(tab.id)}
+                >
+                  <img src={tab.icon} alt={tab.label} className="tab-icon" />
+                  <span className="tab-label">{tab.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="project-details-page pt-120 mb-120">
         <div className="container">
           <div className="row g-lg-4 gy-5 mb-120">
@@ -59,7 +144,7 @@ const ProjectDetailsPage = ({ params }) => {
                 <img src={`/${foundProject.mainImage}`} alt={foundProject.name} />
               </div>
 
-              <div className="details-content-wrapper">
+              <div className="details-content-wrapper" id="overview">
                 <h2>{foundProject.name}</h2>
                 <span className="line-break" />
                 <span className="line-break" />
@@ -75,7 +160,7 @@ const ProjectDetailsPage = ({ params }) => {
 
                     {/* Section Image */}
                     <div className="project-details-thumb mb-30">
-                      <img src={`/${section.image}`} alt={section.title} />
+                      <img src={`/${section.image}`} alt={section.title} style={{ width: '100%' }} />
                     </div>
 
                     {/* Section Categories */}
@@ -115,7 +200,7 @@ const ProjectDetailsPage = ({ params }) => {
               </div>
 
               {/* What's Nearby Section - Inside col-lg-8 */}
-             
+
             </div>
             <div className="col-lg-4">
               <div className="project-details-sidebar">
@@ -213,7 +298,7 @@ const ProjectDetailsPage = ({ params }) => {
           <div className="row g-lg-4 gy-5 mt-5">
             {/* Left: SketchSection */}
             <div className="col-lg-6">
-              <SketchSection 
+              <SketchSection
                 externalActiveIndex={activeLayoutIndex}
                 onLayoutChange={setActiveLayoutIndex}
               />
@@ -222,25 +307,25 @@ const ProjectDetailsPage = ({ params }) => {
             {/* Right: Available Unit Layouts */}
             <div className="col-lg-6">
               {foundProject.layouts && foundProject.layouts.length > 0 && (
-                <div className="layouts-section">
+                <div className="layouts-section" id="layouts">
                   <h3>Available Unit Layouts</h3>
                   <span className="line-break" />
                   <p className="mb-4">Choose from our carefully designed layouts for your perfect home.</p>
 
                   <div className="layouts-grid">
                     {foundProject.layouts.map((layout, layoutIndex) => (
-                      <div 
-                        key={layoutIndex} 
+                      <div
+                        key={layoutIndex}
                         className="layout-card mb-3 p-3 rounded"
                         onMouseEnter={() => setActiveLayoutIndex(layoutIndex + 1)}
-                        style={{ 
-                          cursor: 'pointer', 
+                        style={{
+                          cursor: 'pointer',
                           transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                          border: activeLayoutIndex === layoutIndex + 1 
-                            ? '2px solid var(--primary-color2)' 
+                          border: activeLayoutIndex === layoutIndex + 1
+                            ? '2px solid var(--primary-color2)'
                             : '1px solid rgba(var(--primary-color-opc), 0.1)',
-                          boxShadow: activeLayoutIndex === layoutIndex + 1 
-                            ? '0 4px 12px rgba(var(--primary-color2-opc), 0.15)' 
+                          boxShadow: activeLayoutIndex === layoutIndex + 1
+                            ? '0 4px 12px rgba(var(--primary-color2-opc), 0.15)'
                             : 'none',
                           transform: activeLayoutIndex === layoutIndex + 1 ? 'translateY(-2px)' : 'translateY(0)'
                         }}
@@ -254,9 +339,9 @@ const ProjectDetailsPage = ({ params }) => {
                             <div className="layout-specs">
                               <div className="d-flex flex-wrap gap-2 mb-2">
                                 <span><strong>{layout.area}</strong></span>
-                                <span>•</span>
+                                {/* <span>•</span> */}
                                 <span>{layout.bedrooms} Bed</span>
-                                <span>•</span>
+                                {/* <span>•</span> */}
                                 <span>{layout.bathrooms} Bath</span>
                               </div>
                             </div>
@@ -280,33 +365,19 @@ const ProjectDetailsPage = ({ params }) => {
             </div>
           </div>
 
-          {/* What's Nearby Section */}
-          {foundProject.nearby && foundProject.nearby.length > 0 && (
-            <div className="row mt-5">
-              <div className="col-12">
-                <div className="property-details-page">
-                  <WhatsNearby 
-                    title="What's Nearby"
-                    description="Discover the convenience of Al Faisal Tower's prime location with easy access to Sharjah's key destinations and amenities."
-                    places={foundProject.nearby}
-                  />
-                </div>
-              </div>
-            </div>
-          )}
 
           {/* Location Map - Full Width */}
           {foundProject.locationMap && (
             <div className="row mt-5">
               <div className="col-12">
-                <div className="location-map-section">
+                <div className="location-map-section" id="location">
                   <h3 className="mb-4">Location Map</h3>
                   <div className="location-map-wrapper">
-                    <img 
+                    <img
                       src={`/${foundProject.locationMap}`}
                       alt={`${foundProject.name} Location Map`}
                       className="w-100 rounded shadow-sm"
-                      style={{ 
+                      style={{
                         objectFit: 'cover',
                         maxHeight: '600px'
                       }}
@@ -316,14 +387,30 @@ const ProjectDetailsPage = ({ params }) => {
               </div>
             </div>
           )}
+          {/* What's Nearby Section */}
+          {foundProject.nearby && foundProject.nearby.length > 0 && (
+            <div className="row mt-5">
+              <div className="col-12">
+                <div className="property-details-page" id="nearby">
+                  <WhatsNearby
+                    title="What's Nearby"
+                    description="Discover the convenience of Al Faisal Tower's prime location with easy access to Sharjah's key destinations and amenities."
+                    places={foundProject.nearby}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+
 
           {/* Property Attachment Section */}
           {foundProject.attachments && foundProject.attachments.length > 0 && (
             <div className="row mt-5">
               <div className="col-12">
-                <div className="property-details-page">
+                <div className="property-details-page" id="documents">
                   <div className="property-details-content-wrap">
-                    <PropertyAttachment 
+                    <PropertyAttachment
                       title="Project Documents"
                       description="Download our comprehensive project brochure, floor plans, and payment plan details."
                       attachments={foundProject.attachments}
@@ -338,21 +425,24 @@ const ProjectDetailsPage = ({ params }) => {
           {foundProject.gallery && foundProject.gallery.length > 0 && (
             <div className="row mt-5">
               <div className="col-12">
-                <div className="project-gallery-section">
+                <div className="project-gallery-section" id="gallery">
                   <h3 className="mb-4">Project Gallery</h3>
                   <p className="mb-5">Explore stunning visuals of Al Faisal Tower showcasing architecture, interiors, amenities, and more.</p>
-                  
+
                   <div className="row g-4">
                     {foundProject.gallery.map((item, index) => (
                       <div key={index} className="col-lg-4 col-md-6">
-                        <a 
+                        <a
                           href={`/${item.image}`}
                           data-fancybox="gallery"
                           data-caption={`${item.category} - ${item.title}`}
                           className="gallery-item position-relative overflow-hidden rounded d-block"
-                          style={{ 
+                          style={{
                             height: '300px',
                             transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+                          }}
+                          onClick={(e) => {
+                            e.preventDefault();
                           }}
                           onMouseEnter={(e) => {
                             e.currentTarget.style.transform = 'translateY(-5px)';
@@ -363,11 +453,11 @@ const ProjectDetailsPage = ({ params }) => {
                             e.currentTarget.style.boxShadow = 'none';
                           }}
                         >
-                          <img 
+                          <img
                             src={`/${item.image}`}
                             alt={item.title}
                             className="w-100 h-100"
-                            style={{ 
+                            style={{
                               objectFit: 'cover',
                               transition: 'transform 0.5s ease'
                             }}
@@ -378,14 +468,14 @@ const ProjectDetailsPage = ({ params }) => {
                               e.currentTarget.style.transform = 'scale(1)';
                             }}
                           />
-                          <div 
+                          <div
                             className="gallery-overlay position-absolute w-100 h-100 top-0 start-0 d-flex flex-column justify-content-end p-4"
                             style={{
                               background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%)',
                               pointerEvents: 'none'
                             }}
                           >
-                            <span 
+                            <span
                               className="badge mb-2"
                               style={{
                                 backgroundColor: 'var(--primary-color2)',
@@ -407,9 +497,9 @@ const ProjectDetailsPage = ({ params }) => {
           )}
         </div>
       </div>
-      
 
-      
+
+
 
       <Home1FooterTop />
       <Footer1 />

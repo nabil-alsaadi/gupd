@@ -1,0 +1,66 @@
+{
+  "company": {
+    "name": "Gulf Universal Property Development",
+    "shortName": "GUPD",
+    "tagline": "Building Trust Since 2005",
+    "description": "Shaping Communities, Delivering Excellence.",
+    "logo": {
+      "default": "/assets/img/new/logo_en.svg",
+      "white": "/assets/img/new/logo_en_white.svg",
+      "footer": "/assets/img/footer-logo.svg",
+      "footerWhite": "/assets/img/footer-logo-white.svg"
+    }
+  },
+  "contact": {
+    "phone": {
+      "display": "+971 6 123 4567",
+      "link": "tel:+97161234567"
+    },
+    "email": {
+      "display": "info@gupd.ae",
+      "link": "mailto:info@gupd.ae"
+    },
+    "address": {
+      "primary": "Sharjah, UAE",
+      "secondary": "Al Faisal Tower, Sharjah, UAE"
+    },
+    "workingHours": "Sunday - Thursday: 9:00 AM - 6:00 PM"
+  },
+  "socialMedia": {
+    "linkedin": {
+      "url": "https://www.linkedin.com/company/gupd",
+      "icon": "bi bi-linkedin"
+    },
+    "facebook": {
+      "url": "https://www.facebook.com/gupd.ae",
+      "icon": "bi bi-facebook"
+    },
+    "twitter": {
+      "url": "https://twitter.com/gupd_ae",
+      "icon": "bi bi-twitter-x"
+    },
+    "instagram": {
+      "url": "https://www.instagram.com/gupd.ae",
+      "icon": "bi bi-instagram"
+    },
+    "youtube": {
+      "url": "https://www.youtube.com/@gupd",
+      "icon": "bi bi-youtube"
+    }
+  },
+  "navigation": {
+    "cta": {
+      "text": "Get Quote",
+      "link": "/contact"
+    },
+    "sidebar": {
+      "title": "Get In Touch With Us",
+      "subtitle": "Connect With GUPD",
+      "description": "Ready to take the first step towards unlocking opportunity, realizing goals, and embracing innovation in real estate development?"
+    }
+  },
+  "footer": {
+    "copyright": "Copyright 2025 GUPD | Design By Egens Lab",
+    "description": "Welcome to GUPD, where innovation meets our passion in real estate development that started with a dream to build exceptional communities."
+  }
+}

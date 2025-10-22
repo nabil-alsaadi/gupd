@@ -326,8 +326,7 @@ export default function RootLayout({ children }) {
         
         {/* Fancybox for image gallery */}
         <link rel="stylesheet" href="/assets/css/jquery.fancybox.min.css" />
-        <Script src="/assets/js/jquery.fancybox.min.js" strategy="afterInteractive" />
-        <Script src="/assets/js/main.js" strategy="lazyOnload" />
+        <Script src="/assets/js/jquery.fancybox.min.js" strategy="lazyOnload" />
       </head>
       <body id="body" className={`tt-magic-cursor ${inter.variable} ${kanit.variable}`}>
         <div id="magic-cursor">
