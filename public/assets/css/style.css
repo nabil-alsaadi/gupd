@@ -730,7 +730,7 @@ body.tt-magic-cursor #magic-cursor {
   position: relative;
   display: inline-block;
   vertical-align: top;
-  line-height: 1.4;
+  line-height: 2.4;
   text-decoration: none;
   outline: none;
   padding: 0 1.375em 0.0625em 0;
@@ -1799,9 +1799,37 @@ header.style-1.sticky .nav-right .content span,
 header.style-1.sticky .nav-right .content a {
   color: #fff !important;
 }
-header.style-1.sticky .right-sidebar-button svg path,
-header.style-1.sticky .right-sidebar-button svg rect {
-  fill: #fff;
+/* Make quote icon (SVG) white on scroll - need full selector specificity */
+header.style-1.sticky .nav-right .right-sidebar-button svg,
+header.style-1.sticky .nav-right .right-sidebar-button svg path,
+header.style-1.sticky .nav-right .right-sidebar-button svg rect,
+header.style-1.sticky .nav-right .right-sidebar-button svg * {
+  fill: #fff !important;
+}
+/* Ensure hover state doesn't override sticky white color */
+header.style-1.sticky .nav-right .right-sidebar-button:hover svg,
+header.style-1.sticky .nav-right .right-sidebar-button:hover svg path,
+header.style-1.sticky .nav-right .right-sidebar-button:hover svg rect,
+header.style-1.sticky .nav-right .right-sidebar-button:hover svg * {
+  fill: #fff !important;
+}
+/* Make divider/underline white on scroll - need full selector specificity */
+header.style-1.sticky .nav-right .right-sidebar-button::after {
+  background-color: #fff !important;
+}
+/* Make primary-btn linear gradient background white on scroll */
+header.style-1.sticky .nav-right .primary-btn,
+header.style-1.sticky .primary-btn {
+  background-image: linear-gradient(0deg, #fff 0%, #fff 100%) !important;
+  color: #fff !important;
+}
+header.style-1.sticky .nav-right .primary-btn::after,
+header.style-1.sticky .primary-btn::after {
+  color: #fff !important;
+}
+header.style-1.sticky .nav-right .primary-btn svg,
+header.style-1.sticky .primary-btn svg {
+  stroke: #fff !important;
 }
 @keyframes smooth-header {
   0% {
@@ -2203,6 +2231,34 @@ header.style-1 .main-menu ul > li ul.sub-menu > li .sub-menu {
 header.style-1 .main-menu ul > li ul.sub-menu > li .sub-menu::before {
   display: none;
   visibility: hidden;
+}
+/* Make dropdown match navigation color on scroll */
+header.style-1.sticky .main-menu ul > li ul.sub-menu {
+  background: var(--primary-light) !important;
+  border-color: rgba(13, 23, 32, 0.1) !important;
+}
+header.style-1.sticky .main-menu ul > li ul.sub-menu > li > a {
+  color: #fff !important;
+  border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+}
+header.style-1.sticky .main-menu ul > li ul.sub-menu > li > a:hover {
+  color: var(--primary-color) !important;
+}
+header.style-1.sticky .main-menu ul > li ul.sub-menu > li .dropdown-icon,
+header.style-1.sticky .main-menu ul > li ul.sub-menu > li .dropdown-icon2,
+header.style-1.sticky .main-menu ul > li ul.sub-menu > li i {
+  color: #fff !important;
+}
+header.style-1.sticky .main-menu ul > li ul.sub-menu > li:hover .dropdown-icon,
+header.style-1.sticky .main-menu ul > li ul.sub-menu > li:hover .dropdown-icon2,
+header.style-1.sticky .main-menu ul > li ul.sub-menu > li:hover i {
+  color: var(--primary-color) !important;
+}
+header.style-1.sticky .main-menu ul > li ul.sub-menu > li .sub-menu {
+  background: var(--primary-light) !important;
+}
+header.style-1.sticky .main-menu ul > li ul.sub-menu > li:last-child .sub-menu li a {
+  border-bottom-color: rgba(255, 255, 255, 0.1) !important;
 }
 @media only screen and (max-width: 991px) {
   header.style-1 .main-menu ul > li ul.sub-menu > li .sub-menu {

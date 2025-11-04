@@ -6,7 +6,7 @@ const Home1Banner2 = () => {
     const { openModal, Modal } = useModalVideo();
     return (
         <>
-            <div className="home1-banner2-section" style={{ backgroundImage: 'linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.7) 100%), url(assets/img/home1/home1-banner2-bg.jpg)' }}>
+            <div className="home1-banner2-section" style={{ backgroundImage: 'linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.7) 100%), url(/assets/img/home1/home1-banner2-bg.jpg)' }}>
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-12 d-flex justify-content-center">

@@ -14,67 +14,10 @@
     {
         "id": "3",
         "label": "Projects",
-        "link": "/project",
-        "icon": true,
-        "subMenu": [
-            {
-                "id": "1",
-                "icon": false,
-                "label": "All Projects",
-                "link": "/project"
-            },
-            {
-                "id": "2",
-                "icon": false,
-                "label": "Al Faisal Tower",
-                "link": "/project/al-faisal-tower"
-            },
-            {
-                "id": "3",
-                "icon": false,
-                "label": "Residential Projects",
-                "link": "/project/residential"
-            },
-            {
-                "id": "4",
-                "icon": false,
-                "label": "Commercial Projects",
-                "link": "/project/commercial"
-            }
-        ]
+        "link": "/project/al-faisal-tower",
+        "icon": false
     },
-    {
-        "id": "4",
-        "label": "Services",
-        "link": "/services",
-        "icon": true,
-        "subMenu": [
-            {
-                "id": "1",
-                "icon": false,
-                "label": "Property Development",
-                "link": "/services/development"
-            },
-            {
-                "id": "2",
-                "icon": false,
-                "label": "Investment Opportunities",
-                "link": "/services/investment"
-            },
-            {
-                "id": "3",
-                "icon": false,
-                "label": "Property Management",
-                "link": "/services/management"
-            },
-            {
-                "id": "4",
-                "icon": false,
-                "label": "Consultation",
-                "link": "/services/consultation"
-            }
-        ]
-    },
+    
     {
         "id": "5",
         "label": "Pages",

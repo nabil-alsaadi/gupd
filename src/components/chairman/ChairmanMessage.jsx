@@ -1,12 +1,49 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import useModalVideo from "@/utils/useModalVideo";
 
 const ChairmanMessage = () => {
     const { Modal } = useModalVideo();
+    const sectionRef = useRef(null);
+    const hasAnimated = useRef(false);
+
+    useEffect(() => {
+        if (!sectionRef.current || hasAnimated.current) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting && !hasAnimated.current) {
+                        hasAnimated.current = true;
+                        const elements = entry.target.querySelectorAll('[data-animate]');
+                        elements.forEach((el, index) => {
+                            setTimeout(() => {
+                                el.classList.add('animated');
+                            }, index * 150); // Stagger by 150ms
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+        );
+
+        observer.observe(sectionRef.current);
+
+        return () => {
+            if (sectionRef.current) {
+                observer.unobserve(sectionRef.current);
+            }
+        };
+    }, []);
+
     return (
         <>
-            <div className="home3-why-choose-section mb-120" style={{ position: 'relative', overflow: 'hidden' }}>
+            <div 
+                ref={sectionRef}
+                className="home3-why-choose-section mb-120" 
+                style={{ position: 'relative', overflow: 'hidden' }}
+            >
                 {/* Decorative Background Element */}
                 <div style={{
                     position: 'absolute',
@@ -24,13 +61,13 @@ const ChairmanMessage = () => {
                     <div className="row gy-5 align-items-center">
                         <div className="col-lg-6 order-lg-1 order-2">
                             {/* Main Image at Top */}
-                            <div className="wow animate slideInLeft" data-wow-delay="200ms" data-wow-duration="1800ms">
+                            <div data-animate="slideInLeft">
                                 <div className="why-choose-img magnetic-item" style={{ 
                                     position: 'relative', 
                                     marginBottom: '40px'
                                 }}>
                                     <img 
-                                        src="assets/img/new/ShaikhFaisal.jpg" 
+                                               src="/assets/img/new/ShaikhFaisal.jpg"
                                         alt="Shaikh Faisal - Chairman" 
                                         style={{
                                             borderRadius: '12px',
@@ -43,9 +80,7 @@ const ChairmanMessage = () => {
                                     
                                     {/* Single Experience Badge */}
                                     <div 
-                                        className="wow animate slideInUp" 
-                                        data-wow-delay="600ms" 
-                                        data-wow-duration="1500ms"
+                                        data-animate="slideInUp"
                                         style={{
                                             position: 'absolute',
                                             bottom: '20px',
@@ -79,9 +114,7 @@ const ChairmanMessage = () => {
 
                             {/* Leadership Quote */}
                             <div 
-                                className="wow animate slideInUp" 
-                                data-wow-delay="1000ms" 
-                                data-wow-duration="1500ms"
+                                data-animate="slideInUp"
                                 style={{
                                     background: 'linear-gradient(135deg, rgba(177, 73, 237, 0.05) 0%, rgba(124, 58, 237, 0.05) 100%)',
                                     padding: '30px',
@@ -145,7 +178,7 @@ const ChairmanMessage = () => {
                         </div>
                         <div className="col-lg-6 order-lg-2 order-1">
                             <div className="why-choose-content">
-                                <div className="section-title three wow animate slideInRight" data-wow-delay="300ms" data-wow-duration="1800ms">
+                                <div className="section-title three" data-animate="slideInRight">
                                     <span style={{ 
                                         fontSize: '14px', 
                                         letterSpacing: '2px',
@@ -161,9 +194,7 @@ const ChairmanMessage = () => {
                                     
                                     {/* Stylized Quote */}
                                     <div 
-                                        className="wow animate slideInUp" 
-                                        data-wow-delay="300ms" 
-                                        data-wow-duration="1500ms"
+                                        data-animate="slideInUp"
                                         style={{
                                             borderLeft: '4px solid #B149ED',
                                             paddingLeft: '25px',
@@ -187,7 +218,7 @@ const ChairmanMessage = () => {
                                         "Great architecture is not just about buildings—it's about creating spaces that inspire, transform, and endure."
                                     </div>
                                     
-                                    <p className="wow animate slideInUp" data-wow-delay="400ms" data-wow-duration="1500ms" style={{ 
+                                    <p data-animate="slideInUp" style={{ 
                                         fontSize: '16px', 
                                         lineHeight: '1.8',
                                         marginBottom: '20px'
@@ -195,7 +226,7 @@ const ChairmanMessage = () => {
                                         Welcome to our journey of architectural excellence. At our core, we believe in transforming visions into reality through innovative design and meticulous execution.
                                     </p>
                                     
-                                    <p className="wow animate slideInUp" data-wow-delay="500ms" data-wow-duration="1500ms" style={{ 
+                                    <p data-animate="slideInUp" style={{ 
                                         fontSize: '16px', 
                                         lineHeight: '1.8',
                                         marginBottom: '30px'
@@ -206,9 +237,8 @@ const ChairmanMessage = () => {
                                 
                                 {/* Stats Row */}
                                 <div 
-                                    className="row mb-40 wow animate slideInUp" 
-                                    data-wow-delay="600ms" 
-                                    data-wow-duration="1500ms"
+                                    className="row mb-40" 
+                                    data-animate="slideInUp"
                                     style={{ marginTop: '40px' }}>
                                     <div className="col-4">
                                         <div style={{ 
@@ -270,15 +300,6 @@ const ChairmanMessage = () => {
                                         </div>
                                     </div>
                                 </div>
-
-                                <div className="btn-and-video-area wow animate slideInUp" data-wow-delay="700ms" data-wow-duration="1500ms" style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '30px',
-                                    flexWrap: 'wrap'
-                                }}>
-                                    {/* Buttons can be added here if needed */}
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -288,58 +309,40 @@ const ChairmanMessage = () => {
 
             {/* Custom CSS for scroll animations */}
             <style jsx>{`
-                .wow.animate.slideInLeft {
-                    animation: slideInLeft 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-                }
-                
-                .wow.animate.slideInRight {
-                    animation: slideInRight 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-                }
-                
-                .wow.animate.slideInUp {
-                    animation: slideInUp 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-                }
-                
-                @keyframes slideInLeft {
-                    0% {
-                        transform: translateX(-50px);
-                        opacity: 0;
-                    }
-                    100% {
-                        transform: translateX(0);
-                        opacity: 1;
-                    }
-                }
-                
-                @keyframes slideInRight {
-                    0% {
-                        transform: translateX(50px);
-                        opacity: 0;
-                    }
-                    100% {
-                        transform: translateX(0);
-                        opacity: 1;
-                    }
-                }
-                
-                @keyframes slideInUp {
-                    0% {
-                        transform: translateY(30px);
-                        opacity: 0;
-                    }
-                    100% {
-                        transform: translateY(0);
-                        opacity: 1;
-                    }
-                }
-                
-                /* Only hide elements that haven't been animated yet */
-                .wow.animate:not(.animated) {
+                /* Initial state - hidden */
+                [data-animate] {
                     opacity: 0;
+                    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                                transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
                 }
                 
-                .wow.animate.animated {
+                /* Animated state */
+                [data-animate].animated {
                     opacity: 1;
+                }
+                
+                /* Slide In Left */
+                [data-animate="slideInLeft"] {
+                    transform: translateX(-60px);
+                }
+                [data-animate="slideInLeft"].animated {
+                    transform: translateX(0);
+                }
+                
+                /* Slide In Right */
+                [data-animate="slideInRight"] {
+                    transform: translateX(60px);
+                }
+                [data-animate="slideInRight"].animated {
+                    transform: translateX(0);
+                }
+                
+                /* Slide In Up */
+                [data-animate="slideInUp"] {
+                    transform: translateY(40px);
+                }
+                [data-animate="slideInUp"].animated {
+                    transform: translateY(0);
                 }
             `}</style>
         </>
@@ -347,3 +350,5 @@ const ChairmanMessage = () => {
 };
 
 export default ChairmanMessage;
+
+
