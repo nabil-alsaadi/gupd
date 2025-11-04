@@ -15,6 +15,7 @@ import "../../public/assets/css/nice-select.css";
 import "../../public/assets/css/slick.css";
 import "../../public/assets/css/bootstrap.min.css";
 import "../../public/assets/css/style.css";
+import "../../public/assets/css/jquery.fancybox.min.css";
 import 'react-creative-cursor/dist/styles.css';
 import Script from 'next/script';
 import AnimateCursor from "@/components/common/AnimateCursor";
@@ -325,7 +326,6 @@ export default function RootLayout({ children }) {
         <Script src="/assets/js/SplitText.min.js" strategy="beforeInteractive" />
         
         {/* Fancybox for image gallery */}
-        <link rel="stylesheet" href="/assets/css/jquery.fancybox.min.css" />
         <Script src="/assets/js/jquery.fancybox.min.js" strategy="lazyOnload" />
       </head>
       <body id="body" className={`tt-magic-cursor ${inter.variable} ${kanit.variable}`}>

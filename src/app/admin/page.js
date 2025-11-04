@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import {
-  Image,
+  Image as ImageIcon,
   FileText,
   Users,
   HelpCircle,
@@ -65,14 +65,14 @@ export default function AdminDashboard() {
   }, []);
 
   const quickActions = [
-    { label: 'Add New Banner', link: '/admin/banner', icon: Image, color: '#4CAF50' },
+    { label: 'Add New Banner', link: '/admin/banner', icon: ImageIcon, color: '#4CAF50' },
     { label: 'Create Blog Post', link: '/admin/blog', icon: FileText, color: '#2196F3' },
     { label: 'Add Team Member', link: '/admin/team', icon: Users, color: '#FF9800' },
     { label: 'Add Project', link: '/admin/projects', icon: Building2, color: '#9C27B0' }
   ];
 
   const statCards = [
-    { label: 'Banners', value: stats.banners, icon: Image, link: '/admin/banner', color: '#4CAF50' },
+    { label: 'Banners', value: stats.banners, icon: ImageIcon, link: '/admin/banner', color: '#4CAF50' },
     { label: 'Blog Posts', value: stats.blogs, icon: FileText, link: '/admin/blog', color: '#2196F3' },
     { label: 'Team Members', value: stats.team, icon: Users, link: '/admin/team', color: '#FF9800' },
     { label: 'Projects', value: stats.projects, icon: Building2, link: '/admin/projects', color: '#9C27B0' },
@@ -128,7 +128,7 @@ export default function AdminDashboard() {
         <div className="admin-content-links">
           <Link href="/admin/banner" className="admin-content-link">
             <span className="admin-content-link-icon">
-              <Image size={32} />
+              <ImageIcon size={32} />
             </span>
             <div>
               <h4>Banner Content</h4>
