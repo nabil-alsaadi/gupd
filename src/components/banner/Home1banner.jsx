@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo, useState, useRef } from "react";
+import React, { useEffect, useMemo, useState, useRef } from "react";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, {
@@ -10,11 +10,26 @@ import SwiperCore, {
 } from "swiper";
 import Link from "next/link";
 import bannerData from "@/data/banner-data.json";
+import { useFirestore } from "@/hooks/useFirebase";
 SwiperCore.use([Autoplay, EffectFade, Navigation, Pagination]);
 
 const Home1Banner = () => {
     const [activeSlide, setActiveSlide] = useState(0);
     const swiperRef = useRef(null);
+    const { data: firestoreBanners, fetchData } = useFirestore("banners");
+
+    useEffect(() => {
+        fetchData({ orderBy: { field: "order", direction: "asc" } }).catch(() => null);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const slides = firestoreBanners.length > 0 ? firestoreBanners : bannerData;
+
+    useEffect(() => {
+        if (activeSlide >= slides.length) {
+            setActiveSlide(0);
+        }
+    }, [activeSlide, slides.length]);
     
     const settings = useMemo(() => {
         return {
@@ -48,8 +63,8 @@ const Home1Banner = () => {
                 <div className="col-lg-12">
                     <Swiper {...settings} className="swiper home1-banner-slider">
                         <div className="swiper-wrapper">
-                            {bannerData.map((slide, index) => (
-                                <SwiperSlide key={slide.id} className="swiper-slide">
+                            {slides.map((slide, index) => (
+                                <SwiperSlide key={slide.id || index} className="swiper-slide">
                                     <div 
                                         className="banner-bg" 
                                         style={{ 
@@ -79,13 +94,13 @@ const Home1Banner = () => {
                     maxWidth: '650px'
                 }}>
                     <h1 className="banner-title" style={{ textAlign: 'left' }}>
-                        {bannerData[activeSlide]?.title}
+                        {slides[activeSlide]?.title}
                     </h1>
                     <h2 className="banner-subtitle" style={{ textAlign: 'left' }}>
-                        {bannerData[activeSlide]?.subtitle}
+                        {slides[activeSlide]?.subtitle}
                     </h2>
                     <p className="banner-description" style={{ textAlign: 'left' }}>
-                        {bannerData[activeSlide]?.description}
+                        {slides[activeSlide]?.description}
                     </p>
                 </div>
             </div>
@@ -102,9 +117,9 @@ const Home1Banner = () => {
                 justifyContent: 'flex-start',
                 maxWidth: 'calc(100% - 120px)'
             }}>
-                {bannerData.map((slide, index) => (
+                {slides.map((slide, index) => (
                     <Link 
-                        key={slide.id}
+                        key={slide.id || index}
                         href={slide.ctaLink || "/contact"} 
                         className={`banner-slide-button ${activeSlide === index ? 'active' : ''}`}
                         onClick={(e) => {
@@ -161,9 +176,9 @@ const Home1Banner = () => {
                 borderRadius: '50px',
                 border: '1px solid rgba(255, 255, 255, 0.15)'
             }}>
-                {bannerData.map((slide, index) => (
+                {slides.map((slide, index) => (
                     <button
-                        key={slide.id}
+                        key={slide.id || index}
                         className={`custom-pagination-dot ${activeSlide === index ? 'active' : ''}`}
                         onClick={() => {
                             if (swiperRef.current) {

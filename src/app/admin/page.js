@@ -11,7 +11,8 @@ import {
   ArrowRight,
   Navigation,
   Mail,
-  Briefcase
+  Briefcase,
+  Info
 } from 'lucide-react';
 
 export default function AdminDashboard() {
@@ -141,6 +142,15 @@ export default function AdminDashboard() {
             <div>
               <h4>Blog Posts</h4>
               <p>Create and manage blog articles</p>
+            </div>
+          </Link>
+          <Link href="/admin/about" className="admin-content-link">
+            <span className="admin-content-link-icon">
+              <Info size={32} />
+            </span>
+            <div>
+              <h4>About Section</h4>
+              <p>Manage About content and imagery</p>
             </div>
           </Link>
           <Link href="/admin/navigation" className="admin-content-link">

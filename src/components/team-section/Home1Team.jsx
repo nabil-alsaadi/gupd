@@ -1,6 +1,7 @@
 "use client"
-import React, { useMemo } from "react";
-import teamData from "../../data/team-data.json";
+import React, { useEffect, useMemo } from "react";
+import teamData from "@/data/team-data.json";
+import { useFirestore } from "@/hooks/useFirebase";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, {
@@ -11,6 +12,20 @@ import SwiperCore, {
 } from "swiper";
 SwiperCore.use([Autoplay, EffectFade, Navigation, Pagination]);
 const Home1Team = () => {
+    const { data: firestoreTeam, fetchData } = useFirestore("team");
+
+    useEffect(() => {
+        fetchData().catch(() => null);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const teamDoc = firestoreTeam.length > 0 ? firestoreTeam[0] : null;
+    const sectionTitle = teamDoc?.sectionTitle || teamData.team.sectionTitle;
+    const founder = teamDoc?.founder || teamData.team.founder;
+    const members = Array.isArray(teamDoc?.members) && teamDoc.members.length > 0
+        ? teamDoc.members
+        : teamData.team.members;
+
     const settings = useMemo(() => {
         return {
           slidesPerView: "auto",
@@ -57,8 +72,8 @@ const Home1Team = () => {
           <div className="row gy-5 align-items-center justify-content-between mb-70">
             <div className="col-lg-4 wow animate fadeInLeft" data-wow-delay="200ms" data-wow-duration="1500ms">
               <div className="section-title">
-                <span>{teamData.team.sectionTitle.tagline}</span>
-                <h2>{teamData.team.sectionTitle.title}</h2>
+                <span>{sectionTitle?.tagline}</span>
+                <h2>{sectionTitle?.title}</h2>
               </div>
               <div className="slider-btn-grp d-lg-flex d-none">
                 <div className="slider-btn team-slider-prev">
@@ -72,13 +87,13 @@ const Home1Team = () => {
             <div className="col-xxl-7 col-lg-8 wow animate fadeInRight" data-wow-delay="200ms" data-wow-duration="1500ms">
               <div className="founder-card">
                 <div className="founder-img">
-                  <img src={teamData.team.founder.image} alt="" />
+                  <img src={founder?.image} alt={founder?.name || "Founder"} />
                 </div>
                 <div className="founder-content">
-                  <p>"{teamData.team.founder.quote}".</p>
+                  <p>"{founder?.quote}".</p>
                   <div className="name-and-desig">
-                    <span>{teamData.team.founder.position}</span>
-                    <h5>{teamData.team.founder.name}</h5>
+                    <span>{founder?.position}</span>
+                    <h5>{founder?.name}</h5>
                   </div>
                 </div>
               </div>
@@ -96,11 +111,11 @@ const Home1Team = () => {
             <div className="col-lg-12">
               <Swiper {...settings} className="swiper home1-team-slider">
                 <div className="swiper-wrapper">
-                  {teamData.team.members.map((member) => (
-                    <SwiperSlide key={member.id} className="swiper-slide">
+                  {members.map((member, index) => (
+                    <SwiperSlide key={member.id || index} className="swiper-slide">
                       <div className="team-card">
                         <div className="team-img">
-                          <img src={member.image} alt="" />
+                          <img src={member.image} alt={member.name || "Team member"} />
                         </div>
                         <div className="team-content">
                           <span>{member.position}</span>

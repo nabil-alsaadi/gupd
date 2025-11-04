@@ -15,7 +15,8 @@ import {
   Building,
   Home,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Info
 } from 'lucide-react';
 
 const AdminSidebar = () => {
@@ -37,6 +38,12 @@ const AdminSidebar = () => {
       label: 'Banner Content',
       icon: Image,
       link: '/admin/banner'
+    },
+    {
+      id: 'about',
+      label: 'About Section',
+      icon: Info,
+      link: '/admin/about'
     },
     {
       id: 'blog',

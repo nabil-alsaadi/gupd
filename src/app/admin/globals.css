@@ -981,6 +981,21 @@
   flex-direction: column;
 }
 
+.admin-card-nested {
+  padding: 20px;
+  gap: 16px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.admin-card-nested:last-of-type {
+  margin-bottom: 0;
+}
+
+.admin-card-nested .admin-btn-delete {
+  align-self: flex-end;
+}
+
 .admin-card:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border-color: #cbd5e1;
