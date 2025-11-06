@@ -19,16 +19,78 @@ import { storage } from '@/config/firebase';
  */
 export const uploadFile = async (file, path, fileName = null) => {
   try {
-    const fileExtension = file.name.split('.').pop();
+    // Validate inputs
+    if (!file || !(file instanceof File)) {
+      throw new Error('Invalid file provided');
+    }
+    
+    if (!path || typeof path !== 'string') {
+      throw new Error('Invalid path provided');
+    }
+    
+    // Validate storage is initialized
+    if (!storage) {
+      throw new Error('Firebase Storage is not initialized');
+    }
+    
+    // Clean and normalize path - remove any leading/trailing slashes and ensure proper format
+    let normalizedPath = path.trim();
+    // Remove leading slash if present
+    if (normalizedPath.startsWith('/')) {
+      normalizedPath = normalizedPath.substring(1);
+    }
+    // Ensure path ends with a slash
+    if (!normalizedPath.endsWith('/')) {
+      normalizedPath = normalizedPath + '/';
+    }
+    
+    // Validate path doesn't contain invalid characters
+    if (normalizedPath.includes('//')) {
+      normalizedPath = normalizedPath.replace(/\/+/g, '/');
+    }
+    
+    // Validate file name
+    if (!file.name || typeof file.name !== 'string') {
+      throw new Error('Invalid file name');
+    }
+    
+    const fileExtension = file.name.split('.').pop() || 'jpg';
     const name = fileName || `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExtension}`;
-    const storageRef = ref(storage, `${path}${name}`);
+    
+    // Ensure name is a string
+    if (typeof name !== 'string' || name.length === 0) {
+      throw new Error('Invalid file name generated');
+    }
+    
+    // Create full path
+    const fullPath = `${normalizedPath}${name}`;
+    
+    // Validate full path is a string
+    if (typeof fullPath !== 'string' || fullPath.length === 0) {
+      throw new Error('Invalid storage path');
+    }
+    
+    console.log('Uploading file to path:', fullPath);
+    
+    const storageRef = ref(storage, fullPath);
     
     await uploadBytes(storageRef, file);
     const downloadURL = await getDownloadURL(storageRef);
     
+    // Validate download URL is a string
+    if (typeof downloadURL !== 'string') {
+      throw new Error('Invalid download URL returned');
+    }
+    
     return downloadURL;
   } catch (error) {
     console.error('Error uploading file:', error);
+    console.error('File details:', {
+      fileName: file?.name,
+      fileType: file?.type,
+      fileSize: file?.size,
+      path: path
+    });
     throw error;
   }
 };

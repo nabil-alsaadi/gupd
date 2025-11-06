@@ -23,7 +23,20 @@ if (!getApps().length) {
 export const db = getFirestore(app);
 
 // Initialize Storage
-export const storage = getStorage(app);
+let storage;
+try {
+  storage = getStorage(app);
+  
+  // Validate storage bucket
+  if (!storage || !storage._delegate || !storage._delegate.bucket) {
+    console.warn('Firebase Storage bucket not properly configured');
+  }
+} catch (error) {
+  console.error('Error initializing Firebase Storage:', error);
+  throw error;
+}
+
+export { storage };
 
 export default app;
 

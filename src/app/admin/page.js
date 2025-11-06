@@ -50,7 +50,13 @@ export default function AdminDashboard() {
         }
         if (projectRes) {
           const projectData = await projectRes.json();
-          setStats(prev => ({ ...prev, projects: Array.isArray(projectData) ? projectData.length : 0 }));
+          // Projects data structure: { sectionTitle: {...}, projects: [...] }
+          setStats(prev => ({ 
+            ...prev, 
+            projects: projectData.projects && Array.isArray(projectData.projects) 
+              ? projectData.projects.length 
+              : (Array.isArray(projectData) ? projectData.length : 0)
+          }));
         }
         if (faqRes) {
           const faqData = await faqRes.json();

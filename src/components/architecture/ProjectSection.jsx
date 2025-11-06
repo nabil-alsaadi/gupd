@@ -1,12 +1,20 @@
 
 import Link from 'next/link'
 import React from 'react'
-import projectData from '@/data/project-section-data.json'
+import defaultProjectData from '@/data/project-section-data.json'
 
-const ProjectSection = () => {
+const ProjectSection = ({ projectData }) => {
+  // Use provided data or fall back to default
+  const data = projectData || defaultProjectData;
+  
   // Get the first project (Al Faisal Tower)
-  const project = projectData.projects[0];
-  const sections = project.sections;
+  const project = data.projects && data.projects.length > 0 ? data.projects[0] : defaultProjectData.projects[0];
+  const sections = project?.sections || [];
+  
+  // Safety check - ensure we have at least 3 sections
+  if (sections.length < 3) {
+    return null; // Don't render if we don't have enough sections
+  }
 
   return (
     <div className="home3-project-section mb-120 ">
@@ -14,9 +22,9 @@ const ProjectSection = () => {
       <div className="row justify-content-center mb-70 wow animate fadeInDown" data-wow-delay="200ms" data-wow-duration="1500ms">
         <div className="col-xxl-7 col-xl-8 col-lg-9">
           <div className="section-title three text-center">
-            <span>{projectData.sectionTitle.span}</span>
-            <h2>{projectData.sectionTitle.heading}</h2>
-            <p>{projectData.sectionTitle.description}</p>
+            <span>{data.sectionTitle?.span || ''}</span>
+            <h2>{data.sectionTitle?.heading || ''}</h2>
+            <p>{data.sectionTitle?.description || ''}</p>
           </div>
         </div>
       </div>

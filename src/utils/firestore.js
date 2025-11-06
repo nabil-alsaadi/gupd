@@ -24,7 +24,11 @@ export const getDocument = async (collectionName, docId) => {
     const docSnap = await getDoc(docRef);
     
     if (docSnap.exists()) {
-      return { id: docSnap.id, ...docSnap.data() };
+      const data = docSnap.data();
+      // Remove any 'id' field from data to avoid conflicts with Firestore document ID
+      const { id: dataId, ...restData } = data;
+      // Always use Firestore document ID as 'id'
+      return { id: docSnap.id, ...restData };
     }
     return null;
   } catch (error) {
@@ -38,30 +42,44 @@ export const getDocument = async (collectionName, docId) => {
  */
 export const getDocuments = async (collectionName, options = {}) => {
   try {
-    let q = collection(db, collectionName);
+    const collectionRef = collection(db, collectionName);
+    const constraints = [];
     
     // Apply filters
     if (options.filters && options.filters.length > 0) {
       options.filters.forEach(filter => {
-        q = query(q, where(filter.field, filter.operator, filter.value));
+        constraints.push(where(filter.field, filter.operator, filter.value));
       });
     }
     
     // Apply ordering
     if (options.orderBy) {
-      q = query(q, orderBy(options.orderBy.field, options.orderBy.direction || 'asc'));
+      constraints.push(orderBy(options.orderBy.field, options.orderBy.direction || 'asc'));
     }
     
     // Apply limit
     if (options.limit) {
-      q = query(q, limit(options.limit));
+      constraints.push(limit(options.limit));
     }
     
+    // Build query
+    const q = constraints.length > 0 ? query(collectionRef, ...constraints) : collectionRef;
     const querySnapshot = await getDocs(q);
     const documents = [];
     
     querySnapshot.forEach((doc) => {
-      documents.push({ id: doc.id, ...doc.data() });
+      const data = doc.data();
+      // Remove any 'id' field from data to avoid conflicts with Firestore document ID
+      // This ensures we always use the Firestore document ID, not a stored 'id' field
+      const { id: dataId, ...restData } = data;
+      // Always use Firestore document ID as 'id' (this is the actual document ID)
+      const document = { id: doc.id, ...restData };
+      console.log('Fetched document:', {
+        firestoreId: doc.id,
+        dataId: dataId,
+        finalId: document.id
+      });
+      documents.push(document);
     });
     
     return documents;
@@ -93,14 +111,54 @@ export const addDocument = async (collectionName, data) => {
  */
 export const updateDocument = async (collectionName, docId, data) => {
   try {
+    // Validate inputs
+    if (!collectionName || typeof collectionName !== 'string') {
+      throw new Error('Invalid collection name');
+    }
+    
+    if (!docId || typeof docId !== 'string') {
+      throw new Error('Invalid document ID');
+    }
+    
+    // Clean data - ensure all URL fields are strings
+    const cleanData = (obj) => {
+      if (obj === null || obj === undefined) {
+        return null;
+      }
+      if (typeof obj === 'string') {
+        return obj || '';
+      }
+      if (Array.isArray(obj)) {
+        return obj.map(item => cleanData(item));
+      }
+      if (typeof obj === 'object') {
+        const cleaned = {};
+        for (const key in obj) {
+          if (key === 'image' || key === 'file' || key === 'mainImage' || key === 'locationMap' || key === 'icon') {
+            // Ensure URL fields are always strings
+            cleaned[key] = typeof obj[key] === 'string' ? obj[key] : '';
+          } else {
+            cleaned[key] = cleanData(obj[key]);
+          }
+        }
+        return cleaned;
+      }
+      return obj;
+    };
+    
+    const cleanedData = cleanData(data);
+    
     const docRef = doc(db, collectionName, docId);
     await updateDoc(docRef, {
-      ...data,
+      ...cleanedData,
       updatedAt: serverTimestamp(),
     });
     return docId;
   } catch (error) {
     console.error('Error updating document:', error);
+    console.error('Collection:', collectionName);
+    console.error('Document ID:', docId);
+    console.error('Data:', data);
     throw error;
   }
 };

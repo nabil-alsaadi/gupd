@@ -20,14 +20,16 @@ import ChairmanMessage from "@/components/chairman/ChairmanMessage";
 import { getBanners } from "@/lib/getBanners";
 import { getAbout } from "@/lib/getAbout";
 import { getTeam } from "@/lib/getTeam";
+import { getProjects } from "@/lib/getProjects";
 
 
 export default async function Home() {
   // Fetch all data server-side
-  const [banners, about, team] = await Promise.all([
+  const [banners, about, team, projects] = await Promise.all([
     getBanners(),
     getAbout(),
-    getTeam()
+    getTeam(),
+    getProjects()
   ]);
 
   return (
@@ -40,7 +42,7 @@ export default async function Home() {
       {/* <Home1WhyChooseus /> */}
       {/* <Home1Project /> */}
       <Home1Banner2 />
-      <ProjectSection />
+      <ProjectSection projectData={projects} />
       
       <Home1Support />
       <ProcessSection/>
