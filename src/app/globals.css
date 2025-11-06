@@ -105,3 +105,10 @@ a {
     color-scheme: dark;
   }
 }
+
+/* Fix for Lucide icons in process section - prevent grey fill */
+.process-content .lucide-icon,
+.process-content svg.lucide-icon {
+  fill: none !important;
+  stroke: currentColor;
+}
