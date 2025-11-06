@@ -17,69 +17,10 @@
         "link": "/project/al-faisal-tower",
         "icon": false
     },
-    
     {
-        "id": "5",
-        "label": "Pages",
-        "link": "#",
-        "icon": true,
-        "subMenu": [
-            {
-                "id": "1",
-                "icon": false,
-                "label": "Our Team",
-                "link": "/team"
-            },
-            {
-                "id": "2",
-                "icon": false,
-                "label": "Properties",
-                "link": "/property"
-            },
-            {
-                "id": "3",
-                "label": "Blog",
-                "link": "/blog",
-                "icon": true,
-                "subMenu": [
-                    {
-                        "id": "1",
-                        "icon": false,
-                        "label": "Blog Grid",
-                        "link": "/blog"
-                    },
-                    {
-                        "id": "2",
-                        "icon": false,
-                        "label": "Blog Sidebar",
-                        "link": "/blog/blog-sidebar"
-                    },
-                    {
-                        "id": "3",
-                        "icon": false,
-                        "label": "Blog Masonary",
-                        "link": "/blog/blog-masonary"
-                    },
-                    {
-                        "id": "4",
-                        "icon": false,
-                        "label": "Blog Details",
-                        "link": "/blog/blog-details"
-                    }
-                ]
-            },
-            {
-                "id": "4",
-                "label": "FAQs",
-                "link": "/faq",
-                "icon": false
-            },
-            {
-                "id": "5",
-                "icon": false,
-                "label": "Contact",
-                "link": "/contact"
-            }
-        ]
+        "id": "3",
+        "label": "Contact",
+        "link": "/contact",
+        "icon": false
     }
 ]

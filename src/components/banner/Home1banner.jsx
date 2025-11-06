@@ -10,20 +10,38 @@ import SwiperCore, {
 } from "swiper";
 import Link from "next/link";
 import bannerData from "@/data/banner-data.json";
-import { useFirestore } from "@/hooks/useFirebase";
 SwiperCore.use([Autoplay, EffectFade, Navigation, Pagination]);
 
-const Home1Banner = () => {
+const Home1Banner = ({ banners }) => {
     const [activeSlide, setActiveSlide] = useState(0);
+    const [isMobile, setIsMobile] = useState(false);
     const swiperRef = useRef(null);
-    const { data: firestoreBanners, fetchData } = useFirestore("banners");
+    
+    // Use banners prop if provided, otherwise fall back to static data
+    const slides = banners && banners.length > 0 ? banners : bannerData;
 
+    // Check if mobile on mount and resize
     useEffect(() => {
-        fetchData({ orderBy: { field: "order", direction: "asc" } }).catch(() => null);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+        
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        
+        return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
-    const slides = firestoreBanners.length > 0 ? firestoreBanners : bannerData;
+    // Preload images to prevent gray flash
+    useEffect(() => {
+        if (slides.length === 0) return;
+
+        // Preload all banner images in the background
+        slides.forEach((slide) => {
+            const img = new Image();
+            img.src = slide.image;
+        });
+    }, [slides]);
 
     useEffect(() => {
         if (activeSlide >= slides.length) {
@@ -68,7 +86,11 @@ const Home1Banner = () => {
                                     <div 
                                         className="banner-bg" 
                                         style={{ 
-                                            backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%), url(${slide.image})` 
+                                            backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%), url(${slide.image})`,
+                                            backgroundColor: '#1a1a1a', // Fallback dark color to prevent gray flash
+                                            backgroundSize: 'cover',
+                                            backgroundPosition: 'center center',
+                                            backgroundRepeat: 'no-repeat'
                                         }} 
                                     />
                                 </SwiperSlide>
@@ -105,7 +127,7 @@ const Home1Banner = () => {
                 </div>
             </div>
 
-            {/* Fixed Buttons - Show All */}
+            {/* Fixed Buttons - Show All on Desktop, Only Active on Mobile */}
             <div className="banner-buttons-container" style={{
                 position: 'absolute',
                 bottom: '120px',
@@ -117,47 +139,54 @@ const Home1Banner = () => {
                 justifyContent: 'flex-start',
                 maxWidth: 'calc(100% - 120px)'
             }}>
-                {slides.map((slide, index) => (
-                    <Link 
-                        key={slide.id || index}
-                        href={slide.ctaLink || "/contact"} 
-                        className={`banner-slide-button ${activeSlide === index ? 'active' : ''}`}
-                        onClick={(e) => {
-                            if (activeSlide !== index) {
-                                handleSlideClick(index, e);
-                            }
-                            // Allow default navigation for active button
-                        }}
-                        style={{
-                            padding: '14px 28px',
-                            background: activeSlide === index 
-                                ? 'linear-gradient(135deg, #B149ED 0%, #7C3AED 100%)' 
-                                : 'rgba(255, 255, 255, 0.15)',
-                            backdropFilter: 'blur(10px)',
-                            border: activeSlide === index 
-                                ? '2px solid rgba(177, 73, 237, 0.5)' 
-                                : '2px solid rgba(255, 255, 255, 0.3)',
-                            borderRadius: '8px',
-                            color: '#ffffff',
-                            textDecoration: 'none',
-                            fontWeight: '600',
-                            fontSize: '14px',
-                            transition: 'all 0.3s ease',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            boxShadow: activeSlide === index 
-                                ? '0 8px 24px rgba(177, 73, 237, 0.4)' 
-                                : '0 4px 12px rgba(0, 0, 0, 0.2)',
-                            cursor: 'pointer'
-                        }}
-                    >
-                        <span>{slide.ctaText}</span>
-                        <svg viewBox="0 0 13 20" style={{ width: '16px', height: '16px' }}>
-                            <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5" stroke="currentColor" fill="none" strokeWidth="1.5" />
-                        </svg>
-                    </Link>
-                ))}
+                {slides.map((slide, index) => {
+                    // On mobile, only show the active button
+                    if (isMobile && activeSlide !== index) {
+                        return null;
+                    }
+                    
+                    return (
+                        <Link 
+                            key={slide.id || index}
+                            href={slide.ctaLink || "/contact"} 
+                            className={`banner-slide-button ${activeSlide === index ? 'active' : ''}`}
+                            onClick={(e) => {
+                                if (activeSlide !== index) {
+                                    handleSlideClick(index, e);
+                                }
+                                // Allow default navigation for active button
+                            }}
+                            style={{
+                                padding: '14px 28px',
+                                background: activeSlide === index 
+                                    ? 'linear-gradient(135deg, #B149ED 0%, #7C3AED 100%)' 
+                                    : 'rgba(255, 255, 255, 0.15)',
+                                backdropFilter: 'blur(10px)',
+                                border: activeSlide === index 
+                                    ? '2px solid rgba(177, 73, 237, 0.5)' 
+                                    : '2px solid rgba(255, 255, 255, 0.3)',
+                                borderRadius: '8px',
+                                color: '#ffffff',
+                                textDecoration: 'none',
+                                fontWeight: '600',
+                                fontSize: '14px',
+                                transition: 'all 0.3s ease',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px',
+                                boxShadow: activeSlide === index 
+                                    ? '0 8px 24px rgba(177, 73, 237, 0.4)' 
+                                    : '0 4px 12px rgba(0, 0, 0, 0.2)',
+                                cursor: 'pointer'
+                            }}
+                        >
+                            <span>{slide.ctaText}</span>
+                            <svg viewBox="0 0 13 20" style={{ width: '16px', height: '16px' }}>
+                                <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5" stroke="currentColor" fill="none" strokeWidth="1.5" />
+                            </svg>
+                        </Link>
+                    );
+                })}
             </div>
 
             {/* Custom Pagination - Better Design */}
@@ -207,6 +236,11 @@ const Home1Banner = () => {
 
             {/* Custom Styles */}
             <style jsx>{`
+                .home1-banner-section .banner-bg {
+                    background-color: #1a1a1a !important;
+                    transition: opacity 0.3s ease-in-out;
+                }
+
                 .banner-slide-button:hover {
                     background: rgba(255, 255, 255, 0.25) !important;
                     transform: translateY(-2px);
@@ -231,6 +265,8 @@ const Home1Banner = () => {
                 @media (max-width: 768px) {
                     .banner-content {
                         padding: 0 20px !important;
+                        top: 40% !important;
+                        transform: translateY(-50%) !important;
                     }
 
                     .banner-buttons-container {
@@ -239,6 +275,10 @@ const Home1Banner = () => {
                         bottom: 100px;
                         left: 20px !important;
                         max-width: calc(100% - 40px) !important;
+                    }
+                    
+                    .banner-buttons-container .banner-slide-button:not(.active) {
+                        display: none !important;
                     }
                     
                     .banner-slide-button {

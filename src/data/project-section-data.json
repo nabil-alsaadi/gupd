@@ -15,10 +15,10 @@
       "floors": "35",
       "units": "280",
       "location": "Sharjah, UAE",
-      "mainImage": "/assets/img/new/tower_close.jpg",
+      "mainImage": "assets/img/new/tower_close.jpg",
       "sections": [
         {
-          "image": "/assets/img/new/sharja-lake.jpg",
+          "image": "assets/img/new/sharja-lake.jpg",
           "title": "Prime Location by Sharjah Lake",
           "subtitle": "Where City Meets Waterfront",
           "description": "Al Faisal Tower enjoys an enviable location just minutes from the beautiful Khalid Lagoon (Sharjah Lake), offering residents breathtaking waterfront views and easy access to the city's most scenic areas. Wake up to stunning lake views and enjoy peaceful evenings by the water from your private balcony.",
@@ -26,7 +26,7 @@
           "buttonText": "Explore Location Details"
         },
         {
-          "image": "/assets/img/new/project-img2.jpg",
+          "image": "assets/img/new/project-img2.jpg",
           "title": "Architectural Excellence & Design",
           "subtitle": "Modern Living Redefined",
           "description": "Designed with summer comfort in mind, Al Faisal Tower features innovative architecture that maximizes natural light while providing shade and cooling. The stunning interior lobby welcomes residents with its elegant design, while the rooftop swimming pools offer the perfect escape from Sharjah's warm climate with beautiful lake views.",
@@ -34,7 +34,7 @@
           "buttonText": "Explore Design Details"
         },
         {
-          "image": "/assets/img/new/project-img3.jpg",
+          "image": "assets/img/new/project-img3.jpg",
           "title": "Summer-Ready Amenities",
           "subtitle": "Designed for Sharjah's Climate",
           "description": "Every aspect of Al Faisal Tower is thoughtfully designed for Sharjah's summer climate. From the temperature-controlled lobby to the shaded outdoor areas and refreshing swimming pools, residents can enjoy comfort year-round. The building's orientation and materials ensure optimal cooling and energy efficiency.",
@@ -59,7 +59,7 @@
       "layouts": [
         {
           "name": "Studio Apartment",
-          "image": "/assets/img/home6/sketch-item-img1.png",
+          "image": "assets/img/home6/sketch-item-img1.png",
           "area": "450 sq ft",
           "bedrooms": "Studio",
           "bathrooms": "1",
@@ -68,7 +68,7 @@
         },
         {
           "name": "One Bedroom",
-          "image": "/assets/img/home6/sketch-item-img2.png",
+          "image": "assets/img/home6/sketch-item-img2.png",
           "area": "750 sq ft",
           "bedrooms": "1",
           "bathrooms": "1",
@@ -77,7 +77,7 @@
         },
         {
           "name": "Two Bedroom",
-          "image": "/assets/img/home6/sketch-item-img3.png",
+          "image": "assets/img/home6/sketch-item-img3.png",
           "area": "1,100 sq ft",
           "bedrooms": "2",
           "bathrooms": "2",
@@ -86,7 +86,7 @@
         },
         {
           "name": "Three Bedroom",
-          "image": "/assets/img/home6/sketch-item-img4.png",
+          "image": "assets/img/home6/sketch-item-img4.png",
           "area": "1,550 sq ft",
           "bedrooms": "3",
           "bathrooms": "3",
@@ -95,7 +95,7 @@
         },
         {
           "name": "Penthouse - Two Level",
-          "image": "/assets/img/home6/sketch-item-img5.png",
+          "image": "assets/img/home6/sketch-item-img5.png",
           "area": "2,500 sq ft",
           "bedrooms": "4",
           "bathrooms": "4.5",
@@ -104,7 +104,7 @@
         },
         {
           "name": "Sky Villa",
-          "image": "/assets/img/home6/sketch-item-img6.png",
+          "image": "assets/img/home6/sketch-item-img6.png",
           "area": "3,200 sq ft",
           "bedrooms": "5",
           "bathrooms": "5.5",
@@ -146,55 +146,55 @@
           "distance": "6 km"
         }
       ],
-      "locationMap": "/assets/img/new/map.jpg",
+      "locationMap": "assets/img/new/map.jpg",
       "attachments": [
         {
           "name": "Project Brochure",
           "type": "Pdf",
-          "icon": "/assets/img/inner-pages/icon/pdf-icon.svg",
-          "file": "/assets/property_details.pdf"
+          "icon": "assets/img/inner-pages/icon/pdf-icon.svg",
+          "file": "assets/property_details.pdf"
         },
         {
           "name": "Floor Plans",
           "type": "Pdf",
-          "icon": "/assets/img/inner-pages/icon/pdf-icon.svg",
-          "file": "/assets/property_details.pdf"
+          "icon": "assets/img/inner-pages/icon/pdf-icon.svg",
+          "file": "assets/property_details.pdf"
         },
         {
           "name": "Payment Plan",
           "type": "Pdf",
-          "icon": "/assets/img/inner-pages/icon/pdf-icon.svg",
-          "file": "/assets/property_details.pdf"
+          "icon": "assets/img/inner-pages/icon/pdf-icon.svg",
+          "file": "assets/property_details.pdf"
         }
       ],
       "gallery": [
         {
-          "image": "/assets/img/new/tower_close.jpg",
+          "image": "assets/img/new/tower_close.jpg",
           "title": "Tower Exterior View",
           "category": "Exterior"
         },
         {
-          "image": "/assets/img/new/sharja-lake.jpg",
+          "image": "assets/img/new/sharja-lake.jpg",
           "title": "Waterfront Location",
           "category": "Location"
         },
         {
-          "image": "/assets/img/new/project-img2.jpg",
+          "image": "assets/img/new/project-img2.jpg",
           "title": "Interior Lobby",
           "category": "Interior"
         },
         {
-          "image": "/assets/img/new/project-img3.jpg",
+          "image": "assets/img/new/project-img3.jpg",
           "title": "Rooftop Pool",
           "category": "Amenities"
         },
         {
-          "image": "/assets/img/home6/sketch-item-img1.png",
+          "image": "assets/img/home6/sketch-item-img1.png",
           "title": "Studio Layout",
           "category": "Floor Plans"
         },
         {
-          "image": "/assets/img/home6/sketch-item-img3.png",
+          "image": "assets/img/home6/sketch-item-img3.png",
           "title": "Two Bedroom Layout",
           "category": "Floor Plans"
         }

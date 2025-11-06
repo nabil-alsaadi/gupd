@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
+import companyData from '@/data/companyData.json'
+import navData from '@/data/nav.json'
 
 const Footer1 = () => {
     return (
@@ -13,29 +15,29 @@ const Footer1 = () => {
                                     <img src="/assets/img/footer-logo.svg" alt="" />
                                 </Link>
                                 <div className="footer-content">
-                                    <p>Welcome to Vernex, where innovation meet our passion in a journey that started dream.</p>
+                                    <p>{companyData.footer.description}</p>
                                     <ul className="social-list">
                                         <li>
-                                            <a href="https://www.linkedin.com/">
-                                                <i className="bi bi-linkedin" />
+                                            <a href={companyData.socialMedia.linkedin.url} target="_blank" rel="noopener noreferrer">
+                                                <i className={companyData.socialMedia.linkedin.icon} />
                                                 <span>LinkedIn</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="https://www.facebook.com/">
-                                                <i className="bi bi-facebook" />
+                                            <a href={companyData.socialMedia.facebook.url} target="_blank" rel="noopener noreferrer">
+                                                <i className={companyData.socialMedia.facebook.icon} />
                                                 <span>Facebook</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="https://twitter.com/">
-                                                <i className="bi bi-twitter-x" />
+                                            <a href={companyData.socialMedia.twitter.url} target="_blank" rel="noopener noreferrer">
+                                                <i className={companyData.socialMedia.twitter.icon} />
                                                 <span>Twitter</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="https://www.instagram.com/">
-                                                <i className="bi bi-instagram" />
+                                            <a href={companyData.socialMedia.instagram.url} target="_blank" rel="noopener noreferrer">
+                                                <i className={companyData.socialMedia.instagram.icon} />
                                                 <span>Instagram</span>
                                             </a>
                                         </li>
@@ -54,7 +56,7 @@ const Footer1 = () => {
                                         </div>
                                         <div className="content">
                                             <span>CALL ANY TIME</span>
-                                            <h6><a href="tel:29658718617">2-965-871-8617</a></h6>
+                                            <h6><a href={companyData.contact.phone.link}>{companyData.contact.phone.display}</a></h6>
                                         </div>
                                     </div>
                                     <svg className="arrow" width={8} height={29} viewBox="0 0 8 29" xmlns="http://www.w3.org/2000/svg">
@@ -71,7 +73,7 @@ const Footer1 = () => {
                                         </div>
                                         <div className="content">
                                             <span>ADDRESS</span>
-                                            <h6><a href="#">Dhaka, Bangladesh</a></h6>
+                                            <h6><a href="#">{companyData.contact.address.primary}</a></h6>
                                         </div>
                                     </div>
                                     <svg className="arrow" width={8} height={29} viewBox="0 0 8 29" xmlns="http://www.w3.org/2000/svg">
@@ -87,7 +89,7 @@ const Footer1 = () => {
                                         </div>
                                         <div className="content">
                                             <span>SAY HELLO</span>
-                                            <h6><a href="mailto:info@example.com">info@example.com</a></h6>
+                                            <h6><a href={companyData.contact.email.link}>{companyData.contact.email.display}</a></h6>
                                         </div>
                                     </div>
                                 </li>
@@ -119,20 +121,15 @@ const Footer1 = () => {
                                             <div className="col-xxl-7 col-md-8 col-sm-9">
                                                 <div className="footer-widget">
                                                     <div className="widget-title">
-                                                        <h5>SOLUTIONS</h5>
+                                                        <h5>QUICK LINKS</h5>
                                                     </div>
                                                     <div className="menu-container">
                                                         <ul className="widget-list">
-                                                            <li><Link href="/services/service-details">Residential</Link></li>
-                                                            <li><Link href="/services/service-details">Commercial</Link></li>
-                                                            <li><Link href="/services/service-details">Industrial</Link></li>
-                                                            <li><Link href="/services/service-details">Infrastructure</Link></li>
-                                                        </ul>
-                                                        <ul className="widget-list">
-                                                            <li><Link href="/services/service-details">Public Works</Link></li>
-                                                            <li><Link href="/services/service-details">Sustainable</Link></li>
-                                                            <li><Link href="/services/service-details">Pre-Construction</Link></li>
-                                                            <li><Link href="/services/service-details">Heavy Civil</Link></li>
+                                                            {navData.map((navItem) => (
+                                                                <li key={navItem.id}>
+                                                                    <Link href={navItem.link}>{navItem.label}</Link>
+                                                                </li>
+                                                            ))}
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -146,8 +143,8 @@ const Footer1 = () => {
                                                         <ul className="widget-list">
                                                             <li><Link href="/about">About Us</Link></li>
                                                             <li><Link href="/team">Meet Our Team</Link></li>
-                                                            <li><Link href="/project">Our Project</Link></li>
-                                                            <li><Link href="/blog-grid">Blog &amp; Article</Link></li>
+                                                            <li><Link href="/project/al-faisal-tower">Our Project</Link></li>
+                                                            {/* <li><Link href="/blog-grid">Blog &amp; Article</Link></li> */}
                                                         </ul>
                                                     </div>
                                                 </div>

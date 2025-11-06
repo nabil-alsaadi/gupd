@@ -1,45 +1,20 @@
 "use client"
 import useModalVideo from '@/utils/useModalVideo'
 import Link from 'next/link'
-import React, { useEffect, useMemo } from 'react'
+import React from 'react'
 import content from '@/data/gupdContent.json'
-import { useFirestore } from '@/hooks/useFirebase'
 
-const Home1About = ({ sectionGap }) => {
+const Home1About = ({ sectionGap, aboutData }) => {
   const { Modal, openModal } = useModalVideo()
-  const { data: aboutDocs, fetchData } = useFirestore('about')
 
-  useEffect(() => {
-    fetchData().catch(() => null)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const about = useMemo(() => {
-    const fallback = {
-      title: content.about.title,
-      subtitle: content.about.subtitle,
-      videoDescription: content.about.videoDescription,
-      image: content.about.image || 'assets/img/home1/about-img.jpg',
-      sections: content.about.sections || []
-    }
-
-    if (!aboutDocs || aboutDocs.length === 0) {
-      return fallback
-    }
-
-    const doc = aboutDocs[0]
-
-    return {
-      title: doc.title || fallback.title,
-      subtitle: doc.subtitle || fallback.subtitle,
-      videoDescription: doc.videoDescription || fallback.videoDescription,
-      image: doc.image || fallback.image,
-      sections:
-        Array.isArray(doc.sections) && doc.sections.length > 0
-          ? doc.sections
-          : fallback.sections
-    }
-  }, [aboutDocs])
+  // Use aboutData prop if provided, otherwise fall back to static data
+  const about = aboutData || {
+    title: content.about.title,
+    subtitle: content.about.subtitle,
+    videoDescription: content.about.videoDescription,
+    image: content.about.image || 'assets/img/home1/about-img.jpg',
+    sections: content.about.sections || []
+  }
 
   return (
     <div className="home1-about-section mb-130">

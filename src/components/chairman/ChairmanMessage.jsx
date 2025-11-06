@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useMemo, useRef } from "react";
 import useModalVideo from "@/utils/useModalVideo";
-import { useFirestore } from "@/hooks/useFirebase";
 
 const defaultChairmanMessage = {
   tagline: "Chairman's Message",
@@ -31,19 +30,12 @@ const defaultChairmanMessage = {
   ]
 };
 
-const ChairmanMessage = () => {
+const ChairmanMessage = ({ chairmanMessage }) => {
   const { Modal } = useModalVideo();
   const sectionRef = useRef(null);
   const hasAnimated = useRef(false);
-  const { data: teamDocs, fetchData } = useFirestore("team");
-
-  useEffect(() => {
-    fetchData().catch(() => null);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const chairmanContent = useMemo(() => {
-    const chairmanMessage = teamDocs?.[0]?.chairmanMessage;
     if (!chairmanMessage) {
       return defaultChairmanMessage;
     }
@@ -83,7 +75,7 @@ const ChairmanMessage = () => {
       },
       stats
     };
-  }, [teamDocs]);
+  }, [chairmanMessage]);
 
   useEffect(() => {
     if (!sectionRef.current || hasAnimated.current) return;

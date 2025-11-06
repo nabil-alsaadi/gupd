@@ -307,15 +307,40 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        {/* Favicon - Multiple formats for better browser support */}
         <link
           rel="icon"
-          href="/assets/img/fav-icon.svg"
+          href="/assets/img/fav-icon.svg?v=2"
+          type="image/svg+xml"
+          sizes="any"
+        />
+        <link
+          rel="icon"
+          href="/favicon.ico?v=2"
           type="image/x-icon"
           sizes="16x16"
         />
-        <meta name="description" content="Your description here" />
-        <meta name="keywords" content="next.js, SEO, meta tags" />
-        <title>Vernex- Architecture & Construction Website Template.</title>
+        <link
+          rel="apple-touch-icon"
+          href="/assets/img/fav-icon.svg?v=2"
+        />
+        <meta name="description" content="Gulf Universal Property Development (GUPD) - A UAE-based real estate developer committed to building projects that combine quality, innovation, and long-term value. Shaping communities and delivering excellence in Sharjah and beyond." />
+        <meta name="keywords" content="GUPD, Gulf Universal Property Development, real estate developer, UAE, Sharjah, property development, residential projects, Al Faisal Tower, real estate investment" />
+        <meta name="author" content="Nabil Alsaadi Solutions" />
+        <meta name="developer" content="Nabil Alsaadi Solutions" />
+        <meta name="developer-url" content="https://nabilalsaadi.com" />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="GUPD - Gulf Universal Property Development | Real Estate Developer in UAE" />
+        <meta property="og:description" content="Gulf Universal Property Development (GUPD) - Building trust since 2005. Shaping communities, delivering excellence in real estate development across Sharjah and the UAE." />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="GUPD - Gulf Universal Property Development" />
+        <meta name="twitter:description" content="Gulf Universal Property Development (GUPD) - Building trust since 2005. Shaping communities, delivering excellence." />
+        
+        <title>GUPD - Gulf Universal Property Development | Real Estate Developer in UAE</title>
 
         {/* jQuery */}
         <Script src="/assets/js/jquery-3.7.1.min.js" strategy="beforeInteractive" />

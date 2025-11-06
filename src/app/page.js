@@ -17,15 +17,25 @@ import ContactSection from "@/components/real-estate/ContactSection";
 import ProjectSection from "@/components/architecture/ProjectSection";
 import ProcessSection from "@/components/architecture/ProcessSection";
 import ChairmanMessage from "@/components/chairman/ChairmanMessage";
+import { getBanners } from "@/lib/getBanners";
+import { getAbout } from "@/lib/getAbout";
+import { getTeam } from "@/lib/getTeam";
 
 
-export default function Home() {
+export default async function Home() {
+  // Fetch all data server-side
+  const [banners, about, team] = await Promise.all([
+    getBanners(),
+    getAbout(),
+    getTeam()
+  ]);
+
   return (
     <> 
      
       <Header1 fluid="container-fluid" />
-      <Home1Banner />
-      <Home1About />
+      <Home1Banner banners={banners} />
+      <Home1About aboutData={about} />
       {/* <Home1Service /> */}
       {/* <Home1WhyChooseus /> */}
       {/* <Home1Project /> */}
@@ -34,8 +44,8 @@ export default function Home() {
       
       <Home1Support />
       <ProcessSection/>
-      <ChairmanMessage />
-      <Home1Team/>
+      <ChairmanMessage chairmanMessage={team.chairmanMessage} />
+      <Home1Team teamData={team} />
       
       
       {/* <ContactSection /> */}

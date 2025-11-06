@@ -1,7 +1,6 @@
 "use client"
-import React, { useEffect, useMemo } from "react";
-import teamData from "@/data/team-data.json";
-import { useFirestore } from "@/hooks/useFirebase";
+import React, { useMemo } from "react";
+import staticTeamData from "@/data/team-data.json";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, {
@@ -11,20 +10,15 @@ import SwiperCore, {
   Pagination,
 } from "swiper";
 SwiperCore.use([Autoplay, EffectFade, Navigation, Pagination]);
-const Home1Team = () => {
-    const { data: firestoreTeam, fetchData } = useFirestore("team");
 
-    useEffect(() => {
-        fetchData().catch(() => null);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    const teamDoc = firestoreTeam.length > 0 ? firestoreTeam[0] : null;
-    const sectionTitle = teamDoc?.sectionTitle || teamData.team.sectionTitle;
-    const founder = teamDoc?.founder || teamData.team.founder;
-    const members = Array.isArray(teamDoc?.members) && teamDoc.members.length > 0
-        ? teamDoc.members
-        : teamData.team.members;
+const Home1Team = ({ teamData }) => {
+    // Use teamData prop if provided, otherwise fall back to static data
+    const team = teamData || staticTeamData.team;
+    const sectionTitle = team.sectionTitle || staticTeamData.team.sectionTitle;
+    const founder = team.founder || staticTeamData.team.founder;
+    const members = Array.isArray(team.members) && team.members.length > 0
+        ? team.members
+        : staticTeamData.team.members;
 
     const settings = useMemo(() => {
         return {
