@@ -1782,79 +1782,81 @@ header.style-1.sticky {
 }
 
 /* Smooth transition for sticky header */
-header.style-1.sticky-transition {
+/* header.style-1.sticky-transition {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   transform: translateY(0);
-}
+} */
 
 /* Prevent layout shift by adding padding to body when header becomes sticky */
 body.header-sticky {
   padding-top: 80px;
 }
-header.style-1.sticky .main-menu ul > li > a,
-header.style-1.sticky .main-menu ul > li > .drop-down,
-header.style-1.sticky .right-sidebar-button span,
-header.style-1.sticky .nav-right a,
-header.style-1.sticky .nav-right .content span,
-header.style-1.sticky .nav-right .content a {
-  color: #fff !important;
-}
-/* Make quote icon (SVG) white on scroll - need full selector specificity */
-header.style-1.sticky .nav-right .right-sidebar-button svg,
-header.style-1.sticky .nav-right .right-sidebar-button svg path,
-header.style-1.sticky .nav-right .right-sidebar-button svg rect,
-header.style-1.sticky .nav-right .right-sidebar-button svg * {
-  fill: #fff !important;
-}
-/* Ensure hover state doesn't override sticky white color */
-header.style-1.sticky .nav-right .right-sidebar-button:hover svg,
-header.style-1.sticky .nav-right .right-sidebar-button:hover svg path,
-header.style-1.sticky .nav-right .right-sidebar-button:hover svg rect,
-header.style-1.sticky .nav-right .right-sidebar-button:hover svg * {
-  fill: #fff !important;
-}
-/* Make divider/underline white on scroll - need full selector specificity */
-header.style-1.sticky .nav-right .right-sidebar-button::after {
-  background-color: #fff !important;
-}
-/* Make primary-btn linear gradient background white on scroll */
-header.style-1.sticky .nav-right .primary-btn,
-header.style-1.sticky .primary-btn {
-  background-image: linear-gradient(0deg, #fff 0%, #fff 100%) !important;
-  color: #fff !important;
-}
-header.style-1.sticky .nav-right .primary-btn::after,
-header.style-1.sticky .primary-btn::after {
-  color: #fff !important;
-}
-header.style-1.sticky .nav-right .primary-btn svg,
-header.style-1.sticky .primary-btn svg {
-  stroke: #fff !important;
+@media (min-width: 992px) {
+  header.style-1.sticky .main-menu ul > li > a,
+  header.style-1.sticky .main-menu ul > li > .drop-down,
+  header.style-1.sticky .right-sidebar-button span,
+  header.style-1.sticky .nav-right a,
+  header.style-1.sticky .nav-right .content span,
+  header.style-1.sticky .nav-right .content a {
+    color: #fff !important;
+  }
+  /* Make quote icon (SVG) white on scroll - need full selector specificity */
+  header.style-1.sticky .nav-right .right-sidebar-button svg,
+  header.style-1.sticky .nav-right .right-sidebar-button svg path,
+  header.style-1.sticky .nav-right .right-sidebar-button svg rect,
+  header.style-1.sticky .nav-right .right-sidebar-button svg * {
+    fill: #fff !important;
+  }
+  /* Ensure hover state doesn't override sticky white color */
+  header.style-1.sticky .nav-right .right-sidebar-button:hover svg,
+  header.style-1.sticky .nav-right .right-sidebar-button:hover svg path,
+  header.style-1.sticky .nav-right .right-sidebar-button:hover svg rect,
+  header.style-1.sticky .nav-right .right-sidebar-button:hover svg * {
+    fill: #fff !important;
+  }
+  /* Make divider/underline white on scroll - need full selector specificity */
+  header.style-1.sticky .nav-right .right-sidebar-button::after {
+    background-color: #fff !important;
+  }
+  /* Make primary-btn linear gradient background white on scroll */
+  header.style-1.sticky .nav-right .primary-btn,
+  header.style-1.sticky .primary-btn {
+    background-image: linear-gradient(0deg, #fff 0%, #fff 100%) !important;
+    color: #fff !important;
+  }
+  header.style-1.sticky .nav-right .primary-btn::after,
+  header.style-1.sticky .primary-btn::after {
+    color: #fff !important;
+  }
+  header.style-1.sticky .nav-right .primary-btn svg,
+  header.style-1.sticky .primary-btn svg {
+    stroke: #fff !important;
+  }
 }
 /* Mobile sidebar toggle button base styles */
-header.style-1 .sidebar-toggle-button,
-header.style-1 .sidebar-toggle-button path,
-header.style-1 .sidebar-toggle-button rect,
-header.style-1 .sidebar-toggle-button line,
-header.style-1 .sidebar-toggle-button polyline {
+header.style-1 .nav-right .mobile-menu-btn .sidebar-toggle-button,
+header.style-1 .nav-right .mobile-menu-btn .sidebar-toggle-button path,
+header.style-1 .nav-right .mobile-menu-btn .sidebar-toggle-button rect,
+header.style-1 .nav-right .mobile-menu-btn .sidebar-toggle-button line,
+header.style-1 .nav-right .mobile-menu-btn .sidebar-toggle-button polyline {
   fill: var(--title-color);
   stroke: var(--title-color);
   transition: fill 0.3s ease, stroke 0.3s ease;
 }
 /* Ensure sticky state forces white icon */
-header.style-1.sticky .sidebar-toggle-button,
-header.style-1.sticky .sidebar-toggle-button path,
-header.style-1.sticky .sidebar-toggle-button rect,
-header.style-1.sticky .sidebar-toggle-button line,
-header.style-1.sticky .sidebar-toggle-button polyline {
+header.style-1.sticky .nav-right .mobile-menu-btn .sidebar-toggle-button,
+header.style-1.sticky .nav-right .mobile-menu-btn .sidebar-toggle-button path,
+header.style-1.sticky .nav-right .mobile-menu-btn .sidebar-toggle-button rect,
+header.style-1.sticky .nav-right .mobile-menu-btn .sidebar-toggle-button line,
+header.style-1.sticky .nav-right .mobile-menu-btn .sidebar-toggle-button polyline {
   fill: #fff !important;
   stroke: #fff !important;
 }
-header.style-1.sticky .mobile-menu-btn:hover .sidebar-toggle-button,
-header.style-1.sticky .mobile-menu-btn:hover .sidebar-toggle-button path,
-header.style-1.sticky .mobile-menu-btn:hover .sidebar-toggle-button rect,
-header.style-1.sticky .mobile-menu-btn:hover .sidebar-toggle-button line,
-header.style-1.sticky .mobile-menu-btn:hover .sidebar-toggle-button polyline {
+header.style-1.sticky .nav-right .mobile-menu-btn:hover .sidebar-toggle-button,
+header.style-1.sticky .nav-right .mobile-menu-btn:hover .sidebar-toggle-button path,
+header.style-1.sticky .nav-right .mobile-menu-btn:hover .sidebar-toggle-button rect,
+header.style-1.sticky .nav-right .mobile-menu-btn:hover .sidebar-toggle-button line,
+header.style-1.sticky .nav-right .mobile-menu-btn:hover .sidebar-toggle-button polyline {
   fill: #fff !important;
   stroke: #fff !important;
 }
