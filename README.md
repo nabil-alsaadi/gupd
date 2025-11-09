@@ -275,6 +275,7 @@ The admin panel uses the following Firestore collections:
 3. **Use the admin panel** for content management instead of editing JSON files directly
 4. **Check Firebase Console** regularly for data and storage usage
 5. **Update security rules** before deploying to production
+6. **Styling note:** The production site loads precompiled CSS from `public/assets/css/style.css`. The SCSS sources in `public/assets/css/style.scss` are kept for reference only and are not part of the active build pipeline.
 
 ## Deployment
 

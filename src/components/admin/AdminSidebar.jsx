@@ -45,54 +45,54 @@ const AdminSidebar = () => {
       icon: Info,
       link: '/admin/about'
     },
-    {
-      id: 'blog',
-      label: 'Blog Posts',
-      icon: FileText,
-      link: '/admin/blog'
-    },
-    {
-      id: 'navigation',
-      label: 'Navigation',
-      icon: Navigation,
-      link: '/admin/navigation'
-    },
+    // {
+    //   id: 'blog',
+    //   label: 'Blog Posts',
+    //   icon: FileText,
+    //   link: '/admin/blog'
+    // },
+    // {
+    //   id: 'navigation',
+    //   label: 'Navigation',
+    //   icon: Navigation,
+    //   link: '/admin/navigation'
+    // },
     {
       id: 'team',
       label: 'Team Members',
       icon: Users,
       link: '/admin/team'
     },
-    {
-      id: 'faq',
-      label: 'FAQs',
-      icon: HelpCircle,
-      link: '/admin/faq'
-    },
+    // {
+    //   id: 'faq',
+    //   label: 'FAQs',
+    //   icon: HelpCircle,
+    //   link: '/admin/faq'
+    // },
     {
       id: 'projects',
       label: 'Projects',
       icon: Building2,
       link: '/admin/projects'
     },
-    {
-      id: 'portfolio',
-      label: 'Portfolio',
-      icon: Briefcase,
-      link: '/admin/portfolio'
-    },
+    // {
+    //   id: 'portfolio',
+    //   label: 'Portfolio',
+    //   icon: Briefcase,
+    //   link: '/admin/portfolio'
+    // },
     {
       id: 'contact',
       label: 'Contact Content',
       icon: Mail,
       link: '/admin/contact'
     },
-    {
-      id: 'company',
-      label: 'Company Data',
-      icon: Building,
-      link: '/admin/company'
-    }
+    // {
+    //   id: 'company',
+    //   label: 'Company Data',
+    //   icon: Building,
+    //   link: '/admin/company'
+    // }
   ];
 
   const isActive = (link, exact = false) => {

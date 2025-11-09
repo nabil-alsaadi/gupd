@@ -17,6 +17,44 @@ const ProjectDetailsClient = ({ project, slug }) => {
   // Use provided project or fall back to default data
   const foundProject = project || defaultProjectData.projects.find(p => p.slug === slug);
 
+  const openLayoutGallery = (startIndex = 0) => {
+    const layouts = foundProject?.layouts || [];
+    const galleryItems = layouts
+      .filter(layout => layout?.image)
+      .map(layout => ({
+        src: layout.image,
+        opts: {
+          caption: layout.name || ''
+        }
+      }));
+
+    if (!galleryItems.length) {
+      return;
+    }
+
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    if (window.$ && window.$.fancybox) {
+      window.$.fancybox.open(
+        galleryItems,
+        {
+          loop: true,
+          buttons: ['zoom', 'slideShow', 'fullScreen', 'thumbs', 'close'],
+          animationEffect: 'zoom-in-out',
+          transitionEffect: 'slide'
+        },
+        Math.min(startIndex, galleryItems.length - 1)
+      );
+    } else {
+      const fallbackItem = galleryItems[Math.min(startIndex, galleryItems.length - 1)];
+      if (fallbackItem?.src) {
+        window.open(fallbackItem.src, '_blank', 'noopener,noreferrer');
+      }
+    }
+  };
+
   // Navigation tabs configuration
   const navigationTabs = [
     { id: 'layouts', label: 'Unit Layouts', icon: '/assets/img/icons/icons8-building-50.png' },
@@ -342,7 +380,36 @@ const ProjectDetailsClient = ({ project, slug }) => {
                         <div className="d-flex gap-3 align-items-center">
                           {layout.image && (
                             <div className="layout-image flex-shrink-0" style={{ width: '90px', height: '90px' }}>
-                              <img src={`${layout.image}`} alt={layout.name} className="w-100 h-100 rounded" style={{ objectFit: 'cover' }} />
+                              <div className="layout-image-wrapper">
+                                <img src={`${layout.image}`} alt={layout.name} />
+                                <button
+                                  type="button"
+                                  className="layout-image-overlay"
+                                  aria-label={`View ${layout.name} layout`}
+                                  onClick={(event) => {
+                                    event.preventDefault();
+                                    event.stopPropagation();
+                                    openLayoutGallery(layoutIndex);
+                                  }}
+                                >
+                                  <span className="layout-image-icon" aria-hidden="true">
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="20"
+                                      height="20"
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="1.5"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    >
+                                      <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z" />
+                                      <circle cx="12" cy="12" r="3" />
+                                    </svg>
+                                  </span>
+                                </button>
+                              </div>
                             </div>
                           )}
                           <div className="flex-grow-1">
@@ -446,7 +513,7 @@ const ProjectDetailsClient = ({ project, slug }) => {
                     {foundProject.gallery.map((item, index) => (
                       <div key={index} className="col-lg-4 col-md-6">
                         <a
-                          href={`/${item.image}`}
+                          href={item.image}
                           data-fancybox="gallery"
                           data-caption={`${item.category} - ${item.title}`}
                           className="gallery-item position-relative overflow-hidden rounded d-block"

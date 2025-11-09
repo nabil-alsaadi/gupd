@@ -1776,9 +1776,9 @@ header.style-1.sticky {
   box-sizing: border-box;
   background-color: var(--primary-light);
   box-shadow: 5px 3px 40px rgba(0, 72, 88, 0.1);
-  z-index: 9999;
-  transition: all 0.3s ease-in-out;
-  transform: translateY(0);
+  /* z-index: 9999; */
+  /* transition: all 0.3s ease-in-out;
+  transform: translateY(0); */
 }
 
 /* Smooth transition for sticky header */
@@ -1829,6 +1829,33 @@ header.style-1.sticky .primary-btn::after {
 }
 header.style-1.sticky .nav-right .primary-btn svg,
 header.style-1.sticky .primary-btn svg {
+  stroke: #fff !important;
+}
+/* Mobile sidebar toggle button base styles */
+header.style-1 .sidebar-toggle-button,
+header.style-1 .sidebar-toggle-button path,
+header.style-1 .sidebar-toggle-button rect,
+header.style-1 .sidebar-toggle-button line,
+header.style-1 .sidebar-toggle-button polyline {
+  fill: var(--title-color);
+  stroke: var(--title-color);
+  transition: fill 0.3s ease, stroke 0.3s ease;
+}
+/* Ensure sticky state forces white icon */
+header.style-1.sticky .sidebar-toggle-button,
+header.style-1.sticky .sidebar-toggle-button path,
+header.style-1.sticky .sidebar-toggle-button rect,
+header.style-1.sticky .sidebar-toggle-button line,
+header.style-1.sticky .sidebar-toggle-button polyline {
+  fill: #fff !important;
+  stroke: #fff !important;
+}
+header.style-1.sticky .mobile-menu-btn:hover .sidebar-toggle-button,
+header.style-1.sticky .mobile-menu-btn:hover .sidebar-toggle-button path,
+header.style-1.sticky .mobile-menu-btn:hover .sidebar-toggle-button rect,
+header.style-1.sticky .mobile-menu-btn:hover .sidebar-toggle-button line,
+header.style-1.sticky .mobile-menu-btn:hover .sidebar-toggle-button polyline {
+  fill: #fff !important;
   stroke: #fff !important;
 }
 @keyframes smooth-header {
@@ -16552,9 +16579,6 @@ header.style-3.two.sticky .right-sidebar-button svg path {
 /*=====================================
  66. Home6 Sketch Section 
 ========================================*/
-.home6-sketch-section {
-  /* margin-bottom: 120px; */
-}
 @media (min-width: 992px) and (max-width: 1199px) {
   .home6-sketch-section {
     margin-bottom: 90px;
@@ -16670,6 +16694,7 @@ header.style-3.two.sticky .right-sidebar-button svg path {
   background-position: center center;
   min-height: 1100px;
   position: relative;
+  overflow: visible;
 }
 @media (min-width: 1400px) and (max-width: 1599px) {
   .home6-sketch-section .home6-sketch-bg {
@@ -16955,6 +16980,134 @@ header.style-3.two.sticky .right-sidebar-button svg path {
   line-height: 1;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+}
+.home6-sketch-section .home6-sketch-bg .indicator-area ul li .single-item .layout-thumb-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  width: 240px;
+  height: 160px;
+}
+.home6-sketch-section .home6-sketch-bg .indicator-area ul li .single-item .layout-thumb-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+.home6-sketch-section .home6-sketch-bg .indicator-area ul li .single-item .layout-thumb-wrapper .layout-thumb-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, rgba(10, 6, 33, 0.35) 0%, rgba(10, 6, 33, 0.85) 100%);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  pointer-events: none;
+}
+.home6-sketch-section .home6-sketch-bg .indicator-area ul li .single-item .layout-thumb-wrapper .layout-thumb-overlay .layout-thumb-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  color: var(--white-color);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+.home6-sketch-section .home6-sketch-bg .indicator-area ul li .single-item .layout-thumb-wrapper .layout-thumb-overlay:focus-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  box-shadow: 0 0 0 2px rgba(var(--primary-color2-opc), 0.35);
+}
+.home6-sketch-section .home6-sketch-bg .indicator-area ul li .single-item .layout-thumb-wrapper:hover img,
+.home6-sketch-section .home6-sketch-bg .indicator-area ul li .single-item .layout-thumb-wrapper:focus-within img {
+  transform: scale(1.05);
+}
+.home6-sketch-section .home6-sketch-bg .indicator-area ul li .single-item .layout-thumb-wrapper:hover .layout-thumb-overlay,
+.home6-sketch-section .home6-sketch-bg .indicator-area ul li .single-item .layout-thumb-wrapper:focus-within .layout-thumb-overlay {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.home6-sketch-section .home6-sketch-bg .indicator-area ul li .single-item .layout-thumb-wrapper:hover .layout-thumb-overlay .layout-thumb-icon,
+.home6-sketch-section .home6-sketch-bg .indicator-area ul li .single-item .layout-thumb-wrapper:focus-within .layout-thumb-overlay .layout-thumb-icon {
+  transform: translate(-50%, -50%) scale(1.05);
+  background: rgba(0, 0, 0, 0.7);
+}
+.layouts-grid .layout-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.layouts-grid .layout-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+.layouts-grid .layout-image-wrapper .layout-image-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, rgba(10, 6, 33, 0.3) 0%, rgba(10, 6, 33, 0.8) 100%);
+  border: none;
+  outline: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  cursor: pointer;
+  pointer-events: none;
+}
+.layouts-grid .layout-image-wrapper .layout-image-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  color: var(--white-color);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+.layouts-grid .layout-image-wrapper:hover img,
+.layouts-grid .layout-image-wrapper:focus-within img {
+  transform: scale(1.05);
+}
+.layouts-grid .layout-image-wrapper:hover .layout-image-overlay,
+.layouts-grid .layout-image-wrapper:focus-within .layout-image-overlay {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.layouts-grid .layout-image-wrapper:hover .layout-image-icon,
+.layouts-grid .layout-image-wrapper:focus-within .layout-image-icon {
+  transform: translate(-50%, -50%) scale(1.05);
+  background: rgba(0, 0, 0, 0.7);
 }
 .home6-sketch-section .home6-sketch-bg .indicator-area ul li.active .dot-main .waves {
   background: var(--primary-color2);

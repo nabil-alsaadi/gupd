@@ -14973,6 +14973,87 @@ header.style-3 {
               min-width: 160px;
               bottom: -100px;      
             }
+            .layout-thumb-wrapper{
+              position: relative;
+              overflow: hidden;
+              border-radius: 10px;
+              img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+                transition: transform 0.35s ease;
+              }
+              .layout-thumb-overlay{
+                position: absolute;
+                inset: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: linear-gradient(180deg, rgba(10, 6, 33, 0.35) 0%, rgba(10, 6, 33, 0.85) 100%);
+                border: none;
+                outline: none;
+                cursor: pointer;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.3s ease, visibility 0.3s ease;
+                backdrop-filter: blur(2px);
+                padding: 0;
+                overflow: hidden;
+                border-radius: inherit;
+                z-index: 2;
+                pointer-events: none;
+                .layout-thumb-icon{
+                  position: absolute;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  width: 48px;
+                  height: 48px;
+                  border-radius: 50%;
+                  background: rgba(0,0,0,0.55);
+                  color: var(--white-color);
+                  transition: transform 0.3s ease, background 0.3s ease;
+                }
+              }
+              .layout-thumb-overlay:focus-visible{
+                opacity: 1;
+                visibility: visible;
+                pointer-events: auto;
+                box-shadow: 0 0 0 2px rgba(var(--primary-color2-opc), 0.35);
+              }
+            }
+            &:hover,
+            &.active{
+              .layout-thumb-wrapper{
+                img{
+                  transform: scale(1.05);
+                }
+                .layout-thumb-overlay{
+                  opacity: 1;
+                  visibility: visible;
+                  pointer-events: auto;
+                  .layout-thumb-icon{
+                    transform: scale(1.05);
+                    background: rgba(0,0,0,0.7);
+                  }
+                }
+              }
+            }
+            .layout-thumb-wrapper:hover .layout-thumb-overlay,
+            .layout-thumb-wrapper:focus-within .layout-thumb-overlay{
+              opacity: 1;
+              visibility: visible;
+              pointer-events: auto;
+              .layout-thumb-icon{
+                transform: scale(1.05);
+                background: rgba(0,0,0,0.7);
+              }
+            }
+            .layout-thumb-wrapper:hover img,
+            .layout-thumb-wrapper:focus-within img{
+              transform: scale(1.05);
+            }
             span{
               position: absolute;
               top: 0;
