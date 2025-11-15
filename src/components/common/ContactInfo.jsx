@@ -1,43 +1,115 @@
-import React from 'react'
-import companyData from '../../data/companyData.json'
+"use client";
+import React, { useEffect, useState } from 'react'
+import { Phone, MessageCircle, MapPin, Mail } from 'lucide-react'
+import companyData from '@/data/companyData.json'
+import { useFirestore } from '@/hooks/useFirebase'
 
-const ContactInfo = ({ showPhone = true, showEmail = true, showAddress = true, className = "" }) => {
-  const { contact } = companyData
+const ContactInfo = ({ showArrow = false, className = "", contactData = null }) => {
+    const classes = className ? `contact-area ${className}`.trim() : "contact-area"
+    const { data: contactDocs, fetchData } = useFirestore('contact');
+    const [contact, setContact] = useState(() => {
+        // Use provided contactData if available
+        if (contactData) {
+            return contactData;
+        }
+        // Fallback to static data
+        return {
+            phone: companyData.contact.phone,
+            whatsapp: companyData.contact.whatsapp,
+            email: companyData.contact.email,
+            address: companyData.contact.address,
+            workingHours: companyData.contact.workingHours
+        };
+    });
 
-  return (
-    <div className={className}>
-      {showPhone && (
-        <div className="contact-item">
-          <a href={contact.phone.link} className="contact-link">
-            <svg width={20} height={16} viewBox="0 0 20 16" xmlns="http://www.w3.org/2000/svg">
-              <path d="M18.2422 0.96875H1.75781C0.786602 0.96875 0 1.76023 0 2.72656V13.2734C0 14.2455 0.792383 15.0312 1.75781 15.0312H18.2422C19.2053 15.0312 20 14.2488 20 13.2734V2.72656C20 1.76195 19.2165 0.96875 18.2422 0.96875ZM17.996 2.14062L11.243 8.85809C10.9109 9.19012 10.4695 9.37293 10 9.37293C9.53047 9.37293 9.08906 9.19008 8.75594 8.85699L2.00398 2.14062H17.996ZM1.17188 13.0349V2.96582L6.23586 8.00312L1.17188 13.0349ZM2.00473 13.8594L7.06672 8.82957L7.9284 9.68672C8.48176 10.2401 9.21746 10.5448 10 10.5448C10.7825 10.5448 11.5182 10.2401 12.0705 9.68781L12.9333 8.82957L17.9953 13.8594H2.00473ZM18.8281 13.0349L13.7641 8.00312L18.8281 2.96582V13.0349Z" />
-            </svg>
-            {contact.phone.display}
-          </a>
-        </div>
-      )}
-      {showEmail && (
-        <div className="contact-item">
-          <a href={contact.email.link} className="contact-link">
-            <svg width={20} height={16} viewBox="0 0 20 16" xmlns="http://www.w3.org/2000/svg">
-              <path d="M18.2422 0.96875H1.75781C0.786602 0.96875 0 1.76023 0 2.72656V13.2734C0 14.2455 0.792383 15.0312 1.75781 15.0312H18.2422C19.2053 15.0312 20 14.2488 20 13.2734V2.72656C20 1.76195 19.2165 0.96875 18.2422 0.96875ZM17.996 2.14062L11.243 8.85809C10.9109 9.19012 10.4695 9.37293 10 9.37293C9.53047 9.37293 9.08906 9.19008 8.75594 8.85699L2.00398 2.14062H17.996ZM1.17188 13.0349V2.96582L6.23586 8.00312L1.17188 13.0349ZM2.00473 13.8594L7.06672 8.82957L7.9284 9.68672C8.48176 10.2401 9.21746 10.5448 10 10.5448C10.7825 10.5448 11.5182 10.2401 12.0705 9.68781L12.9333 8.82957L17.9953 13.8594H2.00473ZM18.8281 13.0349L13.7641 8.00312L18.8281 2.96582V13.0349Z" />
-            </svg>
-            {contact.email.display}
-          </a>
-        </div>
-      )}
-      {showAddress && (
-        <div className="contact-item">
-          <span className="contact-text">
-            <svg width={20} height={16} viewBox="0 0 20 16" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 0C4.477 0 0 4.477 0 10s4.477 10 10 10 10-4.477 10-10S15.523 0 10 0zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8zm0-14c-3.314 0-6 2.686-6 6s2.686 6 6 6 6-2.686 6-6-2.686-6-6-6z" />
-            </svg>
-            {contact.address.primary}
-          </span>
-        </div>
-      )}
-    </div>
-  )
+    useEffect(() => {
+        // If contactData is provided as prop, use it (server-side rendered)
+        if (contactData) {
+            setContact(contactData);
+            return;
+        }
+        
+        // Otherwise, fetch from Firebase on client side
+        fetchData().catch(() => null);
+    }, [contactData, fetchData]);
+
+    useEffect(() => {
+        // Update contact when Firebase data loads (only if no contactData prop)
+        if (!contactData && contactDocs && contactDocs.length > 0) {
+            const doc = contactDocs[0];
+            setContact({
+                phone: doc.phone || companyData.contact.phone,
+                whatsapp: doc.whatsapp || companyData.contact.whatsapp,
+                email: doc.email || companyData.contact.email,
+                address: doc.address || companyData.contact.address,
+                workingHours: doc.workingHours || companyData.contact.workingHours
+            });
+        }
+    }, [contactDocs, contactData]);
+
+    return (
+        <ul className={classes}>
+            <li>
+                <div className="single-contact">
+                    <div className="icon">
+                        <Phone size={33} strokeWidth={1.5} />
+                    </div>
+                    <div className="content">
+                        <span>CALL ANY TIME</span>
+                        <h6><a href={contact.phone?.link || '#'}>{contact.phone?.display || ''}</a></h6>
+                    </div>
+                </div>
+                {showArrow && (
+                    <svg className="arrow" width={8} height={29} viewBox="0 0 8 29" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1.33333 3C1.33333 4.47276 2.52724 5.66667 4 5.66667C5.47276 5.66667 6.66667 4.47276 6.66667 3C6.66667 1.52724 5.47276 0.333333 4 0.333333C2.52724 0.333333 1.33333 1.52724 1.33333 3ZM3.64645 28.3536C3.84171 28.5488 4.15829 28.5488 4.35355 28.3536L7.53553 25.1716C7.7308 24.9763 7.7308 24.6597 7.53553 24.4645C7.34027 24.2692 7.02369 24.2692 6.82843 24.4645L4 27.2929L1.17157 24.4645C0.976311 24.2692 0.659728 24.2692 0.464466 24.4645C0.269204 24.6597 0.269204 24.9763 0.464466 25.1716L3.64645 28.3536ZM3.5 3V28H4.5V3H3.5Z" />
+                    </svg>
+                )}
+            </li>
+            <li>
+                <div className="single-contact">
+                    <div className="icon">
+                        <MessageCircle size={33} strokeWidth={1.5} />
+                    </div>
+                    <div className="content">
+                        <span>WHATSAPP</span>
+                        <h6><a href={contact.whatsapp?.link || '#'} target="_blank" rel="noopener noreferrer">{contact.whatsapp?.display || ''}</a></h6>
+                    </div>
+                </div>
+                {showArrow && (
+                    <svg className="arrow" width={8} height={29} viewBox="0 0 8 29" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1.33333 3C1.33333 4.47276 2.52724 5.66667 4 5.66667C5.47276 5.66667 6.66667 4.47276 6.66667 3C6.66667 1.52724 5.47276 0.333333 4 0.333333C2.52724 0.333333 1.33333 1.52724 1.33333 3ZM3.64645 28.3536C3.84171 28.5488 4.15829 28.5488 4.35355 28.3536L7.53553 25.1716C7.7308 24.9763 7.7308 24.6597 7.53553 24.4645C7.34027 24.2692 7.02369 24.2692 6.82843 24.4645L4 27.2929L1.17157 24.4645C0.976311 24.2692 0.659728 24.2692 0.464466 24.4645C0.269204 24.6597 0.269204 24.9763 0.464466 25.1716L3.64645 28.3536ZM3.5 3V28H4.5V3H3.5Z" />
+                    </svg>
+                )}
+            </li>
+            <li>
+                <div className="single-contact">
+                    <div className="icon">
+                        <MapPin size={33} strokeWidth={1.5} />
+                    </div>
+                    <div className="content">
+                        <span>ADDRESS</span>
+                        <h6><a href={contact.address?.link || '#'} target="_blank" rel="noopener noreferrer">{contact.address?.primary || ''}</a></h6>
+                    </div>
+                </div>
+                {showArrow && (
+                    <svg className="arrow" width={8} height={29} viewBox="0 0 8 29" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1.33333 3C1.33333 4.47276 2.52724 5.66667 4 5.66667C5.47276 5.66667 6.66667 4.47276 6.66667 3C6.66667 1.52724 5.47276 0.333333 4 0.333333C2.52724 0.333333 1.33333 1.52724 1.33333 3ZM3.64645 28.3536C3.84171 28.5488 4.15829 28.5488 4.35355 28.3536L7.53553 25.1716C7.7308 24.9763 7.7308 24.6597 7.53553 24.4645C7.34027 24.2692 7.02369 24.2692 6.82843 24.4645L4 27.2929L1.17157 24.4645C0.976311 24.2692 0.659728 24.2692 0.464466 24.4645C0.269204 24.6597 0.269204 24.9763 0.464466 25.1716L3.64645 28.3536ZM3.5 3V28H4.5V3H3.5Z" />
+                    </svg>
+                )}
+            </li>
+            <li>
+                <div className="single-contact">
+                    <div className="icon">
+                        <Mail size={33} strokeWidth={1.5} />
+                    </div>
+                    <div className="content">
+                        <span>SAY HELLO</span>
+                        <h6><a href={contact.email?.link || '#'}>{contact.email?.display || ''}</a></h6>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    )
 }
 
 export default ContactInfo

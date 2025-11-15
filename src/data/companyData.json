@@ -16,13 +16,18 @@
       "display": "+971 6 123 4567",
       "link": "tel:+97161234567"
     },
+    "whatsapp": {
+      "display": "+971 6 123 4567",
+      "link": "https://wa.me/97161234567"
+    },
     "email": {
       "display": "info@gupd.ae",
       "link": "mailto:info@gupd.ae"
     },
     "address": {
       "primary": "Sharjah, UAE",
-      "secondary": "Al Faisal Tower, Sharjah, UAE"
+      "secondary": "Orient building - 2nd Floor - Office 23 Al Arouba St - Al Mareija - Hay Al Gharb - Sharjah",
+      "link": "https://maps.app.goo.gl/ePo7sw4g9JveBGP76"
     },
     "workingHours": "Sunday - Thursday: 9:00 AM - 6:00 PM"
   },
@@ -60,7 +65,7 @@
     }
   },
   "footer": {
-    "copyright": "Copyright 2025 GUPD | Design By Egens Lab",
+    "copyright": "Copyright 2025 GUPD | Powered By Nabil Alsaadi Solutions",
     "description": "Welcome to GUPD, where innovation meets our passion in real estate development that started with a dream to build exceptional communities."
   }
 }

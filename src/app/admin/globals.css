@@ -666,6 +666,11 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  margin-bottom: 0;
+}
+
+.admin-form-group:last-child {
+  margin-bottom: 0;
 }
 
 .admin-form-group label {
@@ -700,6 +705,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
+  margin-bottom: 0;
 }
 
 .admin-form-actions {
@@ -853,6 +859,39 @@
   color: #64748b;
 }
 
+/* Initialize Prompt */
+.admin-initialize-prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.admin-initialize-prompt .admin-card {
+  max-width: 600px;
+  text-align: center;
+  padding: 32px;
+}
+
+.admin-initialize-prompt .admin-card h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 12px 0;
+}
+
+.admin-initialize-prompt .admin-card p {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0 0 16px 0;
+  line-height: 1.6;
+}
+
+.admin-initialize-prompt .admin-card p:last-of-type {
+  margin-bottom: 24px;
+}
+
 .admin-empty-state h3 {
   font-size: 20px;
   font-weight: 600;
@@ -1000,10 +1039,38 @@
   background: #fff;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
+  padding: 24px;
   overflow: hidden;
   transition: all 0.2s;
   display: flex;
   flex-direction: column;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.admin-card:last-child {
+  margin-bottom: 0;
+}
+
+.admin-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 0;
+}
+
+.admin-card-header h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+.admin-card-header svg {
+  color: #64748b;
+  flex-shrink: 0;
 }
 
 .admin-card-nested {

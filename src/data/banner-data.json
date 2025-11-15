@@ -1,6 +1,16 @@
 [
   {
     "id": 1,
+    "video": "/assets/video/renovation.mp4",
+    
+    "title": "Al Faisal Tower - Sharjah's New Landmark",
+    "subtitle": "Premium Residential Apartments Now Available",
+    "description": "Experience luxury living in GUPD's flagship development - Al Faisal Tower. Modern apartments with spacious layouts, premium amenities, and strategic location in the heart of Sharjah. Your dream home awaits.",
+    "ctaText": "View Apartments",
+    "ctaLink": "/property"
+  },
+  {
+    "id": 1,
     "image": "/assets/img/home1/home1-banner-img2.jpg",
     "title": "Al Faisal Tower - Sharjah's New Landmark",
     "subtitle": "Premium Residential Apartments Now Available",

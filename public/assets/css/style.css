@@ -3906,7 +3906,9 @@ header.style-3.two.sticky .right-sidebar-button svg path {
   gap: 12px;
 }
 .right-sidebar-menu .sidebar-content-wrap .contact-area li .single-contact .icon svg {
-  fill: var(--primary-color);
+  fill: none;
+  stroke: var(--primary-color);
+  stroke-width: 1.5;
 }
 .right-sidebar-menu .sidebar-content-wrap .contact-area li .single-contact .content {
   position: relative;
@@ -4111,7 +4113,9 @@ header.style-3.two.sticky .right-sidebar-button svg path {
   gap: 12px;
 }
 .sidebar-menu .sidebar-contact .contact-area .contact-list li .single-contact .icon svg {
-  fill: var(--primary-color);
+  fill: none;
+  stroke: var(--primary-color);
+  stroke-width: 1.5;
 }
 .sidebar-menu .sidebar-contact .contact-area .contact-list li .single-contact .content {
   position: relative;
@@ -4631,6 +4635,24 @@ header.style-3.two.sticky .right-sidebar-button svg path {
   height: 100%;
   
   animation: large 26s linear infinite alternate;
+}
+.home1-banner-section .banner-video-wrapper {
+  min-height: calc(100vh - var(--header-height));
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.home1-banner-section .banner-video {
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+}
+@media (max-width: 576px) {
+  .home1-banner-section .banner-video-wrapper {
+    min-height: calc(100vh - var(--header-height-mobile));
+  }
 }
 @media (min-width: 1400px) and (max-width: 1599px) {
   .home1-banner-section {
@@ -7609,7 +7631,9 @@ header.style-3.two.sticky .right-sidebar-button svg path {
   gap: 12px;
 }
 .footer-section .footer-wrapper .footer-logo-and-contact-area .contact-area li .single-contact .icon svg {
-  fill: var(--primary-color);
+  fill: none;
+  stroke: var(--primary-color);
+  stroke-width: 1.5;
 }
 .footer-section .footer-wrapper .footer-logo-and-contact-area .contact-area li .single-contact .content {
   position: relative;
@@ -18647,7 +18671,9 @@ header.style-3.two.sticky .right-sidebar-button svg path {
   }
 }
 .home6-contact-section .contact-wrapper .contact-content .contact-list .single-contact .icon svg {
-  fill: var(--primary-color2);
+  fill: none;
+  stroke: var(--primary-color2);
+  stroke-width: 1.5;
 }
 .home6-contact-section .contact-wrapper .contact-content .contact-list .single-contact .content {
   position: relative;

@@ -16,6 +16,7 @@ const Home1Banner = ({ banners }) => {
     const [activeSlide, setActiveSlide] = useState(0);
     const [isMobile, setIsMobile] = useState(false);
     const swiperRef = useRef(null);
+    const videoRefs = useRef({});
     
     // Use banners prop if provided, otherwise fall back to static data
     const slides = banners && banners.length > 0 ? banners : bannerData;
@@ -36,10 +37,12 @@ const Home1Banner = ({ banners }) => {
     useEffect(() => {
         if (slides.length === 0) return;
 
-        // Preload all banner images in the background
+        // Preload all banner images in the background (skip video slides)
         slides.forEach((slide) => {
-            const img = new Image();
-            img.src = slide.image;
+            if (slide.image && !slide.video) {
+                const img = new Image();
+                img.src = slide.image;
+            }
         });
     }, [slides]);
 
@@ -48,6 +51,16 @@ const Home1Banner = ({ banners }) => {
             setActiveSlide(0);
         }
     }, [activeSlide, slides.length]);
+
+    // Play video for initial active slide
+    useEffect(() => {
+        const initialVideo = videoRefs.current[activeSlide];
+        if (initialVideo) {
+            initialVideo.play().catch((err) => {
+                console.log('Video autoplay prevented:', err);
+            });
+        }
+    }, [activeSlide]);
     
     const settings = useMemo(() => {
         return {
@@ -60,7 +73,24 @@ const Home1Banner = ({ banners }) => {
             },
             pagination: false, // Using custom pagination
             onSlideChange: (swiper) => {
-                setActiveSlide(swiper.realIndex);
+                const newIndex = swiper.realIndex;
+                setActiveSlide(newIndex);
+                
+                // Pause all videos
+                Object.values(videoRefs.current).forEach((video) => {
+                    if (video) {
+                        video.pause();
+                    }
+                });
+                
+                // Play video for active slide if it exists
+                const activeVideo = videoRefs.current[newIndex];
+                if (activeVideo) {
+                    activeVideo.currentTime = 0;
+                    activeVideo.play().catch((err) => {
+                        console.log('Video autoplay prevented:', err);
+                    });
+                }
             },
             onSwiper: (swiper) => {
                 swiperRef.current = swiper;
@@ -83,16 +113,57 @@ const Home1Banner = ({ banners }) => {
                         <div className="swiper-wrapper">
                             {slides.map((slide, index) => (
                                 <SwiperSlide key={slide.id || index} className="swiper-slide">
-                                    <div 
-                                        className="banner-bg" 
-                                        style={{ 
-                                            backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%), url(${slide.image})`,
-                                            backgroundColor: '#1a1a1a', // Fallback dark color to prevent gray flash
-                                            backgroundSize: 'cover',
-                                            backgroundPosition: 'center center',
-                                            backgroundRepeat: 'no-repeat'
-                                        }} 
-                                    />
+                                    {slide.video ? (
+                                        <div className="banner-bg banner-video-wrapper" style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
+                                            <video
+                                                ref={(el) => {
+                                                    if (el) {
+                                                        videoRefs.current[index] = el;
+                                                    }
+                                                }}
+                                                autoPlay
+                                                loop
+                                                muted
+                                                playsInline
+                                                className="banner-video"
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: '50%',
+                                                    left: '50%',
+                                                    transform: 'translate(-50%, -50%)',
+                                                    width: '100%',
+                                                    height: '100%',
+                                                    objectFit: 'cover',
+                                                    zIndex: 1
+                                                }}
+                                            >
+                                                <source src={slide.video} type="video/mp4" />
+                                            </video>
+                                            <div 
+                                                className="banner-video-overlay"
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: 0,
+                                                    left: 0,
+                                                    width: '100%',
+                                                    height: '100%',
+                                                    background: 'linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%)',
+                                                    zIndex: 2
+                                                }}
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div 
+                                            className="banner-bg" 
+                                            style={{ 
+                                                backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%), url(${slide.image})`,
+                                                backgroundColor: '#1a1a1a', // Fallback dark color to prevent gray flash
+                                                backgroundSize: 'cover',
+                                                backgroundPosition: 'center center',
+                                                backgroundRepeat: 'no-repeat'
+                                            }} 
+                                        />
+                                    )}
                                 </SwiperSlide>
                             ))}
                         </div>
