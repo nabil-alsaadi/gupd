@@ -18664,6 +18664,7 @@ header.style-3.two.sticky .right-sidebar-button svg path {
 }
 .home6-contact-section .contact-wrapper .contact-content .contact-list .single-contact:last-child {
   margin-bottom: 0;
+  padding: 10px;
 }
 @media (max-width: 991px) {
   .home6-contact-section .contact-wrapper .contact-content .contact-list .single-contact {

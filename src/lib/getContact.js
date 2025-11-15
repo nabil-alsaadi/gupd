@@ -15,7 +15,8 @@ export async function getContact() {
         whatsapp: companyData.contact.whatsapp,
         email: companyData.contact.email,
         address: companyData.contact.address,
-        workingHours: companyData.contact.workingHours || ''
+        workingHours: companyData.contact.workingHours || '',
+        socialMedia: companyData.socialMedia || {}
       };
     }
 
@@ -25,7 +26,8 @@ export async function getContact() {
       whatsapp: companyData.contact.whatsapp,
       email: companyData.contact.email,
       address: companyData.contact.address,
-      workingHours: companyData.contact.workingHours || ''
+      workingHours: companyData.contact.workingHours || '',
+      socialMedia: companyData.socialMedia || {}
     };
 
     return {
@@ -33,7 +35,8 @@ export async function getContact() {
       whatsapp: doc.whatsapp || fallback.whatsapp,
       email: doc.email || fallback.email,
       address: doc.address || fallback.address,
-      workingHours: doc.workingHours || fallback.workingHours
+      workingHours: doc.workingHours || fallback.workingHours,
+      socialMedia: doc.socialMedia || fallback.socialMedia
     };
   } catch (error) {
     console.error('Error fetching contact from Firestore:', error);
@@ -43,7 +46,8 @@ export async function getContact() {
       whatsapp: companyData.contact.whatsapp,
       email: companyData.contact.email,
       address: companyData.contact.address,
-      workingHours: companyData.contact.workingHours || ''
+      workingHours: companyData.contact.workingHours || '',
+      socialMedia: companyData.socialMedia || {}
     };
   }
 }

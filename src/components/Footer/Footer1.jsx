@@ -3,6 +3,7 @@ import React from 'react'
 import companyData from '@/data/companyData.json'
 import navData from '@/data/nav.json'
 import ContactInfo from '@/components/common/ContactInfo'
+import SocialMedia from '@/components/common/SocialMedia'
 
 const Footer1 = () => {
     return (
@@ -17,32 +18,7 @@ const Footer1 = () => {
                                 </Link>
                                 <div className="footer-content">
                                     <p>{companyData.footer.description}</p>
-                                    <ul className="social-list">
-                                        <li>
-                                            <a href={companyData.socialMedia.linkedin.url} target="_blank" rel="noopener noreferrer">
-                                                <i className={companyData.socialMedia.linkedin.icon} />
-                                                <span>LinkedIn</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href={companyData.socialMedia.facebook.url} target="_blank" rel="noopener noreferrer">
-                                                <i className={companyData.socialMedia.facebook.icon} />
-                                                <span>Facebook</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href={companyData.socialMedia.twitter.url} target="_blank" rel="noopener noreferrer">
-                                                <i className={companyData.socialMedia.twitter.icon} />
-                                                <span>Twitter</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href={companyData.socialMedia.instagram.url} target="_blank" rel="noopener noreferrer">
-                                                <i className={companyData.socialMedia.instagram.icon} />
-                                                <span>Instagram</span>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                    <SocialMedia className="social-list" showLabels={true} />
                                 </div>
                             </div>
                             <ContactInfo showArrow={true} />

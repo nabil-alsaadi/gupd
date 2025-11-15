@@ -12,7 +12,8 @@ import {
   MapPin,
   Mail,
   Clock,
-  Download
+  Download,
+  Share2
 } from "lucide-react";
 
 const fallbackContact = {
@@ -33,7 +34,14 @@ const fallbackContact = {
     secondary: companyData.contact.address?.secondary || "",
     link: companyData.contact.address?.link || ""
   },
-  workingHours: companyData.contact.workingHours || ""
+  workingHours: companyData.contact.workingHours || "",
+  socialMedia: companyData.socialMedia || {
+    linkedin: { url: "", icon: "bi bi-linkedin" },
+    facebook: { url: "", icon: "bi bi-facebook" },
+    twitter: { url: "", icon: "bi bi-twitter-x" },
+    instagram: { url: "", icon: "bi bi-instagram" },
+    youtube: { url: "", icon: "bi bi-youtube" }
+  }
 };
 
 const toFormState = (data = {}) => ({
@@ -54,7 +62,8 @@ const toFormState = (data = {}) => ({
     secondary: data.address?.secondary || fallbackContact.address.secondary,
     link: data.address?.link || fallbackContact.address.link
   },
-  workingHours: data.workingHours || fallbackContact.workingHours
+  workingHours: data.workingHours || fallbackContact.workingHours,
+  socialMedia: data.socialMedia || fallbackContact.socialMedia
 });
 
 export default function AdminContactPage() {
@@ -86,7 +95,8 @@ export default function AdminContactPage() {
         whatsapp: doc.whatsapp || fallbackContact.whatsapp,
         email: doc.email || fallbackContact.email,
         address: doc.address || fallbackContact.address,
-        workingHours: doc.workingHours || fallbackContact.workingHours
+        workingHours: doc.workingHours || fallbackContact.workingHours,
+        socialMedia: doc.socialMedia || fallbackContact.socialMedia
       };
       setFormData(toFormState(mergedData));
     } else {
@@ -96,24 +106,40 @@ export default function AdminContactPage() {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    const [section, field] = name.split(".");
+    const parts = name.split(".");
     
-    if (section === "address") {
+    if (parts.length === 3 && parts[0] === "socialMedia") {
+      // Handle socialMedia.platform.field
+      const [, platform, field] = parts;
       setFormData((prev) => ({
         ...prev,
-        address: {
-          ...prev.address,
-          [field]: value
+        socialMedia: {
+          ...prev.socialMedia,
+          [platform]: {
+            ...prev.socialMedia[platform],
+            [field]: value
+          }
         }
       }));
-    } else if (section === "phone" || section === "whatsapp" || section === "email") {
-      setFormData((prev) => ({
-        ...prev,
-        [section]: {
-          ...prev[section],
-          [field]: value
-        }
-      }));
+    } else if (parts.length === 2) {
+      const [section, field] = parts;
+      if (section === "address") {
+        setFormData((prev) => ({
+          ...prev,
+          address: {
+            ...prev.address,
+            [field]: value
+          }
+        }));
+      } else if (section === "phone" || section === "whatsapp" || section === "email") {
+        setFormData((prev) => ({
+          ...prev,
+          [section]: {
+            ...prev[section],
+            [field]: value
+          }
+        }));
+      }
     } else {
       setFormData((prev) => ({
         ...prev,
@@ -147,7 +173,29 @@ export default function AdminContactPage() {
           secondary: formData.address.secondary.trim(),
           link: formData.address.link.trim()
         },
-        workingHours: formData.workingHours.trim()
+        workingHours: formData.workingHours.trim(),
+        socialMedia: {
+          linkedin: {
+            url: (formData.socialMedia?.linkedin?.url || "").trim(),
+            icon: formData.socialMedia?.linkedin?.icon || "bi bi-linkedin"
+          },
+          facebook: {
+            url: (formData.socialMedia?.facebook?.url || "").trim(),
+            icon: formData.socialMedia?.facebook?.icon || "bi bi-facebook"
+          },
+          twitter: {
+            url: (formData.socialMedia?.twitter?.url || "").trim(),
+            icon: formData.socialMedia?.twitter?.icon || "bi bi-twitter-x"
+          },
+          instagram: {
+            url: (formData.socialMedia?.instagram?.url || "").trim(),
+            icon: formData.socialMedia?.instagram?.icon || "bi bi-instagram"
+          },
+          youtube: {
+            url: (formData.socialMedia?.youtube?.url || "").trim(),
+            icon: formData.socialMedia?.youtube?.icon || "bi bi-youtube"
+          }
+        }
       };
 
       const currentDoc = contactDocs && contactDocs.length > 0 ? contactDocs[0] : null;
@@ -422,6 +470,74 @@ export default function AdminContactPage() {
                   value={formData.workingHours}
                   onChange={handleInputChange}
                   placeholder="Sunday - Thursday: 9:00 AM - 6:00 PM"
+                />
+              </div>
+            </div>
+
+            {/* Social Media Section */}
+            <div className="admin-card">
+              <div className="admin-card-header">
+                <Share2 size={20} />
+                <h3>Social Media</h3>
+              </div>
+              
+              <div className="admin-form-group">
+                <label htmlFor="socialMedia.linkedin.url">LinkedIn URL</label>
+                <input
+                  type="url"
+                  id="socialMedia.linkedin.url"
+                  name="socialMedia.linkedin.url"
+                  value={formData.socialMedia?.linkedin?.url || ""}
+                  onChange={handleInputChange}
+                  placeholder="https://www.linkedin.com/company/gupd"
+                />
+              </div>
+
+              <div className="admin-form-group">
+                <label htmlFor="socialMedia.facebook.url">Facebook URL</label>
+                <input
+                  type="url"
+                  id="socialMedia.facebook.url"
+                  name="socialMedia.facebook.url"
+                  value={formData.socialMedia?.facebook?.url || ""}
+                  onChange={handleInputChange}
+                  placeholder="https://www.facebook.com/gupd.ae"
+                />
+              </div>
+
+              <div className="admin-form-group">
+                <label htmlFor="socialMedia.twitter.url">Twitter/X URL</label>
+                <input
+                  type="url"
+                  id="socialMedia.twitter.url"
+                  name="socialMedia.twitter.url"
+                  value={formData.socialMedia?.twitter?.url || ""}
+                  onChange={handleInputChange}
+                  placeholder="https://twitter.com/gupd_ae"
+                />
+              </div>
+
+              <div className="admin-form-group">
+                <label htmlFor="socialMedia.instagram.url">Instagram URL</label>
+                <input
+                  type="url"
+                  id="socialMedia.instagram.url"
+                  name="socialMedia.instagram.url"
+                  value={formData.socialMedia?.instagram?.url || ""}
+                  onChange={handleInputChange}
+                  placeholder="https://www.instagram.com/gupd.ae"
+                />
+              </div>
+
+              <div className="admin-form-group">
+                <label htmlFor="socialMedia.youtube.url">YouTube URL</label>
+                <input
+                  type="url"
+                  id="socialMedia.youtube.url"
+                  name="socialMedia.youtube.url"
+                  value={formData.socialMedia?.youtube?.url || ""}
+                  onChange={handleInputChange}
+                  placeholder="https://www.youtube.com/@gupd"
                 />
               </div>
             </div>

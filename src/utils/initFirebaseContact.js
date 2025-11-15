@@ -35,7 +35,14 @@ export const initFirebaseContact = async () => {
         secondary: companyData.contact?.address?.secondary || "",
         link: companyData.contact?.address?.link || ""
       },
-      workingHours: companyData.contact?.workingHours || ""
+      workingHours: companyData.contact?.workingHours || "",
+      socialMedia: companyData.socialMedia || {
+        linkedin: { url: "", icon: "bi bi-linkedin" },
+        facebook: { url: "", icon: "bi bi-facebook" },
+        twitter: { url: "", icon: "bi bi-twitter-x" },
+        instagram: { url: "", icon: "bi bi-instagram" },
+        youtube: { url: "", icon: "bi bi-youtube" }
+      }
     };
 
     // Add default contact data to Firebase
