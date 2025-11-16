@@ -45,12 +45,12 @@ const AdminSidebar = () => {
       icon: Info,
       link: '/admin/about'
     },
-    // {
-    //   id: 'blog',
-    //   label: 'Blog Posts',
-    //   icon: FileText,
-    //   link: '/admin/blog'
-    // },
+    {
+      id: 'blog',
+      label: 'Blog Posts',
+      icon: FileText,
+      link: '/admin/blog'
+    },
     // {
     //   id: 'navigation',
     //   label: 'Navigation',

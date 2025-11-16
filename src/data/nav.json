@@ -18,7 +18,13 @@
         "icon": false
     },
     {
-        "id": "3",
+        "id": "4",
+        "label": "Blogs",
+        "link": "/blog/blog-sidebar",
+        "icon": true
+    },
+    {
+        "id": "5",
         "label": "Contact",
         "link": "/contact",
         "icon": false

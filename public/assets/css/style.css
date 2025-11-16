@@ -4654,6 +4654,261 @@ header.style-3.two.sticky .right-sidebar-button svg path {
     min-height: calc(100vh - var(--header-height-mobile));
   }
 }
+
+/*=====================================
+ Privacy Policy, Terms & Conditions, Support Policy Pages
+========================================*/
+.privacy-policy-page,
+.terms-conditions-page,
+.support-policy-page {
+  background: #fff;
+}
+.privacy-policy-page .policy-header,
+.terms-conditions-page .terms-header,
+.support-policy-page .support-header {
+  text-align: center;
+  padding-bottom: 30px;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 40px;
+}
+.privacy-policy-page .policy-header h1,
+.terms-conditions-page .terms-header h1,
+.support-policy-page .support-header h1 {
+  color: var(--title-color);
+  font-family: var(--font-kanit);
+  font-size: 48px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+.privacy-policy-page .policy-header .last-updated,
+.terms-conditions-page .terms-header .last-updated,
+.support-policy-page .support-header .last-updated {
+  color: var(--paragraph-color);
+  font-family: var(--font-inter);
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 0;
+}
+.privacy-policy-page .policy-introduction,
+.terms-conditions-page .terms-introduction,
+.support-policy-page .support-introduction {
+  margin-bottom: 50px;
+}
+.privacy-policy-page .policy-introduction h2,
+.terms-conditions-page .terms-introduction h2,
+.support-policy-page .support-introduction h2 {
+  color: var(--title-color);
+  font-family: var(--font-kanit);
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.privacy-policy-page .policy-introduction p,
+.terms-conditions-page .terms-introduction p,
+.support-policy-page .support-introduction p {
+  color: var(--paragraph-color);
+  font-family: var(--font-inter);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.8;
+}
+.privacy-policy-page .policy-section,
+.terms-conditions-page .terms-section,
+.support-policy-page .support-section {
+  margin-bottom: 40px;
+}
+.privacy-policy-page .policy-section h3,
+.terms-conditions-page .terms-section h3,
+.support-policy-page .support-section h3 {
+  color: var(--title-color);
+  font-family: var(--font-kanit);
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.privacy-policy-page .policy-section .section-content,
+.terms-conditions-page .terms-section .section-content,
+.support-policy-page .support-section .section-content {
+  color: var(--paragraph-color);
+  font-family: var(--font-inter);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+.privacy-policy-page .policy-list,
+.terms-conditions-page .terms-list,
+.support-policy-page .support-list {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 20px;
+}
+.privacy-policy-page .policy-list li,
+.terms-conditions-page .terms-list li,
+.support-policy-page .support-list li {
+  color: var(--paragraph-color);
+  font-family: var(--font-inter);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.8;
+  margin-bottom: 12px;
+  padding-left: 25px;
+  position: relative;
+}
+.privacy-policy-page .policy-list li::before,
+.terms-conditions-page .terms-list li::before,
+.support-policy-page .support-list li::before {
+  content: "•";
+  position: absolute;
+  left: 10px;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+.privacy-policy-page .policy-list li a,
+.terms-conditions-page .terms-list li a,
+.support-policy-page .support-list li a {
+  color: var(--primary-color);
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+.privacy-policy-page .policy-list li a:hover,
+.terms-conditions-page .terms-list li a:hover,
+.support-policy-page .support-list li a:hover {
+  color: var(--primary-color2);
+}
+.privacy-policy-page .policy-subsections,
+.terms-conditions-page .terms-subsections,
+.support-policy-page .support-subsections {
+  margin-top: 20px;
+}
+.privacy-policy-page .policy-subsection,
+.terms-conditions-page .terms-subsection,
+.support-policy-page .support-subsection {
+  margin-bottom: 30px;
+}
+.privacy-policy-page .policy-subsection h4,
+.terms-conditions-page .terms-subsection h4,
+.support-policy-page .support-subsection h4 {
+  color: var(--title-color);
+  font-family: var(--font-kanit);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.privacy-policy-page .policy-subsection p,
+.terms-conditions-page .terms-subsection p,
+.support-policy-page .support-subsection p {
+  color: var(--paragraph-color);
+  font-family: var(--font-inter);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.8;
+  margin-bottom: 0;
+}
+.privacy-policy-page .policy-contact-info,
+.terms-conditions-page .terms-contact-info,
+.support-policy-page .support-contact-info {
+  margin-top: 20px;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+.privacy-policy-page .policy-contact-info p,
+.terms-conditions-page .terms-contact-info p,
+.support-policy-page .support-contact-info p {
+  color: var(--paragraph-color);
+  font-family: var(--font-inter);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.8;
+  margin-bottom: 10px;
+}
+.privacy-policy-page .policy-contact-info p:last-child,
+.terms-conditions-page .terms-contact-info p:last-child,
+.support-policy-page .support-contact-info p:last-child {
+  margin-bottom: 0;
+}
+.privacy-policy-page .policy-contact-info strong,
+.terms-conditions-page .terms-contact-info strong,
+.support-policy-page .support-contact-info strong {
+  color: var(--title-color);
+  font-weight: 600;
+}
+.privacy-policy-page .policy-contact-info a,
+.terms-conditions-page .terms-contact-info a,
+.support-policy-page .support-contact-info a {
+  color: var(--primary-color);
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+.privacy-policy-page .policy-contact-info a:hover,
+.terms-conditions-page .terms-contact-info a:hover,
+.support-policy-page .support-contact-info a:hover {
+  color: var(--primary-color2);
+}
+.privacy-policy-page .policy-footer,
+.terms-conditions-page .terms-footer,
+.support-policy-page .support-footer {
+  margin-top: 50px;
+  padding-top: 30px;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+}
+.privacy-policy-page .policy-footer p,
+.terms-conditions-page .terms-footer p,
+.support-policy-page .support-footer p {
+  color: var(--paragraph-color);
+  font-family: var(--font-inter);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.8;
+  margin-bottom: 10px;
+}
+.privacy-policy-page .policy-footer p:last-child,
+.terms-conditions-page .terms-footer p:last-child,
+.support-policy-page .support-footer p:last-child {
+  margin-bottom: 0;
+}
+.privacy-policy-page .policy-footer strong,
+.terms-conditions-page .terms-footer strong,
+.support-policy-page .support-footer strong {
+  color: var(--title-color);
+  font-weight: 600;
+}
+.privacy-policy-page .policy-footer a,
+.terms-conditions-page .terms-footer a,
+.support-policy-page .support-footer a {
+  color: var(--primary-color);
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+.privacy-policy-page .policy-footer a:hover,
+.terms-conditions-page .terms-footer a:hover,
+.support-policy-page .support-footer a:hover {
+  color: var(--primary-color2);
+}
+@media (max-width: 768px) {
+  .privacy-policy-page .policy-header h1,
+  .terms-conditions-page .terms-header h1,
+  .support-policy-page .support-header h1 {
+    font-size: 36px;
+  }
+  .privacy-policy-page .policy-introduction h2,
+  .terms-conditions-page .terms-introduction h2,
+  .support-policy-page .support-introduction h2 {
+    font-size: 28px;
+  }
+  .privacy-policy-page .policy-section h3,
+  .terms-conditions-page .terms-section h3,
+  .support-policy-page .support-section h3 {
+    font-size: 24px;
+  }
+  .privacy-policy-page .policy-subsection h4,
+  .terms-conditions-page .terms-subsection h4,
+  .support-policy-page .support-subsection h4 {
+    font-size: 20px;
+  }
+}
 @media (min-width: 1400px) and (max-width: 1599px) {
   .home1-banner-section {
     height: calc(100vh - var(--header-height));
