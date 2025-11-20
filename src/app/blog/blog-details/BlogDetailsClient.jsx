@@ -1,6 +1,9 @@
 "use client";
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
+import { useAuth } from '@/hooks/useAuth';
+import { useRouter } from 'next/navigation';
+import { updateDocument } from '@/utils/firestore';
 
 const BlogDetailsClient = ({ blog, relatedBlogs = [] }) => {
     if (!blog) {
@@ -50,6 +53,55 @@ const BlogDetailsClient = ({ blog, relatedBlogs = [] }) => {
 
     // Extract tags - ensure it's an array
     const tags = Array.isArray(blog.tags) ? blog.tags : (blog.tags ? blog.tags.split(',').map(t => t.trim()) : []);
+
+    const { user, userData } = useAuth();
+    const router = useRouter();
+    const [commentText, setCommentText] = useState('');
+    const [submitting, setSubmitting] = useState(false);
+
+    const handleCommentSubmit = async (e) => {
+        e.preventDefault();
+        
+        if (!user) {
+            router.push('/login');
+            return;
+        }
+        
+        if (!commentText.trim()) {
+            alert('Please enter a comment');
+            return;
+        }
+        
+        setSubmitting(true);
+        
+        try {
+            const newComment = {
+                author_name: userData?.displayName || user.email?.split('@')[0] || 'Anonymous',
+                author_image: user.photoURL || '/assets/img/inner-pages/blog-comment-author-01.png',
+                content: commentText.trim(),
+                date: new Date().toISOString(),
+                userId: user.uid,
+            };
+            
+            const currentComments = Array.isArray(blog.comment_content) ? blog.comment_content : [];
+            const updatedComments = [...currentComments, newComment];
+            
+            // Update blog document
+            await updateDocument('blogs', blog.id, {
+                comment_content: updatedComments,
+                comment: updatedComments.length,
+            });
+            
+            // Reset form and reload to show new comment
+            setCommentText('');
+            window.location.reload();
+        } catch (error) {
+            console.error('Error submitting comment:', error);
+            alert('Failed to submit comment. Please try again.');
+        } finally {
+            setSubmitting(false);
+        }
+    };
 
     return (
         <div className="blog-details-page pt-120 mb-120">
@@ -278,52 +330,61 @@ const BlogDetailsClient = ({ blog, relatedBlogs = [] }) => {
                                 <div className="title">
                                     <h3>Leave A Comment</h3>
                                 </div>
-                                <div className="contact-form">
-                                    <form>
-                                        <div className="row">
-                                            <div className="col-md-12">
-                                                <div className="form-inner mb-30">
-                                                    <label>Full Name *</label>
-                                                    <input type="text" />
+                                {!user ? (
+                                    <div style={{ 
+                                        padding: '30px', 
+                                        backgroundColor: '#f8f9fa', 
+                                        borderRadius: '8px',
+                                        textAlign: 'center',
+                                        border: '1px solid #dee2e6'
+                                    }}>
+                                        <p style={{ marginBottom: '20px', color: '#495057', fontSize: '16px' }}>
+                                            Please <Link href="/login" style={{ color: 'var(--primary-color2)', fontWeight: '600', textDecoration: 'underline' }}>login</Link> to leave a comment.
+                                        </p>
+                                        <Link href="/login" className="primary-btn2">
+                                            <span>
+                                                Go to Login
+                                                <svg viewBox="0 0 13 20">
+                                                    <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5" />
+                                                </svg>
+                                            </span>
+                                        </Link>
+                                    </div>
+                                ) : (
+                                    <div className="contact-form">
+                                        <form onSubmit={handleCommentSubmit}>
+                                            <div className="row">
+                                                <div className="col-md-12">
+                                                    <div className="form-inner mb-30">
+                                                        <label>Comment *</label>
+                                                        <textarea
+                                                            value={commentText}
+                                                            onChange={(e) => setCommentText(e.target.value)}
+                                                            required
+                                                            rows="5"
+                                                            placeholder="Write your comment here..."
+                                                            style={{ minHeight: '120px' }}
+                                                        />
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div className="col-md-6">
-                                                <div className="form-inner mb-30">
-                                                    <label>Email*</label>
-                                                    <input type="email" />
-                                                </div>
+                                            <div className="form-inner">
+                                                <button 
+                                                    type="submit" 
+                                                    className="primary-btn2"
+                                                    disabled={submitting}
+                                                >
+                                                    <span>
+                                                        {submitting ? 'Submitting...' : 'Submit Comment'}
+                                                        <svg viewBox="0 0 13 20">
+                                                            <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5" />
+                                                        </svg>
+                                                    </span>
+                                                </button>
                                             </div>
-                                            <div className="col-md-6">
-                                                <div className="form-inner mb-30">
-                                                    <label>Phone *</label>
-                                                    <input type="text" />
-                                                </div>
-                                            </div>
-                                            <div className="col-md-12">
-                                                <div className="form-inner mb-30">
-                                                    <label>Subject *</label>
-                                                    <input type="text" />
-                                                </div>
-                                            </div>
-                                            <div className="col-md-12">
-                                                <div className="form-inner mb-50">
-                                                    <label>Message *</label>
-                                                    <textarea defaultValue={""} />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="form-inner">
-                                            <button type="submit" className="primary-btn2">
-                                                <span>
-                                                    Submit Now
-                                                    <svg viewBox="0 0 13 20">
-                                                        <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5" />
-                                                    </svg>
-                                                </span>
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
+                                        </form>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>

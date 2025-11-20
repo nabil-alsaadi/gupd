@@ -8,6 +8,7 @@ import {
   FileText,
   Navigation,
   Users,
+  User,
   HelpCircle,
   Building2,
   Briefcase,
@@ -62,6 +63,12 @@ const AdminSidebar = () => {
       label: 'Team Members',
       icon: Users,
       link: '/admin/team'
+    },
+    {
+      id: 'users',
+      label: 'Users',
+      icon: User,
+      link: '/admin/users'
     },
     // {
     //   id: 'faq',

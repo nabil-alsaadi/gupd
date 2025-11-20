@@ -5,6 +5,7 @@ import {
   Image as ImageIcon,
   FileText,
   Users,
+  User,
   HelpCircle,
   Building2,
   Plus,
@@ -21,7 +22,8 @@ export default function AdminDashboard() {
     blogs: 0,
     team: 0,
     projects: 0,
-    faqs: 0
+    faqs: 0,
+    users: 0
   });
 
   useEffect(() => {
@@ -62,6 +64,15 @@ export default function AdminDashboard() {
           const faqData = await faqRes.json();
           setStats(prev => ({ ...prev, faqs: Array.isArray(faqData) ? faqData.length : 0 }));
         }
+
+        // Load users count from Firestore
+        try {
+          const { getDocuments } = await import('@/utils/firestore');
+          const users = await getDocuments('users');
+          setStats(prev => ({ ...prev, users: users?.length || 0 }));
+        } catch (error) {
+          console.error('Error loading users count:', error);
+        }
       } catch (error) {
         console.error('Error loading stats:', error);
       }
@@ -82,6 +93,7 @@ export default function AdminDashboard() {
     { label: 'Blog Posts', value: stats.blogs, icon: FileText, link: '/admin/blog', color: '#2196F3' },
     { label: 'Team Members', value: stats.team, icon: Users, link: '/admin/team', color: '#FF9800' },
     { label: 'Projects', value: stats.projects, icon: Building2, link: '/admin/projects', color: '#9C27B0' },
+    { label: 'Users', value: stats.users, icon: User, link: '/admin/users', color: '#00BCD4' },
     { label: 'FAQs', value: stats.faqs, icon: HelpCircle, link: '/admin/faq', color: '#F44336' }
   ];
 
@@ -175,6 +187,15 @@ export default function AdminDashboard() {
             <div>
               <h4>Team Members</h4>
               <p>Manage team member profiles</p>
+            </div>
+          </Link>
+          <Link href="/admin/users" className="admin-content-link">
+            <span className="admin-content-link-icon">
+              <User size={32} />
+            </span>
+            <div>
+              <h4>Users</h4>
+              <p>View and manage registered users</p>
             </div>
           </Link>
         </div>

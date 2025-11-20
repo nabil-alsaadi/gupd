@@ -16,6 +16,40 @@ import {
 import { db } from '@/config/firebase';
 
 /**
+ * Convert Firestore data to plain JavaScript objects
+ * Recursively converts Timestamps to ISO strings for Next.js serialization
+ */
+const convertTimestamps = (data) => {
+  if (data === null || data === undefined) {
+    return data;
+  }
+  
+  // Check if it's a Firestore Timestamp
+  if (data && typeof data === 'object' && 'toDate' in data && typeof data.toDate === 'function') {
+    return data.toDate().toISOString();
+  }
+  
+  // Handle arrays
+  if (Array.isArray(data)) {
+    return data.map(item => convertTimestamps(item));
+  }
+  
+  // Handle objects
+  if (typeof data === 'object' && data.constructor === Object) {
+    const converted = {};
+    for (const key in data) {
+      if (data.hasOwnProperty(key)) {
+        converted[key] = convertTimestamps(data[key]);
+      }
+    }
+    return converted;
+  }
+  
+  // Return primitive values as-is
+  return data;
+};
+
+/**
  * Get a single document by ID
  */
 export const getDocument = async (collectionName, docId) => {
@@ -27,8 +61,10 @@ export const getDocument = async (collectionName, docId) => {
       const data = docSnap.data();
       // Remove any 'id' field from data to avoid conflicts with Firestore document ID
       const { id: dataId, ...restData } = data;
+      // Convert Timestamps to plain values for Next.js serialization
+      const convertedData = convertTimestamps(restData);
       // Always use Firestore document ID as 'id'
-      return { id: docSnap.id, ...restData };
+      return { id: docSnap.id, ...convertedData };
     }
     return null;
   } catch (error) {
@@ -72,13 +108,10 @@ export const getDocuments = async (collectionName, options = {}) => {
       // Remove any 'id' field from data to avoid conflicts with Firestore document ID
       // This ensures we always use the Firestore document ID, not a stored 'id' field
       const { id: dataId, ...restData } = data;
+      // Convert Timestamps to plain values for Next.js serialization
+      const convertedData = convertTimestamps(restData);
       // Always use Firestore document ID as 'id' (this is the actual document ID)
-      const document = { id: doc.id, ...restData };
-      console.log('Fetched document:', {
-        firestoreId: doc.id,
-        dataId: dataId,
-        finalId: document.id
-      });
+      const document = { id: doc.id, ...convertedData };
       documents.push(document);
     });
     

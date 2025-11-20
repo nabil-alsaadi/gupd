@@ -19,6 +19,7 @@ import "../../public/assets/css/jquery.fancybox.min.css";
 import 'react-creative-cursor/dist/styles.css';
 import Script from 'next/script';
 import AnimateCursor from "@/components/common/AnimateCursor";
+import { AuthProvider } from '@/hooks/useAuth';
 
 export default function RootLayout({ children }) {
   const pathname = usePathname(); // Get the current pathname
@@ -364,7 +365,9 @@ export default function RootLayout({ children }) {
           </div>
         </div>
         <AnimateCursor />
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

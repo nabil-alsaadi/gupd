@@ -158,9 +158,69 @@ npm run lint
 
 ## Admin Panel Access
 
-Once the project is running, access the admin panel at:
+### Creating Your First Admin
 
-**URL:** `http://localhost:3000/admin`
+Before accessing the admin panel, you need to create an admin account. You have **three options**:
+
+#### Option 1: Using the Setup Page (Recommended)
+
+1. **Sign up a regular user first:**
+   - Go to `http://localhost:3000/login`
+   - Click "Sign Up" and create an account with your email
+
+2. **Make that user an admin:**
+   - Go to `http://localhost:3000/admin/setup`
+   - Enter the email you just signed up with
+   - Click "Make Admin"
+   - Or select the user from the list and click "Make Admin"
+   - **Note:** The setup page automatically disables itself once an admin exists
+
+3. **Login as admin:**
+   - Go to `http://localhost:3000/admin/login`
+   - Login with your admin credentials
+
+#### Option 2: Using Firebase Console (Manual)
+
+1. **Sign up a regular user:**
+   - Go to `http://localhost:3000/login`
+   - Create an account
+
+2. **Update user role in Firestore:**
+   - Go to [Firebase Console](https://console.firebase.google.com/)
+   - Navigate to **Firestore Database**
+   - Find the `users` collection
+   - Locate the document with your user's email
+   - Edit the document and change the `role` field from `developer` to `admin`
+   - Save the changes
+
+3. **Login as admin:**
+   - Go to `http://localhost:3000/admin/login`
+
+#### Option 3: Using Admin Users Page (If you already have an admin)
+
+If you already have an admin account, you can:
+1. Login at `http://localhost:3000/admin/login`
+2. Go to **Users** in the admin panel
+3. Find any user and change their role to "Admin"
+
+### Accessing the Admin Panel
+
+Once you have an admin account, access the admin panel at:
+
+**URL:** `http://localhost:3000/admin/login`
+
+### Disabling the Setup Page
+
+The setup page (`/admin/setup`) automatically disables itself once an admin account exists. For additional security, you can:
+
+1. **Use environment variable** (recommended for production):
+   - Add `NEXT_PUBLIC_DISABLE_SETUP_PAGE=true` to your `.env.local`
+   - Restart your dev server
+
+2. **Delete the setup page**:
+   - Remove `src/app/admin/setup/page.js` file
+
+The setup page is already protected and will show a disabled state when an admin exists.
 
 ### Admin Panel Features
 
@@ -267,6 +327,7 @@ The admin panel uses the following Firestore collections:
 | `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET` | Firebase storage bucket | Yes |
 | `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID` | Firebase messaging sender ID | Yes |
 | `NEXT_PUBLIC_FIREBASE_APP_ID` | Firebase app ID | Yes |
+| `NEXT_PUBLIC_DISABLE_SETUP_PAGE` | Disable admin setup page (set to `true`) | No |
 
 ## Development Tips
 

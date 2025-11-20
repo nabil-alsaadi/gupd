@@ -5,6 +5,7 @@ import companyData from "../../data/companyData.json"
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import ContactInfo from '@/components/common/ContactInfo';
+import { useAuth } from '@/hooks/useAuth';
 const initialState = {
     activeMenu: "",
     activeSubMenu: "",
@@ -115,6 +116,11 @@ const Header1 = ({ style = "", fluid }) => {
         dispatch({ type: "TOGGLE_MENU", menu: "" });
         dispatch({ type: "TOGGLE_SUB_MENU", subMenu: "" });
         dispatch({ type: "TOGGLE_SIDEBAR" });
+    };
+    const { user, userData, signOut } = useAuth();
+    
+    const handleLogout = async () => {
+        await signOut();
     };
     return (
         <>
@@ -243,7 +249,37 @@ const Header1 = ({ style = "", fluid }) => {
                                 })
                             }
                         </ul>
-                        <div className="btn-area d-lg-none d-flex justify-content-center">
+                        <div className="btn-area d-lg-none d-flex flex-column justify-content-center align-items-center" style={{ gap: '15px' }}>
+                            {user ? (
+                                <>
+                                    <div style={{ color: 'var(--title-color)', fontSize: '14px', textAlign: 'center' }}>
+                                        Welcome, <strong>{userData?.displayName || user.email?.split('@')[0] || 'User'}</strong>
+                                    </div>
+                                    <button 
+                                        onClick={handleLogout}
+                                        style={{ 
+                                            background: 'none', 
+                                            border: '1px solid var(--primary-color2)', 
+                                            color: 'var(--primary-color2)', 
+                                            padding: '10px 20px',
+                                            borderRadius: '4px',
+                                            cursor: 'pointer',
+                                            fontSize: '14px',
+                                            width: '100%',
+                                            maxWidth: '200px'
+                                        }}
+                                    >
+                                        Logout
+                                    </button>
+                                </>
+                            ) : (
+                                <Link href="/login" className="primary-btn" style={{ width: '100%', maxWidth: '200px', textAlign: 'center' }}>
+                                    Login
+                                    <svg viewBox="0 0 13 20">
+                                        <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5" />
+                                    </svg>
+                                </Link>
+                            )}
                             <Link href={companyData.navigation.cta.link} className="primary-btn">
                                 {companyData.navigation.cta.text}
                                 <svg viewBox="0 0 13 20">
@@ -253,6 +289,7 @@ const Header1 = ({ style = "", fluid }) => {
                         </div>
                     </div>
                     <div className="nav-right d-flex jsutify-content-end align-items-center">
+                        
                         <div className="right-sidebar-button" onClick={toggleRightSidebar}>
                             <svg width={14} height={14} viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
                                 <rect width="11.2" height="1.4" rx="0.699998" />
@@ -267,6 +304,40 @@ const Header1 = ({ style = "", fluid }) => {
                                 <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5" />
                             </svg>
                         </Link>
+                        {user ? (
+                            <div className="user-menu d-lg-flex d-none align-items-center" style={{ marginRight: '20px', gap: '15px' }}>
+                                <span style={{ color: 'var(--title-color)', fontSize: '14px' }}>
+                                    Welcome, <strong>{userData?.displayName || user.email?.split('@')[0] || 'User'}</strong>
+                                </span>
+                                <button 
+                                    onClick={handleLogout}
+                                    style={{ 
+                                        background: 'none', 
+                                        border: '1px solid var(--primary-color2)', 
+                                        color: 'var(--primary-color2)', 
+                                        padding: '8px 15px',
+                                        borderRadius: '4px',
+                                        cursor: 'pointer',
+                                        fontSize: '14px',
+                                        transition: 'all 0.3s'
+                                    }}
+                                    onMouseEnter={(e) => {
+                                        e.target.style.background = 'var(--primary-color2)';
+                                        e.target.style.color = '#fff';
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        e.target.style.background = 'none';
+                                        e.target.style.color = 'var(--primary-color2)';
+                                    }}
+                                >
+                                    Logout
+                                </button>
+                            </div>
+                        ) : (
+                            <Link href="/login" className="d-lg-flex d-none" style={{ marginRight: '20px', color: 'var(--title-color)', textDecoration: 'none', fontSize: '14px', fontWeight: '500' }}>
+                                Login
+                            </Link>
+                        )}
                         <div className="sidebar-button mobile-menu-btn" onClick={toggleSidebar}>
                             <svg className="sidebar-toggle-button" width={25} height={25} viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M1.29608 0.0658336C0.609639 0.31147 0.139209 0.899069 0.0432028 1.63598C-0.0144009 2.09353 -0.0144009 5.4939 0.0432028 5.95146C0.129608 6.59686 0.489632 7.11703 1.07047 7.42046L1.36329 7.57458H3.83545H6.30761L6.59563 7.42046C6.96525 7.2278 7.25807 6.93401 7.45008 6.56314L7.60369 6.27416V3.79372V1.31328L7.45008 1.02429C7.25807 0.653433 6.96525 0.359633 6.59563 0.166978L6.30761 0.0128531L3.90745 0.00322056C1.83372 -0.00641251 1.4785 0.00322056 1.29608 0.0658336ZM6.2356 0.802741C6.52842 0.956866 6.65803 1.08209 6.79244 1.34699L6.90765 1.57336V3.80817V6.03816L6.74924 6.29824C6.53322 6.66429 6.2068 6.85694 5.74117 6.90029C5.54916 6.91956 4.55549 6.92437 3.52343 6.91474L1.65131 6.90029L1.41129 6.77025C1.12807 6.62094 1.00807 6.49571 0.854455 6.20191L0.739248 5.98518V3.79372V1.60226L0.854455 1.38552C1.05607 0.995397 1.33929 0.778659 1.74731 0.706413C1.85292 0.687148 2.85618 0.677515 3.97946 0.677515L6.01959 0.687148L6.2356 0.802741Z" />
