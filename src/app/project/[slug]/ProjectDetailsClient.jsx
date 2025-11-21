@@ -91,7 +91,7 @@ const ProjectDetailsClient = ({ project, slug }) => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [navigationTabs]);
 
   // Initialize fancybox for gallery
   useEffect(() => {

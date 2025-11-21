@@ -6,6 +6,12 @@ import { useRouter } from 'next/navigation';
 import { updateDocument } from '@/utils/firestore';
 
 const BlogDetailsClient = ({ blog, relatedBlogs = [] }) => {
+    // Hooks must be called before any early returns
+    const { user, userData } = useAuth();
+    const router = useRouter();
+    const [commentText, setCommentText] = useState('');
+    const [submitting, setSubmitting] = useState(false);
+
     if (!blog) {
         return (
             <div className="blog-details-page pt-120 mb-120">
@@ -53,11 +59,6 @@ const BlogDetailsClient = ({ blog, relatedBlogs = [] }) => {
 
     // Extract tags - ensure it's an array
     const tags = Array.isArray(blog.tags) ? blog.tags : (blog.tags ? blog.tags.split(',').map(t => t.trim()) : []);
-
-    const { user, userData } = useAuth();
-    const router = useRouter();
-    const [commentText, setCommentText] = useState('');
-    const [submitting, setSubmitting] = useState(false);
 
     const handleCommentSubmit = async (e) => {
         e.preventDefault();
