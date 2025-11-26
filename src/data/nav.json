@@ -1,31 +1,31 @@
 [
     {
         "id": "1",
-        "label": "Home",
+        "labelKey": "navigation.home",
         "link": "/",
         "icon": false
     },
     {
         "id": "2",
-        "label": "About",
+        "labelKey": "navigation.about",
         "link": "/about",
         "icon": false
     },
     {
         "id": "3",
-        "label": "Projects",
+        "labelKey": "navigation.projects",
         "link": "/project/al-faisal-tower",
         "icon": false
     },
     {
         "id": "4",
-        "label": "Blogs",
+        "labelKey": "navigation.blogs",
         "link": "/blog/blog-sidebar",
         "icon": true
     },
     {
         "id": "5",
-        "label": "Contact",
+        "labelKey": "navigation.contact",
         "link": "/contact",
         "icon": false
     }

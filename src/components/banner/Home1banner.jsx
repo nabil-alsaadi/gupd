@@ -10,9 +10,12 @@ import SwiperCore, {
 } from "swiper";
 import Link from "next/link";
 import bannerData from "@/data/banner-data.json";
+import { useLanguage } from "@/providers/LanguageProvider";
 SwiperCore.use([Autoplay, EffectFade, Navigation, Pagination]);
 
 const Home1Banner = ({ banners }) => {
+    const { locale } = useLanguage();
+    const isRTL = locale === 'ar';
     const [activeSlide, setActiveSlide] = useState(0);
     const [isMobile, setIsMobile] = useState(false);
     const swiperRef = useRef(null);
@@ -175,24 +178,27 @@ const Home1Banner = ({ banners }) => {
             <div className="banner-content" style={{
                 position: 'absolute',
                 top: '50%',
-                left: '0',
+                left: isRTL ? 'auto' : '0',
+                right: isRTL ? '0' : 'auto',
                 transform: 'translateY(-50%)',
                 zIndex: 10,
                 width: '100%',
                 maxWidth: '1200px',
                 padding: '0 60px',
-                textAlign: 'left'
+                textAlign: isRTL ? 'right' : 'left'
             }}>
                 <div className="banner-text-content" style={{
-                    maxWidth: '650px'
+                    maxWidth: '650px',
+                    marginLeft: isRTL ? 'auto' : '0',
+                    marginRight: isRTL ? '0' : 'auto'
                 }}>
-                    <h1 className="banner-title" style={{ textAlign: 'left' }}>
+                    <h1 className="banner-title" style={{ textAlign: isRTL ? 'right' : 'left' }}>
                         {slides[activeSlide]?.title}
                     </h1>
-                    <h2 className="banner-subtitle" style={{ textAlign: 'left' }}>
+                    <h2 className="banner-subtitle" style={{ textAlign: isRTL ? 'right' : 'left' }}>
                         {slides[activeSlide]?.subtitle}
                     </h2>
-                    <p className="banner-description" style={{ textAlign: 'left' }}>
+                    <p className="banner-description" style={{ textAlign: isRTL ? 'right' : 'left' }}>
                         {slides[activeSlide]?.description}
                     </p>
                 </div>
@@ -202,12 +208,13 @@ const Home1Banner = ({ banners }) => {
             <div className="banner-buttons-container" style={{
                 position: 'absolute',
                 bottom: '120px',
-                left: '60px',
+                left: isRTL ? 'auto' : '60px',
+                right: isRTL ? '60px' : 'auto',
                 zIndex: 10,
                 display: 'flex',
                 gap: '15px',
                 flexWrap: 'wrap',
-                justifyContent: 'flex-start',
+                justifyContent: isRTL ? 'flex-end' : 'flex-start',
                 maxWidth: 'calc(100% - 120px)'
             }}>
                 {slides.map((slide, index) => {
@@ -252,7 +259,11 @@ const Home1Banner = ({ banners }) => {
                             }}
                         >
                             <span>{slide.ctaText}</span>
-                            <svg viewBox="0 0 13 20" style={{ width: '16px', height: '16px' }}>
+                            <svg viewBox="0 0 13 20" style={{ 
+                                width: '16px', 
+                                height: '16px',
+                                transform: isRTL ? 'scaleX(-1)' : 'none'
+                            }}>
                                 <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5" stroke="currentColor" fill="none" strokeWidth="1.5" />
                             </svg>
                         </Link>
@@ -345,7 +356,13 @@ const Home1Banner = ({ banners }) => {
                         gap: 10px;
                         bottom: 100px;
                         left: 20px !important;
+                        right: auto !important;
                         max-width: calc(100% - 40px) !important;
+                    }
+                    
+                    [dir="rtl"] .banner-buttons-container {
+                        left: auto !important;
+                        right: 20px !important;
                     }
                     
                     .banner-buttons-container .banner-slide-button:not(.active) {

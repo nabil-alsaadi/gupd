@@ -1,0 +1,40 @@
+{
+    "navigation": {
+        "home": "الرئيسية",
+        "about": "من نحن",
+        "projects": "المشاريع",
+        "blogs": "المدونة",
+        "contact": "اتصل بنا",
+        "getInTouch": "تواصل معنا"
+    },
+    "auth": {
+        "login": "تسجيل الدخول",
+        "logout": "تسجيل الخروج",
+        "welcomeUser": "مرحباً، {{name}}"
+    },
+    "banner": {
+        "knowMore": "اعرف المزيد",
+        "aboutSharjah": "عن الشارقة."
+    },
+    "footerTop": {
+        "eyebrow": "نبني رؤيتك",
+        "headline": "لنبنِ شيئاً مدهشاً.",
+        "startProject": "ابدأ مشروعاً",
+        "contactUs": "تواصل معنا"
+    },
+    "footer": {
+        "quickLinks": "روابط سريعة",
+        "company": "الشركة",
+        "aboutUs": "نبذة عنا",
+        "meetTeam": "تعرف على فريقنا",
+        "ourProject": "مشاريعنا",
+        "supportPolicy": "سياسة الدعم",
+        "terms": "الشروط والأحكام",
+        "privacy": "سياسة الخصوصية"
+    },
+    "language": {
+        "switchToArabic": "العربية",
+        "switchToEnglish": "English"
+    }
+}
+

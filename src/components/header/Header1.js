@@ -6,6 +6,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import ContactInfo from '@/components/common/ContactInfo';
 import { useAuth } from '@/hooks/useAuth';
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "@/components/common/LanguageSwitcher";
 const initialState = {
     activeMenu: "",
     activeSubMenu: "",
@@ -61,6 +63,7 @@ const Header1 = ({ style = "", fluid }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
     const headerRef = useRef(null);
     const pathname = usePathname()
+    const { t } = useTranslation();
     const handleScroll = () => {
         const { scrollY } = window;
         dispatch({ type: "setScrollY", payload: scrollY });
@@ -184,38 +187,42 @@ const Header1 = ({ style = "", fluid }) => {
                         <ul className="menu-list">
                             {
                                 navData.map((data) => {
-                                    const { id, label, link, icon, subMenu } = data;
+                                    const { id, labelKey, label, link, icon, subMenu } = data;
+                                    const menuKey = labelKey || label;
+                                    const labelText = labelKey ? t(labelKey) : label;
                                     const isActive = (subMenu && subMenu.some(item => item.link === pathname)) || link === pathname;
                                     return <li key={id} className={`${icon === true ? "menu-item-has-children" : ""} ${isActive ? "active" : ""}`}>
                                         <Link href={link} className="drop-down">
-                                            {label}
+                                            {labelText}
                                         </Link>
                                         {icon && (
                                             <i
-                                                onClick={() => toggleMenu(label)}
-                                                className={`bi bi-${state.activeMenu === label ? "dash" : "plus"
+                                                onClick={() => toggleMenu(menuKey)}
+                                                className={`bi bi-${state.activeMenu === menuKey ? "dash" : "plus"
                                                     } dropdown-icon`}
                                             />
                                         )}
                                         {
                                             subMenu && (
                                                 <ul
-                                                    className={`sub-menu ${state.activeMenu === label ? "d-block" : ""
+                                                    className={`sub-menu ${state.activeMenu === menuKey ? "d-block" : ""
                                                         }`}
                                                 >
-                                                    {subMenu.map((subItem, subIndex) => {
-                                                        const isActive = subItem.link === pathname || (subItem?.subMenu && subItem.subMenu.some(item => item.link === pathname));
+                                                    {subMenu.map((subItem) => {
+                                                        const subKey = subItem.labelKey || subItem.label;
+                                                        const subLabel = subItem.labelKey ? t(subItem.labelKey) : subItem.label;
+                                                        const isSubActive = subItem.link === pathname || (subItem?.subMenu && subItem.subMenu.some(item => item.link === pathname));
                                                         return (
-                                                            <li key={subItem.id} className={`${isActive ? "active" : ""}`} >
+                                                            <li key={subItem.id} className={`${isSubActive ? "active" : ""}`} >
                                                                 <Link href={subItem.link} >
-                                                                    {subItem.label}
+                                                                    {subLabel}
                                                                 </Link>
                                                                 {subItem.icon && subItem.icon ? (
                                                                     <>
                                                                         <i className="d-lg-flex d-none bi bi-chevron-right dropdown-icon" />
                                                                         <i
-                                                                            onClick={() => toggleSubMenu(subItem.label)}
-                                                                            className={`d-lg-none d-flex bi bi-${state.activeSubMenu === subItem.label
+                                                                            onClick={() => toggleSubMenu(subKey)}
+                                                                            className={`d-lg-none d-flex bi bi-${state.activeSubMenu === subKey
                                                                                 ? "dash"
                                                                                 : "plus"
                                                                                 } dropdown-icon `}
@@ -226,18 +233,21 @@ const Header1 = ({ style = "", fluid }) => {
                                                                 )}
                                                                 {subItem.subMenu && (
                                                                     <ul
-                                                                        className={`sub-menu ${state.activeSubMenu === subItem.label
+                                                                        className={`sub-menu ${state.activeSubMenu === subKey
                                                                             ? "d-block"
                                                                             : ""
                                                                             }`}
                                                                     >
-                                                                        {subItem.subMenu.map((subItem, subIndex) => (
-                                                                            <li key={subItem.label}>
-                                                                                <Link legacyBehavior href={subItem.link}>
-                                                                                    <a>{subItem.label}</a>
-                                                                                </Link>
-                                                                            </li>
-                                                                        ))}
+                                                                        {subItem.subMenu.map((subNested) => {
+                                                                            const nestedLabel = subNested.labelKey ? t(subNested.labelKey) : subNested.label;
+                                                                            return (
+                                                                                <li key={subNested.id || nestedLabel}>
+                                                                                    <Link legacyBehavior href={subNested.link}>
+                                                                                        <a>{nestedLabel}</a>
+                                                                                    </Link>
+                                                                                </li>
+                                                                            )
+                                                                        })}
                                                                     </ul>
                                                                 )}
                                                             </li>
@@ -253,7 +263,7 @@ const Header1 = ({ style = "", fluid }) => {
                             {user ? (
                                 <>
                                     <div style={{ color: 'var(--title-color)', fontSize: '14px', textAlign: 'center' }}>
-                                        Welcome, <strong>{userData?.displayName || user.email?.split('@')[0] || 'User'}</strong>
+                                        {t('auth.welcomeUser', { name: userData?.displayName || user.email?.split('@')[0] || 'User' })}
                                     </div>
                                     <button 
                                         onClick={handleLogout}
@@ -269,12 +279,12 @@ const Header1 = ({ style = "", fluid }) => {
                                             maxWidth: '200px'
                                         }}
                                     >
-                                        Logout
+                                        {t('auth.logout')}
                                     </button>
                                 </>
                             ) : (
                                 <Link href="/login" className="primary-btn" style={{ width: '100%', maxWidth: '200px', textAlign: 'center' }}>
-                                    Login
+                                    {t('auth.login')}
                                     <svg viewBox="0 0 13 20">
                                         <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5" />
                                     </svg>
@@ -296,7 +306,7 @@ const Header1 = ({ style = "", fluid }) => {
                                 <rect x="2.80078" y="5.6" width="11.2" height="2.79999" rx="1.4" />
                                 <rect y="12.6" width="11.2" height="1.4" rx="0.699998" />
                             </svg>
-                            <span>GET IN TOUCH</span>
+                            <span>{t('navigation.getInTouch')}</span>
                         </div>
                         <Link href={companyData.navigation.cta.link} className="primary-btn d-lg-flex d-none">
                             {companyData.navigation.cta.text}
@@ -307,7 +317,7 @@ const Header1 = ({ style = "", fluid }) => {
                         {user ? (
                             <div className="user-menu d-lg-flex d-none align-items-center" style={{ marginRight: '20px', gap: '15px' }}>
                                 <span style={{ color: 'var(--title-color)', fontSize: '14px' }}>
-                                    Welcome, <strong>{userData?.displayName || user.email?.split('@')[0] || 'User'}</strong>
+                                    {t('auth.welcomeUser', { name: userData?.displayName || user.email?.split('@')[0] || 'User' })}
                                 </span>
                                 <button 
                                     onClick={handleLogout}
@@ -330,14 +340,15 @@ const Header1 = ({ style = "", fluid }) => {
                                         e.target.style.color = 'var(--primary-color2)';
                                     }}
                                 >
-                                    Logout
+                                    {t('auth.logout')}
                                 </button>
                             </div>
                         ) : (
                             <Link href="/login" className="d-lg-flex d-none" style={{ marginRight: '20px', color: 'var(--title-color)', textDecoration: 'none', fontSize: '14px', fontWeight: '500' }}>
-                                Login
+                                {t('auth.login')}
                             </Link>
                         )}
+                        <LanguageSwitcher className="ms-3" />
                         <div className="sidebar-button mobile-menu-btn" onClick={toggleSidebar}>
                             <svg className="sidebar-toggle-button" width={25} height={25} viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M1.29608 0.0658336C0.609639 0.31147 0.139209 0.899069 0.0432028 1.63598C-0.0144009 2.09353 -0.0144009 5.4939 0.0432028 5.95146C0.129608 6.59686 0.489632 7.11703 1.07047 7.42046L1.36329 7.57458H3.83545H6.30761L6.59563 7.42046C6.96525 7.2278 7.25807 6.93401 7.45008 6.56314L7.60369 6.27416V3.79372V1.31328L7.45008 1.02429C7.25807 0.653433 6.96525 0.359633 6.59563 0.166978L6.30761 0.0128531L3.90745 0.00322056C1.83372 -0.00641251 1.4785 0.00322056 1.29608 0.0658336ZM6.2356 0.802741C6.52842 0.956866 6.65803 1.08209 6.79244 1.34699L6.90765 1.57336V3.80817V6.03816L6.74924 6.29824C6.53322 6.66429 6.2068 6.85694 5.74117 6.90029C5.54916 6.91956 4.55549 6.92437 3.52343 6.91474L1.65131 6.90029L1.41129 6.77025C1.12807 6.62094 1.00807 6.49571 0.854455 6.20191L0.739248 5.98518V3.79372V1.60226L0.854455 1.38552C1.05607 0.995397 1.33929 0.778659 1.74731 0.706413C1.85292 0.687148 2.85618 0.677515 3.97946 0.677515L6.01959 0.687148L6.2356 0.802741Z" />

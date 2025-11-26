@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useWow } from '@/customHooks/useWow';
 
 import useMagneticHover from "@/customHooks/useMagneticHover";
-import { kanit, inter } from "@/fonts/font";
+import { kanit, inter, notoKufiArabic } from "@/fonts/font";
 import { usePathname } from 'next/navigation'; // Import usePathname
 import "../../public/assets/css/bootstrap-icons.css";
 import "../../public/assets/css/boxicons.min.css";
@@ -20,6 +20,7 @@ import 'react-creative-cursor/dist/styles.css';
 import Script from 'next/script';
 import AnimateCursor from "@/components/common/AnimateCursor";
 import { AuthProvider } from '@/hooks/useAuth';
+import { LanguageProvider } from "@/providers/LanguageProvider";
 
 export default function RootLayout({ children }) {
   const pathname = usePathname(); // Get the current pathname
@@ -354,7 +355,7 @@ export default function RootLayout({ children }) {
         {/* Fancybox for image gallery */}
         <Script src="/assets/js/jquery.fancybox.min.js" strategy="lazyOnload" />
       </head>
-      <body id="body" className={`tt-magic-cursor ${inter.variable} ${kanit.variable}`}>
+      <body id="body" className={`tt-magic-cursor ${inter.variable} ${kanit.variable} ${notoKufiArabic.variable}`}>
         <div id="magic-cursor">
           <div id="ball"></div>
         </div>
@@ -365,9 +366,11 @@ export default function RootLayout({ children }) {
           </div>
         </div>
         <AnimateCursor />
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+        <LanguageProvider>
+          <AuthProvider>
+            {children}
+          </AuthProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

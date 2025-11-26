@@ -1,0 +1,40 @@
+{
+    "navigation": {
+        "home": "Home",
+        "about": "About",
+        "projects": "Projects",
+        "blogs": "Blogs",
+        "contact": "Contact",
+        "getInTouch": "Get in touch"
+    },
+    "auth": {
+        "login": "Login",
+        "logout": "Logout",
+        "welcomeUser": "Welcome, {{name}}"
+    },
+    "banner": {
+        "knowMore": "Know More",
+        "aboutSharjah": "About Sharjah."
+    },
+    "footerTop": {
+        "eyebrow": "Building Your Vision",
+        "headline": "Let's Build Something Amazing.",
+        "startProject": "Start A Project",
+        "contactUs": "Contact With Us"
+    },
+    "footer": {
+        "quickLinks": "Quick Links",
+        "company": "Company",
+        "aboutUs": "About Us",
+        "meetTeam": "Meet Our Team",
+        "ourProject": "Our Project",
+        "supportPolicy": "Support Policy",
+        "terms": "Terms & Conditions",
+        "privacy": "Privacy Policy"
+    },
+    "language": {
+        "switchToArabic": "العربية",
+        "switchToEnglish": "English"
+    }
+}
+

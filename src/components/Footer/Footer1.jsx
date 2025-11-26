@@ -1,11 +1,14 @@
+"use client"
 import Link from 'next/link'
 import React from 'react'
 import companyData from '@/data/companyData.json'
 import navData from '@/data/nav.json'
 import ContactInfo from '@/components/common/ContactInfo'
 import SocialMedia from '@/components/common/SocialMedia'
+import { useTranslation } from 'react-i18next';
 
 const Footer1 = () => {
+    const { t } = useTranslation();
     return (
         <footer className="footer-section">
             <div className="footer-wrapper">
@@ -49,15 +52,18 @@ const Footer1 = () => {
                                             <div className="col-xxl-7 col-md-8 col-sm-9">
                                                 <div className="footer-widget">
                                                     <div className="widget-title">
-                                                        <h5>QUICK LINKS</h5>
+                                                        <h5>{t('footer.quickLinks')}</h5>
                                                     </div>
                                                     <div className="menu-container">
                                                         <ul className="widget-list">
-                                                            {navData.map((navItem) => (
-                                                                <li key={navItem.id}>
-                                                                    <Link href={navItem.link}>{navItem.label}</Link>
-                                                                </li>
-                                                            ))}
+                                                            {navData.map((navItem) => {
+                                                                const label = navItem.labelKey ? t(navItem.labelKey) : navItem.label;
+                                                                return (
+                                                                    <li key={navItem.id}>
+                                                                        <Link href={navItem.link}>{label}</Link>
+                                                                    </li>
+                                                                );
+                                                            })}
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -65,13 +71,13 @@ const Footer1 = () => {
                                             <div className="col-md-3 col-sm-3">
                                                 <div className="footer-widget">
                                                     <div className="widget-title">
-                                                        <h5>COMPANY</h5>
+                                                        <h5>{t('footer.company')}</h5>
                                                     </div>
                                                     <div className="menu-container">
                                                         <ul className="widget-list">
-                                                            <li><Link href="/about">About Us</Link></li>
-                                                            <li><Link href="/team">Meet Our Team</Link></li>
-                                                            <li><Link href="/project/al-faisal-tower">Our Project</Link></li>
+                                                            <li><Link href="/about">{t('footer.aboutUs')}</Link></li>
+                                                            <li><Link href="/team">{t('footer.meetTeam')}</Link></li>
+                                                            <li><Link href="/project/al-faisal-tower">{t('footer.ourProject')}</Link></li>
                                                             {/* <li><Link href="/blog-grid">Blog &amp; Article</Link></li> */}
                                                         </ul>
                                                     </div>
@@ -93,9 +99,9 @@ const Footer1 = () => {
                         </div>
                         <div className="footer-bottom-right">
                             <ul>
-                                <li><Link href="/support-policy">Support Policy</Link></li>
-                                <li><Link href="/terms-conditions">Terms &amp; Conditions</Link></li>
-                                <li><Link href="/privacy-policy">Privacy Policy</Link></li>
+                                <li><Link href="/support-policy">{t('footer.supportPolicy')}</Link></li>
+                                <li><Link href="/terms-conditions">{t('footer.terms')}</Link></li>
+                                <li><Link href="/privacy-policy">{t('footer.privacy')}</Link></li>
                             </ul>
                         </div>
                     </div>

@@ -1279,6 +1279,53 @@ body.tt-magic-cursor #magic-cursor {
   right: unset;
   left: 0;
 }
+/* RTL Fix for section-title.three separator */
+html[dir="rtl"] .section-title.three span {
+  padding-left: 0 !important;
+  padding-right: 40px !important;
+}
+html[dir="rtl"] .section-title.three span::after {
+  left: auto !important;
+  right: 0 !important;
+}
+/* RTL Fixes for Chairman Section */
+html[dir="rtl"] .home3-why-choose-section .section-title.three span svg {
+  margin-right: 0 !important;
+  margin-left: 8px !important;
+}
+/* Fix padding for quotes and signature sections */
+html[dir="rtl"] .home3-why-choose-section .why-choose-content > p {
+  padding-left: 0 !important;
+  padding-right: 30px !important;
+}
+html[dir="rtl"] .home3-why-choose-section .why-choose-content > div[style*="paddingLeft"] {
+  padding-left: 0 !important;
+  padding-right: 30px !important;
+}
+/* Fix highlight quote separator and quotation marks - flip to right */
+/* Target divs with purple border (4px solid #B149ED) */
+html[dir="rtl"] .home3-why-choose-section .why-choose-content > div {
+  border-left: none !important;
+}
+html[dir="rtl"] .home3-why-choose-section .why-choose-content > div[style*="4px solid"] {
+  border-right: 4px solid #B149ED !important;
+  padding-left: 0 !important;
+  padding-right: 25px !important;
+}
+html[dir="rtl"] .home3-why-choose-section .why-choose-content > div svg[fill="#B149ED"] {
+  left: auto !important;
+  right: -10px !important;
+}
+/* Fix stats separators - flip borderRight to borderLeft */
+html[dir="rtl"] .home3-why-choose-section .row.mb-40 .col-4 > div {
+  border-right: none !important;
+}
+html[dir="rtl"] .home3-why-choose-section .row.mb-40 .col-4:not(:last-child) > div {
+  border-left: 1px solid #eee !important;
+}
+html[dir="rtl"] .home3-why-choose-section .row.mb-40 .col-4:last-child > div {
+  border-left: none !important;
+}
 .section-title.four span {
   padding-left: 25px;
   color: var(--primary-color2);
@@ -1967,6 +2014,19 @@ header.style-1 .nav-right .right-sidebar-button::after {
 @media (max-width: 991px) {
   header.style-1 .nav-right .right-sidebar-button::after {
     display: none;
+  }
+}
+/* RTL Fix: Flip separator to left side in Arabic */
+html[dir="rtl"] header.style-1 .nav-right .right-sidebar-button::after,
+html[dir="rtl"] header.style-1.sticky .nav-right .right-sidebar-button::after {
+  right: auto !important;
+  left: -30px !important;
+}
+@media (max-width: 1199px) {
+  html[dir="rtl"] header.style-1 .nav-right .right-sidebar-button::after,
+  html[dir="rtl"] header.style-1.sticky .nav-right .right-sidebar-button::after {
+    right: auto !important;
+    left: -13px !important;
   }
 }
 header.style-1 .nav-right .right-sidebar-button:hover svg {
@@ -5450,6 +5510,52 @@ header.style-3.two.sticky .right-sidebar-button svg path {
   line-height: 1.8;
   margin-bottom: 0;
 }
+/* RTL Fixes for About Section */
+/* Flip separator from left to right */
+html[dir="rtl"] .home1-about-section .about-top-area .about-title-area .video-and-content .content p::before {
+  left: auto !important;
+  right: 0 !important;
+}
+/* Flip padding-left to padding-right on video-and-content container */
+html[dir="rtl"] .home1-about-section .about-top-area .about-title-area .video-and-content {
+  padding-left: 0 !important;
+  padding-right: 95px !important;
+}
+@media (max-width: 1399px) {
+  html[dir="rtl"] .home1-about-section .about-top-area .about-title-area .video-and-content {
+    padding-right: 60px !important;
+  }
+}
+@media (max-width: 1199px) {
+  html[dir="rtl"] .home1-about-section .about-top-area .about-title-area .video-and-content {
+    padding-right: 40px !important;
+  }
+}
+@media (max-width: 991px) {
+  html[dir="rtl"] .home1-about-section .about-top-area .about-title-area .video-and-content {
+    padding-right: 0 !important;
+  }
+}
+/* Flip padding-left to padding-right on content p */
+html[dir="rtl"] .home1-about-section .about-top-area .about-title-area .video-and-content .content p {
+  padding-left: 0 !important;
+  padding-right: 15px !important;
+}
+@media (max-width: 576px) {
+  html[dir="rtl"] .home1-about-section .about-top-area .about-title-area .video-and-content .content p {
+    padding-right: 0 !important;
+  }
+}
+/* Flip even items margin from left to right */
+html[dir="rtl"] .home1-about-section .about-content ul li:nth-child(even) {
+  margin-left: 0 !important;
+  margin-right: auto !important;
+}
+@media (max-width: 576px) {
+  html[dir="rtl"] .home1-about-section .about-content ul li:nth-child(even) {
+    margin-right: 0 !important;
+  }
+}
 
 /*=====================================
  05. Home1 Service Section 
@@ -6726,6 +6832,24 @@ header.style-3.two.sticky .right-sidebar-button svg path {
   line-height: 1.4;
   letter-spacing: 0.03em;
   margin-bottom: 0;
+}
+
+/* RTL Padding Fixes for Founder Card */
+html[dir="rtl"] .home1-team-section .founder-card {
+  padding: 15px 15px 15px 25px !important;
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  html[dir="rtl"] .home1-team-section .founder-card {
+    padding: 10px !important;
+  }
+}
+html[dir="rtl"] .home1-team-section .founder-card .founder-content {
+  padding: 10px 20px 10px 0 !important;
+}
+@media (max-width: 1199px) {
+  html[dir="rtl"] .home1-team-section .founder-card .founder-content {
+    padding: 0 15px 0 0 !important;
+  }
 }
 
 .team-card .team-img {
@@ -8262,6 +8386,12 @@ header.style-3.two.sticky .right-sidebar-button svg path {
   height: 2px;
   border-radius: 10px;
   background: linear-gradient(90.01deg, #000000 0.01%, rgba(0, 0, 0, 0) 102.8%);
+}
+/* RTL Fix for Footer Separator */
+html[dir="rtl"] .footer-section .footer-wrapper .footer-menu .footer-widget .widget-title h5::after {
+  left: auto !important;
+  right: 0 !important;
+  background: linear-gradient(270deg, #000000 0.01%, rgba(0, 0, 0, 0) 102.8%) !important;
 }
 .footer-section .footer-wrapper .footer-menu .footer-widget .menu-container {
   display: flex;
@@ -11916,6 +12046,44 @@ header.style-3.two.sticky .right-sidebar-button svg path {
   .project-card2.two .project-content-wrap {
     padding: 0;
     margin-right: unset;
+  }
+}
+
+/* RTL Padding Fixes for Project Section - ONLY padding/margin, no layout changes */
+html[dir="rtl"] .project-card2 .project-content-wrap {
+  padding-right: 0 !important;
+  padding-left: 50px !important;
+  margin-left: unset !important;
+  margin-right: auto !important;
+}
+@media (max-width: 1399px) {
+  html[dir="rtl"] .project-card2 .project-content-wrap {
+    padding-left: 30px !important;
+    padding-right: 0 !important;
+  }
+}
+@media (max-width: 1199px) {
+  html[dir="rtl"] .project-card2 .project-content-wrap {
+    padding-left: 20px !important;
+    padding-right: 0 !important;
+  }
+}
+html[dir="rtl"] .project-card2.two .project-content-wrap {
+  padding-left: 0 !important;
+  padding-right: 50px !important;
+  margin-right: unset !important;
+  margin-left: auto !important;
+}
+@media (max-width: 1399px) {
+  html[dir="rtl"] .project-card2.two .project-content-wrap {
+    padding-right: 30px !important;
+    padding-left: 0 !important;
+  }
+}
+@media (max-width: 1199px) {
+  html[dir="rtl"] .project-card2.two .project-content-wrap {
+    padding-right: 20px !important;
+    padding-left: 0 !important;
   }
 }
 
@@ -24388,4 +24556,31 @@ header.style-3.two.sticky .right-sidebar-button svg path {
   .single-attachment .content span {
     font-size: 0.8rem;
   }
+}
+
+/* RTL Arabic Font Overrides - Apply Arabic font to all elements in RTL */
+html[dir="rtl"] *,
+html[dir="rtl"] body,
+html[dir="rtl"] .section-title,
+html[dir="rtl"] h1,
+html[dir="rtl"] h2,
+html[dir="rtl"] h3,
+html[dir="rtl"] h4,
+html[dir="rtl"] h5,
+html[dir="rtl"] h6,
+html[dir="rtl"] p,
+html[dir="rtl"] span,
+html[dir="rtl"] a,
+html[dir="rtl"] li,
+html[dir="rtl"] button,
+html[dir="rtl"] div,
+html[dir="rtl"] input,
+html[dir="rtl"] textarea,
+html[dir="rtl"] label {
+  font-family: var(--font-arabic), "Noto Kufi Arabic", "Arial", sans-serif !important;
+}
+
+/* Override font variables in RTL */
+html[dir="rtl"] * {
+  font-family: var(--font-arabic), "Noto Kufi Arabic", "Arial", sans-serif !important;
 }/*# sourceMappingURL=style.css.map */

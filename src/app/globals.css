@@ -4,6 +4,16 @@
   --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
     "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
     "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+  
+  /**
+   * Arabic Font Configuration
+   * 
+   * To change the Arabic font fallback:
+   * 1. Update the font name in the --font-arabic-fallback variable below
+   * 2. The main font is loaded via Next.js in src/fonts/font.js
+   * 3. This fallback is used if the main font fails to load
+   */
+  --font-arabic-fallback: "Noto Kufi Arabic", "Arial", sans-serif;
 
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -111,4 +121,175 @@ a {
 .process-content svg.lucide-icon {
   fill: none !important;
   stroke: currentColor;
+}
+
+.language-switcher {
+  border: 1px solid var(--primary-color2, #f6c343);
+  background: transparent;
+  color: var(--primary-color2, #f6c343);
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.language-switcher:hover {
+  background: var(--primary-color2, #f6c343);
+  color: #0a0a0a;
+}
+
+/* RTL Support for Arabic */
+[dir="rtl"] {
+  direction: rtl;
+  font-family: var(--font-arabic), var(--font-arabic-fallback) !important;
+}
+
+/* Apply Arabic font to all RTL elements */
+html[dir="rtl"] body,
+html[dir="rtl"] * {
+  font-family: var(--font-arabic), var(--font-arabic-fallback) !important;
+}
+
+/* Override specific font families in RTL to use Arabic font */
+html[dir="rtl"] .section-title,
+html[dir="rtl"] h1,
+html[dir="rtl"] h2,
+html[dir="rtl"] h3,
+html[dir="rtl"] h4,
+html[dir="rtl"] h5,
+html[dir="rtl"] h6,
+html[dir="rtl"] p,
+html[dir="rtl"] span,
+html[dir="rtl"] a,
+html[dir="rtl"] li,
+html[dir="rtl"] button {
+  font-family: var(--font-arabic), var(--font-arabic-fallback) !important;
+}
+
+/* Slider Pagination RTL Fix */
+[dir="rtl"] .pagination-area {
+  left: auto !important;
+  right: 50% !important;
+  transform: translateX(50%) !important;
+}
+
+[dir="rtl"] .home1-banner-section .banner-content {
+  left: auto !important;
+  right: 0 !important;
+  text-align: right !important;
+}
+
+[dir="rtl"] .home1-banner-section .banner-text-content {
+  text-align: right !important;
+}
+
+[dir="rtl"] .home1-banner-section .banner-title,
+[dir="rtl"] .home1-banner-section .banner-subtitle,
+[dir="rtl"] .home1-banner-section .banner-description {
+  text-align: right !important;
+}
+
+[dir="rtl"] .banner-buttons-container {
+  left: auto !important;
+  right: 60px !important;
+  justify-content: flex-end !important;
+}
+
+[dir="rtl"] .banner-slide-button svg {
+  transform: scaleX(-1);
+}
+
+/* Navigation Menu Separators RTL Fix */
+/* Add separator using ::before since ::after is used for dot indicator */
+[dir="rtl"] header.style-1 .main-menu .menu-list > li:not(:first-child)::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Fix for menu items with borders in RTL - flip border positions */
+[dir="rtl"] header.style-1 .main-menu .menu-list > li {
+  border-left: none !important;
+}
+
+[dir="rtl"] header.style-1 .main-menu .menu-list > li:not(:last-child) {
+  border-right: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-left: none !important;
+}
+
+[dir="rtl"] header.style-1 .main-menu .menu-list > li:last-child {
+  border-right: none !important;
+}
+
+/* Fix dot indicator position in RTL */
+[dir="rtl"] header.style-1 .main-menu ul > li::after {
+  right: auto !important;
+  left: 10px !important;
+}
+
+@media (max-width: 1399px) {
+  [dir="rtl"] header.style-1 .main-menu ul > li::after {
+    left: 5px !important;
+  }
+}
+
+@media (max-width: 1199px) {
+  [dir="rtl"] header.style-1 .main-menu ul > li::after {
+    left: 0 !important;
+  }
+}
+
+/* Header Navigation Separator RTL Fix */
+/* Purple separator after "GET IN TOUCH" should be on the left in RTL (opposite side) */
+html[dir="rtl"] header.style-1 .nav-right .right-sidebar-button::after,
+html[dir="rtl"] header.style-1.sticky .nav-right .right-sidebar-button::after,
+body[dir="rtl"] header.style-1 .nav-right .right-sidebar-button::after,
+body[dir="rtl"] header.style-1.sticky .nav-right .right-sidebar-button::after {
+  right: auto !important;
+  left: -30px !important;
+  transform: translateY(-50%) !important;
+}
+
+/* Ensure the separator is visible and properly positioned */
+html[dir="rtl"] header.style-1 .nav-right .right-sidebar-button,
+body[dir="rtl"] header.style-1 .nav-right .right-sidebar-button {
+  position: relative;
+}
+
+@media (max-width: 1199px) {
+  html[dir="rtl"] header.style-1 .nav-right .right-sidebar-button::after,
+  html[dir="rtl"] header.style-1.sticky .nav-right .right-sidebar-button::after,
+  body[dir="rtl"] header.style-1 .nav-right .right-sidebar-button::after,
+  body[dir="rtl"] header.style-1.sticky .nav-right .right-sidebar-button::after {
+    right: auto !important;
+    left: -13px !important;
+  }
+}
+
+@media (max-width: 991px) {
+  html[dir="rtl"] header.style-1 .nav-right .right-sidebar-button::after,
+  html[dir="rtl"] header.style-1.sticky .nav-right .right-sidebar-button::after,
+  body[dir="rtl"] header.style-1 .nav-right .right-sidebar-button::after,
+  body[dir="rtl"] header.style-1.sticky .nav-right .right-sidebar-button::after {
+    display: none !important;
+  }
+}
+
+/* Mobile RTL fixes */
+@media (max-width: 768px) {
+  [dir="rtl"] .banner-buttons-container {
+    right: 20px !important;
+    left: auto !important;
+  }
+  
+  [dir="rtl"] .home1-banner-section .banner-content {
+    padding: 0 20px !important;
+  }
 }

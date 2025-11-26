@@ -1,9 +1,11 @@
 "use client"
 import useModalVideo from '@/utils/useModalVideo';
 import React from 'react'
+import { useTranslation } from 'react-i18next';
 
 const Home1Banner2 = () => {
     const { openModal, Modal } = useModalVideo();
+    const { t } = useTranslation();
     return (
         <>
             <div className="home1-banner2-section" style={{ backgroundImage: 'linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.7) 100%), url(/assets/img/home1/home1-banner2-bg.jpg)' }}>
@@ -12,7 +14,7 @@ const Home1Banner2 = () => {
                         <div className="col-lg-12 d-flex justify-content-center">
                             <div className="banner-content">
                                 <div className="video-area">
-                                    <h2>Know More</h2>
+                                    <h2>{t('banner.knowMore')}</h2>
                                     <a data-fancybox="video-player" onClick={openModal} className="play-btn">
                                         <div className="icon">
                                             <svg className="video-circle" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="77px" viewBox="0 0 206 206" style={{ enableBackground: 'new 0 0 206 206' }} xmlSpace="preserve">
@@ -26,7 +28,7 @@ const Home1Banner2 = () => {
                                         </div>
                                     </a>
                                 </div>
-                                <h2>About Sharjah.</h2>
+                                <h2>{t('banner.aboutSharjah')}</h2>
                             </div>
                         </div>
                     </div>
