@@ -11,8 +11,10 @@ import {
   Save,
   Loader2,
   ChevronUp,
-  ChevronDown
+  ChevronDown,
+  Languages
 } from 'lucide-react';
+import { translateToArabic } from '@/utils/translate';
 
 export default function AdminBannerPage() {
   const { data: banners, loading, error, fetchData, add, update, remove } = useFirestore('banners');
@@ -22,11 +24,15 @@ export default function AdminBannerPage() {
   const [editingBanner, setEditingBanner] = useState(null);
   const [formData, setFormData] = useState({
     title: '',
+    titleArabic: '',
     subtitle: '',
+    subtitleArabic: '',
     description: '',
+    descriptionArabic: '',
     image: '',
     video: '',
     ctaText: '',
+    ctaTextArabic: '',
     ctaLink: ''
   });
   const [mediaType, setMediaType] = useState('image'); // 'image' or 'video'
@@ -37,6 +43,7 @@ export default function AdminBannerPage() {
   const [saving, setSaving] = useState(false);
   const [reordering, setReordering] = useState(false);
   const [formError, setFormError] = useState('');
+  const [translating, setTranslating] = useState({});
 
   useEffect(() => {
     fetchData({ orderBy: { field: 'order', direction: 'asc' } });
@@ -49,6 +56,27 @@ export default function AdminBannerPage() {
       ...prev,
       [name]: value
     }));
+  };
+
+  const handleTranslate = async (field, englishField) => {
+    const englishText = formData[englishField];
+    if (!englishText || englishText.trim() === '') {
+      alert('Please enter English text first');
+      return;
+    }
+
+    setTranslating(prev => ({ ...prev, [field]: true }));
+    try {
+      const translated = await translateToArabic(englishText);
+      setFormData(prev => ({
+        ...prev,
+        [field]: translated
+      }));
+    } catch (error) {
+      alert(error.message || 'Translation failed. Please translate manually.');
+    } finally {
+      setTranslating(prev => ({ ...prev, [field]: false }));
+    }
   };
 
   const handleImageChange = (e) => {
@@ -119,8 +147,13 @@ export default function AdminBannerPage() {
         return orderA - orderB;
       });
 
+      // Add default Arabic translations if not provided
       const bannerData = {
         ...formData,
+        titleArabic: formData.titleArabic || 'عنوان البانر',
+        subtitleArabic: formData.subtitleArabic || 'العنوان الفرعي',
+        descriptionArabic: formData.descriptionArabic || 'وصف البانر',
+        ctaTextArabic: formData.ctaTextArabic || 'عرض المزيد',
         image: imageUrl,
         video: videoUrl || null,
         order: editingBanner ? editingBanner.order : (sortedBanners.length > 0 ? sortedBanners[sortedBanners.length - 1].order + 1 : 1)
@@ -155,11 +188,15 @@ export default function AdminBannerPage() {
     setMediaType(hasVideo ? 'video' : 'image');
     setFormData({
       title: banner.title || '',
+      titleArabic: banner.titleArabic || '',
       subtitle: banner.subtitle || '',
+      subtitleArabic: banner.subtitleArabic || '',
       description: banner.description || '',
+      descriptionArabic: banner.descriptionArabic || '',
       image: banner.image || '',
       video: banner.video || '',
       ctaText: banner.ctaText || '',
+      ctaTextArabic: banner.ctaTextArabic || '',
       ctaLink: banner.ctaLink || ''
     });
     if (hasVideo) {
@@ -237,11 +274,15 @@ export default function AdminBannerPage() {
   const resetForm = () => {
     setFormData({
       title: '',
+      titleArabic: '',
       subtitle: '',
+      subtitleArabic: '',
       description: '',
+      descriptionArabic: '',
       image: '',
       video: '',
       ctaText: '',
+      ctaTextArabic: '',
       ctaLink: ''
     });
     setMediaType('image');
@@ -300,7 +341,7 @@ export default function AdminBannerPage() {
             )}
 
             <div className="admin-form-group">
-              <label htmlFor="title">Title *</label>
+              <label htmlFor="title">Title (English) *</label>
               <input
                 type="text"
                 id="title"
@@ -313,7 +354,45 @@ export default function AdminBannerPage() {
             </div>
 
             <div className="admin-form-group">
-              <label htmlFor="subtitle">Subtitle *</label>
+              <label htmlFor="titleArabic">
+                Title (Arabic) *
+                <button
+                  type="button"
+                  onClick={() => handleTranslate('titleArabic', 'title')}
+                  disabled={translating.titleArabic || !formData.title}
+                  style={{
+                    marginLeft: '10px',
+                    padding: '4px 8px',
+                    fontSize: '12px',
+                    backgroundColor: '#2196F3',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: translating.titleArabic || !formData.title ? 'not-allowed' : 'pointer',
+                    opacity: translating.titleArabic || !formData.title ? 0.6 : 1,
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4px'
+                  }}
+                  title="Translate from English"
+                >
+                  <Languages size={14} />
+                  {translating.titleArabic ? 'Translating...' : 'Translate'}
+                </button>
+              </label>
+              <input
+                type="text"
+                id="titleArabic"
+                name="titleArabic"
+                value={formData.titleArabic}
+                onChange={handleInputChange}
+                required
+                placeholder="أدخل عنوان البانر"
+              />
+            </div>
+
+            <div className="admin-form-group">
+              <label htmlFor="subtitle">Subtitle (English) *</label>
               <input
                 type="text"
                 id="subtitle"
@@ -326,7 +405,45 @@ export default function AdminBannerPage() {
             </div>
 
             <div className="admin-form-group">
-              <label htmlFor="description">Description *</label>
+              <label htmlFor="subtitleArabic">
+                Subtitle (Arabic) *
+                <button
+                  type="button"
+                  onClick={() => handleTranslate('subtitleArabic', 'subtitle')}
+                  disabled={translating.subtitleArabic || !formData.subtitle}
+                  style={{
+                    marginLeft: '10px',
+                    padding: '4px 8px',
+                    fontSize: '12px',
+                    backgroundColor: '#2196F3',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: translating.subtitleArabic || !formData.subtitle ? 'not-allowed' : 'pointer',
+                    opacity: translating.subtitleArabic || !formData.subtitle ? 0.6 : 1,
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4px'
+                  }}
+                  title="Translate from English"
+                >
+                  <Languages size={14} />
+                  {translating.subtitleArabic ? 'Translating...' : 'Translate'}
+                </button>
+              </label>
+              <input
+                type="text"
+                id="subtitleArabic"
+                name="subtitleArabic"
+                value={formData.subtitleArabic}
+                onChange={handleInputChange}
+                required
+                placeholder="أدخل العنوان الفرعي للبانر"
+              />
+            </div>
+
+            <div className="admin-form-group">
+              <label htmlFor="description">Description (English) *</label>
               <textarea
                 id="description"
                 name="description"
@@ -335,6 +452,44 @@ export default function AdminBannerPage() {
                 required
                 rows="4"
                 placeholder="Enter banner description"
+              />
+            </div>
+
+            <div className="admin-form-group">
+              <label htmlFor="descriptionArabic">
+                Description (Arabic) *
+                <button
+                  type="button"
+                  onClick={() => handleTranslate('descriptionArabic', 'description')}
+                  disabled={translating.descriptionArabic || !formData.description}
+                  style={{
+                    marginLeft: '10px',
+                    padding: '4px 8px',
+                    fontSize: '12px',
+                    backgroundColor: '#2196F3',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: translating.descriptionArabic || !formData.description ? 'not-allowed' : 'pointer',
+                    opacity: translating.descriptionArabic || !formData.description ? 0.6 : 1,
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4px'
+                  }}
+                  title="Translate from English"
+                >
+                  <Languages size={14} />
+                  {translating.descriptionArabic ? 'Translating...' : 'Translate'}
+                </button>
+              </label>
+              <textarea
+                id="descriptionArabic"
+                name="descriptionArabic"
+                value={formData.descriptionArabic}
+                onChange={handleInputChange}
+                required
+                rows="4"
+                placeholder="أدخل وصف البانر"
               />
             </div>
 
@@ -492,7 +647,7 @@ export default function AdminBannerPage() {
 
             <div className="admin-form-row">
               <div className="admin-form-group">
-                <label htmlFor="ctaText">CTA Button Text *</label>
+                <label htmlFor="ctaText">CTA Button Text (English) *</label>
                 <input
                   type="text"
                   id="ctaText"
@@ -505,7 +660,46 @@ export default function AdminBannerPage() {
               </div>
 
               <div className="admin-form-group">
-                <label htmlFor="ctaLink">CTA Button Link *</label>
+                <label htmlFor="ctaTextArabic">
+                  CTA Button Text (Arabic) *
+                  <button
+                    type="button"
+                    onClick={() => handleTranslate('ctaTextArabic', 'ctaText')}
+                    disabled={translating.ctaTextArabic || !formData.ctaText}
+                    style={{
+                      marginLeft: '10px',
+                      padding: '4px 8px',
+                      fontSize: '12px',
+                      backgroundColor: '#2196F3',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '4px',
+                      cursor: translating.ctaTextArabic || !formData.ctaText ? 'not-allowed' : 'pointer',
+                      opacity: translating.ctaTextArabic || !formData.ctaText ? 0.6 : 1,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px'
+                    }}
+                    title="Translate from English"
+                  >
+                    <Languages size={14} />
+                    {translating.ctaTextArabic ? 'Translating...' : 'Translate'}
+                  </button>
+                </label>
+                <input
+                  type="text"
+                  id="ctaTextArabic"
+                  name="ctaTextArabic"
+                  value={formData.ctaTextArabic}
+                  onChange={handleInputChange}
+                  required
+                  placeholder="مثل: عرض الشقق"
+                />
+              </div>
+            </div>
+
+            <div className="admin-form-group">
+              <label htmlFor="ctaLink">CTA Button Link *</label>
                 <input
                   type="text"
                   id="ctaLink"
@@ -515,7 +709,6 @@ export default function AdminBannerPage() {
                   required
                   placeholder="e.g., /property"
                 />
-              </div>
             </div>
 
             <div className="admin-form-actions">

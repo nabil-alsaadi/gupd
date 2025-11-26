@@ -187,7 +187,7 @@ const ChairmanMessage = ({ chairmanMessage }) => {
                         letterSpacing: "1px"
                       }}
                     >
-                      {chairmanContent.badge.label}
+                      {isRTL && chairmanMessage?.badge?.labelArabic ? chairmanMessage.badge.labelArabic : chairmanContent.badge.label}
                     </p>
                   </div>
                 </div>
@@ -230,7 +230,7 @@ const ChairmanMessage = ({ chairmanMessage }) => {
                     [isRTL ? 'paddingRight' : 'paddingLeft']: "30px"
                   }}
                 >
-                  {`"${chairmanContent.leadershipQuote}"`}
+                  {`"${isRTL && chairmanMessage?.leadershipQuoteArabic ? chairmanMessage.leadershipQuoteArabic : chairmanContent.leadershipQuote}"`}
                 </p>
                 <div
                   style={{
@@ -265,7 +265,7 @@ const ChairmanMessage = ({ chairmanMessage }) => {
                         color: "#000"
                       }}
                     >
-                      {chairmanContent.signature.name}
+                      {isRTL && chairmanMessage?.signature?.nameArabic ? chairmanMessage.signature.nameArabic : chairmanContent.signature.name}
                     </h6>
                     <p
                       style={{
@@ -274,7 +274,7 @@ const ChairmanMessage = ({ chairmanMessage }) => {
                         color: "#666"
                       }}
                     >
-                      {chairmanContent.signature.role}
+                      {isRTL && chairmanMessage?.signature?.roleArabic ? chairmanMessage.signature.roleArabic : chairmanContent.signature.role}
                     </p>
                   </div>
                 </div>
@@ -300,9 +300,9 @@ const ChairmanMessage = ({ chairmanMessage }) => {
                     >
                       <path d="M6.6304 0.338424C6.67018 -0.112811 7.32982 -0.112807 7.3696 0.338428L7.72654 4.38625C7.75291 4.68505 8.10454 4.83069 8.33443 4.63804L11.4491 2.02821C11.7963 1.73728 12.2627 2.20368 11.9718 2.55089L9.36197 5.66556C9.1693 5.89546 9.31496 6.24709 9.61374 6.27346L13.6615 6.6304C14.1128 6.67018 14.1128 7.32982 13.6615 7.3696L9.61374 7.72654C9.31496 7.75291 9.1693 8.10454 9.36197 8.33443L11.9718 11.4491C12.2627 11.7963 11.7963 12.2627 11.4491 11.9718L8.33443 9.36197C8.10454 9.1693 7.75291 9.31496 7.72654 9.61374L7.3696 13.6615C7.32982 14.1128 6.67018 14.1128 6.6304 13.6615L6.27346 9.61374C6.24709 9.31496 5.89546 9.1693 5.66556 9.36197L2.55089 11.9718C2.20368 12.2627 1.73729 11.7963 2.02822 11.4491L4.63804 8.33443C4.83069 8.10454 4.68504 7.75291 4.38625 7.72654L0.338424 7.3696C-0.112811 7.32982 -0.112807 6.67018 0.338428 6.6304L4.38625 6.27346C4.68505 6.24709 4.83069 5.89546 4.63804 5.66556L2.02821 2.55089C1.73728 2.20368 2.20368 1.73729 2.55089 2.02822L5.66556 4.63804C5.89546 4.83069 6.24709 4.68504 6.27346 4.38625L6.6304 0.338424Z" />
                     </svg>
-                    {chairmanContent.tagline}
+                    {isRTL && chairmanMessage?.taglineArabic ? chairmanMessage.taglineArabic : chairmanContent.tagline}
                   </span>
-                  <h2 style={{ marginBottom: "25px" }}>{chairmanContent.title}</h2>
+                  <h2 style={{ marginBottom: "25px" }}>{isRTL && chairmanMessage?.titleArabic ? chairmanMessage.titleArabic : chairmanContent.title}</h2>
                   <div
                     data-animate="slideInUp"
                     style={{
@@ -332,10 +332,12 @@ const ChairmanMessage = ({ chairmanMessage }) => {
                     >
                       <path d="M0 19.2C0 9.6 6.4 3.2 16 0L19.2 4.8C13.6 7.2 10.4 11.2 9.6 16H16V32H0V19.2ZM20.8 19.2C20.8 9.6 27.2 3.2 36.8 0L40 4.8C34.4 7.2 31.2 11.2 30.4 16H36.8V32H20.8V19.2Z" />
                     </svg>
-                    {`"${chairmanContent.highlightQuote}"`}
+                    {`"${isRTL && chairmanMessage?.highlightQuoteArabic ? chairmanMessage.highlightQuoteArabic : chairmanContent.highlightQuote}"`}
                   </div>
 
-                  {chairmanContent.paragraphs.map((paragraph, index) => (
+                  {(isRTL && Array.isArray(chairmanMessage?.paragraphsArabic) && chairmanMessage.paragraphsArabic.length > 0
+                    ? chairmanMessage.paragraphsArabic
+                    : chairmanContent.paragraphs).map((paragraph, index) => (
                     <p
                       key={index}
                       data-animate="slideInUp"
@@ -383,7 +385,7 @@ const ChairmanMessage = ({ chairmanMessage }) => {
                             letterSpacing: "1px"
                           }}
                         >
-                          {stat.label || defaultChairmanMessage.stats[index]?.label || ""}
+                          {isRTL && stat.labelArabic ? stat.labelArabic : (stat.label || defaultChairmanMessage.stats[index]?.label || "")}
                         </p>
                       </div>
                     </div>

@@ -193,13 +193,19 @@ const Home1Banner = ({ banners }) => {
                     marginRight: isRTL ? '0' : 'auto'
                 }}>
                     <h1 className="banner-title" style={{ textAlign: isRTL ? 'right' : 'left' }}>
-                        {slides[activeSlide]?.title}
+                        {isRTL && slides[activeSlide]?.titleArabic 
+                            ? slides[activeSlide].titleArabic 
+                            : slides[activeSlide]?.title}
                     </h1>
                     <h2 className="banner-subtitle" style={{ textAlign: isRTL ? 'right' : 'left' }}>
-                        {slides[activeSlide]?.subtitle}
+                        {isRTL && slides[activeSlide]?.subtitleArabic 
+                            ? slides[activeSlide].subtitleArabic 
+                            : slides[activeSlide]?.subtitle}
                     </h2>
                     <p className="banner-description" style={{ textAlign: isRTL ? 'right' : 'left' }}>
-                        {slides[activeSlide]?.description}
+                        {isRTL && slides[activeSlide]?.descriptionArabic 
+                            ? slides[activeSlide].descriptionArabic 
+                            : slides[activeSlide]?.description}
                     </p>
                 </div>
             </div>
@@ -258,7 +264,11 @@ const Home1Banner = ({ banners }) => {
                                 cursor: 'pointer'
                             }}
                         >
-                            <span>{slide.ctaText}</span>
+                            <span>
+                                {isRTL && slide.ctaTextArabic 
+                                    ? slide.ctaTextArabic 
+                                    : slide.ctaText}
+                            </span>
                             <svg viewBox="0 0 13 20" style={{ 
                                 width: '16px', 
                                 height: '16px',

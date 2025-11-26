@@ -70,12 +70,12 @@ const AdminSidebar = () => {
       icon: User,
       link: '/admin/users'
     },
-    // {
-    //   id: 'faq',
-    //   label: 'FAQs',
-    //   icon: HelpCircle,
-    //   link: '/admin/faq'
-    // },
+    {
+      id: 'faq',
+      label: 'FAQs',
+      icon: HelpCircle,
+      link: '/admin/faq'
+    },
     {
       id: 'projects',
       label: 'Projects',

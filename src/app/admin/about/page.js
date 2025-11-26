@@ -11,6 +11,7 @@ import {
   Trash2,
   X
 } from "lucide-react";
+import TranslateButton from '@/components/admin/TranslateButton';
 
 const fallbackAbout = {
   title: content.about?.title || "",
@@ -24,16 +25,21 @@ const fallbackAbout = {
 
 const toFormState = (data = {}) => ({
   title: data.title || "",
+  titleArabic: data.titleArabic || "",
   subtitle: data.subtitle || "",
+  subtitleArabic: data.subtitleArabic || "",
   videoDescription: data.videoDescription || "",
+  videoDescriptionArabic: data.videoDescriptionArabic || "",
   image: data.image || "",
   sections:
     Array.isArray(data.sections) && data.sections.length > 0
       ? data.sections.map((section) => ({
           title: section?.title || "",
-          text: section?.text || ""
+          titleArabic: section?.titleArabic || "",
+          text: section?.text || "",
+          textArabic: section?.textArabic || ""
         }))
-      : [{ title: "", text: "" }]
+      : [{ title: "", titleArabic: "", text: "", textArabic: "" }]
 });
 
 export default function AdminAboutPage() {
@@ -64,8 +70,11 @@ export default function AdminAboutPage() {
       const doc = aboutDocs[0];
       const mergedData = {
         title: doc.title || fallbackAbout.title,
+        titleArabic: doc.titleArabic || "",
         subtitle: doc.subtitle || fallbackAbout.subtitle,
+        subtitleArabic: doc.subtitleArabic || "",
         videoDescription: doc.videoDescription || fallbackAbout.videoDescription,
+        videoDescriptionArabic: doc.videoDescriptionArabic || "",
         image: doc.image || fallbackAbout.image,
         sections:
           Array.isArray(doc.sections) && doc.sections.length > 0
@@ -100,7 +109,7 @@ export default function AdminAboutPage() {
   const handleAddSection = () => {
     setFormData((prev) => ({
       ...prev,
-      sections: [...prev.sections, { title: "", text: "" }]
+      sections: [...prev.sections, { title: "", titleArabic: "", text: "", textArabic: "" }]
     }));
   };
 
@@ -148,7 +157,9 @@ export default function AdminAboutPage() {
       const sanitizedSections = formData.sections
         .map((section) => ({
           title: section.title.trim(),
-          text: section.text.trim()
+          titleArabic: section.titleArabic || section.title.trim(),
+          text: section.text.trim(),
+          textArabic: section.textArabic || section.text.trim()
         }))
         .filter((section) => section.title || section.text);
 
@@ -160,8 +171,11 @@ export default function AdminAboutPage() {
 
       const payload = {
         title: formData.title.trim() || fallbackAbout.title,
+        titleArabic: formData.titleArabic || formData.title.trim() || fallbackAbout.title,
         subtitle: formData.subtitle.trim() || fallbackAbout.subtitle,
+        subtitleArabic: formData.subtitleArabic || formData.subtitle.trim() || fallbackAbout.subtitle,
         videoDescription: formData.videoDescription.trim() || fallbackAbout.videoDescription,
+        videoDescriptionArabic: formData.videoDescriptionArabic || formData.videoDescription.trim() || fallbackAbout.videoDescription,
         image: imageUrl || fallbackAbout.image,
         sections: sanitizedSections
       };
@@ -219,7 +233,7 @@ export default function AdminAboutPage() {
 
             <div className="admin-form-row">
               <div className="admin-form-group">
-                <label htmlFor="title">Section Title *</label>
+                <label htmlFor="title">Section Title (English) *</label>
                 <input
                   type="text"
                   id="title"
@@ -231,7 +245,28 @@ export default function AdminAboutPage() {
                 />
               </div>
               <div className="admin-form-group">
-                <label htmlFor="subtitle">Section Subtitle *</label>
+                <label htmlFor="titleArabic">
+                  Section Title (Arabic) *
+                  <TranslateButton
+                    onTranslate={(translated) => setFormData(prev => ({ ...prev, titleArabic: translated }))}
+                    englishText={formData.title}
+                  />
+                </label>
+                <input
+                  type="text"
+                  id="titleArabic"
+                  name="titleArabic"
+                  value={formData.titleArabic}
+                  onChange={handleInputChange}
+                  placeholder="مثل: بناء الثقة منذ 2005"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="admin-form-row">
+              <div className="admin-form-group">
+                <label htmlFor="subtitle">Section Subtitle (English) *</label>
                 <input
                   type="text"
                   id="subtitle"
@@ -242,10 +277,28 @@ export default function AdminAboutPage() {
                   required
                 />
               </div>
+              <div className="admin-form-group">
+                <label htmlFor="subtitleArabic">
+                  Section Subtitle (Arabic) *
+                  <TranslateButton
+                    onTranslate={(translated) => setFormData(prev => ({ ...prev, subtitleArabic: translated }))}
+                    englishText={formData.subtitle}
+                  />
+                </label>
+                <input
+                  type="text"
+                  id="subtitleArabic"
+                  name="subtitleArabic"
+                  value={formData.subtitleArabic}
+                  onChange={handleInputChange}
+                  placeholder="مثل: تشكيل المجتمعات، تقديم التميز"
+                  required
+                />
+              </div>
             </div>
 
             <div className="admin-form-group">
-              <label htmlFor="videoDescription">Intro Description *</label>
+              <label htmlFor="videoDescription">Intro Description (English) *</label>
               <textarea
                 id="videoDescription"
                 name="videoDescription"
@@ -253,6 +306,25 @@ export default function AdminAboutPage() {
                 onChange={handleInputChange}
                 rows={4}
                 placeholder="Enter the description shown beside the play button"
+                required
+              />
+            </div>
+
+            <div className="admin-form-group">
+              <label htmlFor="videoDescriptionArabic">
+                Intro Description (Arabic) *
+                <TranslateButton
+                  onTranslate={(translated) => setFormData(prev => ({ ...prev, videoDescriptionArabic: translated }))}
+                  englishText={formData.videoDescription}
+                />
+              </label>
+              <textarea
+                id="videoDescriptionArabic"
+                name="videoDescriptionArabic"
+                value={formData.videoDescriptionArabic}
+                onChange={handleInputChange}
+                rows={4}
+                placeholder="أدخل الوصف المعروض بجانب زر التشغيل"
                 required
               />
             </div>
@@ -316,7 +388,7 @@ export default function AdminAboutPage() {
               {formData.sections.map((section, index) => (
                 <div key={index} className="admin-card admin-card-nested">
                   <div className="admin-form-group">
-                    <label htmlFor={`section-title-${index}`}>Section Title *</label>
+                    <label htmlFor={`section-title-${index}`}>Section Title (English) *</label>
                     <input
                       type="text"
                       id={`section-title-${index}`}
@@ -329,7 +401,26 @@ export default function AdminAboutPage() {
                     />
                   </div>
                   <div className="admin-form-group">
-                    <label htmlFor={`section-text-${index}`}>Section Text *</label>
+                    <label htmlFor={`section-titleArabic-${index}`}>
+                      Section Title (Arabic) *
+                      <TranslateButton
+                        onTranslate={(translated) => handleSectionChange(index, "titleArabic", translated)}
+                        englishText={section.title}
+                      />
+                    </label>
+                    <input
+                      type="text"
+                      id={`section-titleArabic-${index}`}
+                      value={section.titleArabic || ''}
+                      onChange={(event) =>
+                        handleSectionChange(index, "titleArabic", event.target.value)
+                      }
+                      placeholder="مثل: من نحن"
+                      required
+                    />
+                  </div>
+                  <div className="admin-form-group">
+                    <label htmlFor={`section-text-${index}`}>Section Text (English) *</label>
                     <textarea
                       id={`section-text-${index}`}
                       value={section.text}
@@ -338,6 +429,25 @@ export default function AdminAboutPage() {
                       }
                       rows={3}
                       placeholder="Enter the descriptive text"
+                      required
+                    />
+                  </div>
+                  <div className="admin-form-group">
+                    <label htmlFor={`section-textArabic-${index}`}>
+                      Section Text (Arabic) *
+                      <TranslateButton
+                        onTranslate={(translated) => handleSectionChange(index, "textArabic", translated)}
+                        englishText={section.text}
+                      />
+                    </label>
+                    <textarea
+                      id={`section-textArabic-${index}`}
+                      value={section.textArabic || ''}
+                      onChange={(event) =>
+                        handleSectionChange(index, "textArabic", event.target.value)
+                      }
+                      rows={3}
+                      placeholder="أدخل النص الوصفي"
                       required
                     />
                   </div>

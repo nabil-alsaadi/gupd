@@ -13,8 +13,10 @@ import {
   User,
   Tag,
   Calendar,
-  Eye
+  Eye,
+  Languages
 } from 'lucide-react';
+import { translateToArabic } from '@/utils/translate';
 
 export default function AdminBlogPage() {
   const { data: blogs, loading, error, fetchData, add, update, remove } = useFirestore('blogs');
@@ -24,15 +26,19 @@ export default function AdminBlogPage() {
   const [editingBlog, setEditingBlog] = useState(null);
   const [formData, setFormData] = useState({
     blog_title: '',
+    blog_titleArabic: '',
     blog_content: '',
+    blog_contentArabic: '',
     cover_image: '',
     thumbnail_image: '',
     author_image: '',
     author_name: '',
+    author_nameArabic: '',
     blog_view: '0',
     comment: '0',
     date: '',
     category: '',
+    categoryArabic: '',
     tags: ''
   });
   const [coverImageFile, setCoverImageFile] = useState(null);
@@ -43,6 +49,7 @@ export default function AdminBlogPage() {
   const [authorImagePreview, setAuthorImagePreview] = useState('');
   const [saving, setSaving] = useState(false);
   const [formError, setFormError] = useState('');
+  const [translating, setTranslating] = useState({});
 
   useEffect(() => {
     fetchData({ orderBy: { field: 'date', direction: 'desc' } });
@@ -55,6 +62,27 @@ export default function AdminBlogPage() {
       ...prev,
       [name]: value
     }));
+  };
+
+  const handleTranslate = async (field, englishField) => {
+    const englishText = formData[englishField];
+    if (!englishText || englishText.trim() === '') {
+      alert('Please enter English text first');
+      return;
+    }
+
+    setTranslating(prev => ({ ...prev, [field]: true }));
+    try {
+      const translated = await translateToArabic(englishText);
+      setFormData(prev => ({
+        ...prev,
+        [field]: translated
+      }));
+    } catch (error) {
+      alert(error.message || 'Translation failed. Please translate manually.');
+    } finally {
+      setTranslating(prev => ({ ...prev, [field]: false }));
+    }
   };
 
   const handleImageChange = (e, type) => {
@@ -127,18 +155,23 @@ export default function AdminBlogPage() {
         ? formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag !== '')
         : [];
 
+      // Add default Arabic translations if not provided
       const blogData = {
         blog_title: formData.blog_title.trim(),
+        blog_titleArabic: formData.blog_titleArabic || 'عنوان المدونة',
         blog_content: formData.blog_content.trim(),
+        blog_contentArabic: formData.blog_contentArabic || 'محتوى المدونة',
         cover_image: coverImageUrl,
         thumbnail_image: thumbnailImageUrl || coverImageUrl, // Fallback to cover image
         author_image: authorImageUrl,
         author_name: formData.author_name.trim(),
+        author_nameArabic: formData.author_nameArabic || formData.author_name.trim(),
         blog_view: parseInt(formData.blog_view) || 0,
         comment: parseInt(formData.comment) || 0,
         comment_content: editingBlog?.comment_content || [],
         date: formData.date || new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
         category: formData.category.trim(),
+        categoryArabic: formData.categoryArabic || formData.category.trim(),
         tags: tagsArray
       };
 
@@ -162,15 +195,19 @@ export default function AdminBlogPage() {
     setEditingBlog(blog);
     setFormData({
       blog_title: blog.blog_title || '',
+      blog_titleArabic: blog.blog_titleArabic || '',
       blog_content: blog.blog_content || '',
+      blog_contentArabic: blog.blog_contentArabic || '',
       cover_image: blog.cover_image || '',
       thumbnail_image: blog.thumbnail_image || '',
       author_image: blog.author_image || '',
       author_name: blog.author_name || '',
+      author_nameArabic: blog.author_nameArabic || '',
       blog_view: blog.blog_view?.toString() || '0',
       comment: blog.comment?.toString() || '0',
       date: blog.date || '',
       category: blog.category || '',
+      categoryArabic: blog.categoryArabic || '',
       tags: Array.isArray(blog.tags) ? blog.tags.join(', ') : blog.tags || ''
     });
     setCoverImagePreview(blog.cover_image || '');
@@ -195,15 +232,19 @@ export default function AdminBlogPage() {
   const resetForm = () => {
     setFormData({
       blog_title: '',
+      blog_titleArabic: '',
       blog_content: '',
+      blog_contentArabic: '',
       cover_image: '',
       thumbnail_image: '',
       author_image: '',
       author_name: '',
+      author_nameArabic: '',
       blog_view: '0',
       comment: '0',
       date: '',
       category: '',
+      categoryArabic: '',
       tags: ''
     });
     setCoverImageFile(null);
@@ -269,7 +310,7 @@ export default function AdminBlogPage() {
               </div>
               
               <div className="admin-form-group">
-                <label htmlFor="blog_title">Blog Title *</label>
+                <label htmlFor="blog_title">Blog Title (English) *</label>
                 <input
                   type="text"
                   id="blog_title"
@@ -282,7 +323,45 @@ export default function AdminBlogPage() {
               </div>
 
               <div className="admin-form-group">
-                <label htmlFor="blog_content">Blog Content *</label>
+                <label htmlFor="blog_titleArabic">
+                  Blog Title (Arabic) *
+                  <button
+                    type="button"
+                    onClick={() => handleTranslate('blog_titleArabic', 'blog_title')}
+                    disabled={translating.blog_titleArabic || !formData.blog_title}
+                    style={{
+                      marginLeft: '10px',
+                      padding: '4px 8px',
+                      fontSize: '12px',
+                      backgroundColor: '#2196F3',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '4px',
+                      cursor: translating.blog_titleArabic || !formData.blog_title ? 'not-allowed' : 'pointer',
+                      opacity: translating.blog_titleArabic || !formData.blog_title ? 0.6 : 1,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px'
+                    }}
+                    title="Translate from English"
+                  >
+                    <Languages size={14} />
+                    {translating.blog_titleArabic ? 'Translating...' : 'Translate'}
+                  </button>
+                </label>
+                <input
+                  type="text"
+                  id="blog_titleArabic"
+                  name="blog_titleArabic"
+                  value={formData.blog_titleArabic}
+                  onChange={handleInputChange}
+                  required
+                  placeholder="أدخل عنوان المدونة"
+                />
+              </div>
+
+              <div className="admin-form-group">
+                <label htmlFor="blog_content">Blog Content (English) *</label>
                 <textarea
                   id="blog_content"
                   name="blog_content"
@@ -294,9 +373,47 @@ export default function AdminBlogPage() {
                 />
               </div>
 
+              <div className="admin-form-group">
+                <label htmlFor="blog_contentArabic">
+                  Blog Content (Arabic) *
+                  <button
+                    type="button"
+                    onClick={() => handleTranslate('blog_contentArabic', 'blog_content')}
+                    disabled={translating.blog_contentArabic || !formData.blog_content}
+                    style={{
+                      marginLeft: '10px',
+                      padding: '4px 8px',
+                      fontSize: '12px',
+                      backgroundColor: '#2196F3',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '4px',
+                      cursor: translating.blog_contentArabic || !formData.blog_content ? 'not-allowed' : 'pointer',
+                      opacity: translating.blog_contentArabic || !formData.blog_content ? 0.6 : 1,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px'
+                    }}
+                    title="Translate from English"
+                  >
+                    <Languages size={14} />
+                    {translating.blog_contentArabic ? 'Translating...' : 'Translate'}
+                  </button>
+                </label>
+                <textarea
+                  id="blog_contentArabic"
+                  name="blog_contentArabic"
+                  value={formData.blog_contentArabic}
+                  onChange={handleInputChange}
+                  required
+                  rows="8"
+                  placeholder="أدخل محتوى المدونة أو الوصف"
+                />
+              </div>
+
               <div className="admin-form-row">
                 <div className="admin-form-group">
-                  <label htmlFor="category">Category *</label>
+                  <label htmlFor="category">Category (English) *</label>
                   <input
                     type="text"
                     id="category"
@@ -308,6 +425,46 @@ export default function AdminBlogPage() {
                   />
                 </div>
 
+                <div className="admin-form-group">
+                  <label htmlFor="categoryArabic">
+                    Category (Arabic) *
+                    <button
+                      type="button"
+                      onClick={() => handleTranslate('categoryArabic', 'category')}
+                      disabled={translating.categoryArabic || !formData.category}
+                      style={{
+                        marginLeft: '10px',
+                        padding: '4px 8px',
+                        fontSize: '12px',
+                        backgroundColor: '#2196F3',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '4px',
+                        cursor: translating.categoryArabic || !formData.category ? 'not-allowed' : 'pointer',
+                        opacity: translating.categoryArabic || !formData.category ? 0.6 : 1,
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px'
+                      }}
+                      title="Translate from English"
+                    >
+                      <Languages size={14} />
+                      {translating.categoryArabic ? 'Translating...' : 'Translate'}
+                    </button>
+                  </label>
+                  <input
+                    type="text"
+                    id="categoryArabic"
+                    name="categoryArabic"
+                    value={formData.categoryArabic}
+                    onChange={handleInputChange}
+                    required
+                    placeholder="مثل: الصناعة، البناء"
+                  />
+                </div>
+              </div>
+
+              <div className="admin-form-row">
                 <div className="admin-form-group">
                   <label htmlFor="date">Date *</label>
                   <input
@@ -436,7 +593,7 @@ export default function AdminBlogPage() {
 
               <div className="admin-form-row">
                 <div className="admin-form-group">
-                  <label htmlFor="author_name">Author Name *</label>
+                  <label htmlFor="author_name">Author Name (English) *</label>
                   <input
                     type="text"
                     id="author_name"
@@ -446,6 +603,45 @@ export default function AdminBlogPage() {
                     required
                     placeholder="e.g., Cooper Jogan"
                   />
+                </div>
+
+                <div className="admin-form-group">
+                  <label htmlFor="author_nameArabic">
+                    Author Name (Arabic) *
+                    <button
+                      type="button"
+                      onClick={() => handleTranslate('author_nameArabic', 'author_name')}
+                      disabled={translating.author_nameArabic || !formData.author_name}
+                      style={{
+                        marginLeft: '10px',
+                        padding: '4px 8px',
+                        fontSize: '12px',
+                        backgroundColor: '#2196F3',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '4px',
+                        cursor: translating.author_nameArabic || !formData.author_name ? 'not-allowed' : 'pointer',
+                        opacity: translating.author_nameArabic || !formData.author_name ? 0.6 : 1,
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px'
+                      }}
+                      title="Translate from English"
+                    >
+                      <Languages size={14} />
+                      {translating.author_nameArabic ? 'Translating...' : 'Translate'}
+                    </button>
+                  </label>
+                  <input
+                    type="text"
+                    id="author_nameArabic"
+                    name="author_nameArabic"
+                    value={formData.author_nameArabic}
+                    onChange={handleInputChange}
+                    required
+                    placeholder="مثل: كوبر جوجان"
+                  />
+                </div>
                 </div>
 
                 <div className="admin-form-group">
@@ -488,7 +684,6 @@ export default function AdminBlogPage() {
                       className="admin-url-input"
                     />
                   )}
-                </div>
               </div>
 
               <div className="admin-form-row">

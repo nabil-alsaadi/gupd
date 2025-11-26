@@ -1,6 +1,6 @@
 "use client";
 /* eslint-disable react/jsx-key */
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import gupdContent from '@/data/gupdContent.json';
 import { 
     MapPin, 
@@ -10,13 +10,29 @@ import {
     ShieldCheck, 
     Handshake 
 } from 'lucide-react';
+import { useTranslation } from "react-i18next";
+import { useLanguage } from "@/providers/LanguageProvider";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Autoplay, EffectFade, Navigation, Pagination } from "swiper";
 SwiperCore.use([Autoplay, EffectFade, Navigation, Pagination]);
 
 const ProcessSection = () => {
+    const { t } = useTranslation();
+    const { locale } = useLanguage();
+    const isRTL = locale === 'ar';
     const methodology = gupdContent.methodology;
+    const [swiperKey, setSwiperKey] = useState(0);
+
+    // Force Swiper remount when direction changes
+    useEffect(() => {
+        // Wait for DOM to update with new direction attribute
+        const timer = setTimeout(() => {
+            setSwiperKey(prev => prev + 1);
+        }, 100);
+        
+        return () => clearTimeout(timer);
+    }, [locale, isRTL]);
 
     const settings = useMemo(() => ({
         slidesPerView: "auto",
@@ -53,23 +69,29 @@ const ProcessSection = () => {
                 <div className="row justify-content-center mb-70 wow animate slideInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
                     <div className="col-lg-7">
                         <div className="section-title three text-center">
-                            <span>{methodology.title}</span>
-                            <h2>{methodology.heading}</h2>
-                            <p>{methodology.description}</p>
+                            <span>{t('methodology.title')}</span>
+                            <h2>{t('methodology.heading')}</h2>
+                            <p>{t('methodology.description')}</p>
                         </div>
                     </div>
                 </div>
                 <div className="process-slider-wrap">
                     <div className="row">
                         <div className="col-lg-12">
-                            <Swiper {...settings} className="swiper home3-process-slider">
+                            <Swiper 
+                                {...settings} 
+                                className="swiper home3-process-slider"
+                                key={`${locale}-${swiperKey}`}
+                            >
                                 {methodology.steps.map((step, index) => {
                                     const Icon = stepIcons[index];
+                                    // step.stepNumber is already "01", "02", etc., so just use it directly
+                                    const stepKey = `step${step.stepNumber}`;
                                     return (
                                         <SwiperSlide key={index} className="swiper-slide">
                                             <div className="process-card">
                                                 <div className="step-no">
-                                                    <span>STEP : {step.stepNumber}</span>
+                                                    <span>{isRTL ? 'الخطوة' : 'STEP'} : {step.stepNumber}</span>
                                                 </div>
                                                 <div className="process-content">
                                                     <div className="icon">
@@ -82,8 +104,8 @@ const ProcessSection = () => {
                                                             />
                                                         ) : null}
                                                     </div>
-                                                    <h4>{step.title}</h4>
-                                                    <p>{step.description}</p>
+                                                    <h4>{t(`methodology.${stepKey}Title`)}</h4>
+                                                    <p>{t(`methodology.${stepKey}Description`)}</p>
                                                 </div>
                                             </div>
                                         </SwiperSlide>

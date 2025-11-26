@@ -1,8 +1,14 @@
+"use client"
 import Link from 'next/link'
 import React from 'react'
 import contactData from '@/data/contactContent.json'   // 👈 new JSON
+import { useTranslation } from "react-i18next"
+import { useLanguage } from "@/providers/LanguageProvider"
 
 const Home1Support = () => {
+  const { t } = useTranslation()
+  const { locale } = useLanguage()
+  const isRTL = locale === 'ar'
   const contact = contactData.contact
 
   return (
@@ -15,8 +21,8 @@ const Home1Support = () => {
         >
           <div className="col-xl-9 col-lg-10">
             <div className="section-title">
-              <span>{contact.tagline}</span>
-              <h2>{contact.headline}</h2>
+              <span>{t('contact.yourDreamApartmentAwaits')}</span>
+              <h2>{t('contact.headline')}</h2>
             </div>
           </div>
         </div>
@@ -26,11 +32,11 @@ const Home1Support = () => {
               <div className="btn_wrapper">
                 <Link href="/contact" className="contact-area">
                   <h2>{contact.button.number}</h2>
-                  <span>{contact.button.unit}</span>
-                  <p>{contact.button.text}</p>
+                  <span>{t('contact.buttonUnit')}</span>
+                  <p>{t('contact.buttonText')}</p>
                 </Link>
               </div>
-              <p>{contact.description}</p>
+              <p>{t('contact.description')}</p>
             </div>
           </div>
           <div className="col-lg-6 d-lg-block d-none">

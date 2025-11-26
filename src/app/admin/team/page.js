@@ -13,6 +13,7 @@ import {
   User,
   MessageSquare
 } from 'lucide-react';
+import TranslateButton from '@/components/admin/TranslateButton';
 
 export default function AdminTeamPage() {
   const { data: teamData, loading, error, fetchData, add, update, remove } = useFirestore('team');
@@ -49,18 +50,25 @@ export default function AdminTeamPage() {
   const [editingMember, setEditingMember] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
+    nameArabic: '',
     position: '',
+    positionArabic: '',
     image: ''
   });
   const [founderData, setFounderData] = useState({
     name: '',
+    nameArabic: '',
     position: '',
+    positionArabic: '',
     quote: '',
+    quoteArabic: '',
     image: ''
   });
   const [sectionTitle, setSectionTitle] = useState({
     tagline: '',
-    title: ''
+    taglineArabic: '',
+    title: '',
+    titleArabic: ''
   });
   const [imageFile, setImageFile] = useState(null);
   const [founderImageFile, setFounderImageFile] = useState(null);
@@ -85,8 +93,11 @@ export default function AdminTeamPage() {
         if (team.founder) {
           setFounderData({
             name: team.founder.name || '',
+            nameArabic: team.founder.nameArabic || '',
             position: team.founder.position || '',
+            positionArabic: team.founder.positionArabic || '',
             quote: team.founder.quote || '',
+            quoteArabic: team.founder.quoteArabic || '',
             image: team.founder.image || ''
           });
           setFounderImagePreview(team.founder.image || '');
@@ -94,7 +105,9 @@ export default function AdminTeamPage() {
         if (team.sectionTitle) {
           setSectionTitle({
             tagline: team.sectionTitle.tagline || '',
-            title: team.sectionTitle.title || ''
+            taglineArabic: team.sectionTitle.taglineArabic || '',
+            title: team.sectionTitle.title || '',
+            titleArabic: team.sectionTitle.titleArabic || ''
           });
         }
         if (team.chairmanMessage) {
@@ -196,7 +209,7 @@ export default function AdminTeamPage() {
     setChairmanMessage(prev => {
       const stats = [...prev.stats];
       if (!stats[index]) {
-        stats[index] = { value: '', label: '' };
+        stats[index] = { value: '', label: '', labelArabic: '' };
       }
       stats[index] = {
         ...stats[index],
@@ -284,9 +297,12 @@ export default function AdminTeamPage() {
         imageUrl = await uploadFile(imageFile, 'images/team/');
       }
 
+      // Add default Arabic translations if not provided
       const memberData = {
         name: formData.name,
+        nameArabic: formData.nameArabic || formData.name,
         position: formData.position,
+        positionArabic: formData.positionArabic || formData.position,
         image: imageUrl
       };
 
@@ -351,8 +367,12 @@ export default function AdminTeamPage() {
         imageUrl = await uploadFile(founderImageFile, 'images/team/');
       }
 
+      // Add default Arabic translations if not provided
       const updatedFounderData = {
         ...founderData,
+        nameArabic: founderData.nameArabic || founderData.name,
+        positionArabic: founderData.positionArabic || founderData.position,
+        quoteArabic: founderData.quoteArabic || founderData.quote,
         image: imageUrl
       };
 
@@ -403,23 +423,35 @@ export default function AdminTeamPage() {
         }))
         .filter((stat) => stat.value || stat.label);
 
+      // Add default Arabic translations if not provided
       const updatedChairmanMessage = {
         tagline: chairmanMessage.tagline,
+        taglineArabic: chairmanMessage.taglineArabic || chairmanMessage.tagline,
         title: chairmanMessage.title,
+        titleArabic: chairmanMessage.titleArabic || chairmanMessage.title,
         leadershipQuote: chairmanMessage.leadershipQuote,
+        leadershipQuoteArabic: chairmanMessage.leadershipQuoteArabic || chairmanMessage.leadershipQuote,
         highlightQuote: chairmanMessage.highlightQuote,
+        highlightQuoteArabic: chairmanMessage.highlightQuoteArabic || chairmanMessage.highlightQuote,
         paragraphs: filteredParagraphs.length > 0 ? filteredParagraphs : defaultChairmanMessage.paragraphs,
+        paragraphsArabic: chairmanMessage.paragraphsArabic || filteredParagraphs,
         badge: {
           value: chairmanMessage.badge.value,
-          label: chairmanMessage.badge.label
+          label: chairmanMessage.badge.label,
+          labelArabic: chairmanMessage.badge?.labelArabic || chairmanMessage.badge.label
         },
         image: imageUrl,
         signature: {
           initials: chairmanMessage.signature.initials,
           name: chairmanMessage.signature.name,
-          role: chairmanMessage.signature.role
+          nameArabic: chairmanMessage.signature?.nameArabic || chairmanMessage.signature.name,
+          role: chairmanMessage.signature.role,
+          roleArabic: chairmanMessage.signature?.roleArabic || chairmanMessage.signature.role
         },
-        stats: cleanedStats.length > 0 ? cleanedStats : defaultChairmanMessage.stats
+        stats: cleanedStats.length > 0 ? cleanedStats.map(stat => ({
+          ...stat,
+          labelArabic: stat.labelArabic || stat.label
+        })) : defaultChairmanMessage.stats
       };
 
       const currentTeamData = teamData.length > 0 ? teamData[0] : null;
@@ -463,16 +495,24 @@ export default function AdminTeamPage() {
     try {
       const currentTeamData = teamData.length > 0 ? teamData[0] : null;
 
+      // Add default Arabic translations if not provided
+      const updatedSectionTitle = {
+        tagline: sectionTitle.tagline,
+        taglineArabic: sectionTitle.taglineArabic || sectionTitle.tagline,
+        title: sectionTitle.title,
+        titleArabic: sectionTitle.titleArabic || sectionTitle.title
+      };
+
       if (currentTeamData) {
         await update(currentTeamData.id, {
           ...currentTeamData,
-          sectionTitle: sectionTitle
+          sectionTitle: updatedSectionTitle
         });
       } else {
         await add({
           members: [],
           founder: founderData,
-          sectionTitle: sectionTitle
+          sectionTitle: updatedSectionTitle
         });
       }
 
@@ -489,7 +529,9 @@ export default function AdminTeamPage() {
     setEditingMember(member);
     setFormData({
       name: member.name || '',
+      nameArabic: member.nameArabic || '',
       position: member.position || '',
+      positionArabic: member.positionArabic || '',
       image: member.image || ''
     });
     setImagePreview(member.image || '');
@@ -518,7 +560,9 @@ export default function AdminTeamPage() {
   const resetForm = () => {
     setFormData({
       name: '',
+      nameArabic: '',
       position: '',
+      positionArabic: '',
       image: ''
     });
     setImageFile(null);
@@ -677,7 +721,7 @@ export default function AdminTeamPage() {
             )}
 
             <div className="admin-form-group">
-              <label htmlFor="name">Name *</label>
+              <label htmlFor="name">Name (English) *</label>
               <input
                 type="text"
                 id="name"
@@ -690,7 +734,26 @@ export default function AdminTeamPage() {
             </div>
 
             <div className="admin-form-group">
-              <label htmlFor="position">Position *</label>
+              <label htmlFor="nameArabic">
+                Name (Arabic) *
+                <TranslateButton
+                  onTranslate={(translated) => setFormData(prev => ({ ...prev, nameArabic: translated }))}
+                  englishText={formData.name}
+                />
+              </label>
+              <input
+                type="text"
+                id="nameArabic"
+                name="nameArabic"
+                value={formData.nameArabic}
+                onChange={handleInputChange}
+                required
+                placeholder="أدخل اسم عضو الفريق"
+              />
+            </div>
+
+            <div className="admin-form-group">
+              <label htmlFor="position">Position (English) *</label>
               <input
                 type="text"
                 id="position"
@@ -699,6 +762,25 @@ export default function AdminTeamPage() {
                 onChange={handleInputChange}
                 required
                 placeholder="e.g., Project Manager, Architect"
+              />
+            </div>
+
+            <div className="admin-form-group">
+              <label htmlFor="positionArabic">
+                Position (Arabic) *
+                <TranslateButton
+                  onTranslate={(translated) => setFormData(prev => ({ ...prev, positionArabic: translated }))}
+                  englishText={formData.position}
+                />
+              </label>
+              <input
+                type="text"
+                id="positionArabic"
+                name="positionArabic"
+                value={formData.positionArabic}
+                onChange={handleInputChange}
+                required
+                placeholder="مثل: مدير المشروع، مهندس معماري"
               />
             </div>
 
@@ -798,7 +880,7 @@ export default function AdminTeamPage() {
             )}
 
             <div className="admin-form-group">
-              <label htmlFor="founder-name">Name *</label>
+              <label htmlFor="founder-name">Name (English) *</label>
               <input
                 type="text"
                 id="founder-name"
@@ -811,7 +893,26 @@ export default function AdminTeamPage() {
             </div>
 
             <div className="admin-form-group">
-              <label htmlFor="founder-position">Position *</label>
+              <label htmlFor="founder-nameArabic">
+                Name (Arabic) *
+                <TranslateButton
+                  onTranslate={(translated) => setFounderData(prev => ({ ...prev, nameArabic: translated }))}
+                  englishText={founderData.name}
+                />
+              </label>
+              <input
+                type="text"
+                id="founder-nameArabic"
+                name="nameArabic"
+                value={founderData.nameArabic}
+                onChange={handleFounderChange}
+                required
+                placeholder="أدخل اسم المؤسس"
+              />
+            </div>
+
+            <div className="admin-form-group">
+              <label htmlFor="founder-position">Position (English) *</label>
               <input
                 type="text"
                 id="founder-position"
@@ -824,7 +925,26 @@ export default function AdminTeamPage() {
             </div>
 
             <div className="admin-form-group">
-              <label htmlFor="founder-quote">Quote *</label>
+              <label htmlFor="founder-positionArabic">
+                Position (Arabic) *
+                <TranslateButton
+                  onTranslate={(translated) => setFounderData(prev => ({ ...prev, positionArabic: translated }))}
+                  englishText={founderData.position}
+                />
+              </label>
+              <input
+                type="text"
+                id="founder-positionArabic"
+                name="positionArabic"
+                value={founderData.positionArabic}
+                onChange={handleFounderChange}
+                required
+                placeholder="مثل: الرئيس التنفيذي، المؤسس"
+              />
+            </div>
+
+            <div className="admin-form-group">
+              <label htmlFor="founder-quote">Quote (English) *</label>
               <textarea
                 id="founder-quote"
                 name="quote"
@@ -833,6 +953,25 @@ export default function AdminTeamPage() {
                 required
                 rows="4"
                 placeholder="Enter founder quote"
+              />
+            </div>
+
+            <div className="admin-form-group">
+              <label htmlFor="founder-quoteArabic">
+                Quote (Arabic) *
+                <TranslateButton
+                  onTranslate={(translated) => setFounderData(prev => ({ ...prev, quoteArabic: translated }))}
+                  englishText={founderData.quote}
+                />
+              </label>
+              <textarea
+                id="founder-quoteArabic"
+                name="quoteArabic"
+                value={founderData.quoteArabic}
+                onChange={handleFounderChange}
+                required
+                rows="4"
+                placeholder="أدخل اقتباس المؤسس"
               />
             </div>
 
@@ -924,7 +1063,7 @@ export default function AdminTeamPage() {
             )}
 
             <div className="admin-form-group">
-              <label htmlFor="chairman-tagline">Tagline *</label>
+              <label htmlFor="chairman-tagline">Tagline (English) *</label>
               <input
                 type="text"
                 id="chairman-tagline"
@@ -937,7 +1076,26 @@ export default function AdminTeamPage() {
             </div>
 
             <div className="admin-form-group">
-              <label htmlFor="chairman-title">Title *</label>
+              <label htmlFor="chairman-taglineArabic">
+                Tagline (Arabic) *
+                <TranslateButton
+                  onTranslate={(translated) => setChairmanMessage(prev => ({ ...prev, taglineArabic: translated }))}
+                  englishText={chairmanMessage.tagline}
+                />
+              </label>
+              <input
+                type="text"
+                id="chairman-taglineArabic"
+                name="taglineArabic"
+                value={chairmanMessage.taglineArabic || ''}
+                onChange={handleChairmanTextChange}
+                required
+                placeholder="مثل: رسالة الرئيس"
+              />
+            </div>
+
+            <div className="admin-form-group">
+              <label htmlFor="chairman-title">Title (English) *</label>
               <input
                 type="text"
                 id="chairman-title"
@@ -950,7 +1108,26 @@ export default function AdminTeamPage() {
             </div>
 
             <div className="admin-form-group">
-              <label htmlFor="chairman-leadership-quote">Leadership Quote *</label>
+              <label htmlFor="chairman-titleArabic">
+                Title (Arabic) *
+                <TranslateButton
+                  onTranslate={(translated) => setChairmanMessage(prev => ({ ...prev, titleArabic: translated }))}
+                  englishText={chairmanMessage.title}
+                />
+              </label>
+              <input
+                type="text"
+                id="chairman-titleArabic"
+                name="titleArabic"
+                value={chairmanMessage.titleArabic || ''}
+                onChange={handleChairmanTextChange}
+                required
+                placeholder="مثل: كلمة من الشيخ فيصل"
+              />
+            </div>
+
+            <div className="admin-form-group">
+              <label htmlFor="chairman-leadership-quote">Leadership Quote (English) *</label>
               <textarea
                 id="chairman-leadership-quote"
                 name="leadershipQuote"
@@ -963,7 +1140,26 @@ export default function AdminTeamPage() {
             </div>
 
             <div className="admin-form-group">
-              <label htmlFor="chairman-highlight-quote">Highlight Quote *</label>
+              <label htmlFor="chairman-leadership-quoteArabic">
+                Leadership Quote (Arabic) *
+                <TranslateButton
+                  onTranslate={(translated) => setChairmanMessage(prev => ({ ...prev, leadershipQuoteArabic: translated }))}
+                  englishText={chairmanMessage.leadershipQuote}
+                />
+              </label>
+              <textarea
+                id="chairman-leadership-quoteArabic"
+                name="leadershipQuoteArabic"
+                value={chairmanMessage.leadershipQuoteArabic || ''}
+                onChange={handleChairmanTextChange}
+                required
+                rows="2"
+                placeholder="أدخل اقتباس القيادة القصير"
+              />
+            </div>
+
+            <div className="admin-form-group">
+              <label htmlFor="chairman-highlight-quote">Highlight Quote (English) *</label>
               <textarea
                 id="chairman-highlight-quote"
                 name="highlightQuote"
@@ -976,7 +1172,26 @@ export default function AdminTeamPage() {
             </div>
 
             <div className="admin-form-group">
-              <label htmlFor="chairman-paragraphs">Message Paragraphs *</label>
+              <label htmlFor="chairman-highlight-quoteArabic">
+                Highlight Quote (Arabic) *
+                <TranslateButton
+                  onTranslate={(translated) => setChairmanMessage(prev => ({ ...prev, highlightQuoteArabic: translated }))}
+                  englishText={chairmanMessage.highlightQuote}
+                />
+              </label>
+              <textarea
+                id="chairman-highlight-quoteArabic"
+                name="highlightQuoteArabic"
+                value={chairmanMessage.highlightQuoteArabic || ''}
+                onChange={handleChairmanTextChange}
+                required
+                rows="3"
+                placeholder="أدخل الاقتباس المميز"
+              />
+            </div>
+
+            <div className="admin-form-group">
+              <label htmlFor="chairman-paragraphs">Message Paragraphs (English) *</label>
               <textarea
                 id="chairman-paragraphs"
                 value={chairmanMessage.paragraphs.join('\n\n')}
@@ -986,6 +1201,44 @@ export default function AdminTeamPage() {
                 placeholder="Enter each paragraph on a new line"
               />
               <small className="admin-help-text">Separate paragraphs with an empty line.</small>
+            </div>
+
+            <div className="admin-form-group">
+              <label htmlFor="chairman-paragraphsArabic">
+                Message Paragraphs (Arabic) *
+                <TranslateButton
+                  onTranslate={(translated) => {
+                    // Split translated text into paragraphs (same structure as English)
+                    const paragraphs = translated
+                      .split(/\n+/)
+                      .map((paragraph) => paragraph.trim())
+                      .filter(Boolean);
+                    setChairmanMessage(prev => ({
+                      ...prev,
+                      paragraphsArabic: paragraphs.length > 0 ? paragraphs : prev.paragraphs
+                    }));
+                  }}
+                  englishText={chairmanMessage.paragraphs.join('\n\n')}
+                />
+              </label>
+              <textarea
+                id="chairman-paragraphsArabic"
+                value={(chairmanMessage.paragraphsArabic || chairmanMessage.paragraphs || []).join('\n\n')}
+                onChange={(e) => {
+                  const paragraphs = e.target.value
+                    .split(/\n+/)
+                    .map((paragraph) => paragraph.trim())
+                    .filter(Boolean);
+                  setChairmanMessage(prev => ({
+                    ...prev,
+                    paragraphsArabic: paragraphs.length > 0 ? paragraphs : prev.paragraphs
+                  }));
+                }}
+                required
+                rows="6"
+                placeholder="أدخل كل فقرة في سطر جديد"
+              />
+              <small className="admin-help-text">افصل بين الفقرات بسطر فارغ.</small>
             </div>
 
             <div className="admin-form-row">
@@ -1001,7 +1254,7 @@ export default function AdminTeamPage() {
                 />
               </div>
               <div className="admin-form-group">
-                <label htmlFor="chairman-badge-label">Badge Label *</label>
+                <label htmlFor="chairman-badge-label">Badge Label (English) *</label>
                 <input
                   type="text"
                   id="chairman-badge-label"
@@ -1011,6 +1264,24 @@ export default function AdminTeamPage() {
                   placeholder="e.g., YEARS EXPERIENCE"
                 />
               </div>
+            </div>
+
+            <div className="admin-form-group">
+              <label htmlFor="chairman-badge-labelArabic">
+                Badge Label (Arabic) *
+                <TranslateButton
+                  onTranslate={(translated) => handleChairmanBadgeChange('labelArabic', translated)}
+                  englishText={chairmanMessage.badge.label}
+                />
+              </label>
+              <input
+                type="text"
+                id="chairman-badge-labelArabic"
+                value={chairmanMessage.badge?.labelArabic || ''}
+                onChange={(e) => handleChairmanBadgeChange('labelArabic', e.target.value)}
+                required
+                placeholder="مثل: سنوات من الخبرة"
+              />
             </div>
 
             <div className="admin-form-group">
@@ -1075,7 +1346,7 @@ export default function AdminTeamPage() {
                 />
               </div>
               <div className="admin-form-group">
-                <label htmlFor="chairman-name">Name *</label>
+                <label htmlFor="chairman-name">Name (English) *</label>
                 <input
                   type="text"
                   id="chairman-name"
@@ -1086,7 +1357,24 @@ export default function AdminTeamPage() {
                 />
               </div>
               <div className="admin-form-group">
-                <label htmlFor="chairman-role">Role *</label>
+                <label htmlFor="chairman-nameArabic">
+                  Name (Arabic) *
+                  <TranslateButton
+                    onTranslate={(translated) => handleChairmanSignatureChange('nameArabic', translated)}
+                    englishText={chairmanMessage.signature.name}
+                  />
+                </label>
+                <input
+                  type="text"
+                  id="chairman-nameArabic"
+                  value={chairmanMessage.signature?.nameArabic || ''}
+                  onChange={(e) => handleChairmanSignatureChange('nameArabic', e.target.value)}
+                  required
+                  placeholder="أدخل الاسم"
+                />
+              </div>
+              <div className="admin-form-group">
+                <label htmlFor="chairman-role">Role (English) *</label>
                 <input
                   type="text"
                   id="chairman-role"
@@ -1094,6 +1382,23 @@ export default function AdminTeamPage() {
                   onChange={(e) => handleChairmanSignatureChange('role', e.target.value)}
                   required
                   placeholder="e.g., Chairman & Founder"
+                />
+              </div>
+              <div className="admin-form-group">
+                <label htmlFor="chairman-roleArabic">
+                  Role (Arabic) *
+                  <TranslateButton
+                    onTranslate={(translated) => handleChairmanSignatureChange('roleArabic', translated)}
+                    englishText={chairmanMessage.signature.role}
+                  />
+                </label>
+                <input
+                  type="text"
+                  id="chairman-roleArabic"
+                  value={chairmanMessage.signature?.roleArabic || ''}
+                  onChange={(e) => handleChairmanSignatureChange('roleArabic', e.target.value)}
+                  required
+                  placeholder="مثل: الرئيس والمؤسس"
                 />
               </div>
             </div>
@@ -1112,11 +1417,28 @@ export default function AdminTeamPage() {
                     />
                   </div>
                   <div className="admin-form-group">
+                    <label>Label (English) {index === 0 && '*'}</label>
                     <input
                       type="text"
                       value={stat.label}
                       onChange={(e) => handleChairmanStatChange(index, 'label', e.target.value)}
                       placeholder="e.g., PROJECTS"
+                      required={index === 0}
+                    />
+                  </div>
+                  <div className="admin-form-group">
+                    <label>
+                      Label (Arabic) {index === 0 && '*'}
+                      <TranslateButton
+                        onTranslate={(translated) => handleChairmanStatChange(index, 'labelArabic', translated)}
+                        englishText={stat.label}
+                      />
+                    </label>
+                    <input
+                      type="text"
+                      value={stat.labelArabic || ''}
+                      onChange={(e) => handleChairmanStatChange(index, 'labelArabic', e.target.value)}
+                      placeholder="مثل: المشاريع"
                       required={index === 0}
                     />
                   </div>
@@ -1162,7 +1484,7 @@ export default function AdminTeamPage() {
             )}
 
             <div className="admin-form-group">
-              <label htmlFor="tagline">Tagline *</label>
+              <label htmlFor="tagline">Tagline (English) *</label>
               <input
                 type="text"
                 id="tagline"
@@ -1175,7 +1497,26 @@ export default function AdminTeamPage() {
             </div>
 
             <div className="admin-form-group">
-              <label htmlFor="title">Title *</label>
+              <label htmlFor="taglineArabic">
+                Tagline (Arabic) *
+                <TranslateButton
+                  onTranslate={(translated) => setSectionTitle(prev => ({ ...prev, taglineArabic: translated }))}
+                  englishText={sectionTitle.tagline}
+                />
+              </label>
+              <input
+                type="text"
+                id="taglineArabic"
+                name="taglineArabic"
+                value={sectionTitle.taglineArabic}
+                onChange={handleSectionTitleChange}
+                required
+                placeholder="مثل: فريقنا الإبداعي"
+              />
+            </div>
+
+            <div className="admin-form-group">
+              <label htmlFor="title">Title (English) *</label>
               <input
                 type="text"
                 id="title"
@@ -1184,6 +1525,25 @@ export default function AdminTeamPage() {
                 onChange={handleSectionTitleChange}
                 required
                 placeholder="e.g., Meet Our Nice Team."
+              />
+            </div>
+
+            <div className="admin-form-group">
+              <label htmlFor="titleArabic">
+                Title (Arabic) *
+                <TranslateButton
+                  onTranslate={(translated) => setSectionTitle(prev => ({ ...prev, titleArabic: translated }))}
+                  englishText={sectionTitle.title}
+                />
+              </label>
+              <input
+                type="text"
+                id="titleArabic"
+                name="titleArabic"
+                value={sectionTitle.titleArabic}
+                onChange={handleSectionTitleChange}
+                required
+                placeholder="مثل: تعرف على فريقنا الرائع"
               />
             </div>
 

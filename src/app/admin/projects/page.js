@@ -18,6 +18,7 @@ import {
   Settings,
   Info
 } from 'lucide-react';
+import TranslateButton from '@/components/admin/TranslateButton';
 
 export default function AdminProjectsPage() {
   const { data: projectsData, loading, error, fetchData, add, update, remove } = useFirestore('projects');
@@ -31,21 +32,27 @@ export default function AdminProjectsPage() {
   const [formData, setFormData] = useState({
     id: null,
     name: '',
+    nameArabic: '',
     slug: '',
     client: '',
+    clientArabic: '',
     status: 'Completed',
     year: '',
     floors: '',
     units: '',
     location: '',
+    locationArabic: '',
     mainImage: '',
     locationMap: ''
   });
   
   const [sectionTitle, setSectionTitle] = useState({
     span: '',
+    spanArabic: '',
     heading: '',
-    description: ''
+    headingArabic: '',
+    description: '',
+    descriptionArabic: ''
   });
   
   const [sections, setSections] = useState([]);
@@ -172,17 +179,26 @@ export default function AdminProjectsPage() {
     setSections([...sections, {
       image: '',
       title: '',
+      titleArabic: '',
       subtitle: '',
+      subtitleArabic: '',
       description: '',
+      descriptionArabic: '',
       categories: [],
-      buttonText: ''
+      categoriesArabic: [],
+      buttonText: '',
+      buttonTextArabic: ''
     }]);
   };
 
   const updateSection = (index, field, value) => {
     const updated = [...sections];
     if (field === 'categories') {
-      updated[index].categories = value.split(',').map(c => c.trim()).filter(Boolean);
+      // Handle both English comma (,) and Arabic comma (،)
+      updated[index].categories = value.split(/[,،]/).map(c => c.trim()).filter(Boolean);
+    } else if (field === 'categoriesArabic') {
+      // Handle both English comma (,) and Arabic comma (،)
+      updated[index].categoriesArabic = value.split(/[,،]/).map(c => c.trim()).filter(Boolean);
     } else {
       updated[index][field] = value;
     }
@@ -208,7 +224,11 @@ export default function AdminProjectsPage() {
   // Features management
   const addFeature = () => {
     if (newFeature.trim()) {
-      setFeatures([...features, newFeature.trim()]);
+      // Convert to object format if it's a string, or add new object
+      const featureObj = typeof newFeature === 'string' 
+        ? { name: newFeature.trim(), nameArabic: '' }
+        : { name: newFeature.name || newFeature.trim(), nameArabic: newFeature.nameArabic || '' };
+      setFeatures([...features, featureObj]);
       setNewFeature('');
     }
   };
@@ -217,10 +237,24 @@ export default function AdminProjectsPage() {
     setFeatures(features.filter((_, i) => i !== index));
   };
 
+  const updateFeature = (index, field, value) => {
+    const updated = [...features];
+    // Handle both string and object formats
+    if (typeof updated[index] === 'string') {
+      updated[index] = { name: updated[index], nameArabic: '' };
+    }
+    updated[index] = {
+      ...updated[index],
+      [field]: value
+    };
+    setFeatures(updated);
+  };
+
   // Layouts management
   const addLayout = () => {
     setLayouts([...layouts, {
       name: '',
+      nameArabic: '',
       image: '',
       area: '',
       bedrooms: '',
@@ -261,11 +295,21 @@ export default function AdminProjectsPage() {
     if (newNearbyName.trim() && newNearbyDistance.trim()) {
       setNearby([...nearby, {
         name: newNearbyName.trim(),
+        nameArabic: '',
         distance: newNearbyDistance.trim()
       }]);
       setNewNearbyName('');
       setNewNearbyDistance('');
     }
+  };
+
+  const updateNearby = (index, field, value) => {
+    const updated = [...nearby];
+    updated[index] = {
+      ...updated[index],
+      [field]: value
+    };
+    setNearby(updated);
   };
 
   const removeNearby = (index) => {
@@ -276,6 +320,7 @@ export default function AdminProjectsPage() {
   const addAttachment = () => {
     setAttachments([...attachments, {
       name: '',
+      nameArabic: '',
       type: 'Pdf',
       icon: '',
       file: ''
@@ -309,7 +354,9 @@ export default function AdminProjectsPage() {
     setGallery([...gallery, {
       image: '',
       title: '',
-      category: ''
+      titleArabic: '',
+      category: '',
+      categoryArabic: ''
     }]);
   };
 
@@ -361,10 +408,23 @@ export default function AdminProjectsPage() {
         ...section,
         image: typeof section?.image === 'string' ? section.image : '',
         title: typeof section?.title === 'string' ? section.title : '',
+        titleArabic: typeof section?.titleArabic === 'string' ? section.titleArabic : (section.title || ''),
         subtitle: typeof section?.subtitle === 'string' ? section.subtitle : '',
+        subtitleArabic: typeof section?.subtitleArabic === 'string' ? section.subtitleArabic : (section.subtitle || ''),
         description: typeof section?.description === 'string' ? section.description : '',
-        categories: Array.isArray(section?.categories) ? section.categories : [],
-        buttonText: typeof section?.buttonText === 'string' ? section.buttonText : ''
+        descriptionArabic: typeof section?.descriptionArabic === 'string' ? section.descriptionArabic : (section.description || ''),
+        categories: Array.isArray(section?.categories) 
+          ? section.categories 
+          : (typeof section?.categories === 'string' 
+            ? section.categories.split(/[,،]/).map(c => c.trim()).filter(Boolean)
+            : []),
+        categoriesArabic: Array.isArray(section?.categoriesArabic) 
+          ? section.categoriesArabic 
+          : (typeof section?.categoriesArabic === 'string'
+            ? section.categoriesArabic.split(/[,،]/).map(c => c.trim()).filter(Boolean)
+            : (Array.isArray(section?.categories) ? section.categories : [])),
+        buttonText: typeof section?.buttonText === 'string' ? section.buttonText : '',
+        buttonTextArabic: typeof section?.buttonTextArabic === 'string' ? section.buttonTextArabic : (section.buttonText || '')
       })) : [];
 
       // Clean and validate layouts - ensure all image URLs are strings
@@ -372,6 +432,7 @@ export default function AdminProjectsPage() {
         ...layout,
         image: typeof layout?.image === 'string' ? layout.image : '',
         name: typeof layout?.name === 'string' ? layout.name : '',
+        nameArabic: typeof layout?.nameArabic === 'string' ? layout.nameArabic : (layout.name || ''),
         area: typeof layout?.area === 'string' ? layout.area : '',
         bedrooms: typeof layout?.bedrooms === 'string' ? layout.bedrooms : '',
         bathrooms: typeof layout?.bathrooms === 'string' ? layout.bathrooms : '',
@@ -384,7 +445,9 @@ export default function AdminProjectsPage() {
         ...item,
         image: typeof item?.image === 'string' ? item.image : '',
         title: typeof item?.title === 'string' ? item.title : '',
-        category: typeof item?.category === 'string' ? item.category : ''
+        titleArabic: typeof item?.titleArabic === 'string' ? item.titleArabic : (item.title || ''),
+        category: typeof item?.category === 'string' ? item.category : '',
+        categoryArabic: typeof item?.categoryArabic === 'string' ? item.categoryArabic : (item.category || '')
       })) : [];
 
       // Clean and validate attachments - ensure all file URLs are strings
@@ -392,6 +455,7 @@ export default function AdminProjectsPage() {
         ...attachment,
         file: typeof attachment?.file === 'string' ? attachment.file : '',
         name: typeof attachment?.name === 'string' ? attachment.name : '',
+        nameArabic: typeof attachment?.nameArabic === 'string' ? attachment.nameArabic : (attachment.name || ''),
         type: typeof attachment?.type === 'string' ? attachment.type : 'Pdf',
         icon: typeof attachment?.icon === 'string' ? attachment.icon : ''
       })) : [];
@@ -399,30 +463,45 @@ export default function AdminProjectsPage() {
       // Clean and validate nearby - ensure all values are strings
       const cleanedNearby = Array.isArray(nearby) ? nearby.map(item => ({
         name: typeof item?.name === 'string' ? item.name : '',
+        nameArabic: typeof item?.nameArabic === 'string' ? item.nameArabic : (item.name || ''),
         distance: typeof item?.distance === 'string' ? item.distance : ''
       })) : [];
 
-      // Clean and validate features - ensure all are strings
-      const cleanedFeatures = Array.isArray(features) ? features.filter(f => typeof f === 'string') : [];
+      // Clean and validate features - convert to object format with Arabic
+      const cleanedFeatures = Array.isArray(features) ? features.map(f => {
+        if (typeof f === 'string') {
+          return { name: f, nameArabic: f };
+        }
+        return {
+          name: typeof f?.name === 'string' ? f.name : '',
+          nameArabic: typeof f?.nameArabic === 'string' ? f.nameArabic : (f.name || '')
+        };
+      }).filter(f => f.name) : [];
 
       // Clean and validate sectionTitle
       const cleanedSectionTitle = {
         span: typeof sectionTitle?.span === 'string' ? sectionTitle.span : '',
+        spanArabic: typeof sectionTitle?.spanArabic === 'string' ? sectionTitle.spanArabic : (sectionTitle.span || ''),
         heading: typeof sectionTitle?.heading === 'string' ? sectionTitle.heading : '',
-        description: typeof sectionTitle?.description === 'string' ? sectionTitle.description : ''
+        headingArabic: typeof sectionTitle?.headingArabic === 'string' ? sectionTitle.headingArabic : (sectionTitle.heading || ''),
+        description: typeof sectionTitle?.description === 'string' ? sectionTitle.description : '',
+        descriptionArabic: typeof sectionTitle?.descriptionArabic === 'string' ? sectionTitle.descriptionArabic : (sectionTitle.description || '')
       };
 
       // Clean and validate formData - ensure all fields are proper types
       // IMPORTANT: Never include 'id' in formData - it's the Firestore document ID, not a data field
       const cleanedFormData = {
         name: typeof formData.name === 'string' ? formData.name : '',
+        nameArabic: typeof formData.nameArabic === 'string' ? formData.nameArabic : (formData.name || ''),
         slug: typeof formData.slug === 'string' ? formData.slug : '',
         client: typeof formData.client === 'string' ? formData.client : '',
+        clientArabic: typeof formData.clientArabic === 'string' ? formData.clientArabic : (formData.client || ''),
         status: typeof formData.status === 'string' ? formData.status : 'Completed',
         year: typeof formData.year === 'string' ? formData.year : '',
         floors: typeof formData.floors === 'string' ? formData.floors : '',
         units: typeof formData.units === 'string' ? formData.units : '',
         location: typeof formData.location === 'string' ? formData.location : '',
+        locationArabic: typeof formData.locationArabic === 'string' ? formData.locationArabic : (formData.location || ''),
         mainImage: mainImageUrl,
         locationMap: locationMapUrl
       };
@@ -559,20 +638,43 @@ export default function AdminProjectsPage() {
     setFormData({
       id: project.id, // This is the Firestore document ID
       name: project.name || '',
+      nameArabic: project.nameArabic || '',
       slug: project.slug || '',
       client: project.client || '',
+      clientArabic: project.clientArabic || '',
       status: project.status || 'Completed',
       year: project.year || '',
       floors: project.floors || '',
       units: project.units || '',
       location: project.location || '',
+      locationArabic: project.locationArabic || '',
       mainImage: project.mainImage || '',
       locationMap: project.locationMap || ''
     });
     
-    setSectionTitle(project.sectionTitle || { span: '', heading: '', description: '' });
-    setSections(project.sections || []);
-    setFeatures(project.features || []);
+    setSectionTitle(project.sectionTitle || { span: '', spanArabic: '', heading: '', headingArabic: '', description: '', descriptionArabic: '' });
+    
+    // Normalize sections data - ensure categories and categoriesArabic are arrays
+    const normalizedSections = (project.sections || []).map(section => ({
+      ...section,
+      categories: Array.isArray(section?.categories) 
+        ? section.categories 
+        : (typeof section?.categories === 'string' 
+          ? section.categories.split(/[,،]/).map(c => c.trim()).filter(Boolean)
+          : []),
+      categoriesArabic: Array.isArray(section?.categoriesArabic) 
+        ? section.categoriesArabic 
+        : (typeof section?.categoriesArabic === 'string'
+          ? section.categoriesArabic.split(/[,،]/).map(c => c.trim()).filter(Boolean)
+          : [])
+    }));
+    setSections(normalizedSections);
+    // Convert features to object format if they're strings
+    const projectFeatures = project.features || [];
+    const convertedFeatures = projectFeatures.map(f => 
+      typeof f === 'string' ? { name: f, nameArabic: f } : f
+    );
+    setFeatures(convertedFeatures);
     setLayouts(project.layouts || []);
     setNearby(project.nearby || []);
     setAttachments(project.attachments || []);
@@ -602,17 +704,20 @@ export default function AdminProjectsPage() {
     setFormData({
       id: null,
       name: '',
+      nameArabic: '',
       slug: '',
       client: '',
+      clientArabic: '',
       status: 'Completed',
       year: '',
       floors: '',
       units: '',
       location: '',
+      locationArabic: '',
       mainImage: '',
       locationMap: ''
     });
-    setSectionTitle({ span: '', heading: '', description: '' });
+    setSectionTitle({ span: '', spanArabic: '', heading: '', headingArabic: '', description: '', descriptionArabic: '' });
     setSections([]);
     setFeatures([]);
     setLayouts([]);
@@ -792,7 +897,7 @@ export default function AdminProjectsPage() {
             {activeTab === 'basic' && (
               <>
                 <div className="admin-form-group">
-                  <label htmlFor="name">Project Name *</label>
+                  <label htmlFor="name">Project Name (English) *</label>
                   <input
                     type="text"
                     id="name"
@@ -801,6 +906,25 @@ export default function AdminProjectsPage() {
                     onChange={handleInputChange}
                     required
                     placeholder="e.g., Al Faisal Tower"
+                  />
+                </div>
+
+                <div className="admin-form-group">
+                  <label htmlFor="nameArabic">
+                    Project Name (Arabic) *
+                    <TranslateButton
+                      onTranslate={(translated) => setFormData(prev => ({ ...prev, nameArabic: translated }))}
+                      englishText={formData.name}
+                    />
+                  </label>
+                  <input
+                    type="text"
+                    id="nameArabic"
+                    name="nameArabic"
+                    value={formData.nameArabic}
+                    onChange={handleInputChange}
+                    required
+                    placeholder="مثل: برج الفيصل"
                   />
                 </div>
 
@@ -819,7 +943,7 @@ export default function AdminProjectsPage() {
 
                 <div className="admin-form-row">
                   <div className="admin-form-group">
-                    <label htmlFor="client">Client *</label>
+                    <label htmlFor="client">Client (English) *</label>
                     <input
                       type="text"
                       id="client"
@@ -830,6 +954,28 @@ export default function AdminProjectsPage() {
                       placeholder="e.g., GUPD Development"
                     />
                   </div>
+
+                  <div className="admin-form-group">
+                    <label htmlFor="clientArabic">
+                      Client (Arabic) *
+                      <TranslateButton
+                        onTranslate={(translated) => setFormData(prev => ({ ...prev, clientArabic: translated }))}
+                        englishText={formData.client}
+                      />
+                    </label>
+                    <input
+                      type="text"
+                      id="clientArabic"
+                      name="clientArabic"
+                      value={formData.clientArabic}
+                      onChange={handleInputChange}
+                      required
+                      placeholder="مثل: تطوير الخليج العالمي"
+                    />
+                  </div>
+                </div>
+
+                <div className="admin-form-row">
 
                   <div className="admin-form-group">
                     <label htmlFor="status">Status *</label>
@@ -889,7 +1035,7 @@ export default function AdminProjectsPage() {
                 </div>
 
                 <div className="admin-form-group">
-                  <label htmlFor="location">Location *</label>
+                  <label htmlFor="location">Location (English) *</label>
                   <input
                     type="text"
                     id="location"
@@ -898,6 +1044,25 @@ export default function AdminProjectsPage() {
                     onChange={handleInputChange}
                     required
                     placeholder="e.g., Sharjah, UAE"
+                  />
+                </div>
+
+                <div className="admin-form-group">
+                  <label htmlFor="locationArabic">
+                    Location (Arabic) *
+                    <TranslateButton
+                      onTranslate={(translated) => setFormData(prev => ({ ...prev, locationArabic: translated }))}
+                      englishText={formData.location}
+                    />
+                  </label>
+                  <input
+                    type="text"
+                    id="locationArabic"
+                    name="locationArabic"
+                    value={formData.locationArabic}
+                    onChange={handleInputChange}
+                    required
+                    placeholder="مثل: الشارقة، الإمارات"
                   />
                 </div>
 
@@ -1015,7 +1180,7 @@ export default function AdminProjectsPage() {
             {activeTab === 'sectionTitle' && (
               <>
                 <div className="admin-form-group">
-                  <label htmlFor="sectionTitle-span">Span *</label>
+                  <label htmlFor="sectionTitle-span">Span (English) *</label>
                   <input
                     type="text"
                     id="sectionTitle-span"
@@ -1028,7 +1193,26 @@ export default function AdminProjectsPage() {
                 </div>
 
                 <div className="admin-form-group">
-                  <label htmlFor="sectionTitle-heading">Heading *</label>
+                  <label htmlFor="sectionTitle-spanArabic">
+                    Span (Arabic) *
+                    <TranslateButton
+                      onTranslate={(translated) => setSectionTitle(prev => ({ ...prev, spanArabic: translated }))}
+                      englishText={sectionTitle.span}
+                    />
+                  </label>
+                  <input
+                    type="text"
+                    id="sectionTitle-spanArabic"
+                    name="spanArabic"
+                    value={sectionTitle.spanArabic}
+                    onChange={handleSectionTitleChange}
+                    required
+                    placeholder="مثل: برج الفيصل"
+                  />
+                </div>
+
+                <div className="admin-form-group">
+                  <label htmlFor="sectionTitle-heading">Heading (English) *</label>
                   <input
                     type="text"
                     id="sectionTitle-heading"
@@ -1041,7 +1225,26 @@ export default function AdminProjectsPage() {
                 </div>
 
                 <div className="admin-form-group">
-                  <label htmlFor="sectionTitle-description">Description *</label>
+                  <label htmlFor="sectionTitle-headingArabic">
+                    Heading (Arabic) *
+                    <TranslateButton
+                      onTranslate={(translated) => setSectionTitle(prev => ({ ...prev, headingArabic: translated }))}
+                      englishText={sectionTitle.heading}
+                    />
+                  </label>
+                  <input
+                    type="text"
+                    id="sectionTitle-headingArabic"
+                    name="headingArabic"
+                    value={sectionTitle.headingArabic}
+                    onChange={handleSectionTitleChange}
+                    required
+                    placeholder="مثل: اكتشف تطويرنا الرائد"
+                  />
+                </div>
+
+                <div className="admin-form-group">
+                  <label htmlFor="sectionTitle-description">Description (English) *</label>
                   <textarea
                     id="sectionTitle-description"
                     name="description"
@@ -1050,6 +1253,25 @@ export default function AdminProjectsPage() {
                     required
                     rows="4"
                     placeholder="Enter description"
+                  />
+                </div>
+
+                <div className="admin-form-group">
+                  <label htmlFor="sectionTitle-descriptionArabic">
+                    Description (Arabic) *
+                    <TranslateButton
+                      onTranslate={(translated) => setSectionTitle(prev => ({ ...prev, descriptionArabic: translated }))}
+                      englishText={sectionTitle.description}
+                    />
+                  </label>
+                  <textarea
+                    id="sectionTitle-descriptionArabic"
+                    name="descriptionArabic"
+                    value={sectionTitle.descriptionArabic}
+                    onChange={handleSectionTitleChange}
+                    required
+                    rows="4"
+                    placeholder="أدخل الوصف"
                   />
                 </div>
               </>
@@ -1129,7 +1351,7 @@ export default function AdminProjectsPage() {
                       )}
                     </div>
                     <div className="admin-form-group">
-                      <label>Title *</label>
+                      <label>Title (English) *</label>
                       <input
                         type="text"
                         value={section.title}
@@ -1139,7 +1361,23 @@ export default function AdminProjectsPage() {
                       />
                     </div>
                     <div className="admin-form-group">
-                      <label>Subtitle</label>
+                      <label>
+                        Title (Arabic) *
+                        <TranslateButton
+                          onTranslate={(translated) => updateSection(index, 'titleArabic', translated)}
+                          englishText={section.title}
+                        />
+                      </label>
+                      <input
+                        type="text"
+                        value={section.titleArabic || ''}
+                        onChange={(e) => updateSection(index, 'titleArabic', e.target.value)}
+                        required
+                        placeholder="عنوان القسم"
+                      />
+                    </div>
+                    <div className="admin-form-group">
+                      <label>Subtitle (English)</label>
                       <input
                         type="text"
                         value={section.subtitle}
@@ -1148,7 +1386,22 @@ export default function AdminProjectsPage() {
                       />
                     </div>
                     <div className="admin-form-group">
-                      <label>Description *</label>
+                      <label>
+                        Subtitle (Arabic)
+                        <TranslateButton
+                          onTranslate={(translated) => updateSection(index, 'subtitleArabic', translated)}
+                          englishText={section.subtitle}
+                        />
+                      </label>
+                      <input
+                        type="text"
+                        value={section.subtitleArabic || ''}
+                        onChange={(e) => updateSection(index, 'subtitleArabic', e.target.value)}
+                        placeholder="العنوان الفرعي للقسم"
+                      />
+                    </div>
+                    <div className="admin-form-group">
+                      <label>Description (English) *</label>
                       <textarea
                         value={section.description}
                         onChange={(e) => updateSection(index, 'description', e.target.value)}
@@ -1158,7 +1411,23 @@ export default function AdminProjectsPage() {
                       />
                     </div>
                     <div className="admin-form-group">
-                      <label>Categories (comma-separated)</label>
+                      <label>
+                        Description (Arabic) *
+                        <TranslateButton
+                          onTranslate={(translated) => updateSection(index, 'descriptionArabic', translated)}
+                          englishText={section.description}
+                        />
+                      </label>
+                      <textarea
+                        value={section.descriptionArabic || ''}
+                        onChange={(e) => updateSection(index, 'descriptionArabic', e.target.value)}
+                        required
+                        rows="4"
+                        placeholder="وصف القسم"
+                      />
+                    </div>
+                    <div className="admin-form-group">
+                      <label>Categories (English) - comma-separated</label>
                       <input
                         type="text"
                         value={section.categories?.join(', ') || ''}
@@ -1167,12 +1436,72 @@ export default function AdminProjectsPage() {
                       />
                     </div>
                     <div className="admin-form-group">
-                      <label>Button Text</label>
+                      <label>
+                        Categories (Arabic) - comma-separated
+                        <button
+                          type="button"
+                          onClick={async () => {
+                            if (!section.categories || section.categories.length === 0) {
+                              alert('Please enter English categories first');
+                              return;
+                            }
+                            try {
+                              // Translate each category individually for better results
+                              const { translateToArabic } = await import('@/utils/translate');
+                              const translatedCategories = await Promise.all(
+                                section.categories.map(cat => translateToArabic(cat.trim()))
+                              );
+                              updateSection(index, 'categoriesArabic', translatedCategories.join(', '));
+                            } catch (error) {
+                              alert(error.message || 'Translation failed. Please translate manually.');
+                            }
+                          }}
+                          style={{
+                            marginLeft: '10px',
+                            padding: '4px 8px',
+                            fontSize: '12px',
+                            backgroundColor: '#2196F3',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '4px',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          Translate All
+                        </button>
+                      </label>
+                      <input
+                        type="text"
+                        value={section.categoriesArabic?.join(', ') || ''}
+                        onChange={(e) => updateSection(index, 'categoriesArabic', e.target.value)}
+                        placeholder="مثل: موقع ممتاز، إطلالات على البحيرة"
+                      />
+                      <small className="admin-help-text" style={{ display: 'block', marginTop: '5px', color: '#666' }}>
+                        Enter categories separated by commas. Use "Translate All" to translate all English categories at once.
+                      </small>
+                    </div>
+                    <div className="admin-form-group">
+                      <label>Button Text (English)</label>
                       <input
                         type="text"
                         value={section.buttonText}
                         onChange={(e) => updateSection(index, 'buttonText', e.target.value)}
                         placeholder="e.g., Explore Location Details"
+                      />
+                    </div>
+                    <div className="admin-form-group">
+                      <label>
+                        Button Text (Arabic)
+                        <TranslateButton
+                          onTranslate={(translated) => updateSection(index, 'buttonTextArabic', translated)}
+                          englishText={section.buttonText}
+                        />
+                      </label>
+                      <input
+                        type="text"
+                        value={section.buttonTextArabic || ''}
+                        onChange={(e) => updateSection(index, 'buttonTextArabic', e.target.value)}
+                        placeholder="مثل: استكشف تفاصيل الموقع"
                       />
                     </div>
                   </div>
@@ -1188,7 +1517,7 @@ export default function AdminProjectsPage() {
                     type="text"
                     value={newFeature}
                     onChange={(e) => setNewFeature(e.target.value)}
-                    placeholder="Enter feature"
+                    placeholder="Enter feature (English)"
                     className="admin-input"
                     style={{ flex: 1 }}
                     onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addFeature())}
@@ -1199,14 +1528,48 @@ export default function AdminProjectsPage() {
                   </button>
                 </div>
                 <div className="admin-list">
-                  {features.map((feature, index) => (
-                    <div key={index} className="admin-list-item" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px', border: '1px solid #e0e0e0', borderRadius: '4px', marginBottom: '10px' }}>
-                      <span>{feature}</span>
-                      <button type="button" className="admin-btn-icon admin-btn-delete" onClick={() => removeFeature(index)}>
-                        <Trash2 size={18} />
-                      </button>
-                    </div>
-                  ))}
+                  {features.map((feature, index) => {
+                    const featureName = typeof feature === 'string' ? feature : feature.name;
+                    const featureNameArabic = typeof feature === 'string' ? '' : (feature.nameArabic || '');
+                    return (
+                      <div key={index} className="admin-card" style={{ marginBottom: '15px', padding: '15px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                          <h5>Feature {index + 1}</h5>
+                          <button type="button" className="admin-btn-icon admin-btn-delete" onClick={() => removeFeature(index)}>
+                            <Trash2 size={18} />
+                          </button>
+                        </div>
+                        <div className="admin-form-group">
+                          <label>Feature Name (English) *</label>
+                          <input
+                            type="text"
+                            value={featureName}
+                            onChange={(e) => updateFeature(index, 'name', e.target.value)}
+                            placeholder="e.g., Swimming Pool"
+                            required
+                            className="admin-input"
+                          />
+                        </div>
+                        <div className="admin-form-group">
+                          <label>
+                            Feature Name (Arabic) *
+                            <TranslateButton
+                              onTranslate={(translated) => updateFeature(index, 'nameArabic', translated)}
+                              englishText={featureName}
+                            />
+                          </label>
+                          <input
+                            type="text"
+                            value={featureNameArabic}
+                            onChange={(e) => updateFeature(index, 'nameArabic', e.target.value)}
+                            placeholder="مثل: مسبح"
+                            required
+                            className="admin-input"
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </>
             )}
@@ -1231,13 +1594,29 @@ export default function AdminProjectsPage() {
                     </div>
                     <div className="admin-form-row">
                       <div className="admin-form-group">
-                        <label>Name *</label>
+                        <label>Name (English) *</label>
                         <input
                           type="text"
                           value={layout.name}
                           onChange={(e) => updateLayout(index, 'name', e.target.value)}
                           required
                           placeholder="e.g., Studio Apartment"
+                        />
+                      </div>
+                      <div className="admin-form-group">
+                        <label>
+                          Name (Arabic) *
+                          <TranslateButton
+                            onTranslate={(translated) => updateLayout(index, 'nameArabic', translated)}
+                            englishText={layout.name}
+                          />
+                        </label>
+                        <input
+                          type="text"
+                          value={layout.nameArabic || ''}
+                          onChange={(e) => updateLayout(index, 'nameArabic', e.target.value)}
+                          required
+                          placeholder="مثل: استوديو"
                         />
                       </div>
                       <div className="admin-form-group">
@@ -1360,7 +1739,7 @@ export default function AdminProjectsPage() {
                     type="text"
                     value={newNearbyName}
                     onChange={(e) => setNewNearbyName(e.target.value)}
-                    placeholder="Location name"
+                    placeholder="Location name (English)"
                     className="admin-input"
                     style={{ flex: 1 }}
                   />
@@ -1380,11 +1759,54 @@ export default function AdminProjectsPage() {
                 </div>
                 <div className="admin-list">
                   {nearby.map((item, index) => (
-                    <div key={index} className="admin-list-item" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px', border: '1px solid #e0e0e0', borderRadius: '4px', marginBottom: '10px' }}>
-                      <span><strong>{item.name}</strong> - {item.distance}</span>
-                      <button type="button" className="admin-btn-icon admin-btn-delete" onClick={() => removeNearby(index)}>
-                        <Trash2 size={18} />
-                      </button>
+                    <div key={index} className="admin-card" style={{ marginBottom: '15px', padding: '15px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                        <h5>Nearby Location {index + 1}</h5>
+                        <button type="button" className="admin-btn-icon admin-btn-delete" onClick={() => removeNearby(index)}>
+                          <Trash2 size={18} />
+                        </button>
+                      </div>
+                      <div className="admin-form-row">
+                        <div className="admin-form-group">
+                          <label>Location Name (English) *</label>
+                          <input
+                            type="text"
+                            value={item.name}
+                            onChange={(e) => updateNearby(index, 'name', e.target.value)}
+                            placeholder="e.g., Shopping Mall"
+                            required
+                            className="admin-input"
+                          />
+                        </div>
+                        <div className="admin-form-group">
+                          <label>
+                            Location Name (Arabic) *
+                            <TranslateButton
+                              onTranslate={(translated) => updateNearby(index, 'nameArabic', translated)}
+                              englishText={item.name}
+                            />
+                          </label>
+                          <input
+                            type="text"
+                            value={item.nameArabic || ''}
+                            onChange={(e) => updateNearby(index, 'nameArabic', e.target.value)}
+                            placeholder="مثل: مركز تسوق"
+                            required
+                            className="admin-input"
+                          />
+                        </div>
+                        <div className="admin-form-group">
+                          <label>Distance *</label>
+                          <input
+                            type="text"
+                            value={item.distance}
+                            onChange={(e) => updateNearby(index, 'distance', e.target.value)}
+                            placeholder="e.g., 5 min"
+                            required
+                            className="admin-input"
+                          />
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -1411,7 +1833,7 @@ export default function AdminProjectsPage() {
                     </div>
                     <div className="admin-form-row">
                       <div className="admin-form-group">
-                        <label>Name *</label>
+                        <label>Name (English) *</label>
                         <input
                           type="text"
                           value={attachment.name}
@@ -1420,6 +1842,25 @@ export default function AdminProjectsPage() {
                           placeholder="e.g., Project Brochure"
                         />
                       </div>
+                      <div className="admin-form-group">
+                        <label>
+                          Name (Arabic) *
+                          <TranslateButton
+                            onTranslate={(translated) => updateAttachment(index, 'nameArabic', translated)}
+                            englishText={attachment.name}
+                          />
+                        </label>
+                        <input
+                          type="text"
+                          value={attachment.nameArabic || ''}
+                          onChange={(e) => updateAttachment(index, 'nameArabic', e.target.value)}
+                          required
+                          placeholder="مثل: كتيب المشروع"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="admin-form-row">
                       <div className="admin-form-group">
                         <label>Type *</label>
                         <select
@@ -1595,7 +2036,7 @@ export default function AdminProjectsPage() {
                     </div>
                     <div className="admin-form-row">
                       <div className="admin-form-group">
-                        <label>Title *</label>
+                        <label>Title (English) *</label>
                         <input
                           type="text"
                           value={item.title}
@@ -1605,12 +2046,45 @@ export default function AdminProjectsPage() {
                         />
                       </div>
                       <div className="admin-form-group">
-                        <label>Category</label>
+                        <label>
+                          Title (Arabic) *
+                          <TranslateButton
+                            onTranslate={(translated) => updateGalleryItem(index, 'titleArabic', translated)}
+                            englishText={item.title}
+                          />
+                        </label>
+                        <input
+                          type="text"
+                          value={item.titleArabic || ''}
+                          onChange={(e) => updateGalleryItem(index, 'titleArabic', e.target.value)}
+                          required
+                          placeholder="عنوان الصورة"
+                        />
+                      </div>
+                    </div>
+                    <div className="admin-form-row">
+                      <div className="admin-form-group">
+                        <label>Category (English)</label>
                         <input
                           type="text"
                           value={item.category}
                           onChange={(e) => updateGalleryItem(index, 'category', e.target.value)}
                           placeholder="e.g., Exterior, Interior"
+                        />
+                      </div>
+                      <div className="admin-form-group">
+                        <label>
+                          Category (Arabic)
+                          <TranslateButton
+                            onTranslate={(translated) => updateGalleryItem(index, 'categoryArabic', translated)}
+                            englishText={item.category}
+                          />
+                        </label>
+                        <input
+                          type="text"
+                          value={item.categoryArabic || ''}
+                          onChange={(e) => updateGalleryItem(index, 'categoryArabic', e.target.value)}
+                          placeholder="مثل: خارجي، داخلي"
                         />
                       </div>
                     </div>

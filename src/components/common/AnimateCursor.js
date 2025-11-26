@@ -1,8 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Cursor } from 'react-creative-cursor';
 
 const AnimateCursor = () => {
+  const [isDesktop, setIsDesktop] = useState(false);
+
   useEffect(() => {
+    // Check if device is desktop (not mobile or tablet)
+    const checkDevice = () => {
+      const width = window.innerWidth;
+      setIsDesktop(width > 1024);
+    };
+
+    checkDevice();
+    window.addEventListener('resize', checkDevice);
+
+    return () => {
+      window.removeEventListener('resize', checkDevice);
+    };
+  }, []);
+
+  useEffect(() => {
+    // Only run cursor setup on desktop
+    if (!isDesktop) return;
     // Set attributes for all global anchor tags
     const globalATags = document.querySelectorAll('a');
     globalATags.forEach(tag => {
@@ -64,7 +83,12 @@ const AnimateCursor = () => {
       item.removeAttribute('data-cursor-size');
       item.removeAttribute('data-cursor-text');
     });
-  }, []);
+  }, [isDesktop]);
+
+  // Don't render cursor on mobile/tablet
+  if (!isDesktop) {
+    return null;
+  }
 
   return (
     <>

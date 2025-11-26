@@ -1,9 +1,15 @@
-
+"use client"
 import Link from 'next/link'
 import React from 'react'
 import defaultProjectData from '@/data/project-section-data.json'
+import { useLanguage } from "@/providers/LanguageProvider"
+import { useTranslation } from "react-i18next"
 
 const ProjectSection = ({ projectData }) => {
+  const { locale } = useLanguage()
+  const { t } = useTranslation()
+  const isRTL = locale === 'ar'
+  
   // Use provided data or fall back to default
   const data = projectData || defaultProjectData;
   
@@ -22,9 +28,9 @@ const ProjectSection = ({ projectData }) => {
       <div className="row justify-content-center mb-70 wow animate fadeInDown" data-wow-delay="200ms" data-wow-duration="1500ms">
         <div className="col-xxl-7 col-xl-8 col-lg-9">
           <div className="section-title three text-center">
-            <span>{data.sectionTitle?.span || ''}</span>
-            <h2>{data.sectionTitle?.heading || ''}</h2>
-            <p>{data.sectionTitle?.description || ''}</p>
+            <span>{isRTL && data.sectionTitle?.spanArabic ? data.sectionTitle.spanArabic : (data.sectionTitle?.span || '')}</span>
+            <h2>{isRTL && data.sectionTitle?.headingArabic ? data.sectionTitle.headingArabic : (data.sectionTitle?.heading || '')}</h2>
+            <p>{isRTL && data.sectionTitle?.descriptionArabic ? data.sectionTitle.descriptionArabic : (data.sectionTitle?.description || '')}</p>
           </div>
         </div>
       </div>
@@ -36,12 +42,14 @@ const ProjectSection = ({ projectData }) => {
           <div className="col-md-6 wow animate fadeInLeft" data-wow-delay="200ms" data-wow-duration="1500ms">
             <div className="project-content-wrap">
               <div className="project-content">
-                <span>Client: {project.client}</span>
-                <h2><Link href={`/project/${project.slug}`}>{sections[0].title}</Link></h2>
-                <h3 className="project-subtitle">{sections[0].subtitle}</h3>
-                <p className="project-description">{sections[0].description}</p>
+                <span>Client: {isRTL && project.clientArabic ? project.clientArabic : project.client}</span>
+                <h2><Link href={`/project/${project.slug}`}>{isRTL && sections[0].titleArabic ? sections[0].titleArabic : sections[0].title}</Link></h2>
+                <h3 className="project-subtitle">{isRTL && sections[0].subtitleArabic ? sections[0].subtitleArabic : sections[0].subtitle}</h3>
+                <p className="project-description">{isRTL && sections[0].descriptionArabic ? sections[0].descriptionArabic : sections[0].description}</p>
                 <ul>
-                  {sections[0].categories.map((category, index) => (
+                  {(isRTL && Array.isArray(sections[0].categoriesArabic) && sections[0].categoriesArabic.length > 0
+                    ? sections[0].categoriesArabic
+                    : sections[0].categories).map((category, index) => (
                     <li key={index}><Link href={`/project/${project.slug}`}>{category}</Link></li>
                   ))}
                 </ul>
@@ -53,7 +61,7 @@ const ProjectSection = ({ projectData }) => {
               </div>
               <div className="button-area">
                 <Link href={`/project/${project.slug}`} className="primary-btn">
-                  {sections[0].buttonText}
+                  {isRTL && sections[0].buttonTextArabic ? sections[0].buttonTextArabic : sections[0].buttonText}
                   <svg viewBox="0 0 13 20">
                     <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5" />
                   </svg>
@@ -80,12 +88,14 @@ const ProjectSection = ({ projectData }) => {
           <div className="col-md-6 order-md-2 order-1 wow animate fadeInLeft" data-wow-delay="200ms" data-wow-duration="1500ms">
             <div className="project-content-wrap">
               <div className="project-content">
-                <span>Client: {project.client}</span>
-                <h2><Link href={`/project/${project.slug}`}>{sections[1].title}</Link></h2>
-                <h3 className="project-subtitle">{sections[1].subtitle}</h3>
-                <p className="project-description">{sections[1].description}</p>
+                <span>Client: {isRTL && project.clientArabic ? project.clientArabic : project.client}</span>
+                <h2><Link href={`/project/${project.slug}`}>{isRTL && sections[1].titleArabic ? sections[1].titleArabic : sections[1].title}</Link></h2>
+                <h3 className="project-subtitle">{isRTL && sections[1].subtitleArabic ? sections[1].subtitleArabic : sections[1].subtitle}</h3>
+                <p className="project-description">{isRTL && sections[1].descriptionArabic ? sections[1].descriptionArabic : sections[1].description}</p>
                 <ul>
-                  {sections[1].categories.map((category, index) => (
+                  {(isRTL && Array.isArray(sections[1].categoriesArabic) && sections[1].categoriesArabic.length > 0
+                    ? sections[1].categoriesArabic
+                    : sections[1].categories).map((category, index) => (
                     <li key={index}><Link href={`/project/${project.slug}`}>{category}</Link></li>
                   ))}
                 </ul>
@@ -97,7 +107,7 @@ const ProjectSection = ({ projectData }) => {
               </div>
               <div className="button-area">
                 <Link href={`/project/${project.slug}`} className="primary-btn">
-                  {sections[1].buttonText}
+                  {isRTL && sections[1].buttonTextArabic ? sections[1].buttonTextArabic : sections[1].buttonText}
                   <svg viewBox="0 0 13 20">
                     <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5" />
                   </svg>
@@ -114,12 +124,14 @@ const ProjectSection = ({ projectData }) => {
           <div className="col-md-6 wow animate fadeInLeft" data-wow-delay="200ms" data-wow-duration="1500ms">
             <div className="project-content-wrap">
               <div className="project-content">
-                <span>Client: {project.client}</span>
-                <h2><Link href={`/project/${project.slug}`}>{sections[2].title}</Link></h2>
-                <h3 className="project-subtitle">{sections[2].subtitle}</h3>
-                <p className="project-description">{sections[2].description}</p>
+                <span>Client: {isRTL && project.clientArabic ? project.clientArabic : project.client}</span>
+                <h2><Link href={`/project/${project.slug}`}>{isRTL && sections[2].titleArabic ? sections[2].titleArabic : sections[2].title}</Link></h2>
+                <h3 className="project-subtitle">{isRTL && sections[2].subtitleArabic ? sections[2].subtitleArabic : sections[2].subtitle}</h3>
+                <p className="project-description">{isRTL && sections[2].descriptionArabic ? sections[2].descriptionArabic : sections[2].description}</p>
                 <ul>
-                  {sections[2].categories.map((category, index) => (
+                  {(isRTL && Array.isArray(sections[2].categoriesArabic) && sections[2].categoriesArabic.length > 0
+                    ? sections[2].categoriesArabic
+                    : sections[2].categories).map((category, index) => (
                     <li key={index}><Link href={`/project/${project.slug}`}>{category}</Link></li>
                   ))}
                 </ul>
@@ -131,7 +143,7 @@ const ProjectSection = ({ projectData }) => {
               </div>
               <div className="button-area">
                 <Link href={`/project/${project.slug}`} className="primary-btn">
-                  {sections[2].buttonText}
+                  {isRTL && sections[2].buttonTextArabic ? sections[2].buttonTextArabic : sections[2].buttonText}
                   <svg viewBox="0 0 13 20">
                     <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5" />
                   </svg>
@@ -151,8 +163,8 @@ const ProjectSection = ({ projectData }) => {
         <div className="col-lg-12 d-flex justify-content-center">
           <Link href={`/project/${project.slug}`} className="primary-btn2">
             <span>
-              View All Project Details
-              <svg viewBox="0 0 13 20">
+              {t('project.viewAllProjectDetails')}
+              <svg viewBox="0 0 13 20" style={{ transform: isRTL ? 'scaleX(-1)' : 'none', display: 'inline-block' }}>
                 <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5" />
               </svg>
             </span>

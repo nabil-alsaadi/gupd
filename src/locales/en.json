@@ -5,7 +5,8 @@
         "projects": "Projects",
         "blogs": "Blogs",
         "contact": "Contact",
-        "getInTouch": "Get in touch"
+        "getInTouch": "Get in touch",
+        "getQuote": "Get Quote"
     },
     "auth": {
         "login": "Login",
@@ -15,6 +16,41 @@
     "banner": {
         "knowMore": "Know More",
         "aboutSharjah": "About Sharjah."
+    },
+    "about": {
+        "aboutUsMore": "About Us More",
+        "pageTitle": "About Us",
+        "breadcrumbContent": "View Our Story"
+    },
+    "breadcrumb": {
+        "home": "Home"
+    },
+    "project": {
+        "viewAllProjectDetails": "View All Project Details"
+    },
+    "contact": {
+        "yourDreamApartmentAwaits": "Your Dream Apartment Awaits",
+        "headline": "Ready to find your perfect apartment? Get in touch to explore our available units, discuss payment plans, and learn about our real estate services.",
+        "buttonUnit": "Minutes",
+        "buttonText": "Talk With Us",
+        "description": "Whether you're looking to buy your first apartment, invest in real estate, or need information about payment options and financing, our expert team is here to help. Contact us today to discover available apartments, discuss payment plans, and get answers to all your real estate questions."
+    },
+    "methodology": {
+        "title": "How We Work",
+        "heading": "Our Proven Methodology",
+        "description": "At GUPD, we follow a systematic approach to property development that ensures quality, transparency, and customer satisfaction at every stage. From site selection to final handover, our methodology reflects our commitment to building exceptional residential developments in Sharjah.",
+        "step01Title": "Site Selection & Feasibility",
+        "step01Description": "We conduct thorough market research and feasibility studies to identify prime locations that offer long-term value and growth potential. Our team evaluates accessibility, infrastructure, and community needs to ensure strategic site selection.",
+        "step02Title": "Design & Planning",
+        "step02Description": "Our architects and designers create innovative residential layouts that maximize space, natural light, and lifestyle amenities. We focus on climate-responsive design, energy efficiency, and modern living standards tailored for Sharjah's unique environment.",
+        "step03Title": "Permits & Approvals",
+        "step03Description": "We handle all regulatory approvals and building permits required by Sharjah's authorities. Our experienced team ensures full compliance with UAE construction standards and municipal regulations for seamless project progression.",
+        "step04Title": "Construction & Development",
+        "step04Description": "With trusted construction partners, we maintain rigorous quality control throughout the building process. We use premium materials, implement advanced construction techniques, and conduct regular inspections to ensure the highest standards of craftsmanship.",
+        "step05Title": "Quality Assurance",
+        "step05Description": "Before handover, every unit undergoes comprehensive quality checks and inspections. We test all systems, verify finishes, and ensure that every aspect meets our exacting standards and exceeds customer expectations.",
+        "step06Title": "Handover & After-Sales",
+        "step06Description": "We provide a smooth handover process with complete documentation and property orientation. Our dedicated after-sales team continues to support residents, ensuring their satisfaction and maintaining the value of their investment."
     },
     "footerTop": {
         "eyebrow": "Building Your Vision",

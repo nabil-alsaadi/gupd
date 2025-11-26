@@ -36,6 +36,21 @@ export const AuthProvider = ({ children }) => {
         setUser(firebaseUser);
         // Fetch additional user data from Firestore
         try {
+          // Check if db is available before trying to fetch
+          if (!db) {
+            console.warn('Firestore not initialized. Using default user data.');
+            // Set default userData if Firestore is not available
+            const defaultUserData = {
+              email: firebaseUser.email,
+              displayName: firebaseUser.displayName || firebaseUser.email?.split('@')[0],
+              role: 'developer', // Default role
+              createdAt: new Date().toISOString(),
+            };
+            setUserData(defaultUserData);
+            setLoading(false);
+            return;
+          }
+
           const userDoc = await getDoc(doc(db, 'users', firebaseUser.uid));
           if (userDoc.exists()) {
             setUserData(userDoc.data());
@@ -47,11 +62,24 @@ export const AuthProvider = ({ children }) => {
               role: 'developer', // Default role
               createdAt: new Date().toISOString(),
             };
+            try {
             await setDoc(doc(db, 'users', firebaseUser.uid), newUserData);
+            } catch (setDocError) {
+              console.error('Error creating user document:', setDocError);
+              // Still set userData even if we can't save to Firestore
+            }
             setUserData(newUserData);
           }
         } catch (error) {
           console.error('Error fetching user data:', error);
+          // Set default userData on error to prevent infinite loading
+          const defaultUserData = {
+            email: firebaseUser.email,
+            displayName: firebaseUser.displayName || firebaseUser.email?.split('@')[0],
+            role: 'developer', // Default role
+            createdAt: new Date().toISOString(),
+          };
+          setUserData(defaultUserData);
         }
       } else {
         setUser(null);

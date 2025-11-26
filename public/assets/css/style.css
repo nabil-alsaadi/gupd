@@ -1628,6 +1628,37 @@ html[dir="rtl"] .home3-why-choose-section .row.mb-40 .col-4:last-child > div {
     right: 10px;
   }
 }
+
+/* RTL support for scroll overlay */
+html[dir="rtl"] .scroll-progress-wrap {
+  right: auto;
+  left: 40px;
+}
+@media (min-width: 1400px) and (max-width: 1599px) {
+  html[dir="rtl"] .scroll-progress-wrap {
+    left: 35px;
+  }
+}
+@media (max-width: 1399px) {
+  html[dir="rtl"] .scroll-progress-wrap {
+    left: 35px;
+  }
+}
+@media (max-width: 991px) {
+  html[dir="rtl"] .scroll-progress-wrap {
+    left: 20px;
+  }
+}
+@media (max-width: 767px) {
+  html[dir="rtl"] .scroll-progress-wrap {
+    left: 20px;
+  }
+}
+@media (max-width: 576px) {
+  html[dir="rtl"] .scroll-progress-wrap {
+    left: 10px;
+  }
+}
 .scroll-progress-wrap span {
   color: var(--primary-color2);
   font-family: var(--font-kanit);
@@ -1917,7 +1948,7 @@ header.style-1.sticky .nav-right .mobile-menu-btn:hover .sidebar-toggle-button p
 }
 @media (max-width: 991px) {
   header.style-1 .header-logo {
-    padding: 15px 0;
+    padding: 0px 0;
   }
 }
 header.style-1 .header-logo a img {
@@ -24583,4 +24614,145 @@ html[dir="rtl"] label {
 /* Override font variables in RTL */
 html[dir="rtl"] * {
   font-family: var(--font-arabic), "Noto Kufi Arabic", "Arial", sans-serif !important;
-}/*# sourceMappingURL=style.css.map */
+}
+
+/* Flip animations for RTL - fadeInLeft becomes fadeInRight and vice versa */
+html[dir="rtl"] .fadeInLeft {
+  animation-name: fadeInRight !important;
+  -webkit-animation-name: fadeInRight !important;
+}
+
+html[dir="rtl"] .fadeInRight {
+  animation-name: fadeInLeft !important;
+  -webkit-animation-name: fadeInLeft !important;
+}
+
+/* Team slider - allow extra movement to show last slide fully without affecting page layout */
+/* Default LTR (English) styles */
+.home1-team-section .row:last-child {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.home1-team-section .row:last-child .col-lg-12 {
+  overflow: hidden;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.home1-team-slider {
+  overflow: visible !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+  width: 100% !important;
+}
+
+.home1-team-slider .swiper-wrapper {
+  padding-right: 500px !important;
+  padding-left: 0 !important;
+}
+
+@media (max-width: 1400px) {
+  .home1-team-slider .swiper-wrapper {
+    padding-right: 450px !important;
+  }
+}
+
+@media (max-width: 1200px) {
+  .home1-team-slider .swiper-wrapper {
+    padding-right: 400px !important;
+  }
+}
+
+@media (max-width: 992px) {
+  .home1-team-slider .swiper-wrapper {
+    padding-right: 350px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .home1-team-slider .swiper-wrapper {
+    padding-right: 250px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .home1-team-slider .swiper-wrapper {
+    padding-right: 200px !important;
+  }
+}
+
+/* RTL (Arabic) support - only applies when dir="rtl" */
+html[dir="rtl"] .home1-team-section .row:last-child {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+html[dir="rtl"] .home1-team-section .row:last-child .col-lg-12 {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+html[dir="rtl"] .home1-team-slider {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+  width: 100% !important;
+}
+
+html[dir="rtl"] .home1-team-slider .swiper-wrapper {
+  padding-right: 0 !important;
+  padding-left: 500px !important;
+}
+
+@media (max-width: 1400px) {
+  html[dir="rtl"] .home1-team-slider .swiper-wrapper {
+    padding-left: 450px !important;
+  }
+}
+
+@media (max-width: 1200px) {
+  html[dir="rtl"] .home1-team-slider .swiper-wrapper {
+    padding-left: 400px !important;
+  }
+}
+
+@media (max-width: 992px) {
+  html[dir="rtl"] .home1-team-slider .swiper-wrapper {
+    padding-left: 350px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  html[dir="rtl"] .home1-team-slider .swiper-wrapper {
+    padding-left: 250px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  html[dir="rtl"] .home1-team-slider .swiper-wrapper {
+    padding-left: 200px !important;
+  }
+}
+
+/* Hide mouse cursor animation on mobile and tablet */
+@media (max-width: 1024px) {
+  #magic-cursor,
+  #ball,
+  [data-cursor],
+  .react-creative-cursor {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+}
+
+/*# sourceMappingURL=style.css.map */

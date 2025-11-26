@@ -3,15 +3,23 @@ import useModalVideo from '@/utils/useModalVideo'
 import Link from 'next/link'
 import React from 'react'
 import content from '@/data/gupdContent.json'
+import { useLanguage } from "@/providers/LanguageProvider"
+import { useTranslation } from "react-i18next"
 
 const Home1About = ({ sectionGap, aboutData }) => {
   const { Modal, openModal } = useModalVideo()
+  const { locale } = useLanguage()
+  const { t } = useTranslation()
+  const isRTL = locale === 'ar'
 
   // Use aboutData prop if provided, otherwise fall back to static data
   const about = aboutData || {
     title: content.about.title,
+    titleArabic: content.about.titleArabic || content.about.title,
     subtitle: content.about.subtitle,
+    subtitleArabic: content.about.subtitleArabic || content.about.subtitle,
     videoDescription: content.about.videoDescription,
+    videoDescriptionArabic: content.about.videoDescriptionArabic || content.about.videoDescription,
     image: content.about.image || 'assets/img/home1/about-img.jpg',
     sections: content.about.sections || []
   }
@@ -24,8 +32,8 @@ const Home1About = ({ sectionGap, aboutData }) => {
             <div className="col-lg-8 wow animate fadeInDown" data-wow-delay="200ms" data-wow-duration="1500ms">
               <div className="about-title-area">
                 <div className="section-title">
-                  <span>{about.title}</span>
-                  <h2>{about.subtitle}</h2>
+                  <span>{isRTL && about.titleArabic ? about.titleArabic : about.title}</span>
+                  <h2>{isRTL && about.subtitleArabic ? about.subtitleArabic : about.subtitle}</h2>
                 </div>
                 <div className="video-and-content">
                   <a onClick={openModal} className="video-area">
@@ -33,7 +41,7 @@ const Home1About = ({ sectionGap, aboutData }) => {
                     <div className="icon">▶</div>
                   </a>
                   <div className="content">
-                    <p>{about.videoDescription}</p>
+                    <p>{isRTL && about.videoDescriptionArabic ? about.videoDescriptionArabic : about.videoDescription}</p>
                   </div>
                 </div>
               </div>
@@ -41,7 +49,7 @@ const Home1About = ({ sectionGap, aboutData }) => {
             <div className="col-xl-2 col-lg-3 d-flex justify-content-lg-end">
               <Link href="/about" className="about-btn btn_wrapper">
                 <div className="primary-btn">
-                  About Us More →
+                  {t('about.aboutUsMore')} <span style={{ transform: isRTL ? 'scaleX(-1)' : 'none', display: 'inline-block' }}>→</span>
                 </div>
               </Link>
             </div>
@@ -53,8 +61,8 @@ const Home1About = ({ sectionGap, aboutData }) => {
               <ul>
                 {about.sections.map((item, index) => (
                   <li key={index}>
-                    <h5>{item.title}</h5>
-                    <p>{item.text}</p>
+                    <h5>{isRTL && item.titleArabic ? item.titleArabic : item.title}</h5>
+                    <p>{isRTL && item.textArabic ? item.textArabic : item.text}</p>
                   </li>
                 ))}
               </ul>

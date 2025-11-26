@@ -8,6 +8,7 @@ import ContactInfo from '@/components/common/ContactInfo';
 import { useAuth } from '@/hooks/useAuth';
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "@/components/common/LanguageSwitcher";
+import { useLanguage } from "@/providers/LanguageProvider";
 const initialState = {
     activeMenu: "",
     activeSubMenu: "",
@@ -64,6 +65,18 @@ const Header1 = ({ style = "", fluid }) => {
     const headerRef = useRef(null);
     const pathname = usePathname()
     const { t } = useTranslation();
+    const { locale } = useLanguage();
+    const isRTL = locale === "ar";
+    
+    // Get logo paths based on language
+    const getLogoPath = (type) => {
+        if (isRTL) {
+            return type === "white" 
+                ? "/assets/img/header-logo-white-ar.svg" 
+                : "/assets/img/header-logo-ar.svg";
+        }
+        return companyData.company.logo[type] || companyData.company.logo.default;
+    };
     const handleScroll = () => {
         const { scrollY } = window;
         dispatch({ type: "setScrollY", payload: scrollY });
@@ -133,7 +146,7 @@ const Header1 = ({ style = "", fluid }) => {
 
                 <div className="sidebar-logo-area d-flex justify-content-between align-items-center">
                     <div className="sidebar-logo-wrap">
-                        <Link href="/"><img alt="image" src={companyData.company.logo.default} style={{width: '30%'}}/></Link>
+                        <Link href="/"><img alt="image" src={getLogoPath("default")} style={{width: '30%'}}/></Link>
                     </div>
                     <div className="right-sidebar-close-btn" onClick={toggleRightSidebar}>
                         <i className="bi bi-x" />
@@ -171,14 +184,14 @@ const Header1 = ({ style = "", fluid }) => {
                             <img 
                                 alt="image" 
                                 className="img-fluid" 
-                                src={state.scrollY > 20 ? companyData.company.logo.white : companyData.company.logo.default} 
+                                src={state.scrollY > 20 ? getLogoPath("white") : getLogoPath("default")} 
                             />
                         </Link>
                     </div>
                     <div className={`main-menu ${state.isSidebarOpen ? "show-menu" : ""}`}>
                         <div className="mobile-logo-area d-lg-none d-flex align-items-center justify-content-between">
                             <div className="mobile-logo-wrap">
-                                <Link href="/"><img alt="image" src={companyData.company.logo.default} /></Link>
+                                <Link href="/"><img alt="image" src={getLogoPath("default")} /></Link>
                             </div>
                             <div className="menu-close-btn" onClick={toggleSidebar}>
                                 <i className="bi bi-x" />
@@ -262,21 +275,36 @@ const Header1 = ({ style = "", fluid }) => {
                         <div className="btn-area d-lg-none d-flex flex-column justify-content-center align-items-center" style={{ gap: '15px' }}>
                             {user ? (
                                 <>
-                                    <div style={{ color: 'var(--title-color)', fontSize: '14px', textAlign: 'center' }}>
+                                    <div style={{ color: state.scrollY > 20 ? '#fff' : 'var(--title-color)', fontSize: '14px', textAlign: 'center' }}>
                                         {t('auth.welcomeUser', { name: userData?.displayName || user.email?.split('@')[0] || 'User' })}
                                     </div>
                                     <button 
                                         onClick={handleLogout}
                                         style={{ 
                                             background: 'none', 
-                                            border: '1px solid var(--primary-color2)', 
-                                            color: 'var(--primary-color2)', 
+                                            border: `1px solid ${state.scrollY > 20 ? '#fff' : 'var(--primary-color2)'}`, 
+                                            color: state.scrollY > 20 ? '#fff' : 'var(--primary-color2)', 
                                             padding: '10px 20px',
                                             borderRadius: '4px',
                                             cursor: 'pointer',
                                             fontSize: '14px',
                                             width: '100%',
-                                            maxWidth: '200px'
+                                            maxWidth: '200px',
+                                            transition: 'all 0.3s'
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            if (state.scrollY > 20) {
+                                                e.target.style.background = '#fff';
+                                                e.target.style.color = 'var(--primary-color2)';
+                                            } else {
+                                                e.target.style.background = 'var(--primary-color2)';
+                                                e.target.style.color = '#fff';
+                                            }
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.target.style.background = 'none';
+                                            e.target.style.color = state.scrollY > 20 ? '#fff' : 'var(--primary-color2)';
+                                            e.target.style.borderColor = state.scrollY > 20 ? '#fff' : 'var(--primary-color2)';
                                         }}
                                     >
                                         {t('auth.logout')}
@@ -290,8 +318,21 @@ const Header1 = ({ style = "", fluid }) => {
                                     </svg>
                                 </Link>
                             )}
+                            <button 
+                                onClick={() => {
+                                    toggleSidebar();
+                                    toggleRightSidebar();
+                                }}
+                                className="primary-btn"
+                                style={{ width: '100%', maxWidth: '200px', textAlign: 'center' }}
+                            >
+                                {t('navigation.getInTouch')}
+                                <svg viewBox="0 0 13 20">
+                                    <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5" />
+                                </svg>
+                            </button>
                             <Link href={companyData.navigation.cta.link} className="primary-btn">
-                                {companyData.navigation.cta.text}
+                                {t('navigation.getQuote')}
                                 <svg viewBox="0 0 13 20">
                                     <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5" />
                                 </svg>
@@ -300,7 +341,7 @@ const Header1 = ({ style = "", fluid }) => {
                     </div>
                     <div className="nav-right d-flex jsutify-content-end align-items-center">
                         
-                        <div className="right-sidebar-button" onClick={toggleRightSidebar}>
+                        <div className="right-sidebar-button d-lg-flex d-none" onClick={toggleRightSidebar}>
                             <svg width={14} height={14} viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
                                 <rect width="11.2" height="1.4" rx="0.699998" />
                                 <rect x="2.80078" y="5.6" width="11.2" height="2.79999" rx="1.4" />
@@ -309,22 +350,22 @@ const Header1 = ({ style = "", fluid }) => {
                             <span>{t('navigation.getInTouch')}</span>
                         </div>
                         <Link href={companyData.navigation.cta.link} className="primary-btn d-lg-flex d-none">
-                            {companyData.navigation.cta.text}
+                            {t('navigation.getQuote')}
                             <svg viewBox="0 0 13 20">
                                 <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5" />
                             </svg>
                         </Link>
                         {user ? (
                             <div className="user-menu d-lg-flex d-none align-items-center" style={{ marginRight: '20px', gap: '15px' }}>
-                                <span style={{ color: 'var(--title-color)', fontSize: '14px' }}>
+                                <span style={{ color: state.scrollY > 20 ? '#fff' : 'var(--title-color)', fontSize: '14px' }}>
                                     {t('auth.welcomeUser', { name: userData?.displayName || user.email?.split('@')[0] || 'User' })}
                                 </span>
                                 <button 
                                     onClick={handleLogout}
                                     style={{ 
                                         background: 'none', 
-                                        border: '1px solid var(--primary-color2)', 
-                                        color: 'var(--primary-color2)', 
+                                        border: `1px solid ${state.scrollY > 20 ? '#fff' : 'var(--primary-color2)'}`, 
+                                        color: state.scrollY > 20 ? '#fff' : 'var(--primary-color2)', 
                                         padding: '8px 15px',
                                         borderRadius: '4px',
                                         cursor: 'pointer',
@@ -332,12 +373,18 @@ const Header1 = ({ style = "", fluid }) => {
                                         transition: 'all 0.3s'
                                     }}
                                     onMouseEnter={(e) => {
-                                        e.target.style.background = 'var(--primary-color2)';
-                                        e.target.style.color = '#fff';
+                                        if (state.scrollY > 20) {
+                                            e.target.style.background = '#fff';
+                                            e.target.style.color = 'var(--primary-color2)';
+                                        } else {
+                                            e.target.style.background = 'var(--primary-color2)';
+                                            e.target.style.color = '#fff';
+                                        }
                                     }}
                                     onMouseLeave={(e) => {
                                         e.target.style.background = 'none';
-                                        e.target.style.color = 'var(--primary-color2)';
+                                        e.target.style.color = state.scrollY > 20 ? '#fff' : 'var(--primary-color2)';
+                                        e.target.style.borderColor = state.scrollY > 20 ? '#fff' : 'var(--primary-color2)';
                                     }}
                                 >
                                     {t('auth.logout')}
