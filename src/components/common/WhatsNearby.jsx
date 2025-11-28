@@ -1,4 +1,6 @@
+"use client"
 import React from 'react'
+import { useLanguage } from "@/providers/LanguageProvider"
 
 /**
  * WhatsNearby Component
@@ -10,6 +12,7 @@ import React from 'react'
  * @param {string} props.description - Optional description text
  * @param {Array} props.places - Array of nearby places
  * @param {string} props.places[].name - Name of the place
+ * @param {string} props.places[].nameArabic - Arabic name of the place
  * @param {string} props.places[].distance - Distance to the place (e.g., "50m", "2km")
  * @param {string} props.className - Additional CSS classes
  */
@@ -20,6 +23,15 @@ const WhatsNearby = ({
   places = [],
   className = ""
 }) => {
+  const { locale } = useLanguage()
+  const isRTL = locale === 'ar'
+
+  // Helper function to get text based on language
+  const getText = (field, arabicField) => {
+    if (isRTL && arabicField) return arabicField;
+    return field || '';
+  };
+
   // Default places if none provided
   const defaultPlaces = [
     { name: "School", distance: "50m" },
@@ -41,19 +53,22 @@ const WhatsNearby = ({
         {description && <p className="mb-4">{description}</p>}
         <div className="property-details-table">
           <div className="row g-0">
-            {displayPlaces.map((place, index) => (
-              <div key={index} className="col-md-6">
-                <div className="single-item">
-                  <div className="title">
-                    <h6>{place.name}</h6>
+            {displayPlaces.map((place, index) => {
+              const placeName = getText(place.name, place.nameArabic);
+              return (
+                <div key={index} className="col-md-6">
+                  <div className="single-item">
+                    <div className="title">
+                      <h6>{placeName}</h6>
+                    </div>
+                    <svg width={43} height={6} viewBox="0 0 43 6" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M0.333333 3C0.333333 4.47276 1.52724 5.66667 3 5.66667C4.47276 5.66667 5.66667 4.47276 5.66667 3C5.66667 1.52724 4.47276 0.333333 3 0.333333C1.52724 0.333333 0.333333 1.52724 0.333333 3ZM43 3L38 0.113249V5.88675L43 3ZM3 3.5H38.5V2.5H3V3.5Z" />
+                    </svg>
+                    <span>{place.distance}</span>
                   </div>
-                  <svg width={43} height={6} viewBox="0 0 43 6" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0.333333 3C0.333333 4.47276 1.52724 5.66667 3 5.66667C4.47276 5.66667 5.66667 4.47276 5.66667 3C5.66667 1.52724 4.47276 0.333333 3 0.333333C1.52724 0.333333 0.333333 1.52724 0.333333 3ZM43 3L38 0.113249V5.88675L43 3ZM3 3.5H38.5V2.5H3V3.5Z" />
-                  </svg>
-                  <span>{place.distance}</span>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

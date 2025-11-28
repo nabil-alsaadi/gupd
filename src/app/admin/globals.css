@@ -1,8 +1,22 @@
-/* Admin Panel Styles */
+/* Admin Panel Styles - Always LTR */
+html[dir="rtl"] .admin-layout,
+html[dir="rtl"] .admin-sidebar,
+html[dir="rtl"] .admin-main,
+html[dir="rtl"] .admin-content,
+html[dir="rtl"] .admin-header,
+html[dir="rtl"] .admin-page,
+html[dir="rtl"] .admin-form,
+html[dir="rtl"] .admin-table,
+html[dir="rtl"] .admin-card {
+  direction: ltr !important;
+  text-align: left !important;
+}
+
 .admin-layout {
   display: flex;
   min-height: 100vh;
   background-color: #f5f7fa;
+  direction: ltr;
 }
 
 /* Sidebar Styles */

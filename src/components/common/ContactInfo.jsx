@@ -3,10 +3,12 @@ import React, { useEffect, useState } from 'react'
 import { Phone, MessageCircle, MapPin, Mail } from 'lucide-react'
 import companyData from '@/data/companyData.json'
 import { useFirestore } from '@/hooks/useFirebase'
+import { useTranslation } from 'react-i18next'
 
 const ContactInfo = ({ showArrow = false, className = "", contactData = null }) => {
     const classes = className ? `contact-area ${className}`.trim() : "contact-area"
     const { data: contactDocs, fetchData } = useFirestore('contact');
+    const { t } = useTranslation();
     const [contact, setContact] = useState(() => {
         // Use provided contactData if available
         if (contactData) {
@@ -55,7 +57,7 @@ const ContactInfo = ({ showArrow = false, className = "", contactData = null }) 
                         <Phone size={33} strokeWidth={1.5} />
                     </div>
                     <div className="content">
-                        <span>CALL ANY TIME</span>
+                        <span>{t('contact.callAnyTime')}</span>
                         <h6><a href={contact.phone?.link || '#'}>{contact.phone?.display || ''}</a></h6>
                     </div>
                 </div>
@@ -71,7 +73,7 @@ const ContactInfo = ({ showArrow = false, className = "", contactData = null }) 
                         <MessageCircle size={33} strokeWidth={1.5} />
                     </div>
                     <div className="content">
-                        <span>WHATSAPP</span>
+                        <span>{t('contact.whatsapp')}</span>
                         <h6><a href={contact.whatsapp?.link || '#'} target="_blank" rel="noopener noreferrer">{contact.whatsapp?.display || ''}</a></h6>
                     </div>
                 </div>
@@ -87,7 +89,7 @@ const ContactInfo = ({ showArrow = false, className = "", contactData = null }) 
                         <MapPin size={33} strokeWidth={1.5} />
                     </div>
                     <div className="content">
-                        <span>ADDRESS</span>
+                        <span>{t('contact.address')}</span>
                         <h6><a href={contact.address?.link || '#'} target="_blank" rel="noopener noreferrer">{contact.address?.primary || ''}</a></h6>
                     </div>
                 </div>
@@ -103,7 +105,7 @@ const ContactInfo = ({ showArrow = false, className = "", contactData = null }) 
                         <Mail size={33} strokeWidth={1.5} />
                     </div>
                     <div className="content">
-                        <span>SAY HELLO</span>
+                        <span>{t('contact.sayHello')}</span>
                         <h6><a href={contact.email?.link || '#'}>{contact.email?.display || ''}</a></h6>
                     </div>
                 </div>

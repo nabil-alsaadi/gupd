@@ -377,8 +377,8 @@ const Header1 = ({ style = "", fluid }) => {
                                             e.target.style.background = '#fff';
                                             e.target.style.color = 'var(--primary-color2)';
                                         } else {
-                                            e.target.style.background = 'var(--primary-color2)';
-                                            e.target.style.color = '#fff';
+                                        e.target.style.background = 'var(--primary-color2)';
+                                        e.target.style.color = '#fff';
                                         }
                                     }}
                                     onMouseLeave={(e) => {

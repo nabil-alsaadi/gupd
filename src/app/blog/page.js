@@ -1,15 +1,15 @@
-import Breadcrum from '@/components/common/Breadcrum'
 import Footer1 from '@/components/Footer/Footer1'
 import Home1FooterTop from '@/components/Footer/Home1FooterTop'
 import Header1 from '@/components/header/Header1'
 import Link from 'next/link'
 import React from 'react'
+import BlogBreadcrumb from './BlogBreadcrumb'
 
 const page = () => {
   return (
     <>
       <Header1 fluid={"container-fluid"} />
-      <Breadcrum pageTitle={'Blog Grid'} content='See Our Newest Article' pagename={'Blog Grid'} />
+      <BlogBreadcrumb type="blogGrid" />
       <div className="blog-grid-page pt-120 mb-120">
         <div className="container">
           <div className="row gy-5 mb-70">

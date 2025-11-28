@@ -1151,7 +1151,7 @@ body.tt-magic-cursor #magic-cursor {
   cursor: pointer;
   height: 14px;
   width: 14px;
-  margin-top: 7px;
+  margin-top: 0px;
   border: 1px solid rgba(var(--primary-color-opc), 0.2);
 }
 .form-inner2 .form-check .form-check-input:focus {
@@ -19168,6 +19168,10 @@ html[dir="rtl"] .project-card2.two .project-content-wrap {
   top: 50%;
   transform: translateY(-50%);
 }
+html[dir="rtl"] .home6-contact-section .contact-wrapper .contact-content .contact-list .single-contact .content::after {
+  left: auto;
+  right: -10px;
+}
 .home6-contact-section .contact-wrapper .contact-form-wrap {
   background-color: var(--white-color);
   margin-left: 10px;
@@ -20302,6 +20306,30 @@ html[dir="rtl"] .project-card2.two .project-content-wrap {
 }
 .blog-details-page .tag-and-social-area .social-area .social-link li a:hover i {
   color: var(--primary-color2);
+}
+/* Fix for social icons in RTL */
+html[dir="rtl"] .blog-details-page .tag-and-social-area .social-area .social-link li a i {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  font-family: 'boxicons', 'bootstrap-icons' !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  line-height: 1 !important;
+  text-rendering: auto !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}
+html[dir="rtl"] .blog-details-page .tag-and-social-area .social-area .social-link li a i.bx::before,
+html[dir="rtl"] .blog-details-page .tag-and-social-area .social-area .social-link li a i.bi::before {
+  display: inline-block !important;
+  font-family: 'boxicons', 'bootstrap-icons' !important;
+}
+html[dir="rtl"] .blog-details-page .tag-and-social-area .social-area {
+  direction: rtl;
+}
+html[dir="rtl"] .blog-details-page .tag-and-social-area .social-area .social-link {
+  direction: rtl;
 }
 .blog-details-page .details-navigation {
   display: flex;

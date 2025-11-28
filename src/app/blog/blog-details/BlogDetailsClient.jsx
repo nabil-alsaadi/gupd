@@ -4,13 +4,47 @@ import React, { useState } from 'react'
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import { updateDocument } from '@/utils/firestore';
+import { useLanguage } from "@/providers/LanguageProvider";
+import { useTranslation } from 'react-i18next';
 
-const BlogDetailsClient = ({ blog, relatedBlogs = [] }) => {
+const BlogDetailsClient = ({ blog, relatedBlogs = [], allBlogs = [] }) => {
     // Hooks must be called before any early returns
     const { user, userData } = useAuth();
     const router = useRouter();
+    const { locale } = useLanguage();
+    const { t } = useTranslation();
+    const isRTL = locale === 'ar';
     const [commentText, setCommentText] = useState('');
     const [submitting, setSubmitting] = useState(false);
+
+    // Find previous and next blogs
+    const getPreviousNextBlogs = () => {
+        if (!blog || !allBlogs || allBlogs.length === 0) {
+            return { previousBlog: null, nextBlog: null };
+        }
+
+        // Sort blogs by date (most recent first) to match the order
+        const sortedBlogs = [...allBlogs].sort((a, b) => {
+            const dateA = new Date(a.date || 0);
+            const dateB = new Date(b.date || 0);
+            return dateB - dateA;
+        });
+
+        const currentIndex = sortedBlogs.findIndex(b => b.id === blog.id || b.id?.toString() === blog.id?.toString());
+        
+        if (currentIndex === -1) {
+            return { previousBlog: null, nextBlog: null };
+        }
+
+        // Previous blog is the one after current (newer)
+        // Next blog is the one before current (older)
+        const previousBlog = currentIndex > 0 ? sortedBlogs[currentIndex - 1] : null;
+        const nextBlog = currentIndex < sortedBlogs.length - 1 ? sortedBlogs[currentIndex + 1] : null;
+
+        return { previousBlog, nextBlog };
+    };
+
+    const { previousBlog, nextBlog } = getPreviousNextBlogs();
 
     if (!blog) {
         return (
@@ -19,10 +53,10 @@ const BlogDetailsClient = ({ blog, relatedBlogs = [] }) => {
                     <div className="row">
                         <div className="col-lg-12">
                             <div style={{ textAlign: 'center', padding: '100px 20px' }}>
-                                <h2>Blog Post Not Found</h2>
-                                <p>The blog post you're looking for doesn't exist.</p>
+                                <h2>{t('blog.blogPostNotFound')}</h2>
+                                <p>{t('blog.blogPostNotFoundDescription')}</p>
                                 <Link href="/blog" className="primary-btn2" style={{ marginTop: '20px', display: 'inline-block' }}>
-                                    <span>Back to Blog</span>
+                                    <span>{t('blog.backToBlog')}</span>
                                 </Link>
                             </div>
                         </div>
@@ -52,13 +86,29 @@ const BlogDetailsClient = ({ blog, relatedBlogs = [] }) => {
 
     const coverImage = blog.cover_image || blog.thumbnail_image || '/assets/img/inner-pages/blog-details-thumb-img.jpg';
     const authorImage = blog.author_image || '/assets/img/inner-pages/blog-meta-author-img.png';
-    const authorName = blog.author_name || 'Unknown Author';
+    const authorName = blog.author_name || t('blog.anonymous');
 
-    // Parse HTML content from ReactQuill
-    const blogContent = blog.blog_content || '';
+    // Helper function to get text based on language
+    const getText = (english, arabic) => {
+        if (isRTL && arabic) return arabic;
+        return english || '';
+    };
 
-    // Extract tags - ensure it's an array
-    const tags = Array.isArray(blog.tags) ? blog.tags : (blog.tags ? blog.tags.split(',').map(t => t.trim()) : []);
+    // Get blog title based on language
+    const blogTitle = getText(blog.blog_title, blog.blog_title_arabic || blog.blog_titleArabic);
+
+    // Parse HTML content from ReactQuill - check for Arabic version
+    const blogContent = getText(blog.blog_content, blog.blog_content_arabic || blog.blog_contentArabic);
+
+    // Extract tags - ensure it's an array, check for Arabic version
+    const tagsEnglish = Array.isArray(blog.tags) ? blog.tags : (blog.tags ? blog.tags.split(',').map(t => t.trim()) : []);
+    const tagsArabic = Array.isArray(blog.tags_arabic || blog.tagsArabic) 
+        ? (blog.tags_arabic || blog.tagsArabic) 
+        : ((blog.tags_arabic || blog.tagsArabic) ? (blog.tags_arabic || blog.tagsArabic).split(',').map(t => t.trim()) : []);
+    const tags = isRTL && tagsArabic.length > 0 ? tagsArabic : tagsEnglish;
+
+    // Get category based on language
+    const category = getText(blog.category, blog.category_arabic || blog.categoryArabic);
 
     const handleCommentSubmit = async (e) => {
         e.preventDefault();
@@ -69,7 +119,7 @@ const BlogDetailsClient = ({ blog, relatedBlogs = [] }) => {
         }
         
         if (!commentText.trim()) {
-            alert('Please enter a comment');
+            alert(t('blog.pleaseEnterComment'));
             return;
         }
         
@@ -77,7 +127,7 @@ const BlogDetailsClient = ({ blog, relatedBlogs = [] }) => {
         
         try {
             const newComment = {
-                author_name: userData?.displayName || user.email?.split('@')[0] || 'Anonymous',
+                author_name: userData?.displayName || user.email?.split('@')[0] || t('blog.anonymous'),
                 author_image: user.photoURL || '/assets/img/inner-pages/blog-comment-author-01.png',
                 content: commentText.trim(),
                 date: new Date().toISOString(),
@@ -98,7 +148,7 @@ const BlogDetailsClient = ({ blog, relatedBlogs = [] }) => {
             window.location.reload();
         } catch (error) {
             console.error('Error submitting comment:', error);
-            alert('Failed to submit comment. Please try again.');
+            alert(t('blog.failedToSubmitComment'));
         } finally {
             setSubmitting(false);
         }
@@ -121,7 +171,7 @@ const BlogDetailsClient = ({ blog, relatedBlogs = [] }) => {
                                     <svg width={12} height={16} viewBox="0 0 12 16" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M7.80968 15.0679C9.5273 12.1176 8.80817 8.40483 6.09966 6.24033C6.09808 6.23911 6.0965 6.23758 6.09523 6.23666L6.10694 6.26482L6.10504 6.28594C6.63276 7.63466 6.55873 9.11531 5.91047 10.3857L5.45362 11.2813L5.31347 10.2917C5.21824 9.62039 4.95659 8.98001 4.55353 8.43177H4.48994L4.4564 8.33993C4.46115 9.3657 4.23778 10.3762 3.7996 11.3294C3.22474 12.5768 3.30922 14.0152 4.02581 15.1778L4.52031 15.9804L3.63066 15.6168C2.16361 15.0171 0.990804 13.8618 0.412783 12.4473C-0.234842 10.8678 -0.114934 9.03633 0.733906 7.54925C1.17652 6.77572 1.48657 5.95443 1.65583 5.10773L1.82129 4.27787L2.24334 5.01804C2.44487 5.37098 2.59326 5.75301 2.68532 6.15432L2.69481 6.16381L2.70462 6.22809L2.71379 6.22533C3.97804 4.6002 4.73545 2.57805 4.84586 0.530486L4.87434 0L5.33435 0.290191C7.21173 1.47391 8.51552 3.37301 8.91827 5.5069L8.92744 5.55067L8.93219 5.5574L8.95275 5.52924C9.3207 5.05906 9.51496 4.4998 9.51496 3.91115V2.99956L10.0835 3.72626C11.4053 5.41537 12.083 7.51068 11.9919 9.62651C11.8799 12.117 10.4761 14.3029 8.23648 15.4873L7.26678 16L7.80968 15.0679Z" />
                                     </svg>
-                                    {formatViews(blog.blog_view)} View
+                                    {formatViews(blog.blog_view)} {t('blog.view')}
                                 </li>
                                 <li>
                                     <a href="#comment-area" id="scroll-btn">
@@ -131,11 +181,11 @@ const BlogDetailsClient = ({ blog, relatedBlogs = [] }) => {
                                                 <path d="M6.0757 0.216683C4.48484 0.198937 2.95187 0.812778 1.81293 1.92361C0.673981 3.03443 0.0220199 4.55159 1.29169e-06 6.14239C-0.000538167 6.95003 0.167902 7.74885 0.494497 8.48752C0.821091 9.22618 1.29861 9.88834 1.89638 10.4315L1.65183 11.737C1.63148 11.8466 1.63545 11.9593 1.66346 12.0673C1.69147 12.1752 1.74285 12.2756 1.81395 12.3615C1.88505 12.4474 1.97414 12.5166 2.07493 12.5642C2.17572 12.6119 2.28575 12.6368 2.39724 12.6373C2.52333 12.6371 2.64739 12.6056 2.75837 12.5458L4.19679 11.773C4.8041 11.9679 5.43791 12.0675 6.0757 12.0685C7.66662 12.0862 9.19965 11.4723 10.3386 10.3614C11.4776 9.25051 12.1295 7.73326 12.1514 6.14239C12.1294 4.55159 11.4774 3.03443 10.3385 1.92361C9.19953 0.812778 7.66656 0.198937 6.0757 0.216683ZM3.79731 7.05184C3.64711 7.05184 3.50027 7.0073 3.37538 6.92385C3.25049 6.8404 3.15314 6.72179 3.09566 6.58302C3.03818 6.44424 3.02314 6.29154 3.05244 6.14422C3.08175 5.9969 3.15408 5.86157 3.26029 5.75536C3.36651 5.64915 3.50183 5.57682 3.64915 5.54751C3.79647 5.51821 3.94917 5.53325 4.08795 5.59073C4.22672 5.64821 4.34533 5.74555 4.42878 5.87045C4.51223 5.99534 4.55678 6.14217 4.55678 6.29238C4.55678 6.4938 4.47676 6.68698 4.33433 6.8294C4.19191 6.97183 3.99874 7.05184 3.79731 7.05184ZM6.0757 7.05184C5.92549 7.05184 5.77866 7.0073 5.65377 6.92385C5.52887 6.8404 5.43153 6.72179 5.37405 6.58302C5.31657 6.44424 5.30153 6.29154 5.33083 6.14422C5.36013 5.9969 5.43247 5.86157 5.53868 5.75536C5.64489 5.64915 5.78022 5.57682 5.92754 5.54751C6.07486 5.51821 6.22756 5.53325 6.36633 5.59073C6.50511 5.64821 6.62372 5.74555 6.70717 5.87045C6.79062 5.99534 6.83516 6.14217 6.83516 6.29238C6.83516 6.4938 6.75515 6.68698 6.61272 6.8294C6.47029 6.97183 6.27712 7.05184 6.0757 7.05184ZM8.35409 7.05184C8.20388 7.05184 8.05704 7.0073 7.93215 6.92385C7.80726 6.8404 7.70992 6.72179 7.65244 6.58302C7.59495 6.44424 7.57991 6.29154 7.60922 6.14422C7.63852 5.9969 7.71085 5.86157 7.81707 5.75536C7.92328 5.64915 8.0586 5.57682 8.20592 5.54751C8.35324 5.51821 8.50595 5.53325 8.64472 5.59073C8.78349 5.64821 8.90211 5.74555 8.98556 5.87045C9.06901 5.99534 9.11355 6.14217 9.11355 6.29238C9.11355 6.4938 9.03354 6.68698 8.89111 6.8294C8.74868 6.97183 8.55551 7.05184 8.35409 7.05184Z" />
                                             </g>
                                         </svg>
-                                        {blog.comment || 0} Comment
+                                        {blog.comment || 0} {t('blog.comment')}
                                     </a>
                                 </li>
                             </ul>
-                            <h2>{blog.blog_title || 'Untitled Blog Post'}</h2>
+                            <h2>{blogTitle || t('blog.untitledBlogPost')}</h2>
                             <div className="author-area">
                                 <div className="author-img">
                                     <img 
@@ -147,14 +197,14 @@ const BlogDetailsClient = ({ blog, relatedBlogs = [] }) => {
                                     />
                                 </div>
                                 <div className="author-content">
-                                    <h6>By, <Link href="/blog">{authorName}</Link></h6>
+                                    <h6>{t('blog.by')} <Link href="/blog">{authorName}</Link></h6>
                                 </div>
                             </div>
                         </div>
                         <div className="blog-details-thumb">
                             <img 
                                 src={coverImage} 
-                                alt={blog.blog_title || 'Blog post'}
+                                alt={blogTitle || t('blog.untitledBlogPost')}
                                 onError={(e) => {
                                     e.target.src = '/assets/img/inner-pages/blog-details-thumb-img.jpg';
                                 }}
@@ -163,7 +213,7 @@ const BlogDetailsClient = ({ blog, relatedBlogs = [] }) => {
                     </div>
                 </div>
                 <div className="row gy-5 mb-120">
-                    <div className="col-lg-8">
+                    <div className="col-lg-12">
                         <div className="details-content-wrapper mb-80">
                             {blogContent && (
                                 <div 
@@ -172,7 +222,7 @@ const BlogDetailsClient = ({ blog, relatedBlogs = [] }) => {
                                 />
                             )}
                             {!blogContent && (
-                                <p className="first-para">No content available for this blog post.</p>
+                                <p className="first-para">{t('blog.noContentAvailable')}</p>
                             )}
                         </div>
                         {tags.length > 0 && (
@@ -186,34 +236,105 @@ const BlogDetailsClient = ({ blog, relatedBlogs = [] }) => {
                                         </li>
                                     ))}
                                 </ul>
-                                <div className="social-area">
-                                    <h6>Share On:</h6>
-                                    <ul className="social-link">
-                                        <li><a href="https://www.facebook.com/"><i className="bx bxl-facebook" /></a></li>
-                                        <li><a href="https://twitter.com/"><i className="bi bi-twitter-x" /></a></li>
-                                        <li><a href="https://www.pinterest.com/"><i className="bx bxl-pinterest-alt" /></a></li>
-                                        <li><a href="https://www.instagram.com/"><i className="bx bxl-instagram" /></a></li>
+                                <div className="social-area" style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
+                                    <h6>{t('blog.shareOn')}</h6>
+                                    <ul className="social-link" style={{ direction: isRTL ? 'rtl' : 'ltr', display: 'flex', alignItems: 'center', gap: '28px' }}>
+                                        <li style={{ display: 'list-item' }}><a href="https://www.facebook.com/" style={{ display: 'block' }}><i className="bx bxl-facebook" style={{ display: 'inline-block', fontFamily: 'boxicons' }} /></a></li>
+                                        <li style={{ display: 'list-item' }}><a href="https://twitter.com/" style={{ display: 'block' }}><i className="bi bi-twitter-x" style={{ display: 'inline-block', fontFamily: 'bootstrap-icons' }} /></a></li>
+                                        <li style={{ display: 'list-item' }}><a href="https://www.pinterest.com/" style={{ display: 'block' }}><i className="bx bxl-pinterest-alt" style={{ display: 'inline-block', fontFamily: 'boxicons' }} /></a></li>
+                                        <li style={{ display: 'list-item' }}><a href="https://www.instagram.com/" style={{ display: 'block' }}><i className="bx bxl-instagram" style={{ display: 'inline-block', fontFamily: 'boxicons' }} /></a></li>
                                     </ul>
                                 </div>
                             </div>
                         )}
-                        <div className="details-navigation">
-                            <Link href="/blog/blog-details" className="navigation-arrow">
-                                <svg width={21} height={14} viewBox="0 0 21 14" xmlns="http://www.w3.org/2000/svg">
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M20.75 7C20.75 7.41421 20.4142 7.75 20 7.75H2V6.25H20C20.4142 6.25 20.75 6.58579 20.75 7Z" />
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M10.0856 0.531506C10.3444 0.854953 10.2919 1.32692 9.96849 1.58568L3.20056 7.00003L9.96849 12.4144C10.2919 12.6731 10.3444 13.1451 10.0856 13.4685C9.82687 13.792 9.3549 13.8444 9.03145 13.5857L0.799387 7.00003L9.03145 0.414376C9.3549 0.155619 9.82687 0.20806 10.0856 0.531506Z" />
-                                </svg>
-                            </Link>
-                            <p>Previous post title...</p>
-                            <Link href="/blog/blog-details" className="navigation-arrow">
-                                <svg width={21} height={14} viewBox="0 0 21 14" xmlns="http://www.w3.org/2000/svg">
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M0.095796 6.74944C0.101677 6.33526 0.442198 6.00428 0.85637 6.01016L18.8546 6.26574L18.8333 7.76559L0.835071 7.51001C0.420899 7.50413 0.0899145 7.16361 0.095796 6.74944Z" />
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M10.6671 13.3686C10.413 13.0415 10.4721 12.5703 10.7992 12.3162L17.6434 6.99845L10.953 1.48855C10.6332 1.22523 10.5875 0.752562 10.8508 0.432823C11.1142 0.113083 11.5868 0.0673482 11.9066 0.330672L20.0443 7.03255L11.7195 13.5006C11.3925 13.7548 10.9213 13.6956 10.6671 13.3686Z" />
-                                </svg>
-                            </Link>
+                        <div className="details-navigation" style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '15px', flex: isRTL ? '0 0 auto' : '1' }}>
+                                {previousBlog ? (
+                                    <Link 
+                                        href={`/blog/blog-details?slug=${previousBlog.id}`} 
+                                        className="navigation-arrow"
+                                        style={{ opacity: 1, pointerEvents: 'auto' }}
+                                    >
+                                        <svg 
+                                            width={21} 
+                                            height={14} 
+                                            viewBox="0 0 21 14" 
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            style={{ transform: isRTL ? 'scaleX(-1)' : 'none' }}
+                                        >
+                                            <path fillRule="evenodd" clipRule="evenodd" d="M20.75 7C20.75 7.41421 20.4142 7.75 20 7.75H2V6.25H20C20.4142 6.25 20.75 6.58579 20.75 7Z" />
+                                            <path fillRule="evenodd" clipRule="evenodd" d="M10.0856 0.531506C10.3444 0.854953 10.2919 1.32692 9.96849 1.58568L3.20056 7.00003L9.96849 12.4144C10.2919 12.6731 10.3444 13.1451 10.0856 13.4685C9.82687 13.792 9.3549 13.8444 9.03145 13.5857L0.799387 7.00003L9.03145 0.414376C9.3549 0.155619 9.82687 0.20806 10.0856 0.531506Z" />
+                                        </svg>
+                                    </Link>
+                                ) : (
+                                    <span 
+                                        className="navigation-arrow" 
+                                        style={{ opacity: 0.5, pointerEvents: 'none', cursor: 'not-allowed' }}
+                                    >
+                                        <svg 
+                                            width={21} 
+                                            height={14} 
+                                            viewBox="0 0 21 14" 
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            style={{ transform: isRTL ? 'scaleX(-1)' : 'none' }}
+                                        >
+                                            <path fillRule="evenodd" clipRule="evenodd" d="M20.75 7C20.75 7.41421 20.4142 7.75 20 7.75H2V6.25H20C20.4142 6.25 20.75 6.58579 20.75 7Z" />
+                                            <path fillRule="evenodd" clipRule="evenodd" d="M10.0856 0.531506C10.3444 0.854953 10.2919 1.32692 9.96849 1.58568L3.20056 7.00003L9.96849 12.4144C10.2919 12.6731 10.3444 13.1451 10.0856 13.4685C9.82687 13.792 9.3549 13.8444 9.03145 13.5857L0.799387 7.00003L9.03145 0.414376C9.3549 0.155619 9.82687 0.20806 10.0856 0.531506Z" />
+                                        </svg>
+                                    </span>
+                                )}
+                                <p style={{ marginBottom: 0 }}>
+                                    {previousBlog 
+                                        ? getText(previousBlog.blog_title, previousBlog.blog_title_arabic || previousBlog.blog_titleArabic) || t('blog.previousPostTitle')
+                                        : t('blog.previousPostTitle')
+                                    }
+                                </p>
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '15px', flex: isRTL ? '1' : '0 0 auto', flexDirection: isRTL ? 'row-reverse' : 'row' }}>
+                                <p style={{ marginBottom: 0 }}>
+                                    {nextBlog 
+                                        ? getText(nextBlog.blog_title, nextBlog.blog_title_arabic || nextBlog.blog_titleArabic) || t('blog.nextPostTitle')
+                                        : t('blog.nextPostTitle')
+                                    }
+                                </p>
+                                {nextBlog ? (
+                                    <Link 
+                                        href={`/blog/blog-details?slug=${nextBlog.id}`} 
+                                        className="navigation-arrow"
+                                        style={{ opacity: 1, pointerEvents: 'auto' }}
+                                    >
+                                        <svg 
+                                            width={21} 
+                                            height={14} 
+                                            viewBox="0 0 21 14" 
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            style={{ transform: isRTL ? 'scaleX(-1)' : 'none' }}
+                                        >
+                                            <path fillRule="evenodd" clipRule="evenodd" d="M0.095796 6.74944C0.101677 6.33526 0.442198 6.00428 0.85637 6.01016L18.8546 6.26574L18.8333 7.76559L0.835071 7.51001C0.420899 7.50413 0.0899145 7.16361 0.095796 6.74944Z" />
+                                            <path fillRule="evenodd" clipRule="evenodd" d="M10.6671 13.3686C10.413 13.0415 10.4721 12.5703 10.7992 12.3162L17.6434 6.99845L10.953 1.48855C10.6332 1.22523 10.5875 0.752562 10.8508 0.432823C11.1142 0.113083 11.5868 0.0673482 11.9066 0.330672L20.0443 7.03255L11.7195 13.5006C11.3925 13.7548 10.9213 13.6956 10.6671 13.3686Z" />
+                                        </svg>
+                                    </Link>
+                                ) : (
+                                    <span 
+                                        className="navigation-arrow" 
+                                        style={{ opacity: 0.5, pointerEvents: 'none', cursor: 'not-allowed' }}
+                                    >
+                                        <svg 
+                                            width={21} 
+                                            height={14} 
+                                            viewBox="0 0 21 14" 
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            style={{ transform: isRTL ? 'scaleX(-1)' : 'none' }}
+                                        >
+                                            <path fillRule="evenodd" clipRule="evenodd" d="M0.095796 6.74944C0.101677 6.33526 0.442198 6.00428 0.85637 6.01016L18.8546 6.26574L18.8333 7.76559L0.835071 7.51001C0.420899 7.50413 0.0899145 7.16361 0.095796 6.74944Z" />
+                                            <path fillRule="evenodd" clipRule="evenodd" d="M10.6671 13.3686C10.413 13.0415 10.4721 12.5703 10.7992 12.3162L17.6434 6.99845L10.953 1.48855C10.6332 1.22523 10.5875 0.752562 10.8508 0.432823C11.1142 0.113083 11.5868 0.0673482 11.9066 0.330672L20.0443 7.03255L11.7195 13.5006C11.3925 13.7548 10.9213 13.6956 10.6671 13.3686Z" />
+                                        </svg>
+                                    </span>
+                                )}
+                            </div>
                         </div>
                     </div>
-                    <div className="col-lg-4">
+                    {/* <div className="col-lg-4">
                         <div className="blog-sidebar-area">
                             <div className="single-widget mb-30">
                                 <h5 className="widget-title">Search Here</h5>
@@ -283,13 +404,13 @@ const BlogDetailsClient = ({ blog, relatedBlogs = [] }) => {
                                 </div>
                             )}
                         </div>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="row">
                     <div className="col-lg-8">
                         <div className="comment-area" id="scroll-section">
                             <div className="title">
-                                <h3>Comments</h3>
+                                <h3>{t('blog.comments')}</h3>
                             </div>
                             {blog.comment_content && Array.isArray(blog.comment_content) && blog.comment_content.length > 0 ? (
                                 <ul className="comment">
@@ -307,13 +428,13 @@ const BlogDetailsClient = ({ blog, relatedBlogs = [] }) => {
                                                 </div>
                                                 <div className="comment-content">
                                                     <div className="author-name-date">
-                                                        <h4>{comment.author_name || 'Anonymous'},</h4>
+                                                        <h4>{comment.author_name || t('blog.anonymous')},</h4>
                                                         <span>{formatDate(comment.date)}</span>
                                                     </div>
-                                                    <p>{comment.content || comment.message || 'No content'}</p>
+                                                    <p>{comment.content || comment.message || t('blog.noContent')}</p>
                                                     <div className="replay-btn">
                                                         <div className="details-button">
-                                                            Reply
+                                                            {t('blog.reply')}
                                                             <svg viewBox="0 0 13 20">
                                                                 <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5" />
                                                             </svg>
@@ -325,11 +446,11 @@ const BlogDetailsClient = ({ blog, relatedBlogs = [] }) => {
                                     ))}
                                 </ul>
                             ) : (
-                                <p style={{ padding: '20px 0' }}>No comments yet. Be the first to comment!</p>
+                                <p style={{ padding: '20px 0' }}>{t('blog.noCommentsYet')}</p>
                             )}
                             <div className="contact-form-area">
                                 <div className="title">
-                                    <h3>Leave A Comment</h3>
+                                    <h3>{t('blog.leaveAComment')}</h3>
                                 </div>
                                 {!user ? (
                                     <div style={{ 
@@ -340,11 +461,13 @@ const BlogDetailsClient = ({ blog, relatedBlogs = [] }) => {
                                         border: '1px solid #dee2e6'
                                     }}>
                                         <p style={{ marginBottom: '20px', color: '#495057', fontSize: '16px' }}>
-                                            Please <Link href="/login" style={{ color: 'var(--primary-color2)', fontWeight: '600', textDecoration: 'underline' }}>login</Link> to leave a comment.
+                                            {t('blog.pleaseLoginToComment')}{' '}
+                                            <Link href="/login" style={{ color: 'var(--primary-color2)', fontWeight: '600', textDecoration: 'underline' }}>{t('blog.login')}</Link>
+                                            {' '}{t('blog.pleaseLoginToCommentSuffix')}
                                         </p>
                                         <Link href="/login" className="primary-btn2">
                                             <span>
-                                                Go to Login
+                                                {t('blog.goToLogin')}
                                                 <svg viewBox="0 0 13 20">
                                                     <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5" />
                                                 </svg>
@@ -357,13 +480,13 @@ const BlogDetailsClient = ({ blog, relatedBlogs = [] }) => {
                                             <div className="row">
                                                 <div className="col-md-12">
                                                     <div className="form-inner mb-30">
-                                                        <label>Comment *</label>
+                                                        <label>{t('blog.commentLabel')}</label>
                                                         <textarea
                                                             value={commentText}
                                                             onChange={(e) => setCommentText(e.target.value)}
                                                             required
                                                             rows="5"
-                                                            placeholder="Write your comment here..."
+                                                            placeholder={t('blog.writeCommentPlaceholder')}
                                                             style={{ minHeight: '120px' }}
                                                         />
                                                     </div>
@@ -376,7 +499,7 @@ const BlogDetailsClient = ({ blog, relatedBlogs = [] }) => {
                                                     disabled={submitting}
                                                 >
                                                     <span>
-                                                        {submitting ? 'Submitting...' : 'Submit Comment'}
+                                                        {submitting ? t('blog.submitting') : t('blog.submitComment')}
                                                         <svg viewBox="0 0 13 20">
                                                             <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5" />
                                                         </svg>

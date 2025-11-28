@@ -26,14 +26,71 @@
         "home": "الرئيسية"
     },
     "project": {
-        "viewAllProjectDetails": "عرض جميع تفاصيل المشروع"
+        "viewAllProjectDetails": "عرض جميع تفاصيل المشروع",
+        "projectDetails": "تفاصيل المشروع",
+        "project": "المشروع",
+        "projectNotFound": "المشروع غير موجود",
+        "returnToHome": "العودة إلى الرئيسية",
+        "unitLayouts": "تخطيطات الوحدات",
+        "locationMap": "خريطة الموقع",
+        "photoGallery": "معرض الصور",
+        "client": "العميل",
+        "location": "الموقع",
+        "buildingType": "نوع المبنى",
+        "residentialTower": "برج سكني",
+        "status": "الحالة",
+        "specifications": "المواصفات",
+        "floors": "طوابق",
+        "units": "وحدات",
+        "categories": "الفئات",
+        "keyFeatures": "المميزات الرئيسية",
+        "keyFeaturesDescription": "اكتشف المميزات الاستثنائية التي تجعل {{name}} تطويراً سكنياً رائداً في الشارقة.",
+        "availableUnitLayouts": "تخطيطات الوحدات المتاحة",
+        "chooseLayoutDescription": "اختر من بين تخطيطاتنا المصممة بعناية لمنزلك المثالي.",
+        "bed": "غرفة نوم",
+        "bath": "حمام",
+        "viewLayout": "عرض",
+        "whatsNearby": "ما هو قريب",
+        "whatsNearbyDescription": "اكتشف راحة موقع برج الفيصل المتميز مع سهولة الوصول إلى الوجهات والمرافق الرئيسية في الشارقة.",
+        "projectDocuments": "مستندات المشروع",
+        "projectDocumentsDescription": "قم بتنزيل كتيب المشروع الشامل، ومخططات الطوابق، وتفاصيل خطة الدفع.",
+        "projectGallery": "معرض المشروع",
+        "projectGalleryDescription": "استكشف الصور المذهلة لبرج الفيصل التي تعرض الهندسة المعمارية والديكورات الداخلية والمرافق والمزيد.",
+        "readyToGetDreamHome": "هل أنت مستعد للحصول على منزل أحلامك؟",
+        "getAQuote": "احصل على عرض سعر"
     },
     "contact": {
         "yourDreamApartmentAwaits": "شقتك الأحلام في انتظارك",
         "headline": "هل أنت مستعد للعثور على شقتك المثالية؟ تواصل معنا لاستكشاف الوحدات المتاحة، ومناقشة خطط الدفع، والتعرف على خدماتنا العقارية.",
         "buttonUnit": "دقيقة",
         "buttonText": "تحدث معنا",
-        "description": "سواء كنت تبحث عن شراء شقتك الأولى، أو الاستثمار في العقارات، أو تحتاج إلى معلومات حول خيارات الدفع والتمويل، فريقنا الخبير هنا لمساعدتك. اتصل بنا اليوم لاكتشاف الشقق المتاحة، ومناقشة خطط الدفع، والحصول على إجابات لجميع أسئلتك العقارية."
+        "description": "سواء كنت تبحث عن شراء شقتك الأولى، أو الاستثمار في العقارات، أو تحتاج إلى معلومات حول خيارات الدفع والتمويل، فريقنا الخبير هنا لمساعدتك. اتصل بنا اليوم لاكتشاف الشقق المتاحة، ومناقشة خطط الدفع، والحصول على إجابات لجميع أسئلتك العقارية.",
+        "connectWithTeam": "تواصل مع فريق GUPD.",
+        "fullName": "الاسم الكامل *",
+        "email": "البريد الإلكتروني *",
+        "phone": "الهاتف *",
+        "message": "الرسالة *",
+        "termsAcceptance": "لقد قرأت ووافقت على الشروط والأحكام.",
+        "submitNow": "إرسال الآن",
+        "serviceType": {
+            "label": "نوع الخدمة",
+            "placeholder": "اختر نوع الخدمة",
+            "propertyDevelopment": "تطوير العقارات",
+            "investmentOpportunities": "فرص الاستثمار",
+            "propertyManagement": "إدارة العقارات",
+            "consultation": "استشارة",
+            "residentialProjects": "المشاريع السكنية",
+            "commercialProjects": "المشاريع التجارية"
+        },
+        "breadcrumb": {
+            "content": "تواصل مع GUPD",
+            "pageTitle": "اتصل بنا",
+            "pagename": "اتصل بنا"
+        },
+        "callAnyTime": "اتصل في أي وقت",
+        "whatsapp": "واتساب",
+        "address": "العنوان",
+        "sayHello": "تواصل معنا"
     },
     "methodology": {
         "title": "كيف نعمل",
@@ -66,11 +123,62 @@
         "ourProject": "مشاريعنا",
         "supportPolicy": "سياسة الدعم",
         "terms": "الشروط والأحكام",
-        "privacy": "سياسة الخصوصية"
+        "privacy": "سياسة الخصوصية",
+        "welcomeDescription": "مرحباً بكم في GUPD، حيث يلتقي الابتكار بشغفنا في التطوير العقاري الذي بدأ بحلم لبناء مجتمعات استثنائية."
     },
     "language": {
         "switchToArabic": "العربية",
         "switchToEnglish": "English"
+    },
+    "blog": {
+        "shareOn": "شارك على:",
+        "blogPostNotFound": "المقال غير موجود",
+        "blogPostNotFoundDescription": "المقال الذي تبحث عنه غير موجود.",
+        "backToBlog": "العودة إلى المدونة",
+        "view": "مشاهدة",
+        "views": "مشاهدات",
+        "comment": "تعليق",
+        "comments": "تعليقات",
+        "by": "بواسطة،",
+        "untitledBlogPost": "مقال بدون عنوان",
+        "noContentAvailable": "لا يوجد محتوى متاح لهذا المقال.",
+        "previousPostTitle": "عنوان المقال السابق...",
+        "nextPostTitle": "عنوان المقال التالي...",
+        "noCommentsYet": "لا توجد تعليقات بعد. كن أول من يعلق!",
+        "leaveAComment": "اترك تعليقاً",
+        "pleaseLoginToComment": "يرجى",
+        "pleaseLoginToCommentSuffix": "لترك تعليق.",
+        "login": "تسجيل الدخول",
+        "goToLogin": "الذهاب إلى تسجيل الدخول",
+        "commentLabel": "التعليق *",
+        "writeCommentPlaceholder": "اكتب تعليقك هنا...",
+        "submitting": "جاري الإرسال...",
+        "submitComment": "إرسال التعليق",
+        "pleaseEnterComment": "يرجى إدخال تعليق",
+        "failedToSubmitComment": "فشل إرسال التعليق. يرجى المحاولة مرة أخرى.",
+        "reply": "رد",
+        "anonymous": "مجهول",
+        "noContent": "لا يوجد محتوى",
+        "uncategorized": "غير مصنف",
+        "noBlogPostsAvailable": "لا توجد مقالات متاحة",
+        "checkBackSoon": "تحقق مرة أخرى قريباً للحصول على مقالات جديدة!",
+        "breadcrumb": {
+            "blogGrid": {
+                "content": "اطلع على أحدث مقالاتنا",
+                "pageTitle": "شبكة المدونة",
+                "pagename": "شبكة المدونة"
+            },
+            "blogSidebar": {
+                "content": "اطلع على أحدث مقالاتنا",
+                "pageTitle": "المدونة مع الشريط الجانبي",
+                "pagename": "المدونة مع الشريط الجانبي"
+            },
+            "blogDetails": {
+                "content": "اطلع على أحدث مقالاتنا",
+                "pageTitle": "تفاصيل المقال",
+                "pagename": "تفاصيل المقال"
+            }
+        }
     }
 }
 

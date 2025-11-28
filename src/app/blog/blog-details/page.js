@@ -1,9 +1,9 @@
-import Breadcrum from '@/components/common/Breadcrum'
 import Footer1 from '@/components/Footer/Footer1'
 import Home1FooterTop from '@/components/Footer/Home1FooterTop'
 import Header1 from '@/components/header/Header1'
 import BlogDetailsClient from './BlogDetailsClient'
 import { getBlog, getBlogs } from '@/lib/getBlogs'
+import BlogDetailsBreadcrumb from './BlogDetailsBreadcrumb'
 
 const page = async ({ searchParams }) => {
     const slug = searchParams?.slug;
@@ -16,12 +16,8 @@ const page = async ({ searchParams }) => {
     return (
         <>
             <Header1 fluid={"container-fluid"}/>
-            <Breadcrum 
-                content='See Our Newest Article' 
-                pageTitle={blog?.blog_title || 'Blog Details'} 
-                pagename={'Blog Details'} 
-            />
-            <BlogDetailsClient blog={blog} relatedBlogs={relatedBlogs} />
+            <BlogDetailsBreadcrumb blog={blog} />
+            <BlogDetailsClient blog={blog} relatedBlogs={relatedBlogs} allBlogs={allBlogs} />
             <Home1FooterTop />
             <Footer1 />
         </>

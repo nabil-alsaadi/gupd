@@ -1,5 +1,6 @@
 "use client"
 import React, { useMemo, useState } from 'react'
+import { useLanguage } from "@/providers/LanguageProvider"
 
 const fallbackLayouts = [
     { image: '/assets/img/home6/sketch-item-img1.png', name: 'Layout 1' },
@@ -12,16 +13,24 @@ const fallbackLayouts = [
 
 const SketchSection = ({ externalActiveIndex = null, onLayoutChange = null, layouts = [] }) => {
     const [internalActiveIndex, setInternalActiveIndex] = useState(1);
+    const { locale } = useLanguage()
+    const isRTL = locale === 'ar'
+
+    // Helper function to get text based on language
+    const getText = (field, arabicField) => {
+        if (isRTL && arabicField) return arabicField;
+        return field || '';
+    };
 
     const layoutItems = useMemo(() => {
         if (Array.isArray(layouts) && layouts.length > 0) {
             return layouts.map((layout, index) => ({
                 image: layout?.image || fallbackLayouts[index % fallbackLayouts.length].image,
-                name: layout?.name || fallbackLayouts[index % fallbackLayouts.length].name
+                name: getText(layout?.name, layout?.nameArabic) || fallbackLayouts[index % fallbackLayouts.length].name
             }));
         }
         return fallbackLayouts;
-    }, [layouts]);
+    }, [layouts, isRTL]);
 
     const rawActiveIndex = externalActiveIndex !== null ? externalActiveIndex : internalActiveIndex;
     const activeIndex = layoutItems.length > 0

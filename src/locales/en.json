@@ -26,14 +26,71 @@
         "home": "Home"
     },
     "project": {
-        "viewAllProjectDetails": "View All Project Details"
+        "viewAllProjectDetails": "View All Project Details",
+        "projectDetails": "Project Details",
+        "project": "Project",
+        "projectNotFound": "Project Not Found",
+        "returnToHome": "Return to Home",
+        "unitLayouts": "Unit Layouts",
+        "locationMap": "Location Map",
+        "photoGallery": "Photo Gallery",
+        "client": "Client",
+        "location": "Location",
+        "buildingType": "Building Type",
+        "residentialTower": "Residential Tower",
+        "status": "Status",
+        "specifications": "Specifications",
+        "floors": "Floors",
+        "units": "Units",
+        "categories": "Categories",
+        "keyFeatures": "Key Features",
+        "keyFeaturesDescription": "Discover the exceptional features that make {{name}} a premier residential development in Sharjah.",
+        "availableUnitLayouts": "Available Unit Layouts",
+        "chooseLayoutDescription": "Choose from our carefully designed layouts for your perfect home.",
+        "bed": "Bed",
+        "bath": "Bath",
+        "viewLayout": "View",
+        "whatsNearby": "What's Nearby",
+        "whatsNearbyDescription": "Discover the convenience of Al Faisal Tower's prime location with easy access to Sharjah's key destinations and amenities.",
+        "projectDocuments": "Project Documents",
+        "projectDocumentsDescription": "Download our comprehensive project brochure, floor plans, and payment plan details.",
+        "projectGallery": "Project Gallery",
+        "projectGalleryDescription": "Explore stunning visuals of Al Faisal Tower showcasing architecture, interiors, amenities, and more.",
+        "readyToGetDreamHome": "Ready to Get Your Dream Home?",
+        "getAQuote": "Get a quote"
     },
     "contact": {
         "yourDreamApartmentAwaits": "Your Dream Apartment Awaits",
         "headline": "Ready to find your perfect apartment? Get in touch to explore our available units, discuss payment plans, and learn about our real estate services.",
         "buttonUnit": "Minutes",
         "buttonText": "Talk With Us",
-        "description": "Whether you're looking to buy your first apartment, invest in real estate, or need information about payment options and financing, our expert team is here to help. Contact us today to discover available apartments, discuss payment plans, and get answers to all your real estate questions."
+        "description": "Whether you're looking to buy your first apartment, invest in real estate, or need information about payment options and financing, our expert team is here to help. Contact us today to discover available apartments, discuss payment plans, and get answers to all your real estate questions.",
+        "connectWithTeam": "Connect with GUPD team.",
+        "fullName": "Full Name *",
+        "email": "Email *",
+        "phone": "Phone *",
+        "message": "Message *",
+        "termsAcceptance": "I have read & accepted Terms & Conditions.",
+        "submitNow": "Submit Now",
+        "serviceType": {
+            "label": "Service Type",
+            "placeholder": "Select Service Type",
+            "propertyDevelopment": "Property Development",
+            "investmentOpportunities": "Investment Opportunities",
+            "propertyManagement": "Property Management",
+            "consultation": "Consultation",
+            "residentialProjects": "Residential Projects",
+            "commercialProjects": "Commercial Projects"
+        },
+        "breadcrumb": {
+            "content": "Get In Touch With GUPD",
+            "pageTitle": "Contact Us",
+            "pagename": "Contact"
+        },
+        "callAnyTime": "CALL ANY TIME",
+        "whatsapp": "WHATSAPP",
+        "address": "ADDRESS",
+        "sayHello": "SAY HELLO"
     },
     "methodology": {
         "title": "How We Work",
@@ -66,11 +123,62 @@
         "ourProject": "Our Project",
         "supportPolicy": "Support Policy",
         "terms": "Terms & Conditions",
-        "privacy": "Privacy Policy"
+        "privacy": "Privacy Policy",
+        "welcomeDescription": "Welcome to GUPD, where innovation meets our passion in real estate development that started with a dream to build exceptional communities."
     },
     "language": {
         "switchToArabic": "العربية",
         "switchToEnglish": "English"
+    },
+    "blog": {
+        "shareOn": "Share On:",
+        "blogPostNotFound": "Blog Post Not Found",
+        "blogPostNotFoundDescription": "The blog post you're looking for doesn't exist.",
+        "backToBlog": "Back to Blog",
+        "view": "View",
+        "views": "Views",
+        "comment": "Comment",
+        "comments": "Comments",
+        "by": "By,",
+        "untitledBlogPost": "Untitled Blog Post",
+        "noContentAvailable": "No content available for this blog post.",
+        "previousPostTitle": "Previous post title...",
+        "nextPostTitle": "Next post title...",
+        "noCommentsYet": "No comments yet. Be the first to comment!",
+        "leaveAComment": "Leave A Comment",
+        "pleaseLoginToComment": "Please",
+        "pleaseLoginToCommentSuffix": "to leave a comment.",
+        "login": "login",
+        "goToLogin": "Go to Login",
+        "commentLabel": "Comment *",
+        "writeCommentPlaceholder": "Write your comment here...",
+        "submitting": "Submitting...",
+        "submitComment": "Submit Comment",
+        "pleaseEnterComment": "Please enter a comment",
+        "failedToSubmitComment": "Failed to submit comment. Please try again.",
+        "reply": "Reply",
+        "anonymous": "Anonymous",
+        "noContent": "No content",
+        "uncategorized": "Uncategorized",
+        "noBlogPostsAvailable": "No blog posts available",
+        "checkBackSoon": "Check back soon for new articles!",
+        "breadcrumb": {
+            "blogGrid": {
+                "content": "See Our Newest Article",
+                "pageTitle": "Blog Grid",
+                "pagename": "Blog Grid"
+            },
+            "blogSidebar": {
+                "content": "See Our Newest Article",
+                "pageTitle": "Blog Sidebar",
+                "pagename": "Blog Sidebar"
+            },
+            "blogDetails": {
+                "content": "See Our Newest Article",
+                "pageTitle": "Blog Details",
+                "pagename": "Blog Details"
+            }
+        }
     }
 }
 

@@ -1,19 +1,48 @@
 "use client";
 import Link from 'next/link'
-import React from 'react'
+import React, { useMemo } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { useLanguage } from "@/providers/LanguageProvider"
+import { useTranslation } from 'react-i18next'
 
-const BlogSidebarClient = ({ blogs = [] }) => {
+const BlogSidebarClient = ({ blogs = [], postsPerPage = 9 }) => {
     // Ensure we have blogs array
     const blogPosts = Array.isArray(blogs) ? blogs : [];
+    const { locale } = useLanguage()
+    const { t } = useTranslation()
+    const isRTL = locale === 'ar'
+    const searchParams = useSearchParams()
+    const currentPage = parseInt(searchParams?.get('page') || '1', 10);
+    
+    // Helper function to get text based on language
+    const getText = (english, arabic) => {
+        if (isRTL && arabic) return arabic;
+        return english || '';
+    };
+    
+    // Calculate total pages
+    const totalPages = Math.ceil(blogPosts.length / postsPerPage);
+    
+    // Generate page numbers array - only show existing pages
+    const pageNumbers = useMemo(() => {
+        return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }, [totalPages]);
+    
+    // Get current page posts
+    const currentPosts = useMemo(() => {
+        const startIndex = (currentPage - 1) * postsPerPage;
+        const endIndex = startIndex + postsPerPage;
+        return blogPosts.slice(startIndex, endIndex);
+    }, [blogPosts, currentPage, postsPerPage]);
     
     return (
         <div className="blog-sidebar-page pt-120 mb-120">
             <div className="container">
                 <div className="row gy-5">
-                    <div className="col-lg-8">
+                    <div className="col-lg-12">
                         <div className="row gy-5 mb-70">
-                            {blogPosts.length > 0 ? (
-                                blogPosts.map((blog, index) => {
+                            {currentPosts.length > 0 ? (
+                                currentPosts.map((blog, index) => {
                                     const imageSrc = blog.cover_image || blog.thumbnail_image || '/assets/img/home1/blog-img1.jpg';
                                     const delay = ((index % 6) + 1) * 200;
                                     
@@ -28,7 +57,7 @@ const BlogSidebarClient = ({ blogs = [] }) => {
                                                 <Link href={`/blog/blog-details?slug=${blog.id || index}`} className="blog-img">
                                                     <img 
                                                         src={imageSrc} 
-                                                        alt={blog.blog_title || 'Blog post'} 
+                                                        alt={getText(blog.blog_title, blog.blog_title_arabic || blog.blog_titleArabic) || t('blog.untitledBlogPost')} 
                                                         onError={(e) => {
                                                             e.target.src = '/assets/img/home1/blog-img1.jpg';
                                                         }}
@@ -38,14 +67,14 @@ const BlogSidebarClient = ({ blogs = [] }) => {
                                                     <div className="blog-meta">
                                                         <ul>
                                                             <li><Link href="/blog" className="blog-date">{blog.date || 'N/A'}</Link></li>
-                                                            <li><Link href="/blog">{blog.category || 'Uncategorized'}</Link></li>
-                                                        </ul>
-                                                    </div>
-                                                    <h4>
-                                                        <Link href={`/blog/blog-details?slug=${blog.id || index}`}>
-                                                            {blog.blog_title || 'Untitled Blog Post'}
-                                                        </Link>
-                                                    </h4>
+                                                            <li><Link href="/blog">{getText(blog.category, blog.category_arabic || blog.categoryArabic) || t('blog.uncategorized')}</Link></li>
+                                                    </ul>
+                                                </div>
+                                                <h4>
+                                                    <Link href={`/blog/blog-details?slug=${blog.id || index}`}>
+                                                        {getText(blog.blog_title, blog.blog_title_arabic || blog.blog_titleArabic) || t('blog.untitledBlogPost')}
+                                                    </Link>
+                                                </h4>
                                                 </div>
                                             </div>
                                         </div>
@@ -54,45 +83,66 @@ const BlogSidebarClient = ({ blogs = [] }) => {
                             ) : (
                                 <div className="col-lg-12">
                                     <div className="blog-empty-state" style={{ textAlign: 'center', padding: '60px 20px' }}>
-                                        <h3>No blog posts available</h3>
-                                        <p>Check back soon for new articles!</p>
+                                        <h3>{t('blog.noBlogPostsAvailable')}</h3>
+                                        <p>{t('blog.checkBackSoon')}</p>
                                     </div>
                                 </div>
                             )}
                         </div>
-                        <div className="row wow animate fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
-                            <div className="col-lg-12 d-flex justify-content-center">
-                                <div className="innerpage-pagination-area">
-                                    <ul className="paginations">
-                                        <li className="page-item paginations-button">
-                                            <a href="#">
-                                                <svg width={14} height={12} viewBox="0 0 14 12" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M13.98 5.66372C13.9099 5.4729 13.7497 5.26524 13.5995 5.16983C13.4493 5.08003 13.0538 5.07442 8.23285 5.04636L3.02639 5.01829L4.91373 3.22795C6.14025 2.06619 6.83111 1.37026 6.88117 1.2524C7.05138 0.848309 6.89619 0.30391 6.55577 0.101865C6.36053 -0.0216073 5.98506 -0.0328321 5.81986 0.0681905C5.75978 0.107477 4.46318 1.31975 2.93128 2.76774C1.05896 4.54124 0.127801 5.46167 0.0727325 5.57953C-0.0774537 5.94433 0.00765182 6.34281 0.303018 6.6571C0.798632 7.17344 5.8549 11.8598 5.99007 11.9271C6.20534 12.0337 6.39057 12.0225 6.63587 11.8991C7.03136 11.697 7.20157 11.0909 6.9863 10.6812C6.93624 10.5858 6.03012 9.699 4.97381 8.71684C3.92251 7.72907 3.05643 6.90966 3.05643 6.88721C3.05143 6.85915 5.38932 6.84231 8.25287 6.84231L13.4493 6.84231L13.6145 6.71884C13.8648 6.52241 13.975 6.32036 13.995 6.0173C14.005 5.87137 14 5.70862 13.98 5.66372Z" />
-                                                </svg>
-                                            </a>
-                                        </li>
-                                        <li className="page-item active">
-                                            <a href="#">01</a>
-                                        </li>
-                                        <li className="page-item">
-                                            <a href="#">02</a>
-                                        </li>
-                                        <li className="page-item">
-                                            <a href="#">03</a>
-                                        </li>
-                                        <li className="page-item paginations-button">
-                                            <a href="#">
-                                                <svg width={14} height={12} viewBox="0 0 14 12" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M0.020025 6.33628C0.0901115 6.5271 0.25031 6.73476 0.400496 6.83017C0.550683 6.91997 0.946172 6.92558 5.76715 6.95364L10.9736 6.98171L9.08627 8.77205C7.85974 9.93381 7.16889 10.6297 7.11883 10.7476C6.94862 11.1517 7.10381 11.6961 7.44423 11.8981C7.63947 12.0216 8.01494 12.0328 8.18014 11.9318C8.24022 11.8925 9.53682 10.6803 11.0687 9.23226C12.941 7.45876 13.8722 6.53833 13.9273 6.42047C14.0775 6.05567 13.9923 5.65719 13.697 5.3429C13.2014 4.82656 8.1451 0.140237 8.00993 0.0728886C7.79466 -0.0337464 7.60943 -0.0225217 7.36413 0.100951C6.96864 0.302995 6.79843 0.909129 7.0137 1.31883C7.06376 1.41424 7.96988 2.301 9.02619 3.28316C10.0775 4.27093 10.9436 5.09034 10.9436 5.11279C10.9486 5.14085 8.61068 5.15769 5.74713 5.15769L0.550683 5.15769L0.385478 5.28116C0.135167 5.47759 0.0250308 5.67964 0.00500557 5.98271C-0.00500609 6.12863 -2.49531e-07 6.29139 0.020025 6.33628Z" />
-                                                </svg>
-                                            </a>
-                                        </li>
-                                    </ul>
+                        {totalPages > 1 && (
+                            <div className="row wow animate fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
+                                <div className="col-lg-12 d-flex justify-content-center">
+                                    <div className="innerpage-pagination-area">
+                                        <ul className="paginations" style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
+                                            {/* Previous Button */}
+                                            <li className={`page-item paginations-button ${currentPage === 1 ? 'disabled' : ''}`}>
+                                                <Link 
+                                                    href={currentPage > 1 ? `/blog/blog-sidebar?page=${currentPage - 1}` : '#'} 
+                                                    style={{ pointerEvents: currentPage === 1 ? 'none' : 'auto', opacity: currentPage === 1 ? 0.5 : 1 }}
+                                                >
+                                                    <svg 
+                                                        width={14} 
+                                                        height={12} 
+                                                        viewBox="0 0 14 12" 
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        style={{ transform: isRTL ? 'scaleX(-1)' : 'none' }}
+                                                    >
+                                                        <path d="M13.98 5.66372C13.9099 5.4729 13.7497 5.26524 13.5995 5.16983C13.4493 5.08003 13.0538 5.07442 8.23285 5.04636L3.02639 5.01829L4.91373 3.22795C6.14025 2.06619 6.83111 1.37026 6.88117 1.2524C7.05138 0.848309 6.89619 0.30391 6.55577 0.101865C6.36053 -0.0216073 5.98506 -0.0328321 5.81986 0.0681905C5.75978 0.107477 4.46318 1.31975 2.93128 2.76774C1.05896 4.54124 0.127801 5.46167 0.0727325 5.57953C-0.0774537 5.94433 0.00765182 6.34281 0.303018 6.6571C0.798632 7.17344 5.8549 11.8598 5.99007 11.9271C6.20534 12.0337 6.39057 12.0225 6.63587 11.8991C7.03136 11.697 7.20157 11.0909 6.9863 10.6812C6.93624 10.5858 6.03012 9.699 4.97381 8.71684C3.92251 7.72907 3.05643 6.90966 3.05643 6.88721C3.05143 6.85915 5.38932 6.84231 8.25287 6.84231L13.4493 6.84231L13.6145 6.71884C13.8648 6.52241 13.975 6.32036 13.995 6.0173C14.005 5.87137 14 5.70862 13.98 5.66372Z" />
+                                                    </svg>
+                                                </Link>
+                                            </li>
+                                            {/* Page Numbers */}
+                                            {pageNumbers.map((pageNum) => (
+                                                <li key={pageNum} className={`page-item ${currentPage === pageNum ? 'active' : ''}`}>
+                                                    <Link href={`/blog/blog-sidebar${pageNum === 1 ? '' : `?page=${pageNum}`}`}>
+                                                        {String(pageNum).padStart(2, '0')}
+                                                    </Link>
+                                                </li>
+                                            ))}
+                                            {/* Next Button */}
+                                            <li className={`page-item paginations-button ${currentPage === totalPages ? 'disabled' : ''}`}>
+                                                <Link 
+                                                    href={currentPage < totalPages ? `/blog/blog-sidebar?page=${currentPage + 1}` : '#'} 
+                                                    style={{ pointerEvents: currentPage === totalPages ? 'none' : 'auto', opacity: currentPage === totalPages ? 0.5 : 1 }}
+                                                >
+                                                    <svg 
+                                                        width={14} 
+                                                        height={12} 
+                                                        viewBox="0 0 14 12" 
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        style={{ transform: isRTL ? 'scaleX(-1)' : 'none' }}
+                                                    >
+                                                        <path d="M0.020025 6.33628C0.0901115 6.5271 0.25031 6.73476 0.400496 6.83017C0.550683 6.91997 0.946172 6.92558 5.76715 6.95364L10.9736 6.98171L9.08627 8.77205C7.85974 9.93381 7.16889 10.6297 7.11883 10.7476C6.94862 11.1517 7.10381 11.6961 7.44423 11.8981C7.63947 12.0216 8.01494 12.0328 8.18014 11.9318C8.24022 11.8925 9.53682 10.6803 11.0687 9.23226C12.941 7.45876 13.8722 6.53833 13.9273 6.42047C14.0775 6.05567 13.9923 5.65719 13.697 5.3429C13.2014 4.82656 8.1451 0.140237 8.00993 0.0728886C7.79466 -0.0337464 7.60943 -0.0225217 7.36413 0.100951C6.96864 0.302995 6.79843 0.909129 7.0137 1.31883C7.06376 1.41424 7.96988 2.301 9.02619 3.28316C10.0775 4.27093 10.9436 5.09034 10.9436 5.11279C10.9486 5.14085 8.61068 5.15769 5.74713 5.15769L0.550683 5.15769L0.385478 5.28116C0.135167 5.47759 0.0250308 5.67964 0.00500557 5.98271C-0.00500609 6.12863 -2.49531e-07 6.29139 0.020025 6.33628Z" />
+                                                    </svg>
+                                                </Link>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        )}
                     </div>
-                    <div className="col-lg-4 wow animate fadeInRight" data-wow-delay="200ms" data-wow-duration="1500ms">
+                    {/* <div className="col-lg-4 wow animate fadeInRight" data-wow-delay="200ms" data-wow-duration="1500ms">
                         <div className="blog-sidebar-area">
                             <div className="single-widget mb-30">
                                 <h5 className="widget-title">Search Here</h5>
@@ -241,7 +291,7 @@ const BlogSidebarClient = ({ blogs = [] }) => {
                                 </ul>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

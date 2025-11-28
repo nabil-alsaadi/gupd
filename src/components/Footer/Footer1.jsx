@@ -20,7 +20,7 @@ const Footer1 = () => {
                                     <img src="/assets/img/footer-logo.svg" alt="" />
                                 </Link>
                                 <div className="footer-content">
-                                    <p>{companyData.footer.description}</p>
+                                    <p>{t('footer.welcomeDescription')}</p>
                                     <SocialMedia className="social-list" showLabels={true} />
                                 </div>
                             </div>
