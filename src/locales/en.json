@@ -72,6 +72,9 @@
         "message": "Message *",
         "termsAcceptance": "I have read & accepted Terms & Conditions.",
         "submitNow": "Submit Now",
+        "submitting": "Sending...",
+        "successMessage": "Thank you! Your message has been sent successfully. We'll get back to you soon.",
+        "errorMessage": "Sorry, there was an error sending your message. Please try again.",
         "serviceType": {
             "label": "Service Type",
             "placeholder": "Select Service Type",

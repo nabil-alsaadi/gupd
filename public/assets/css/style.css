@@ -23266,7 +23266,7 @@ html[dir="rtl"] .blog-details-page .tag-and-social-area .social-area .social-lin
   }
 }
 .property-details-page .property-details-content-wrap .property-details-table {
-  box-shadow: 0 0 0 0.5px rgba(var(--primary-color-opc), 0.08);
+  /* box-shadow: 0 0 0 0.5px rgba(var(--primary-color-opc), 0.08); */
 }
 .property-details-page .property-details-content-wrap .property-details-table .single-item {
   display: flex;
