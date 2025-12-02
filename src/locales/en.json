@@ -6,12 +6,26 @@
         "blogs": "Blogs",
         "contact": "Contact",
         "getInTouch": "Get in touch",
-        "getQuote": "Get Quote"
+        "getQuote": "Get Quote",
+        "sidebar": {
+            "title": "Get In Touch With Us",
+            "subtitle": "Connect With GUPD",
+            "description": "Ready to take the first step towards unlocking opportunity, realizing goals, and embracing innovation in real estate development?",
+            "address": {
+                "sharjah": "SHARJAH",
+                "sharjahAddress": "Orient building - 2nd Floor - Office 23 Al Arouba St - Al Mareija - Hay Al Gharb - Sharjah",
+                "uae": "UAE",
+                "companyName": "Gulf Universal Property Development"
+            },
+            "copyright": "Copyright",
+            "poweredBy": "Powered By"
+        }
     },
     "auth": {
         "login": "Login",
         "logout": "Logout",
-        "welcomeUser": "Welcome, {{name}}"
+        "welcomeUser": "Welcome, {{name}}",
+        "user": "User"
     },
     "banner": {
         "knowMore": "Know More",
@@ -23,7 +37,22 @@
         "breadcrumbContent": "View Our Story"
     },
     "breadcrumb": {
-        "home": "Home"
+        "home": "Home",
+        "privacyPolicy": {
+            "content": "How We Protect Your Information",
+            "pageTitle": "Privacy Policy",
+            "pagename": "Privacy Policy"
+        },
+        "termsConditions": {
+            "content": "Legal Terms and Conditions",
+            "pageTitle": "Terms & Conditions",
+            "pagename": "Terms & Conditions"
+        },
+        "supportPolicy": {
+            "content": "Our Commitment to Customer Support",
+            "pageTitle": "Support Policy",
+            "pagename": "Support Policy"
+        }
     },
     "project": {
         "viewAllProjectDetails": "View All Project Details",
@@ -127,7 +156,9 @@
         "supportPolicy": "Support Policy",
         "terms": "Terms & Conditions",
         "privacy": "Privacy Policy",
-        "welcomeDescription": "Welcome to GUPD, where innovation meets our passion in real estate development that started with a dream to build exceptional communities."
+        "welcomeDescription": "Welcome to GUPD, where innovation meets our passion in real estate development that started with a dream to build exceptional communities.",
+        "copyright": "Copyright",
+        "poweredBy": "Powered By"
     },
     "language": {
         "switchToArabic": "العربية",
@@ -180,6 +211,386 @@
                 "content": "See Our Newest Article",
                 "pageTitle": "Blog Details",
                 "pagename": "Blog Details"
+            }
+        }
+    },
+    "privacyPolicy": {
+        "title": "Privacy Policy",
+        "lastUpdated": "January 2025",
+        "lastUpdatedLabel": "Last Updated:",
+        "introduction": {
+            "heading": "Introduction",
+            "content": "Gulf Universal Property Development (\"GUPD\", \"we\", \"us\", or \"our\") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our services. Please read this privacy policy carefully. If you do not agree with the terms of this privacy policy, please do not access the site."
+        },
+        "sections": {
+            "section1": {
+                "heading": "1. Information We Collect",
+                "content": "We may collect information about you in a variety of ways. The information we may collect on the site includes:",
+                "subsections": {
+                    "personalData": {
+                        "title": "Personal Data",
+                        "content": "Personally identifiable information, such as your name, email address, telephone number, and demographic information (such as your age and gender) that you voluntarily give to us when you register with the site or when you choose to participate in various activities related to the site, such as online chat and message boards."
+                    },
+                    "derivativeData": {
+                        "title": "Derivative Data",
+                        "content": "Information our servers automatically collect when you access the site, such as your IP address, your browser type, your operating system, your access times, and the pages you have viewed directly before and after accessing the site."
+                    },
+                    "financialData": {
+                        "title": "Financial Data",
+                        "content": "Financial information, such as data related to your payment method (e.g., valid credit card number, card brand, expiration date) that we may collect when you purchase, order, return, exchange, or request information about our services from the site."
+                    },
+                    "contactForms": {
+                        "title": "Contact Forms",
+                        "content": "When you fill out contact forms, request property information, or schedule property viewings, we collect the information you provide, including your name, email address, phone number, and any other details you choose to share."
+                    }
+                }
+            },
+            "section2": {
+                "heading": "2. How We Use Your Information",
+                "content": "Having accurate information about you permits us to provide you with a smooth, efficient, and customized experience. Specifically, we may use information collected about you via the site to:",
+                "list": [
+                    "Create and manage your account",
+                    "Process your transactions and send you related information",
+                    "Email you regarding your account or order",
+                    "Fulfill and manage purchases, orders, payments, and other transactions related to the site",
+                    "Generate a personal profile about you to make future visits more personalized",
+                    "Increase the efficiency and operation of the site",
+                    "Monitor and analyze usage and trends to improve your experience",
+                    "Notify you of updates to the site",
+                    "Perform other business activities as needed",
+                    "Request feedback and contact you about your use of the site",
+                    "Respond to product and customer service requests",
+                    "Send you marketing and promotional communications",
+                    "Resolve disputes and troubleshoot problems"
+                ]
+            },
+            "section3": {
+                "heading": "3. Disclosure of Your Information",
+                "content": "We may share information we have collected about you in certain situations. Your information may be disclosed as follows:",
+                "subsections": {
+                    "byLaw": {
+                        "title": "By Law or to Protect Rights",
+                        "content": "If we believe the release of information about you is necessary to respond to legal process, to investigate or remedy potential violations of our policies, or to protect the rights, property, and safety of others, we may share your information as permitted or required by any applicable law, rule, or regulation."
+                    },
+                    "thirdParty": {
+                        "title": "Third-Party Service Providers",
+                        "content": "We may share your information with third parties that perform services for us or on our behalf, including payment processing, data analysis, email delivery, hosting services, customer service, and marketing assistance."
+                    },
+                    "businessTransfers": {
+                        "title": "Business Transfers",
+                        "content": "We may share or transfer your information in connection with, or during negotiations of, any merger, sale of company assets, financing, or acquisition of all or a portion of our business to another company."
+                    },
+                    "realEstatePartners": {
+                        "title": "Real Estate Partners",
+                        "content": "With your consent, we may share your information with our real estate partners, property developers, or third parties for the purpose of providing you with property-related services, property viewings, or promotional offers related to real estate."
+                    }
+                }
+            },
+            "section4": {
+                "heading": "4. Third-Party Websites",
+                "content": "The site may contain links to third-party websites and applications of interest, including advertisements and external services, that are not affiliated with us. Once you have used these links to leave the site, any information you provide to these third parties is not covered by this Privacy Policy, and we cannot guarantee the safety and privacy of your information."
+            },
+            "section5": {
+                "heading": "5. Security of Your Information",
+                "content": "We use administrative, technical, and physical security measures to help protect your personal information. While we have taken reasonable steps to secure the personal information you provide to us, please be aware that despite our efforts, no security measures are perfect or impenetrable, and no method of data transmission can be guaranteed against any interception or other type of misuse."
+            },
+            "section6": {
+                "heading": "6. Policy for Children",
+                "content": "We do not knowingly solicit information from or market to children under the age of 18. If we learn that we have collected personal information from a child under age 18 without verification of parental consent, we will delete that information as quickly as possible."
+            },
+            "section7": {
+                "heading": "7. Your Rights",
+                "content": "Depending on your location, you may have the following rights regarding your personal information:",
+                "list": [
+                    "The right to access – You have the right to request copies of your personal data",
+                    "The right to rectification – You have the right to request that we correct any information you believe is inaccurate",
+                    "The right to erasure – You have the right to request that we erase your personal data, under certain conditions",
+                    "The right to restrict processing – You have the right to request that we restrict the processing of your personal data",
+                    "The right to object to processing – You have the right to object to our processing of your personal data",
+                    "The right to data portability – You have the right to request that we transfer the data that we have collected to another organization"
+                ]
+            },
+            "section8": {
+                "heading": "8. Cookies and Tracking Technologies",
+                "content": "We may use cookies, web beacons, tracking pixels, and other tracking technologies on the site to help customize the site and improve your experience. When you access the site, your personal information is not collected through the use of tracking technology. Most browsers are set to accept cookies by default. You can remove or reject cookies, but be aware that such action could affect the availability and functionality of the site."
+            },
+            "section9": {
+                "heading": "9. Changes to This Privacy Policy",
+                "content": "We may update this Privacy Policy from time to time in order to reflect changes to our practices or for other operational, legal, or regulatory reasons. We will notify you of any changes by posting the new Privacy Policy on this page and updating the \"Last Updated\" date. You are advised to review this Privacy Policy periodically for any changes."
+            },
+            "section10": {
+                "heading": "10. Contact Us",
+                "content": "If you have questions or comments about this Privacy Policy, please contact us at:",
+                "email": "Email:",
+                "phone": "Phone:",
+                "address": "Address:"
+            }
+        }
+    },
+    "termsConditions": {
+        "title": "Terms and Conditions",
+        "lastUpdated": "January 2025",
+        "lastUpdatedLabel": "Last Updated:",
+        "introduction": {
+            "heading": "Introduction",
+            "content": "Welcome to Gulf Universal Property Development (\"GUPD\", \"we\", \"us\", or \"our\"). These Terms and Conditions (\"Terms\", \"Terms and Conditions\") govern your use of our website located at gupd.ae (the \"Service\") operated by Gulf Universal Property Development. Our Privacy Policy also governs your use of our Service and explains how we collect, safeguard and disclose information that results from your use of our web pages."
+        },
+        "sections": {
+            "section1": {
+                "heading": "1. Agreement to Terms",
+                "content": "By accessing or using our Service, you agree to be bound by these Terms and Conditions. If you disagree with any part of these terms, then you may not access the Service. Your access to and use of the Service is also conditioned on your acceptance of and compliance with the Privacy Policy of GUPD."
+            },
+            "section2": {
+                "heading": "2. Use License",
+                "content": "Permission is granted to temporarily download one copy of the materials on GUPD's website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:",
+                "list": [
+                    "Modify or copy the materials",
+                    "Use the materials for any commercial purpose or for any public display (commercial or non-commercial)",
+                    "Attempt to decompile or reverse engineer any software contained on GUPD's website",
+                    "Remove any copyright or other proprietary notations from the materials",
+                    "Transfer the materials to another person or \"mirror\" the materials on any other server"
+                ]
+            },
+            "section3": {
+                "heading": "3. Property Information",
+                "content": "All property listings, descriptions, images, pricing, and availability information on this website are subject to change without notice. While we strive to ensure the accuracy of information, GUPD does not warrant or guarantee the accuracy, completeness, or timeliness of any property information displayed on the website.",
+                "subsections": {
+                    "propertyAvailability": {
+                        "title": "Property Availability",
+                        "content": "Property availability is subject to prior sale and may change without notice. We reserve the right to withdraw any property from the market at any time."
+                    },
+                    "pricing": {
+                        "title": "Pricing",
+                        "content": "All prices quoted are in UAE Dirhams (AED) unless otherwise stated. Prices are subject to change without notice and do not include applicable government fees, taxes, or other charges unless specifically mentioned."
+                    },
+                    "propertyImages": {
+                        "title": "Property Images",
+                        "content": "Images and virtual tours are for illustrative purposes only and may not accurately represent the actual condition, layout, or finishes of properties. All measurements are approximate."
+                    }
+                }
+            },
+            "section4": {
+                "heading": "4. Purchase Terms",
+                "content": "When purchasing or reserving a property through our website, the following terms apply:",
+                "subsections": {
+                    "reservations": {
+                        "title": "Reservations",
+                        "content": "Reservations are subject to availability and our acceptance. A reservation does not constitute a legally binding sale until a formal purchase agreement is executed."
+                    },
+                    "paymentTerms": {
+                        "title": "Payment Terms",
+                        "content": "Payment terms, deposit requirements, and installment schedules will be detailed in the purchase agreement. All payments must be made in accordance with the terms specified in your individual purchase agreement."
+                    },
+                    "cancellation": {
+                        "title": "Cancellation and Refund Policy",
+                        "content": "Cancellation and refund policies vary by property and will be outlined in your specific purchase agreement. Please review these terms carefully before making any payments."
+                    }
+                }
+            },
+            "section5": {
+                "heading": "5. User Accounts",
+                "content": "When you create an account with us, you must provide information that is accurate, complete, and current at all times. You are responsible for safeguarding the password and for keeping your account information current. You agree to notify us immediately of any unauthorized use of your account."
+            },
+            "section6": {
+                "heading": "6. Prohibited Uses",
+                "content": "You may use our Service only for lawful purposes and in accordance with these Terms. You agree not to use the Service:",
+                "list": [
+                    "In any way that violates any applicable national or international law or regulation",
+                    "To transmit, or procure the sending of, any advertising or promotional material without our prior written consent",
+                    "To impersonate or attempt to impersonate the company, a company employee, another user, or any other person or entity",
+                    "In any way that infringes upon the rights of others, or in any way is illegal, threatening, fraudulent, or harmful",
+                    "To engage in any other conduct that restricts or inhibits anyone's use or enjoyment of the website"
+                ]
+            },
+            "section7": {
+                "heading": "7. Intellectual Property",
+                "content": "The Service and its original content, features, and functionality are and will remain the exclusive property of GUPD and its licensors. The Service is protected by copyright, trademark, and other laws. Our trademarks and trade dress may not be used in connection with any product or service without our prior written consent."
+            },
+            "section8": {
+                "heading": "8. Disclaimer",
+                "content": "The information on this website is provided on an \"as is\" basis. To the fullest extent permitted by law, GUPD excludes all representations, warranties, conditions, and terms relating to our website and the use of this website (including, without limitation, any warranties implied by law in respect of satisfactory quality, fitness for purpose, and/or the use of reasonable care and skill).",
+                "subsections": {
+                    "noWarranty": {
+                        "title": "No Warranty",
+                        "content": "GUPD makes no representations or warranties regarding the accuracy, reliability, or availability of the website or its content. We do not warrant that the website will be available at all times or that access will be uninterrupted."
+                    },
+                    "limitation": {
+                        "title": "Limitation of Liability",
+                        "content": "In no event shall GUPD, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your use of the Service."
+                    }
+                }
+            },
+            "section9": {
+                "heading": "9. Indemnification",
+                "content": "You agree to defend, indemnify, and hold harmless GUPD and its licensee and licensors, and their employees, contractors, agents, officers and directors, from and against any and all claims, damages, obligations, losses, liabilities, costs or debt, and expenses (including but not limited to attorney's fees), resulting from or arising out of: (a) your use and access of the Service; (b) your violation of any term of these Terms; (c) your violation of any third party right, including without limitation any copyright, property, or privacy right."
+            },
+            "section10": {
+                "heading": "10. Governing Law",
+                "content": "These Terms shall be interpreted and governed by the laws of the United Arab Emirates, without regard to its conflict of law provisions. Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights."
+            },
+            "section11": {
+                "heading": "11. Dispute Resolution",
+                "content": "Any disputes arising out of or in connection with these Terms or the use of the Service shall be resolved through negotiation in good faith. If negotiation fails, disputes shall be referred to the courts of Sharjah, United Arab Emirates, which shall have exclusive jurisdiction."
+            },
+            "section12": {
+                "heading": "12. Changes to Terms",
+                "content": "We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material, we will provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion."
+            },
+            "section13": {
+                "heading": "13. Contact Information",
+                "content": "If you have any questions about these Terms and Conditions, please contact us:",
+                "email": "Email:",
+                "phone": "Phone:",
+                "address": "Address:"
+            }
+        }
+    },
+    "supportPolicy": {
+        "title": "Support Policy",
+        "lastUpdated": "January 2025",
+        "lastUpdatedLabel": "Last Updated:",
+        "introduction": {
+            "heading": "Introduction",
+            "content": "At Gulf Universal Property Development (\"GUPD\", \"we\", \"us\", or \"our\"), we are committed to providing exceptional customer support and service. This Support Policy outlines our commitment to you, our valued customers, and explains how we handle support requests, inquiries, and customer service matters."
+        },
+        "sections": {
+            "section1": {
+                "heading": "1. Support Hours",
+                "content": "Our customer support team is available during the following hours:",
+                "subsections": {
+                    "businessHours": {
+                        "title": "Business Hours",
+                        "content": "Sunday - Thursday: 9:00 AM - 6:00 PM (UAE Time). We are closed on Fridays and Saturdays, as well as on official UAE public holidays."
+                    },
+                    "responseTimes": {
+                        "title": "Response Times",
+                        "content": "We aim to respond to all inquiries within 24 hours during business days. For urgent matters related to property sales or reservations, we will make every effort to respond as quickly as possible."
+                    }
+                }
+            },
+            "section2": {
+                "heading": "2. Contact Methods",
+                "content": "You can reach our support team through the following channels:",
+                "list": [
+                    "Email: info@gupd.ae",
+                    "Phone: +971 6 123 4567",
+                    "WhatsApp: +971 6 123 4567",
+                    "In-Person: Visit our office at Orient building - 2nd Floor - Office 23 Al Arouba St - Al Mareija - Hay Al Gharb - Sharjah, UAE",
+                    "Website Contact Form: Available on our contact page"
+                ]
+            },
+            "section3": {
+                "heading": "3. Types of Support",
+                "content": "Our support team can assist you with:",
+                "list": [
+                    "Property inquiries and information requests",
+                    "Scheduling property viewings and site visits",
+                    "Purchase process questions and guidance",
+                    "Payment and financing inquiries",
+                    "Documentation and legal matters related to property transactions",
+                    "After-sales support and property management queries",
+                    "Technical support for website and online services",
+                    "General information about our projects and services"
+                ]
+            },
+            "section4": {
+                "heading": "4. Support Priority Levels",
+                "content": "We prioritize support requests based on their urgency and nature:",
+                "subsections": {
+                    "highPriority": {
+                        "title": "High Priority",
+                        "content": "Urgent matters related to active property purchases, payment issues, or time-sensitive transactions. These are addressed immediately during business hours."
+                    },
+                    "mediumPriority": {
+                        "title": "Medium Priority",
+                        "content": "Property inquiries, viewing requests, and general information requests. These are typically responded to within 24 hours."
+                    },
+                    "lowPriority": {
+                        "title": "Low Priority",
+                        "content": "General questions, feedback, or non-urgent inquiries. These are handled within 2-3 business days."
+                    }
+                }
+            },
+            "section5": {
+                "heading": "5. Information Required for Support",
+                "content": "To help us assist you more effectively, please provide the following information when contacting support:",
+                "list": [
+                    "Your full name and contact information",
+                    "Property or project name (if applicable)",
+                    "Reference number or transaction ID (if applicable)",
+                    "Detailed description of your inquiry or issue",
+                    "Preferred method of communication",
+                    "Any relevant documentation or screenshots"
+                ]
+            },
+            "section6": {
+                "heading": "6. Property Viewings and Site Visits",
+                "content": "For property viewings and site visits:",
+                "subsections": {
+                    "scheduling": {
+                        "title": "Scheduling",
+                        "content": "Property viewings can be scheduled through our website contact form, by phone, or by email. We recommend booking at least 24 hours in advance to ensure availability."
+                    },
+                    "cancellations": {
+                        "title": "Cancellations",
+                        "content": "If you need to cancel or reschedule a viewing, please notify us at least 12 hours in advance. This helps us accommodate other customers."
+                    },
+                    "requirements": {
+                        "title": "Requirements",
+                        "content": "Visitors may be required to provide identification and sign a visitor registration form for security and safety purposes."
+                    }
+                }
+            },
+            "section7": {
+                "heading": "7. After-Sales Support",
+                "content": "Our commitment to you doesn't end after your purchase. We provide ongoing support for:",
+                "list": [
+                    "Property handover process",
+                    "Warranty and maintenance inquiries",
+                    "Documentation and title deed matters",
+                    "Property management services",
+                    "Community and facilities information"
+                ]
+            },
+            "section8": {
+                "heading": "8. Escalation Process",
+                "content": "If you are not satisfied with the support received, you may escalate your concern:",
+                "subsections": {
+                    "level1": {
+                        "title": "Level 1",
+                        "content": "Contact our Customer Support Manager at info@gupd.ae with \"Escalation\" in the subject line."
+                    },
+                    "level2": {
+                        "title": "Level 2",
+                        "content": "For serious concerns, you may request to speak with senior management by contacting our main office."
+                    },
+                    "legalDisputes": {
+                        "title": "Legal Disputes",
+                        "content": "For legal disputes, please refer to our Terms and Conditions for dispute resolution procedures."
+                    }
+                }
+            },
+            "section9": {
+                "heading": "9. Feedback and Complaints",
+                "content": "We welcome your feedback and take all complaints seriously. Please contact us at info@gupd.ae with \"Feedback\" or \"Complaint\" in the subject line. We will acknowledge receipt within 48 hours and work to resolve your concerns promptly."
+            },
+            "section10": {
+                "heading": "10. Confidentiality",
+                "content": "All information shared with our support team is treated with strict confidentiality in accordance with our Privacy Policy. We will not share your personal information with third parties without your consent, except as required by law."
+            },
+            "section11": {
+                "heading": "11. Limitations",
+                "content": "While we strive to provide the best possible support, please note:",
+                "list": [
+                    "Support is provided during business hours only",
+                    "We cannot provide legal or financial advice beyond property-related matters",
+                    "Some requests may require consultation with third-party service providers",
+                    "Response times may be extended during peak periods or holidays"
+                ]
+            },
+            "section12": {
+                "heading": "12. Updates to This Policy",
+                "content": "We may update this Support Policy from time to time. Changes will be posted on this page with an updated \"Last Updated\" date. Continued use of our services after changes constitutes acceptance of the updated policy."
             }
         }
     }

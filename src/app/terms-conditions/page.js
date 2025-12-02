@@ -10,9 +10,9 @@ const page = async () => {
         <>
             <Header1 fluid={"container-fluid"}/>
             <Breadcrum 
-                content='Legal Terms and Conditions' 
-                pageTitle={'Terms & Conditions'} 
-                pagename={'Terms & Conditions'} 
+                contentKey="breadcrumb.termsConditions.content"
+                pageTitleKey="breadcrumb.termsConditions.pageTitle"
+                pagenameKey="breadcrumb.termsConditions.pagename"
             />
             <TermsConditionsClient termsData={termsData} />
             <Home1FooterTop />

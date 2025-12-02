@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '@/config/firebase';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -29,6 +31,31 @@ export async function POST(request) {
         { error: 'Invalid email address' },
         { status: 400 }
       );
+    }
+
+    // Save to Firestore
+    let messageId = null;
+    try {
+      if (db) {
+        const docRef = await addDoc(collection(db, 'contactMessages'), {
+          name: name.trim(),
+          email: email.trim(),
+          phone: phone.trim(),
+          serviceType: serviceType || null,
+          message: message.trim(),
+          termsAccepted: true,
+          read: false,
+          submittedAt: serverTimestamp(),
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp()
+        });
+        messageId = docRef.id;
+      } else {
+        console.warn('Firestore database not initialized. Skipping database save.');
+      }
+    } catch (dbError) {
+      console.error('Error saving to Firestore:', dbError);
+      // Continue even if DB save fails - still try to send email
     }
 
     // Get contact email from environment or use default
@@ -95,6 +122,13 @@ Submitted at: ${new Date().toLocaleString()}
 
     if (error) {
       console.error('Resend error:', error);
+      // If email fails but DB save succeeded, still return success
+      if (messageId) {
+        return NextResponse.json(
+          { message: 'Message saved successfully. Email notification failed.', id: messageId },
+          { status: 200 }
+        );
+      }
       return NextResponse.json(
         { error: 'Failed to send email. Please try again later.' },
         { status: 500 }
@@ -102,7 +136,7 @@ Submitted at: ${new Date().toLocaleString()}
     }
 
     return NextResponse.json(
-      { message: 'Email sent successfully', id: data?.id },
+      { message: 'Email sent successfully', id: messageId || data?.id },
       { status: 200 }
     );
 

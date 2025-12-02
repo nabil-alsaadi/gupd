@@ -37,3 +37,15 @@ env:
     availability:
       - BUILD
       - RUNTIME
+  
+  - variable: RESEND_API_KEY
+    value: re_KW6hqa1d_3hLghaAnP75i8d8fSxHcGhJ4
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: CONTACT_EMAIL
+    value: marketing@gupd.com
+    availability:
+      - BUILD
+      - RUNTIME

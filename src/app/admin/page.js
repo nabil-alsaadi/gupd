@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
+import { db } from '@/config/firebase';
 import {
   Image as ImageIcon,
   FileText,
@@ -13,7 +15,8 @@ import {
   Navigation,
   Mail,
   Briefcase,
-  Info
+  Info,
+  MessageSquare
 } from 'lucide-react';
 
 export default function AdminDashboard() {
@@ -23,7 +26,9 @@ export default function AdminDashboard() {
     team: 0,
     projects: 0,
     faqs: 0,
-    users: 0
+    users: 0,
+    messages: 0,
+    unreadMessages: 0
   });
 
   useEffect(() => {
@@ -73,12 +78,49 @@ export default function AdminDashboard() {
         } catch (error) {
           console.error('Error loading users count:', error);
         }
+
       } catch (error) {
         console.error('Error loading stats:', error);
       }
     };
 
     loadStats();
+  }, []);
+
+  // Set up real-time listener for contact messages count
+  useEffect(() => {
+    if (!db) return;
+
+    try {
+      const messagesRef = collection(db, 'contactMessages');
+      const q = query(messagesRef, orderBy('submittedAt', 'desc'));
+      
+      const unsubscribeMessages = onSnapshot(
+        q,
+        (snapshot) => {
+          const messagesData = [];
+          snapshot.forEach((doc) => {
+            messagesData.push({ id: doc.id, ...doc.data() });
+          });
+          const unreadMessages = messagesData.filter(msg => !msg.read).length;
+          setStats(prev => ({ 
+            ...prev, 
+            messages: messagesData.length,
+            unreadMessages: unreadMessages
+          }));
+        },
+        (error) => {
+          console.error('Error listening to messages:', error);
+        }
+      );
+
+      // Cleanup listener on unmount
+      return () => {
+        unsubscribeMessages();
+      };
+    } catch (error) {
+      console.error('Error setting up messages listener:', error);
+    }
   }, []);
 
   const quickActions = [
@@ -94,7 +136,15 @@ export default function AdminDashboard() {
     { label: 'Team Members', value: stats.team, icon: Users, link: '/admin/team', color: '#FF9800' },
     { label: 'Projects', value: stats.projects, icon: Building2, link: '/admin/projects', color: '#9C27B0' },
     { label: 'Users', value: stats.users, icon: User, link: '/admin/users', color: '#00BCD4' },
-    { label: 'FAQs', value: stats.faqs, icon: HelpCircle, link: '/admin/faq', color: '#F44336' }
+    { label: 'FAQs', value: stats.faqs, icon: HelpCircle, link: '/admin/faq', color: '#F44336' },
+    { 
+      label: 'Contact Messages', 
+      value: stats.messages, 
+      icon: MessageSquare, 
+      link: '/admin/messages', 
+      color: '#E91E63',
+      badge: stats.unreadMessages > 0 ? stats.unreadMessages : null
+    }
   ];
 
   return (
@@ -113,7 +163,22 @@ export default function AdminDashboard() {
                 <IconComponent size={24} />
               </div>
               <div className="admin-stat-card-content">
-                <h3 className="admin-stat-card-value">{stat.value}</h3>
+                <h3 className="admin-stat-card-value">
+                  {stat.value}
+                  {stat.badge && stat.badge > 0 && (
+                    <span style={{
+                      marginLeft: '8px',
+                      padding: '2px 8px',
+                      backgroundColor: '#F44336',
+                      color: '#fff',
+                      borderRadius: '12px',
+                      fontSize: '12px',
+                      fontWeight: '600'
+                    }}>
+                      {stat.badge} new
+                    </span>
+                  )}
+                </h3>
                 <p className="admin-stat-card-label">{stat.label}</p>
               </div>
               <div className="admin-stat-card-arrow">
@@ -196,6 +261,15 @@ export default function AdminDashboard() {
             <div>
               <h4>Users</h4>
               <p>View and manage registered users</p>
+            </div>
+          </Link>
+          <Link href="/admin/messages" className="admin-content-link">
+            <span className="admin-content-link-icon">
+              <MessageSquare size={32} />
+            </span>
+            <div>
+              <h4>Contact Messages</h4>
+              <p>View and manage contact form submissions</p>
             </div>
           </Link>
         </div>

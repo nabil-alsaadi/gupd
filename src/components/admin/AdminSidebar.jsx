@@ -17,7 +17,8 @@ import {
   Home,
   ChevronLeft,
   ChevronRight,
-  Info
+  Info,
+  MessageSquare
 } from 'lucide-react';
 
 const AdminSidebar = () => {
@@ -26,80 +27,86 @@ const AdminSidebar = () => {
   const isOpen = isSidebarOpen;
   const setIsOpen = setIsSidebarOpen;
 
-  const menuItems = [
+  const menuCategories = [
     {
-      id: 'dashboard',
-      label: 'Dashboard',
-      icon: LayoutDashboard,
-      link: '/admin',
-      exact: true
+      id: 'main',
+      label: 'Main',
+      items: [
+        {
+          id: 'dashboard',
+          label: 'Dashboard',
+          icon: LayoutDashboard,
+          link: '/admin',
+          exact: true
+        }
+      ]
     },
     {
-      id: 'banner',
-      label: 'Banner Content',
-      icon: Image,
-      link: '/admin/banner'
+      id: 'content',
+      label: 'Content',
+      items: [
+        {
+          id: 'banner',
+          label: 'Banner Content',
+          icon: Image,
+          link: '/admin/banner'
+        },
+        {
+          id: 'about',
+          label: 'About Section',
+          icon: Info,
+          link: '/admin/about'
+        },
+        {
+          id: 'blog',
+          label: 'Blog Posts',
+          icon: FileText,
+          link: '/admin/blog'
+        },
+        {
+          id: 'projects',
+          label: 'Projects',
+          icon: Building2,
+          link: '/admin/projects'
+        },
+        {
+          id: 'faq',
+          label: 'FAQs',
+          icon: HelpCircle,
+          link: '/admin/faq'
+        }
+      ]
     },
     {
-      id: 'about',
-      label: 'About Section',
-      icon: Info,
-      link: '/admin/about'
-    },
-    {
-      id: 'blog',
-      label: 'Blog Posts',
-      icon: FileText,
-      link: '/admin/blog'
-    },
-    // {
-    //   id: 'navigation',
-    //   label: 'Navigation',
-    //   icon: Navigation,
-    //   link: '/admin/navigation'
-    // },
-    {
-      id: 'team',
-      label: 'Team Members',
-      icon: Users,
-      link: '/admin/team'
-    },
-    {
-      id: 'users',
-      label: 'Users',
-      icon: User,
-      link: '/admin/users'
-    },
-    {
-      id: 'faq',
-      label: 'FAQs',
-      icon: HelpCircle,
-      link: '/admin/faq'
-    },
-    {
-      id: 'projects',
-      label: 'Projects',
-      icon: Building2,
-      link: '/admin/projects'
-    },
-    // {
-    //   id: 'portfolio',
-    //   label: 'Portfolio',
-    //   icon: Briefcase,
-    //   link: '/admin/portfolio'
-    // },
-    {
-      id: 'contact',
-      label: 'Contact Content',
-      icon: Mail,
-      link: '/admin/contact'
-    },
-    // {
-    //   id: 'company',
-    //   label: 'Company Data',
-    //   icon: Building,
-    //   link: '/admin/company'
-    // }
+      id: 'management',
+      label: 'Management',
+      items: [
+        {
+          id: 'team',
+          label: 'Team Members',
+          icon: Users,
+          link: '/admin/team'
+        },
+        {
+          id: 'users',
+          label: 'Users',
+          icon: User,
+          link: '/admin/users'
+        },
+        {
+          id: 'contact',
+          label: 'Contact Content',
+          icon: Mail,
+          link: '/admin/contact'
+        },
+        {
+          id: 'messages',
+          label: 'Contact Messages',
+          icon: MessageSquare,
+          link: '/admin/messages'
+        }
+      ]
+    }
   ];
 
   const isActive = (link, exact = false) => {
@@ -123,21 +130,30 @@ const AdminSidebar = () => {
       </div>
       
       <nav className="admin-sidebar-nav">
-        <ul className="admin-sidebar-menu">
-          {menuItems.map((item) => (
-            <li key={item.id} className="admin-sidebar-menu-item">
-              <Link 
-                href={item.link}
-                className={`admin-sidebar-link ${isActive(item.link, item.exact) ? 'active' : ''}`}
-              >
-                <span className="admin-sidebar-icon">
-                  <item.icon size={20} />
-                </span>
-                {isOpen && <span className="admin-sidebar-label">{item.label}</span>}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        {menuCategories.map((category) => (
+          <div key={category.id} className="admin-sidebar-category">
+            {isOpen && category.label !== 'Main' && (
+              <div className="admin-sidebar-category-label">
+                {category.label}
+              </div>
+            )}
+            <ul className="admin-sidebar-menu">
+              {category.items.map((item) => (
+                <li key={item.id} className="admin-sidebar-menu-item">
+                  <Link 
+                    href={item.link}
+                    className={`admin-sidebar-link ${isActive(item.link, item.exact) ? 'active' : ''}`}
+                  >
+                    <span className="admin-sidebar-icon">
+                      <item.icon size={20} />
+                    </span>
+                    {isOpen && <span className="admin-sidebar-label">{item.label}</span>}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </nav>
 
       <div className="admin-sidebar-footer">

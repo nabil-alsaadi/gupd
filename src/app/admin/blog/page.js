@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFirestore, useStorage } from '@/hooks/useFirebase';
 import { 
   Plus, 
@@ -14,7 +14,8 @@ import {
   Tag,
   Calendar,
   Eye,
-  Languages
+  Languages,
+  MessageSquare
 } from 'lucide-react';
 import { translateToArabic } from '@/utils/translate';
 
@@ -50,6 +51,8 @@ export default function AdminBlogPage() {
   const [saving, setSaving] = useState(false);
   const [formError, setFormError] = useState('');
   const [translating, setTranslating] = useState({});
+  const [viewingComments, setViewingComments] = useState(null);
+  const [deletingComment, setDeletingComment] = useState(null);
 
   useEffect(() => {
     fetchData({ orderBy: { field: 'date', direction: 'desc' } });
@@ -226,6 +229,55 @@ export default function AdminBlogPage() {
       } catch (err) {
         alert('Failed to delete blog post: ' + err.message);
       }
+    }
+  };
+
+  const handleDeleteComment = async (blogId, commentIndex) => {
+    const blog = blogs.find(b => b.id === blogId);
+    if (!blog) return;
+
+    const comments = Array.isArray(blog.comment_content) ? blog.comment_content : [];
+    const comment = comments[commentIndex];
+    
+    if (!confirm(`Are you sure you want to delete this comment by ${comment?.author_name || 'Anonymous'}?`)) {
+      return;
+    }
+
+    setDeletingComment(`${blogId}-${commentIndex}`);
+    
+    try {
+      const updatedComments = comments.filter((_, index) => index !== commentIndex);
+      await update(blogId, {
+        comment_content: updatedComments,
+        comment: updatedComments.length
+      });
+      // Refresh data
+      await fetchData({ orderBy: { field: 'date', direction: 'desc' } });
+      
+      // Close comments view if no comments left
+      if (updatedComments.length === 0 && viewingComments === blogId) {
+        setViewingComments(null);
+      }
+    } catch (err) {
+      alert('Failed to delete comment: ' + err.message);
+    } finally {
+      setDeletingComment(null);
+    }
+  };
+
+  const formatCommentDate = (dateString) => {
+    if (!dateString) return 'N/A';
+    try {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    } catch {
+      return dateString;
     }
   };
 
@@ -792,61 +844,189 @@ export default function AdminBlogPage() {
                     <th>Author</th>
                     <th>Date</th>
                     <th>Views</th>
+                    <th>Comments</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {blogs.map((blog) => (
-                    <tr key={blog.id}>
-                      <td>
-                        <div className="admin-table-image">
-                          <img 
-                            src={blog.cover_image || blog.thumbnail_image || '/placeholder.jpg'} 
-                            alt={blog.blog_title}
-                            onError={(e) => {
-                              e.target.src = '/placeholder.jpg';
-                            }}
-                          />
-                        </div>
-                      </td>
-                      <td>
-                        <div style={{ maxWidth: '300px' }}>
-                          <strong>{blog.blog_title}</strong>
-                          <p style={{ fontSize: '12px', color: '#666', marginTop: '4px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                            {blog.blog_content?.substring(0, 100)}...
-                          </p>
-                        </div>
-                      </td>
-                      <td>
-                        <span className="admin-badge">{blog.category || 'Uncategorized'}</span>
-                      </td>
-                      <td>{blog.author_name || 'Unknown'}</td>
-                      <td>{blog.date || 'N/A'}</td>
-                      <td>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                          <Eye size={14} />
-                          {blog.blog_view || 0}
-                        </div>
-                      </td>
-                      <td>
-                        <div className="admin-table-actions">
-                          <button
-                            className="admin-btn-icon admin-btn-edit"
-                            onClick={() => handleEdit(blog)}
-                            aria-label="Edit blog post"
-                          >
-                            <Edit2 size={18} />
-                          </button>
-                          <button
-                            className="admin-btn-icon admin-btn-delete"
-                            onClick={() => handleDelete(blog.id)}
-                            aria-label="Delete blog post"
-                          >
-                            <Trash2 size={18} />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
+                    <React.Fragment key={blog.id}>
+                      <tr>
+                        <td>
+                          <div className="admin-table-image">
+                            <img 
+                              src={blog.cover_image || blog.thumbnail_image || '/placeholder.jpg'} 
+                              alt={blog.blog_title}
+                              onError={(e) => {
+                                e.target.src = '/placeholder.jpg';
+                              }}
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div style={{ maxWidth: '300px' }}>
+                            <strong>{blog.blog_title}</strong>
+                            <p style={{ fontSize: '12px', color: '#666', marginTop: '4px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                              {blog.blog_content?.substring(0, 100)}...
+                            </p>
+                          </div>
+                        </td>
+                        <td>
+                          <span className="admin-badge">{blog.category || 'Uncategorized'}</span>
+                        </td>
+                        <td>{blog.author_name || 'Unknown'}</td>
+                        <td>{blog.date || 'N/A'}</td>
+                        <td>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <Eye size={14} />
+                            {blog.blog_view || 0}
+                          </div>
+                        </td>
+                        <td>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            <MessageSquare size={14} />
+                            <span>{blog.comment || (blog.comment_content?.length || 0)}</span>
+                            {blog.comment_content && blog.comment_content.length > 0 && (
+                              <button
+                                onClick={() => setViewingComments(viewingComments === blog.id ? null : blog.id)}
+                                style={{
+                                  marginLeft: '8px',
+                                  padding: '4px 8px',
+                                  fontSize: '11px',
+                                  backgroundColor: viewingComments === blog.id ? '#2196F3' : '#f5f5f5',
+                                  color: viewingComments === blog.id ? '#fff' : '#666',
+                                  border: 'none',
+                                  borderRadius: '4px',
+                                  cursor: 'pointer'
+                                }}
+                              >
+                                {viewingComments === blog.id ? 'Hide' : 'View'}
+                              </button>
+                            )}
+                          </div>
+                        </td>
+                        <td>
+                          <div className="admin-table-actions">
+                            <button
+                              className="admin-btn-icon admin-btn-edit"
+                              onClick={() => handleEdit(blog)}
+                              aria-label="Edit blog post"
+                            >
+                              <Edit2 size={18} />
+                            </button>
+                            <button
+                              className="admin-btn-icon admin-btn-delete"
+                              onClick={() => handleDelete(blog.id)}
+                              aria-label="Delete blog post"
+                            >
+                              <Trash2 size={18} />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                      {viewingComments === blog.id && blog.comment_content && blog.comment_content.length > 0 && (
+                        <tr>
+                          <td colSpan="8" style={{ padding: '0', backgroundColor: '#f9fafb' }}>
+                            <div style={{ padding: '20px', borderTop: '2px solid #e5e7eb' }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                                <h4 style={{ margin: 0, fontSize: '16px', fontWeight: '600', color: '#1e293b' }}>
+                                  Comments ({blog.comment_content.length})
+                                </h4>
+                                <button
+                                  onClick={() => setViewingComments(null)}
+                                  style={{
+                                    padding: '6px 12px',
+                                    backgroundColor: '#f5f5f5',
+                                    border: 'none',
+                                    borderRadius: '4px',
+                                    cursor: 'pointer',
+                                    fontSize: '12px',
+                                    color: '#666'
+                                  }}
+                                >
+                                  Close
+                                </button>
+                              </div>
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                                {blog.comment_content.map((comment, index) => (
+                                  <div
+                                    key={index}
+                                    style={{
+                                      padding: '16px',
+                                      backgroundColor: '#fff',
+                                      borderRadius: '8px',
+                                      border: '1px solid #e5e7eb',
+                                      display: 'flex',
+                                      gap: '12px'
+                                    }}
+                                  >
+                                    <div>
+                                      <img
+                                        src={comment.author_image || '/assets/img/inner-pages/blog-comment-author-01.png'}
+                                        alt={comment.author_name || 'Commenter'}
+                                        style={{
+                                          width: '40px',
+                                          height: '40px',
+                                          borderRadius: '50%',
+                                          objectFit: 'cover'
+                                        }}
+                                        onError={(e) => {
+                                          e.target.src = '/assets/img/inner-pages/blog-comment-author-01.png';
+                                        }}
+                                      />
+                                    </div>
+                                    <div style={{ flex: 1 }}>
+                                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '8px' }}>
+                                        <div>
+                                          <strong style={{ fontSize: '14px', color: '#1e293b' }}>
+                                            {comment.author_name || 'Anonymous'}
+                                          </strong>
+                                          <div style={{ fontSize: '12px', color: '#64748b', marginTop: '2px' }}>
+                                            {formatCommentDate(comment.date)}
+                                          </div>
+                                        </div>
+                                        <button
+                                          onClick={() => handleDeleteComment(blog.id, index)}
+                                          disabled={deletingComment === `${blog.id}-${index}`}
+                                          style={{
+                                            padding: '6px 10px',
+                                            backgroundColor: '#F44336',
+                                            color: '#fff',
+                                            border: 'none',
+                                            borderRadius: '4px',
+                                            cursor: deletingComment === `${blog.id}-${index}` ? 'not-allowed' : 'pointer',
+                                            fontSize: '12px',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '4px',
+                                            opacity: deletingComment === `${blog.id}-${index}` ? 0.6 : 1
+                                          }}
+                                        >
+                                          {deletingComment === `${blog.id}-${index}` ? (
+                                            <>
+                                              <Loader2 size={14} className="admin-spinner" />
+                                              Deleting...
+                                            </>
+                                          ) : (
+                                            <>
+                                              <Trash2 size={14} />
+                                              Delete
+                                            </>
+                                          )}
+                                        </button>
+                                      </div>
+                                      <p style={{ margin: 0, fontSize: '14px', color: '#334155', lineHeight: '1.6' }}>
+                                        {comment.content || comment.message || 'No content'}
+                                      </p>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      )}
+                    </React.Fragment>
                   ))}
                 </tbody>
               </table>

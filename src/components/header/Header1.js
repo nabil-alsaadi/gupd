@@ -154,24 +154,24 @@ const Header1 = ({ style = "", fluid }) => {
                 </div>
                 <div className="sidebar-content-wrap">
                     <div className="title-area">
-                        <span>{companyData.navigation.sidebar.title}</span>
-                        <h2>{companyData.navigation.sidebar.subtitle}</h2>
-                        <p>{companyData.navigation.sidebar.description}</p>
+                        <span>{t('navigation.sidebar.title')}</span>
+                        <h2>{t('navigation.sidebar.subtitle')}</h2>
+                        <p>{t('navigation.sidebar.description')}</p>
                     </div>
                     <ContactInfo showArrow={true} />
                     <ul className="address-area">
                         <li className="single-address">
-                            <span>SHARJAH</span>
-                            <p>Orient building - 2nd Floor - Office 23 Al Arouba St - Al Mareija - Hay Al Gharb - Sharjah</p>
+                            <span>{t('navigation.sidebar.address.sharjah')}</span>
+                            <p>{t('navigation.sidebar.address.sharjahAddress')}</p>
                         </li>
                         <li className="single-address">
-                            <span>UAE</span>
-                            <p>Gulf Universal Property Development</p>
+                            <span>{t('navigation.sidebar.address.uae')}</span>
+                            <p>{t('navigation.sidebar.address.companyName')}</p>
                         </li>
                     </ul>
                 </div>
                 <div className="sidebar-bottom-area">
-                    <p>Copyright {new Date().getFullYear()} <Link href="/">GUPD</Link> | Powered By <a href="https://www.nabilalsaadi.com/">Nabil Alsaadi</a></p>
+                    <p>{t('navigation.sidebar.copyright')} {new Date().getFullYear()} <Link href="/">GUPD</Link> | {t('navigation.sidebar.poweredBy')} <a href="https://www.nabilalsaadi.com/">Nabil Alsaadi</a></p>
                 </div>
             </div>
             <header 
@@ -276,7 +276,7 @@ const Header1 = ({ style = "", fluid }) => {
                             {user ? (
                                 <>
                                     <div style={{ color: state.scrollY > 20 ? '#fff' : 'var(--title-color)', fontSize: '14px', textAlign: 'center' }}>
-                                        {t('auth.welcomeUser', { name: userData?.displayName || user.email?.split('@')[0] || 'User' })}
+                                        {t('auth.welcomeUser', { name: userData?.displayName || user.email?.split('@')[0] || t('auth.user') })}
                                     </div>
                                     <button 
                                         onClick={handleLogout}

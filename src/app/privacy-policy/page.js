@@ -10,9 +10,9 @@ const page = async () => {
         <>
             <Header1 fluid={"container-fluid"}/>
             <Breadcrum 
-                content='How We Protect Your Information' 
-                pageTitle={'Privacy Policy'} 
-                pagename={'Privacy Policy'} 
+                contentKey="breadcrumb.privacyPolicy.content"
+                pageTitleKey="breadcrumb.privacyPolicy.pageTitle"
+                pagenameKey="breadcrumb.privacyPolicy.pagename"
             />
             <PrivacyPolicyClient privacyData={privacyData} />
             <Home1FooterTop />
