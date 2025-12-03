@@ -116,28 +116,42 @@ export default function AdminTeamPage() {
             : defaultChairmanMessage.stats;
           const paddedStats = [...stats];
           while (paddedStats.length < 3) {
-            paddedStats.push({ value: '', label: '' });
+            paddedStats.push({ value: '', label: '', labelArabic: '' });
           }
 
           setChairmanMessage({
             tagline: team.chairmanMessage.tagline || defaultChairmanMessage.tagline,
+            taglineArabic: team.chairmanMessage.taglineArabic || '',
             title: team.chairmanMessage.title || defaultChairmanMessage.title,
+            titleArabic: team.chairmanMessage.titleArabic || '',
             leadershipQuote: team.chairmanMessage.leadershipQuote || defaultChairmanMessage.leadershipQuote,
+            leadershipQuoteArabic: team.chairmanMessage.leadershipQuoteArabic || '',
             highlightQuote: team.chairmanMessage.highlightQuote || defaultChairmanMessage.highlightQuote,
+            highlightQuoteArabic: team.chairmanMessage.highlightQuoteArabic || '',
             paragraphs: Array.isArray(team.chairmanMessage.paragraphs) && team.chairmanMessage.paragraphs.length > 0
               ? team.chairmanMessage.paragraphs
               : defaultChairmanMessage.paragraphs,
+            paragraphsArabic: Array.isArray(team.chairmanMessage.paragraphsArabic) && team.chairmanMessage.paragraphsArabic.length > 0
+              ? team.chairmanMessage.paragraphsArabic
+              : [],
             badge: {
               value: team.chairmanMessage?.badge?.value || defaultChairmanMessage.badge.value,
-              label: team.chairmanMessage?.badge?.label || defaultChairmanMessage.badge.label
+              label: team.chairmanMessage?.badge?.label || defaultChairmanMessage.badge.label,
+              labelArabic: team.chairmanMessage?.badge?.labelArabic || ''
             },
             image: team.chairmanMessage.image || defaultChairmanMessage.image,
             signature: {
               initials: team.chairmanMessage?.signature?.initials || defaultChairmanMessage.signature.initials,
               name: team.chairmanMessage?.signature?.name || defaultChairmanMessage.signature.name,
-              role: team.chairmanMessage?.signature?.role || defaultChairmanMessage.signature.role
+              nameArabic: team.chairmanMessage?.signature?.nameArabic || '',
+              role: team.chairmanMessage?.signature?.role || defaultChairmanMessage.signature.role,
+              roleArabic: team.chairmanMessage?.signature?.roleArabic || ''
             },
-            stats: paddedStats
+            stats: paddedStats.map((stat, index) => ({
+              value: stat?.value || '',
+              label: stat?.label || '',
+              labelArabic: stat?.labelArabic || ''
+            }))
           });
           setChairmanImagePreview(team.chairmanMessage.image || '');
         } else {

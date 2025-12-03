@@ -22,9 +22,12 @@ import { getAbout } from "@/lib/getAbout";
 import { getTeam } from "@/lib/getTeam";
 import { getProjects } from "@/lib/getProjects";
 
+// Revalidate every 60 seconds to ensure fresh data after updates
+export const revalidate = 60;
 
 export default async function Home() {
   // Fetch all data server-side
+  // Revalidate every 60 seconds to ensure fresh data
   const [banners, about, team, projects] = await Promise.all([
     getBanners(),
     getAbout(),

@@ -3,34 +3,6 @@ import React, { useEffect, useMemo, useRef } from "react";
 import useModalVideo from "@/utils/useModalVideo";
 import { useLanguage } from "@/providers/LanguageProvider";
 
-const defaultChairmanMessage = {
-  tagline: "Chairman's Message",
-  title: "A Word from Shaikh Faisal",
-  leadershipQuote:
-    "Leadership is about inspiring others to achieve more than they thought possible.",
-  highlightQuote:
-    "Great architecture is not just about buildings—it's about creating spaces that inspire, transform, and endure.",
-  paragraphs: [
-    "Welcome to our journey of architectural excellence. At our core, we believe in transforming visions into reality through innovative design and meticulous execution.",
-    "With decades of experience and a commitment to innovation, we bring your vision to life through thoughtful design. Our team is dedicated to delivering projects that exceed expectations and stand the test of time."
-  ],
-  badge: {
-    value: "30+",
-    label: "YEARS EXPERIENCE"
-  },
-  image: "/assets/img/new/ShaikhFaisal.jpg",
-  signature: {
-    initials: "SF",
-    name: "Shaikh Faisal",
-    role: "Chairman & Founder"
-  },
-  stats: [
-    { value: "500+", label: "PROJECTS" },
-    { value: "50+", label: "AWARDS" },
-    { value: "100%", label: "SATISFIED" }
-  ]
-};
-
 const ChairmanMessage = ({ chairmanMessage }) => {
   const { Modal } = useModalVideo();
   const { locale } = useLanguage();
@@ -39,13 +11,21 @@ const ChairmanMessage = ({ chairmanMessage }) => {
   const hasAnimated = useRef(false);
 
   const chairmanContent = useMemo(() => {
-    if (!chairmanMessage) {
-      return defaultChairmanMessage;
+    // Check if chairmanMessage exists and has meaningful content
+    if (!chairmanMessage || 
+        typeof chairmanMessage !== 'object' || 
+        Object.keys(chairmanMessage).length === 0) {
+      return null;
+    }
+    
+    // Ensure at least some key fields exist
+    if (!chairmanMessage.title && !chairmanMessage.titleArabic) {
+      return null;
     }
 
     const stats = (Array.isArray(chairmanMessage.stats) && chairmanMessage.stats.length > 0
       ? chairmanMessage.stats
-      : defaultChairmanMessage.stats).map((stat) => ({
+      : []).map((stat) => ({
       value: stat?.value || "",
       label: stat?.label || ""
     }));
@@ -55,26 +35,23 @@ const ChairmanMessage = ({ chairmanMessage }) => {
     }
 
     return {
-      tagline: chairmanMessage.tagline || defaultChairmanMessage.tagline,
-      title: chairmanMessage.title || defaultChairmanMessage.title,
-      leadershipQuote:
-        chairmanMessage.leadershipQuote || defaultChairmanMessage.leadershipQuote,
-      highlightQuote:
-        chairmanMessage.highlightQuote || defaultChairmanMessage.highlightQuote,
+      tagline: chairmanMessage.tagline || "",
+      title: chairmanMessage.title || "",
+      leadershipQuote: chairmanMessage.leadershipQuote || "",
+      highlightQuote: chairmanMessage.highlightQuote || "",
       paragraphs:
         Array.isArray(chairmanMessage.paragraphs) && chairmanMessage.paragraphs.length > 0
           ? chairmanMessage.paragraphs
-          : defaultChairmanMessage.paragraphs,
+          : [],
       badge: {
-        value: chairmanMessage?.badge?.value || defaultChairmanMessage.badge.value,
-        label: chairmanMessage?.badge?.label || defaultChairmanMessage.badge.label
+        value: chairmanMessage?.badge?.value || "",
+        label: chairmanMessage?.badge?.label || ""
       },
-      image: chairmanMessage.image || defaultChairmanMessage.image,
+      image: chairmanMessage.image || "",
       signature: {
-        initials:
-          chairmanMessage?.signature?.initials || defaultChairmanMessage.signature.initials,
-        name: chairmanMessage?.signature?.name || defaultChairmanMessage.signature.name,
-        role: chairmanMessage?.signature?.role || defaultChairmanMessage.signature.role
+        initials: chairmanMessage?.signature?.initials || "",
+        name: chairmanMessage?.signature?.name || "",
+        role: chairmanMessage?.signature?.role || ""
       },
       stats
     };
@@ -109,6 +86,10 @@ const ChairmanMessage = ({ chairmanMessage }) => {
       }
     };
   }, []);
+
+  if (!chairmanContent) {
+    return null;
+  }
 
   return (
     <>
@@ -375,7 +356,7 @@ const ChairmanMessage = ({ chairmanMessage }) => {
                             marginBottom: "8px"
                           }}
                         >
-                          {stat.value || defaultChairmanMessage.stats[index]?.value || ""}
+                          {stat.value || ""}
                         </h3>
                         <p
                           style={{
@@ -385,7 +366,7 @@ const ChairmanMessage = ({ chairmanMessage }) => {
                             letterSpacing: "1px"
                           }}
                         >
-                          {isRTL && stat.labelArabic ? stat.labelArabic : (stat.label || defaultChairmanMessage.stats[index]?.label || "")}
+                          {isRTL && stat.labelArabic ? stat.labelArabic : (stat.label || "")}
                         </p>
                       </div>
                     </div>

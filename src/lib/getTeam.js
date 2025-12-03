@@ -20,13 +20,28 @@ export async function getTeam() {
 
     const teamDoc = teamDocs[0];
     
+    // Check if chairmanMessage exists and has content
+    const chairmanMessage = teamDoc?.chairmanMessage;
+    const hasChairmanMessage = chairmanMessage && 
+      typeof chairmanMessage === 'object' && 
+      Object.keys(chairmanMessage).length > 0;
+    
+    // Debug logging (remove in production if needed)
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[getTeam] chairmanMessage from DB:', chairmanMessage ? 'exists' : 'null/undefined');
+      if (chairmanMessage) {
+        console.log('[getTeam] chairmanMessage keys:', Object.keys(chairmanMessage));
+        console.log('[getTeam] chairmanMessage.image:', chairmanMessage.image);
+      }
+    }
+    
     return {
       sectionTitle: teamDoc?.sectionTitle || teamData.team.sectionTitle,
       founder: teamDoc?.founder || teamData.team.founder,
       members: Array.isArray(teamDoc?.members) && teamDoc.members.length > 0
         ? teamDoc.members
         : teamData.team.members,
-      chairmanMessage: teamDoc?.chairmanMessage || null
+      chairmanMessage: hasChairmanMessage ? chairmanMessage : null
     };
   } catch (error) {
     console.error('Error fetching team from Firestore:', error);
