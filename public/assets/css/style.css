@@ -1826,7 +1826,7 @@ header.style-1 {
 }
 @media (max-width: 1399px) {
   header.style-1 {
-    padding: 0 4%;
+    padding: 0 2%;
   }
 }
 @media (max-width: 1199px) {
@@ -2102,6 +2102,12 @@ header.style-1 .nav-right .primary-btn {
 @media (min-width: 992px) and (max-width: 1199px) {
   header.style-1 .nav-right .primary-btn {
     font-size: 14px;
+  }
+}
+@media (max-width: 1500px) {
+  header.style-1 .nav-right .right-sidebar-button,
+  header.style-1 .nav-right .primary-btn {
+    display: none !important;
   }
 }
 header.style-1 .main-menu {
