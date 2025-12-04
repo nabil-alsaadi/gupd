@@ -53,11 +53,11 @@ const ProjectSection = ({ projectData }) => {
                     <li key={index}><Link href={`/project/${project.slug}`}>{category}</Link></li>
                   ))}
                 </ul>
-                <div className="project-stats">
+                {/* <div className="project-stats">
                   <span className="stat">{project.floors} Floors</span>
                   <span className="stat">{project.units} Units</span>
                   <span className="stat">{project.status}</span>
-                </div>
+                </div> */}
               </div>
               <div className="button-area">
                 <Link href={`/project/${project.slug}`} className="primary-btn">
@@ -99,11 +99,11 @@ const ProjectSection = ({ projectData }) => {
                     <li key={index}><Link href={`/project/${project.slug}`}>{category}</Link></li>
                   ))}
                 </ul>
-                <div className="project-stats">
+                {/* <div className="project-stats">
                   <span className="stat">{project.floors} Floors</span>
                   <span className="stat">{project.units} Units</span>
                   <span className="stat">{project.status}</span>
-                </div>
+                </div> */}
               </div>
               <div className="button-area">
                 <Link href={`/project/${project.slug}`} className="primary-btn">
