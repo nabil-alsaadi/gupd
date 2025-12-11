@@ -43,7 +43,8 @@ export default function AdminProjectsPage() {
     location: '',
     locationArabic: '',
     mainImage: '',
-    locationMap: ''
+    locationMap: '',
+    locationLink: ''
   });
   
   const [sectionTitle, setSectionTitle] = useState({
@@ -102,7 +103,8 @@ export default function AdminProjectsPage() {
       units: defaultProject.units || '',
       location: defaultProject.location || '',
       mainImage: defaultProject.mainImage || '',
-      locationMap: defaultProject.locationMap || ''
+      locationMap: defaultProject.locationMap || '',
+      locationLink: defaultProject.locationLink || ''
     });
     
     setSectionTitle({
@@ -138,6 +140,14 @@ export default function AdminProjectsPage() {
         ...prev,
         name: value,
         slug: slugify(value)
+      }));
+    }
+    
+    // Ensure slug is always lowercase when manually entered
+    if (name === 'slug') {
+      setFormData(prev => ({
+        ...prev,
+        slug: typeof value === 'string' ? value.toLowerCase().trim() : ''
       }));
     }
   };
@@ -493,7 +503,7 @@ export default function AdminProjectsPage() {
       const cleanedFormData = {
         name: typeof formData.name === 'string' ? formData.name : '',
         nameArabic: typeof formData.nameArabic === 'string' ? formData.nameArabic : (formData.name || ''),
-        slug: typeof formData.slug === 'string' ? formData.slug : '',
+        slug: typeof formData.slug === 'string' ? formData.slug.toLowerCase().trim() : '',
         client: typeof formData.client === 'string' ? formData.client : '',
         clientArabic: typeof formData.clientArabic === 'string' ? formData.clientArabic : (formData.client || ''),
         status: typeof formData.status === 'string' ? formData.status : 'Completed',
@@ -503,7 +513,8 @@ export default function AdminProjectsPage() {
         location: typeof formData.location === 'string' ? formData.location : '',
         locationArabic: typeof formData.locationArabic === 'string' ? formData.locationArabic : (formData.location || ''),
         mainImage: mainImageUrl,
-        locationMap: locationMapUrl
+        locationMap: locationMapUrl,
+        locationLink: typeof formData.locationLink === 'string' ? formData.locationLink : ''
       };
       
       // Explicitly remove 'id' if it exists - we never want to store it in Firestore
@@ -589,6 +600,11 @@ export default function AdminProjectsPage() {
 
       const cleanedFinalData = removeUndefined(finalProjectData);
 
+      // Ensure slug is always lowercase (safety check)
+      if (cleanedFinalData.slug && typeof cleanedFinalData.slug === 'string') {
+        cleanedFinalData.slug = cleanedFinalData.slug.toLowerCase().trim();
+      }
+
       console.log('Saving project data:', cleanedFinalData);
 
       if (editingProject) {
@@ -649,7 +665,8 @@ export default function AdminProjectsPage() {
       location: project.location || '',
       locationArabic: project.locationArabic || '',
       mainImage: project.mainImage || '',
-      locationMap: project.locationMap || ''
+      locationMap: project.locationMap || '',
+      locationLink: project.locationLink || ''
     });
     
     setSectionTitle(project.sectionTitle || { span: '', spanArabic: '', heading: '', headingArabic: '', description: '', descriptionArabic: '' });
@@ -712,11 +729,12 @@ export default function AdminProjectsPage() {
       year: '',
       floors: '',
       units: '',
-      location: '',
-      locationArabic: '',
-      mainImage: '',
-      locationMap: ''
-    });
+        location: '',
+        locationArabic: '',
+        mainImage: '',
+        locationMap: '',
+        locationLink: ''
+      });
     setSectionTitle({ span: '', spanArabic: '', heading: '', headingArabic: '', description: '', descriptionArabic: '' });
     setSections([]);
     setFeatures([]);
@@ -751,14 +769,14 @@ export default function AdminProjectsPage() {
         </div>
         {!showForm && (
           <div style={{ display: 'flex', gap: '10px' }}>
-            <button 
+            {/* <button 
               className="admin-btn admin-btn-secondary"
               onClick={loadDefaultProject}
             >
               <FileText size={20} />
               Load Default Data
-            </button>
-            <button 
+            </button> */}
+            {/* <button 
               className="admin-btn admin-btn-primary"
               onClick={() => {
                 resetForm();
@@ -767,7 +785,7 @@ export default function AdminProjectsPage() {
             >
               <Plus size={20} />
               Add New Project
-            </button>
+            </button> */}
           </div>
         )}
       </div>
@@ -1172,6 +1190,20 @@ export default function AdminProjectsPage() {
                       className="admin-url-input"
                     />
                   )}
+                </div>
+
+                <div className="admin-form-group" style={{ marginTop: '20px' }}>
+                  <label htmlFor="locationLink">Location Link (Google Maps, etc.)</label>
+                  <input
+                    type="url"
+                    id="locationLink"
+                    name="locationLink"
+                    value={formData.locationLink}
+                    onChange={(e) => setFormData(prev => ({ ...prev, locationLink: e.target.value }))}
+                    placeholder="https://maps.google.com/..."
+                    className="admin-input"
+                  />
+                  <p className="admin-input-hint">Users can click on the map image to open this link</p>
                 </div>
               </>
             )}
@@ -2141,13 +2173,13 @@ export default function AdminProjectsPage() {
               <h3>No projects yet</h3>
               <p>Add your first project or load default data to get started</p>
               <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
-                <button 
+                {/* <button 
                   className="admin-btn admin-btn-secondary"
                   onClick={loadDefaultProject}
                 >
                   <FileText size={20} />
                   Load Default Data
-                </button>
+                </button> */}
                 <button 
                   className="admin-btn admin-btn-primary"
                   onClick={() => {
@@ -2187,13 +2219,14 @@ export default function AdminProjectsPage() {
                     >
                       <Edit2 size={18} />
                     </button>
-                    <button
+                    {/* Delete button hidden for now */}
+                    {/* <button
                       className="admin-btn-icon admin-btn-delete"
                       onClick={() => handleDelete(project.id)}
                       aria-label="Delete project"
                     >
                       <Trash2 size={18} />
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               ))}

@@ -1,7 +1,6 @@
 "use client"
 import Link from 'next/link'
 import React from 'react'
-import defaultProjectData from '@/data/project-section-data.json'
 import { useLanguage } from "@/providers/LanguageProvider"
 import { useTranslation } from "react-i18next"
 
@@ -10,11 +9,15 @@ const ProjectSection = ({ projectData }) => {
   const { t } = useTranslation()
   const isRTL = locale === 'ar'
   
-  // Use provided data or fall back to default
-  const data = projectData || defaultProjectData;
+  // Only use database data - no fallback to default
+  if (!projectData || !projectData.projects || projectData.projects.length === 0) {
+    return null; // Don't render if no data from database
+  }
   
-  // Get the first project (Al Faisal Tower)
-  const project = data.projects && data.projects.length > 0 ? data.projects[0] : defaultProjectData.projects[0];
+  const data = projectData;
+  
+  // Get the first project from database
+  const project = data.projects[0];
   const sections = project?.sections || [];
   
   // Safety check - ensure we have at least 3 sections

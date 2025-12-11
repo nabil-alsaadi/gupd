@@ -5,7 +5,6 @@ import Home1FooterTop from '@/components/Footer/Home1FooterTop'
 import Header1 from '@/components/header/Header1'
 import Link from 'next/link'
 import React, { useState, useEffect } from 'react'
-import defaultProjectData from '@/data/project-section-data.json'
 import SketchSection from '@/components/architecture-project-components/SketchSection'
 import WhatsNearby from '@/components/common/WhatsNearby'
 import PropertyAttachment from '@/components/common/PropertyAttachment'
@@ -19,9 +18,8 @@ const ProjectDetailsClient = ({ project, slug }) => {
   const { t } = useTranslation()
   const isRTL = locale === 'ar'
 
-  // Use provided project or fall back to default data
-  const foundProject = project || defaultProjectData.projects.find(p => p.slug === slug);
-
+  // Use provided project from database only
+  const foundProject = project;
   const openLayoutGallery = (startIndex = 0) => {
     const layouts = foundProject?.layouts || [];
     const galleryItems = layouts
@@ -161,7 +159,9 @@ const ProjectDetailsClient = ({ project, slug }) => {
         <Breadcrum content={t('project.projectNotFound')} pageTitle={t('project.project')} pagename={t('project.project')} />
         <div className="container pt-120 mb-120">
           <h2>{t('project.projectNotFound')}</h2>
-          <Link href="/">{t('project.returnToHome')}</Link>
+          <Link href="/" style={{ marginTop: '20px', display: 'inline-block' }}>
+            {t('project.returnToHome')}
+          </Link>
         </div>
         <Home1FooterTop />
         <Footer1 />
@@ -505,16 +505,59 @@ const ProjectDetailsClient = ({ project, slug }) => {
                 <div className="location-map-section" id="location">
                   <h3 className="mb-4">{t('project.locationMap')}</h3>
                   <div className="location-map-wrapper">
-                    <img
-                      src={`${foundProject.locationMap}`}
-                      alt={`${getText(foundProject.name, foundProject.nameArabic)} ${t('project.locationMap')}`}
-                      className="w-100 rounded shadow-sm"
-                      style={{
-                        objectFit: 'cover',
-                        maxHeight: '600px'
-                      }}
-                    />
+                    {foundProject.locationLink ? (
+                      <a
+                        href={foundProject.locationLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ display: 'block', cursor: 'pointer' }}
+                        title={t('project.openLocation') || 'Open location in maps'}
+                      >
+                        <img
+                          src={`${foundProject.locationMap}`}
+                          alt={`${getText(foundProject.name, foundProject.nameArabic)} ${t('project.locationMap')}`}
+                          className="w-100 rounded shadow-sm"
+                          style={{
+                            objectFit: 'cover',
+                            maxHeight: '600px',
+                            transition: 'opacity 0.3s ease',
+                            cursor: 'pointer'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.opacity = '0.9';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.opacity = '1';
+                          }}
+                        />
+                      </a>
+                    ) : (
+                      <img
+                        src={`${foundProject.locationMap}`}
+                        alt={`${getText(foundProject.name, foundProject.nameArabic)} ${t('project.locationMap')}`}
+                        className="w-100 rounded shadow-sm"
+                        style={{
+                          objectFit: 'cover',
+                          maxHeight: '600px'
+                        }}
+                      />
+                    )}
                   </div>
+                  {foundProject.locationLink && (
+                    <div className="mt-4 text-center">
+                      <a
+                        href={foundProject.locationLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="primary-btn"
+                      >
+                        {t('project.getDirections') || 'Get Directions'}
+                        <svg viewBox="0 0 13 20">
+                          <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5" />
+                        </svg>
+                      </a>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

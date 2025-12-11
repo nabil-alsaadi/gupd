@@ -1,19 +1,17 @@
 import { getDocuments } from '@/utils/firestore';
-import defaultProjectData from '@/data/project-section-data.json';
 
 /**
- * Server-side function to fetch project data
- * Falls back to static data if Firestore fetch fails
+ * Server-side function to fetch project data from database only
  */
 export async function getProjects() {
   try {
     const firestoreProjects = await getDocuments('projects');
     
     if (!firestoreProjects || firestoreProjects.length === 0) {
-      // Return default data structure
+      // Return empty structure if no data in database
       return {
-        sectionTitle: defaultProjectData.sectionTitle,
-        projects: defaultProjectData.projects
+        sectionTitle: null,
+        projects: []
       };
     }
 
@@ -22,7 +20,7 @@ export async function getProjects() {
     
     // Return data in the same structure as the JSON file
     return {
-      sectionTitle: project?.sectionTitle || defaultProjectData.sectionTitle,
+      sectionTitle: project?.sectionTitle || null,
       projects: firestoreProjects.map(p => ({
         id: p.id,
         name: p.name,
@@ -40,40 +38,42 @@ export async function getProjects() {
         nearby: p.nearby || [],
         attachments: p.attachments || [],
         gallery: p.gallery || [],
-        locationMap: p.locationMap
+        locationMap: p.locationMap,
+        locationLink: p.locationLink || ''
       }))
     };
   } catch (error) {
     console.error('Error fetching projects from Firestore:', error);
-    // Fall back to static data on error
+    // Return empty structure on error
     return {
-      sectionTitle: defaultProjectData.sectionTitle,
-      projects: defaultProjectData.projects
+      sectionTitle: null,
+      projects: []
     };
   }
 }
 
 /**
- * Get a single project by slug
+ * Get a single project by slug from database only
  */
 export async function getProjectBySlug(slug) {
   try {
+    // Ensure slug is always lowercase for consistent matching
+    const normalizedSlug = typeof slug === 'string' ? slug.toLowerCase().trim() : slug;
+    
     const firestoreProjects = await getDocuments('projects', {
-      filters: [{ field: 'slug', operator: '==', value: slug }]
+      filters: [{ field: 'slug', operator: '==', value: normalizedSlug }]
     });
     
-    if (!firestoreProjects || firestoreProjects.length === 0) {
-      // Fall back to default data
-      const defaultProject = defaultProjectData.projects.find(p => p.slug === slug);
-      return defaultProject || null;
+    if (firestoreProjects && firestoreProjects.length > 0) {
+      return firestoreProjects[0];
     }
-
-    return firestoreProjects[0];
+    
+    // Return null if no data in database
+    return null;
   } catch (error) {
     console.error('Error fetching project by slug from Firestore:', error);
-    // Fall back to static data
-    const defaultProject = defaultProjectData.projects.find(p => p.slug === slug);
-    return defaultProject || null;
+    // Return null on error
+    return null;
   }
 }
 
