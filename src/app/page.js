@@ -3,7 +3,7 @@ import Home1Service from "@/components/service/Home1Service";
 import Home1About from "@/components/about/Home1About";
 import Home1WhyChooseus from "@/components/why-choose-us-section/Home1WhyChooseus";
 import Home1Testimonial from "@/components/testimonial/Home1Testimonial";
-import Home1Faq from "@/components/faq-section/Home1Faq";
+// import Home1Faq from "@/components/faq-section/Home1Faq";
 import Home1blog from "@/components/blog-section/Home1blog";
 import Footer1 from "@/components/Footer/Footer1";
 import Home1Banner from "@/components/banner/Home1banner";
@@ -47,10 +47,10 @@ export default async function Home() {
       <Home1Banner2 />
       <ProjectSection projectData={projects} />
       
-      <Home1Support />
-      <ProcessSection/>
-      <ChairmanMessage chairmanMessage={team.chairmanMessage} />
-      <Home1Team teamData={team} />
+      {/* <Home1Support /> */}
+      {/* <ProcessSection/> */}
+      {/* <ChairmanMessage chairmanMessage={team.chairmanMessage} /> */}
+      {/* <Home1Team teamData={team} /> */}
       
       
       {/* <ContactSection /> */}

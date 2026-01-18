@@ -95,7 +95,7 @@ const TermsConditionsClient = ({ termsData }) => {
                                                     <div className="terms-subsection mb-30">
                                                         <h4>{t('termsConditions.sections.section8.subsections.limitation.title')}</h4>
                                                         <p>{t('termsConditions.sections.section8.subsections.limitation.content')}</p>
-                                                    </div>
+                                                </div>
                                                 </>
                                             )}
                                         </div>

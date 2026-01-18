@@ -24,9 +24,8 @@ import ChairmanMessage from '@/components/chairman/ChairmanMessage'
 import FAQSection from '@/components/faq/FAQSection'
 import Spacer from '@/components/common/Spacer'
 import Home1FooterTop from '@/components/Footer/Home1FooterTop'
+import ProcessSection from '@/components/architecture/ProcessSection'
 import { getDocuments } from '@/utils/firestore'
-import content from '@/data/gupdContent.json'
-import teamData from '@/data/team-data.json'
 SwiperCore.use([Autoplay, EffectFade, Navigation, Pagination]);
 const AboutPage = () => {
   const { t } = useTranslation();
@@ -39,62 +38,33 @@ const AboutPage = () => {
         const aboutDocs = await getDocuments('about');
         
         if (!aboutDocs || aboutDocs.length === 0) {
-          setAboutData({
-            title: content.about.title,
-            titleArabic: content.about.titleArabic || content.about.title,
-            subtitle: content.about.subtitle,
-            subtitleArabic: content.about.subtitleArabic || content.about.subtitle,
-            videoDescription: content.about.videoDescription,
-            videoDescriptionArabic: content.about.videoDescriptionArabic || content.about.videoDescription,
-            image: content.about.image || 'assets/img/home1/about-img.jpg',
-            sections: content.about.sections || []
-          });
+          setAboutData(null);
           return;
         }
 
         const doc = aboutDocs[0];
-        const fallback = {
-          title: content.about.title,
-          titleArabic: content.about.titleArabic || content.about.title,
-          subtitle: content.about.subtitle,
-          subtitleArabic: content.about.subtitleArabic || content.about.subtitle,
-          videoDescription: content.about.videoDescription,
-          videoDescriptionArabic: content.about.videoDescriptionArabic || content.about.videoDescription,
-          image: content.about.image || 'assets/img/home1/about-img.jpg',
-          sections: content.about.sections || []
-        };
 
         setAboutData({
-          title: doc.title || fallback.title,
-          titleArabic: doc.titleArabic || doc.title || fallback.title,
-          subtitle: doc.subtitle || fallback.subtitle,
-          subtitleArabic: doc.subtitleArabic || doc.subtitle || fallback.subtitle,
-          videoDescription: doc.videoDescription || fallback.videoDescription,
-          videoDescriptionArabic: doc.videoDescriptionArabic || doc.videoDescription || fallback.videoDescription,
-          image: doc.image || fallback.image,
+          title: doc.title || '',
+          titleArabic: doc.titleArabic || '',
+          subtitle: doc.subtitle || '',
+          subtitleArabic: doc.subtitleArabic || '',
+          videoDescription: doc.videoDescription || '',
+          videoDescriptionArabic: doc.videoDescriptionArabic || '',
+          image: doc.image || '',
           sections:
             Array.isArray(doc.sections) && doc.sections.length > 0
               ? doc.sections.map(section => ({
                   title: section.title || '',
-                  titleArabic: section.titleArabic || section.title || '',
+                  titleArabic: section.titleArabic || '',
                   text: section.text || '',
-                  textArabic: section.textArabic || section.text || ''
+                  textArabic: section.textArabic || ''
                 }))
-              : fallback.sections
+              : []
         });
       } catch (error) {
         console.error('Error fetching about from Firestore:', error);
-        // Fall back to static data on error
-        setAboutData({
-          title: content.about.title,
-          titleArabic: content.about.titleArabic || content.about.title,
-          subtitle: content.about.subtitle,
-          subtitleArabic: content.about.subtitleArabic || content.about.subtitle,
-          videoDescription: content.about.videoDescription,
-          videoDescriptionArabic: content.about.videoDescriptionArabic || content.about.videoDescription,
-          image: content.about.image || 'assets/img/home1/about-img.jpg',
-          sections: content.about.sections || []
-        });
+        setAboutData(null);
       }
     };
 
@@ -107,34 +77,23 @@ const AboutPage = () => {
         const teamDocs = await getDocuments('team');
         
         if (!teamDocs || teamDocs.length === 0) {
-          setTeamDataState({
-            sectionTitle: teamData.team.sectionTitle,
-            founder: teamData.team.founder,
-            members: teamData.team.members,
-            chairmanMessage: null
-          });
+          setTeamDataState(null);
           return;
         }
 
         const teamDoc = teamDocs[0];
         
         setTeamDataState({
-          sectionTitle: teamDoc?.sectionTitle || teamData.team.sectionTitle,
-          founder: teamDoc?.founder || teamData.team.founder,
+          sectionTitle: teamDoc?.sectionTitle || {},
+          founder: teamDoc?.founder || null,
           members: Array.isArray(teamDoc?.members) && teamDoc.members.length > 0
             ? teamDoc.members
-            : teamData.team.members,
+            : [],
           chairmanMessage: teamDoc?.chairmanMessage || null
         });
       } catch (error) {
         console.error('Error fetching team from Firestore:', error);
-        // Fall back to static data on error
-        setTeamDataState({
-          sectionTitle: teamData.team.sectionTitle,
-          founder: teamData.team.founder,
-          members: teamData.team.members,
-          chairmanMessage: null
-        });
+        setTeamDataState(null);
       }
     };
 
@@ -259,7 +218,7 @@ const AboutPage = () => {
             </div>
           </div>
           <Modal /> */}
-          <Home1About aboutData={aboutData} />
+          {aboutData && <Home1About aboutData={aboutData} />}
         </div>
       </div>
       <div className="home1-support-section mb-130">
@@ -467,12 +426,14 @@ const AboutPage = () => {
         </div>
       </div> */}
       <Spacer size="xl" />
+      
       <ChairmanMessage chairmanMessage={teamDataState?.chairmanMessage} />
-      <Home1Team teamData={teamDataState} />
+      {teamDataState && <Home1Team teamData={teamDataState} />}
       <Home1Support />
+      <ProcessSection />
       {/* <Home1Testimonial /> */}
 
-      <FAQSection />
+      {/* <FAQSection /> */}
       {/* <div className="home1-footer-top-banner-section">
         <div className="container">
           <div className="row">

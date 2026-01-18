@@ -1,10 +1,11 @@
 import React from 'react'
 import Header1 from '@/components/header/Header1'
 import Breadcrum from '@/components/common/Breadcrum'
-import Footer1 from '@/components/Footer/Footer1'
+ 
 import Home1FooterTop from '@/components/Footer/Home1FooterTop';
 import { getTeam } from '@/lib/getTeam';
 import staticTeamData from '@/data/team-data.json';
+import Footer1 from '@/components/Footer/Footer1';
 
 export const metadata = {
   icons: {

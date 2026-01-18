@@ -1855,6 +1855,15 @@ header.style-1 {
         font-size: 14px;
       }
     }
+    /* Hide Get in Touch and Get Quote buttons on small desktop, iPad and smaller screens */
+    @include xxl-down-device(){
+      .right-sidebar-button {
+        display: none !important;
+      }
+      .primary-btn.d-lg-flex {
+        display: none !important;
+      }
+    }
   }
   .main-menu {
     display: inline-block;

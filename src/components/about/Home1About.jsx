@@ -2,7 +2,6 @@
 import useModalVideo from '@/utils/useModalVideo'
 import Link from 'next/link'
 import React from 'react'
-import content from '@/data/gupdContent.json'
 import { useLanguage } from "@/providers/LanguageProvider"
 import { useTranslation } from "react-i18next"
 
@@ -12,17 +11,8 @@ const Home1About = ({ sectionGap, aboutData }) => {
   const { t } = useTranslation()
   const isRTL = locale === 'ar'
 
-  // Use aboutData prop if provided, otherwise fall back to static data
-  const about = aboutData || {
-    title: content.about.title,
-    titleArabic: content.about.titleArabic || content.about.title,
-    subtitle: content.about.subtitle,
-    subtitleArabic: content.about.subtitleArabic || content.about.subtitle,
-    videoDescription: content.about.videoDescription,
-    videoDescriptionArabic: content.about.videoDescriptionArabic || content.about.videoDescription,
-    image: content.about.image || 'assets/img/home1/about-img.jpg',
-    sections: content.about.sections || []
-  }
+  // Only use database data, no fallbacks
+  const about = aboutData || {};
 
   return (
     <div className="home1-about-section mb-130">
@@ -59,7 +49,7 @@ const Home1About = ({ sectionGap, aboutData }) => {
           <div className="col-lg-5">
             <div className="about-content">
               <ul>
-                {about.sections.map((item, index) => (
+                {Array.isArray(about.sections) && about.sections.length > 0 && about.sections.map((item, index) => (
                   <li key={index}>
                     <h5>{isRTL && item.titleArabic ? item.titleArabic : item.title}</h5>
                     <p>{isRTL && item.textArabic ? item.textArabic : item.text}</p>
@@ -70,7 +60,7 @@ const Home1About = ({ sectionGap, aboutData }) => {
           </div>
           <div className="col-lg-7 d-lg-block d-none">
             <div className="about-img magnetic-item">
-              <img src={about.image || 'assets/img/home1/about-img.jpg'} alt="About GUPD" />
+              {about.image && <img src={about.image} alt="About GUPD" />}
             </div>
           </div>
         </div>

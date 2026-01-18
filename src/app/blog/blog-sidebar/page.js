@@ -14,7 +14,7 @@ const page = async () => {
             <Header1  fluid={"container-fluid"}/>
             <BlogBreadcrumb type="blogSidebar" />
             <Suspense fallback={<div className="blog-sidebar-page pt-120 mb-120"><div className="container"><div className="row"><div className="col-lg-12"><p>Loading...</p></div></div></div></div>}>
-                <BlogSidebarClient blogs={blogs} />
+            <BlogSidebarClient blogs={blogs} />
             </Suspense>
             <Home1FooterTop />
             <Footer1 />

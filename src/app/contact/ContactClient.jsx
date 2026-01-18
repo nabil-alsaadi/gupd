@@ -27,6 +27,7 @@ const ContactClient = ({ contactData }) => {
         t('contact.serviceType.propertyDevelopment'),
         t('contact.serviceType.investmentOpportunities'),
         t('contact.serviceType.propertyManagement'),
+        t('contact.serviceType.rentalFacilityManagement'),
         t('contact.serviceType.consultation'),
         t('contact.serviceType.residentialProjects'),
         t('contact.serviceType.commercialProjects')

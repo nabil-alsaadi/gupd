@@ -7870,7 +7870,7 @@ html[dir="rtl"] .home1-team-section .founder-card .founder-content {
   }
 }
 .footer-section .footer-wrapper .footer-logo-and-contact-area {
-  padding: 50px 110px;
+  padding: 25px 110px;
   display: flex;
   justify-content: space-between;
   align-items: end;
@@ -7916,7 +7916,7 @@ html[dir="rtl"] .home1-team-section .founder-card .founder-content {
   }
 }
 .footer-section .footer-wrapper .footer-logo-and-contact-area .footer-logo-area .footer-content {
-  padding-top: 55px;
+  padding-top: 25px;
 }
 @media (max-width: 1199px) {
   .footer-section .footer-wrapper .footer-logo-and-contact-area .footer-logo-area .footer-content {
@@ -19199,7 +19199,7 @@ html[dir="rtl"] .home6-contact-section .contact-wrapper .contact-content .contac
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  padding: 175px 0;
+  padding: 80px 0;
   position: relative;
 }
 @media (max-width: 1199px) {
@@ -19219,7 +19219,7 @@ html[dir="rtl"] .home6-contact-section .contact-wrapper .contact-content .contac
 .breadcrumb-section .banner-content span {
   color: rgba(255, 255, 255, 0.6);
   font-family: var(--font-kanit);
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 400;
   line-height: 1;
   letter-spacing: 0.03em;

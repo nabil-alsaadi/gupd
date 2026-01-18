@@ -1,6 +1,5 @@
 "use client"
 import React, { useMemo, useEffect, useRef, useState } from "react";
-import staticTeamData from "@/data/team-data.json";
 import { useLanguage } from "@/providers/LanguageProvider";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -18,13 +17,12 @@ const Home1Team = ({ teamData }) => {
     const swiperRef = useRef(null);
     const [swiperKey, setSwiperKey] = useState(0);
     
-    // Use teamData prop if provided, otherwise fall back to static data
-    const team = teamData || staticTeamData.team;
-    const sectionTitle = team.sectionTitle || staticTeamData.team.sectionTitle;
-    const founder = team.founder || staticTeamData.team.founder;
-    const members = Array.isArray(team.members) && team.members.length > 0
-        ? team.members
-        : staticTeamData.team.members;
+    // Only use database data, no fallbacks - check after all hooks
+    const sectionTitle = teamData?.sectionTitle || {};
+    const founder = teamData?.founder || null;
+    const members = Array.isArray(teamData?.members) && teamData.members.length > 0
+        ? teamData.members
+        : [];
     
     // Flip animation classes for RTL
     const leftAnimation = isRTL ? "fadeInRight" : "fadeInLeft";
@@ -80,6 +78,7 @@ const Home1Team = ({ teamData }) => {
           },
         };
       }, []);
+    
     return (
         <div className="home1-team-section mb-130">
         <div className="container">
@@ -99,18 +98,20 @@ const Home1Team = ({ teamData }) => {
               </div>
             </div>
             <div className={`col-xxl-7 col-lg-8 wow animate ${rightAnimation}`} data-wow-delay="200ms" data-wow-duration="1500ms">
+              {founder && (
               <div className="founder-card">
                 <div className="founder-img">
-                  <img src={founder?.image} alt={founder?.name || "Founder"} />
+                    <img src={founder.image} alt={founder.name || "Founder"} />
                 </div>
                 <div className="founder-content">
-                  <p>"{isRTL && founder?.quoteArabic ? founder.quoteArabic : founder?.quote}".</p>
+                    <p>"{isRTL && founder.quoteArabic ? founder.quoteArabic : founder.quote}".</p>
                   <div className="name-and-desig">
-                    <span>{isRTL && founder?.positionArabic ? founder.positionArabic : founder?.position}</span>
-                    <h5>{isRTL && founder?.nameArabic ? founder.nameArabic : founder?.name}</h5>
+                      <span>{isRTL && founder.positionArabic ? founder.positionArabic : founder.position}</span>
+                      <h5>{isRTL && founder.nameArabic ? founder.nameArabic : founder.name}</h5>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
               <div className="slider-btn-grp d-lg-none d-flex">
                 <div className="slider-btn team-slider-prev">
                   <i className={`bi bi-arrow-${isRTL ? "right" : "left"}`} />

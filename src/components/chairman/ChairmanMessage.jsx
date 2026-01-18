@@ -11,66 +11,82 @@ const ChairmanMessage = ({ chairmanMessage }) => {
   const hasAnimated = useRef(false);
 
   const chairmanContent = useMemo(() => {
-    // Check if chairmanMessage exists and has meaningful content
-    if (!chairmanMessage || 
-        typeof chairmanMessage !== 'object' || 
-        Object.keys(chairmanMessage).length === 0) {
-      return null;
-    }
-    
-    // Ensure at least some key fields exist
-    if (!chairmanMessage.title && !chairmanMessage.titleArabic) {
+    if (!chairmanMessage) {
       return null;
     }
 
-    const stats = (Array.isArray(chairmanMessage.stats) && chairmanMessage.stats.length > 0
-      ? chairmanMessage.stats
-      : []).map((stat) => ({
+    const stats = Array.isArray(chairmanMessage.stats) && chairmanMessage.stats.length > 0
+      ? chairmanMessage.stats.map((stat) => ({
       value: stat?.value || "",
-      label: stat?.label || ""
-    }));
+          label: stat?.label || "",
+          labelArabic: stat?.labelArabic || ""
+        }))
+      : [];
 
+    // Ensure we have at least 3 stats (fill with empty if needed)
     while (stats.length < 3) {
-      stats.push({ value: "", label: "" });
+      stats.push({ value: "", label: "", labelArabic: "" });
     }
 
     return {
       tagline: chairmanMessage.tagline || "",
+      taglineArabic: chairmanMessage.taglineArabic || "",
       title: chairmanMessage.title || "",
+      titleArabic: chairmanMessage.titleArabic || "",
       leadershipQuote: chairmanMessage.leadershipQuote || "",
+      leadershipQuoteArabic: chairmanMessage.leadershipQuoteArabic || "",
       highlightQuote: chairmanMessage.highlightQuote || "",
-      paragraphs:
-        Array.isArray(chairmanMessage.paragraphs) && chairmanMessage.paragraphs.length > 0
+      highlightQuoteArabic: chairmanMessage.highlightQuoteArabic || "",
+      paragraphs: Array.isArray(chairmanMessage.paragraphs) && chairmanMessage.paragraphs.length > 0
           ? chairmanMessage.paragraphs
-          : [],
+        : [],
+      paragraphsArabic: Array.isArray(chairmanMessage.paragraphsArabic) && chairmanMessage.paragraphsArabic.length > 0
+        ? chairmanMessage.paragraphsArabic
+        : [],
       badge: {
         value: chairmanMessage?.badge?.value || "",
-        label: chairmanMessage?.badge?.label || ""
+        label: chairmanMessage?.badge?.label || "",
+        labelArabic: chairmanMessage?.badge?.labelArabic || ""
       },
+      image: chairmanMessage.image || "",
       image: chairmanMessage.image || "",
       signature: {
         initials: chairmanMessage?.signature?.initials || "",
         name: chairmanMessage?.signature?.name || "",
-        role: chairmanMessage?.signature?.role || ""
+        nameArabic: chairmanMessage?.signature?.nameArabic || "",
+        role: chairmanMessage?.signature?.role || "",
+        roleArabic: chairmanMessage?.signature?.roleArabic || ""
       },
       stats
     };
   }, [chairmanMessage]);
 
   useEffect(() => {
-    if (!sectionRef.current || hasAnimated.current) return;
+    if (!sectionRef.current || !chairmanContent) return;
+
+    // Reset animation state when content changes
+    hasAnimated.current = false;
+    const elements = sectionRef.current.querySelectorAll("[data-animate]");
+    elements.forEach((el) => {
+      el.classList.remove("animated");
+    });
+
+    const triggerAnimation = () => {
+      if (hasAnimated.current) return;
+      hasAnimated.current = true;
+      const animateElements = sectionRef.current.querySelectorAll("[data-animate]");
+      animateElements.forEach((el, index) => {
+        setTimeout(() => {
+          el.classList.add("animated");
+        }, index * 150);
+      });
+    };
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && !hasAnimated.current) {
-            hasAnimated.current = true;
-            const elements = entry.target.querySelectorAll("[data-animate]");
-            elements.forEach((el, index) => {
-              setTimeout(() => {
-                el.classList.add("animated");
-              }, index * 150);
-            });
+            triggerAnimation();
             observer.unobserve(entry.target);
           }
         });
@@ -80,13 +96,22 @@ const ChairmanMessage = ({ chairmanMessage }) => {
 
     observer.observe(sectionRef.current);
 
+    // Check if element is already in view (e.g., when content loads asynchronously)
+    const rect = sectionRef.current.getBoundingClientRect();
+    const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+    if (isInView && !hasAnimated.current) {
+      // Use a small delay to ensure DOM is ready
+      setTimeout(triggerAnimation, 100);
+    }
+
     return () => {
       if (sectionRef.current) {
         observer.unobserve(sectionRef.current);
       }
     };
-  }, []);
+  }, [chairmanContent]);
 
+  // Only render if chairmanContent exists - check after all hooks
   if (!chairmanContent) {
     return null;
   }
@@ -133,6 +158,7 @@ const ChairmanMessage = ({ chairmanMessage }) => {
                   />
 
                   <div
+                    className="chairman-badge"
                     data-animate="slideInUp"
                     style={{
                       position: "absolute",
@@ -168,7 +194,7 @@ const ChairmanMessage = ({ chairmanMessage }) => {
                         letterSpacing: "1px"
                       }}
                     >
-                      {isRTL && chairmanMessage?.badge?.labelArabic ? chairmanMessage.badge.labelArabic : chairmanContent.badge.label}
+                      {isRTL && chairmanContent.badge.labelArabic ? chairmanContent.badge.labelArabic : chairmanContent.badge.label}
                     </p>
                   </div>
                 </div>
@@ -211,7 +237,7 @@ const ChairmanMessage = ({ chairmanMessage }) => {
                     [isRTL ? 'paddingRight' : 'paddingLeft']: "30px"
                   }}
                 >
-                  {`"${isRTL && chairmanMessage?.leadershipQuoteArabic ? chairmanMessage.leadershipQuoteArabic : chairmanContent.leadershipQuote}"`}
+                  {`"${isRTL && chairmanContent.leadershipQuoteArabic ? chairmanContent.leadershipQuoteArabic : chairmanContent.leadershipQuote}"`}
                 </p>
                 <div
                   style={{
@@ -246,7 +272,7 @@ const ChairmanMessage = ({ chairmanMessage }) => {
                         color: "#000"
                       }}
                     >
-                      {isRTL && chairmanMessage?.signature?.nameArabic ? chairmanMessage.signature.nameArabic : chairmanContent.signature.name}
+                      {isRTL && chairmanContent.signature.nameArabic ? chairmanContent.signature.nameArabic : chairmanContent.signature.name}
                     </h6>
                     <p
                       style={{
@@ -255,7 +281,7 @@ const ChairmanMessage = ({ chairmanMessage }) => {
                         color: "#666"
                       }}
                     >
-                      {isRTL && chairmanMessage?.signature?.roleArabic ? chairmanMessage.signature.roleArabic : chairmanContent.signature.role}
+                      {isRTL && chairmanContent.signature.roleArabic ? chairmanContent.signature.roleArabic : chairmanContent.signature.role}
                     </p>
                   </div>
                 </div>
@@ -281,9 +307,9 @@ const ChairmanMessage = ({ chairmanMessage }) => {
                     >
                       <path d="M6.6304 0.338424C6.67018 -0.112811 7.32982 -0.112807 7.3696 0.338428L7.72654 4.38625C7.75291 4.68505 8.10454 4.83069 8.33443 4.63804L11.4491 2.02821C11.7963 1.73728 12.2627 2.20368 11.9718 2.55089L9.36197 5.66556C9.1693 5.89546 9.31496 6.24709 9.61374 6.27346L13.6615 6.6304C14.1128 6.67018 14.1128 7.32982 13.6615 7.3696L9.61374 7.72654C9.31496 7.75291 9.1693 8.10454 9.36197 8.33443L11.9718 11.4491C12.2627 11.7963 11.7963 12.2627 11.4491 11.9718L8.33443 9.36197C8.10454 9.1693 7.75291 9.31496 7.72654 9.61374L7.3696 13.6615C7.32982 14.1128 6.67018 14.1128 6.6304 13.6615L6.27346 9.61374C6.24709 9.31496 5.89546 9.1693 5.66556 9.36197L2.55089 11.9718C2.20368 12.2627 1.73729 11.7963 2.02822 11.4491L4.63804 8.33443C4.83069 8.10454 4.68504 7.75291 4.38625 7.72654L0.338424 7.3696C-0.112811 7.32982 -0.112807 6.67018 0.338428 6.6304L4.38625 6.27346C4.68505 6.24709 4.83069 5.89546 4.63804 5.66556L2.02821 2.55089C1.73728 2.20368 2.20368 1.73729 2.55089 2.02822L5.66556 4.63804C5.89546 4.83069 6.24709 4.68504 6.27346 4.38625L6.6304 0.338424Z" />
                     </svg>
-                    {isRTL && chairmanMessage?.taglineArabic ? chairmanMessage.taglineArabic : chairmanContent.tagline}
+                    {isRTL && chairmanContent.taglineArabic ? chairmanContent.taglineArabic : chairmanContent.tagline}
                   </span>
-                  <h2 style={{ marginBottom: "25px" }}>{isRTL && chairmanMessage?.titleArabic ? chairmanMessage.titleArabic : chairmanContent.title}</h2>
+                  <h2 style={{ marginBottom: "25px" }}>{isRTL && chairmanContent.titleArabic ? chairmanContent.titleArabic : chairmanContent.title}</h2>
                   <div
                     data-animate="slideInUp"
                     style={{
@@ -313,11 +339,11 @@ const ChairmanMessage = ({ chairmanMessage }) => {
                     >
                       <path d="M0 19.2C0 9.6 6.4 3.2 16 0L19.2 4.8C13.6 7.2 10.4 11.2 9.6 16H16V32H0V19.2ZM20.8 19.2C20.8 9.6 27.2 3.2 36.8 0L40 4.8C34.4 7.2 31.2 11.2 30.4 16H36.8V32H20.8V19.2Z" />
                     </svg>
-                    {`"${isRTL && chairmanMessage?.highlightQuoteArabic ? chairmanMessage.highlightQuoteArabic : chairmanContent.highlightQuote}"`}
+                    {`"${isRTL && chairmanContent.highlightQuoteArabic ? chairmanContent.highlightQuoteArabic : chairmanContent.highlightQuote}"`}
                   </div>
 
-                  {(isRTL && Array.isArray(chairmanMessage?.paragraphsArabic) && chairmanMessage.paragraphsArabic.length > 0
-                    ? chairmanMessage.paragraphsArabic
+                  {(isRTL && Array.isArray(chairmanContent.paragraphsArabic) && chairmanContent.paragraphsArabic.length > 0
+                    ? chairmanContent.paragraphsArabic
                     : chairmanContent.paragraphs).map((paragraph, index) => (
                     <p
                       key={index}
@@ -357,6 +383,7 @@ const ChairmanMessage = ({ chairmanMessage }) => {
                           }}
                         >
                           {stat.value || ""}
+                          {stat.value || ""}
                         </h3>
                         <p
                           style={{
@@ -366,6 +393,7 @@ const ChairmanMessage = ({ chairmanMessage }) => {
                             letterSpacing: "1px"
                           }}
                         >
+                          {isRTL && stat.labelArabic ? stat.labelArabic : (stat.label || "")}
                           {isRTL && stat.labelArabic ? stat.labelArabic : (stat.label || "")}
                         </p>
                       </div>
@@ -409,6 +437,16 @@ const ChairmanMessage = ({ chairmanMessage }) => {
         }
         [data-animate="slideInUp"].animated {
           transform: translateY(0);
+        }
+
+        .chairman-badge {
+          display: block;
+        }
+
+        @media (max-width: 768px) {
+          .chairman-badge {
+            display: none !important;
+          }
         }
       `}</style>
     </>

@@ -64,7 +64,7 @@ const ProcessSection = () => {
     ];
 
     return (
-        <div className="home3-process-section mb-120">
+        <div className="home3-process-section">
             <div className="container-fluid">
                 <div className="row justify-content-center mb-70 wow animate slideInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
                     <div className="col-lg-7">

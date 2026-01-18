@@ -24,35 +24,35 @@ const SupportPolicyClient = ({ supportData }) => {
 
     const renderListItem = (item, itemIndex) => {
         // Check if item contains email, phone, or WhatsApp to make them clickable
-        const emailMatch = item.match(/Email:\s*([^\s]+)/);
-        const phoneMatch = item.match(/Phone:\s*([^\s]+)/);
-        const whatsappMatch = item.match(/WhatsApp:\s*([^\s]+)/);
-        
-        if (emailMatch) {
-            return (
-                <li key={itemIndex}>
-                    {item.split(emailMatch[0])[0]}
-                    <strong>Email:</strong> <Link href={`mailto:${emailMatch[1]}`}>{emailMatch[1]}</Link>
-                </li>
-            );
-        }
-        if (phoneMatch) {
-            return (
-                <li key={itemIndex}>
-                    {item.split(phoneMatch[0])[0]}
-                    <strong>Phone:</strong> <Link href={companyData.contact.phone.link}>{phoneMatch[1]}</Link>
-                </li>
-            );
-        }
-        if (whatsappMatch) {
-            return (
-                <li key={itemIndex}>
-                    {item.split(whatsappMatch[0])[0]}
-                    <strong>WhatsApp:</strong> <Link href={companyData.contact.whatsapp.link} target="_blank" rel="noopener noreferrer">{whatsappMatch[1]}</Link>
-                </li>
-            );
-        }
-        return <li key={itemIndex}>{item}</li>;
+                                                const emailMatch = item.match(/Email:\s*([^\s]+)/);
+                                                const phoneMatch = item.match(/Phone:\s*([^\s]+)/);
+                                                const whatsappMatch = item.match(/WhatsApp:\s*([^\s]+)/);
+                                                
+                                                if (emailMatch) {
+                                                    return (
+                                                        <li key={itemIndex}>
+                                                            {item.split(emailMatch[0])[0]}
+                                                            <strong>Email:</strong> <Link href={`mailto:${emailMatch[1]}`}>{emailMatch[1]}</Link>
+                                                        </li>
+                                                    );
+                                                }
+                                                if (phoneMatch) {
+                                                    return (
+                                                        <li key={itemIndex}>
+                                                            {item.split(phoneMatch[0])[0]}
+                                                            <strong>Phone:</strong> <Link href={companyData.contact.phone.link}>{phoneMatch[1]}</Link>
+                                                        </li>
+                                                    );
+                                                }
+                                                if (whatsappMatch) {
+                                                    return (
+                                                        <li key={itemIndex}>
+                                                            {item.split(whatsappMatch[0])[0]}
+                                                            <strong>WhatsApp:</strong> <Link href={companyData.contact.whatsapp.link} target="_blank" rel="noopener noreferrer">{whatsappMatch[1]}</Link>
+                                                        </li>
+                                                    );
+                                                }
+                                                return <li key={itemIndex}>{item}</li>;
     };
 
     return (
@@ -143,7 +143,7 @@ const SupportPolicyClient = ({ supportData }) => {
                                                     <div className="support-subsection mb-30">
                                                         <h4>{t('supportPolicy.sections.section8.subsections.legalDisputes.title')}</h4>
                                                         <p>{t('supportPolicy.sections.section8.subsections.legalDisputes.content')}</p>
-                                                    </div>
+                                                </div>
                                                 </>
                                             )}
                                         </div>

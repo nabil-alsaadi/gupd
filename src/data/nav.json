@@ -25,6 +25,12 @@
     },
     {
         "id": "5",
+        "labelKey": "navigation.faq",
+        "link": "/faq",
+        "icon": false
+    },
+    {
+        "id": "6",
         "labelKey": "navigation.contact",
         "link": "/contact",
         "icon": false

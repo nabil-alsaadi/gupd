@@ -138,7 +138,7 @@ const PrivacyPolicyClient = ({ privacyData }) => {
                                                     <div className="policy-subsection mb-30">
                                                         <h4>{t('privacyPolicy.sections.section3.subsections.realEstatePartners.title')}</h4>
                                                         <p>{t('privacyPolicy.sections.section3.subsections.realEstatePartners.content')}</p>
-                                                    </div>
+                                                </div>
                                                 </>
                                             )}
                                         </div>

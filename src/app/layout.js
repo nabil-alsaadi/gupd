@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { useWow } from '@/customHooks/useWow';
 
-import useMagneticHover from "@/customHooks/useMagneticHover";
+// import useMagneticHover from "@/customHooks/useMagneticHover";
 import { kanit, inter, notoKufiArabic } from "@/fonts/font";
 import { usePathname } from 'next/navigation'; // Import usePathname
 import "../../public/assets/css/bootstrap-icons.css";
@@ -16,16 +16,16 @@ import "../../public/assets/css/slick.css";
 import "../../public/assets/css/bootstrap.min.css";
 import "../../public/assets/css/style.css";
 import "../../public/assets/css/jquery.fancybox.min.css";
-import 'react-creative-cursor/dist/styles.css';
+// import 'react-creative-cursor/dist/styles.css';
 import Script from 'next/script';
-import AnimateCursor from "@/components/common/AnimateCursor";
+// import AnimateCursor from "@/components/common/AnimateCursor";
 import { AuthProvider } from '@/hooks/useAuth';
 import { LanguageProvider } from "@/providers/LanguageProvider";
 
 export default function RootLayout({ children }) {
   const pathname = usePathname(); // Get the current pathname
 
-  useMagneticHover();
+  // useMagneticHover();
   useWow()
   useEffect(() => {
     require("bootstrap/dist/js/bootstrap.bundle.min.js");
@@ -201,110 +201,110 @@ export default function RootLayout({ children }) {
     return () => clearInterval(checkGSAPLoaded);
   }, [pathname]); // This runs once after initial mount
 
-  // Magnetic Cursor Functionality
-  useEffect(() => {
-    const ball = document.getElementById("ball");
-    const magneticItems = document.querySelectorAll(".magnetic-item");
-    const magicCursor = document.getElementById("magic-cursor");
+  // Magnetic Cursor Functionality - REMOVED
+  // useEffect(() => {
+  //   const ball = document.getElementById("ball");
+  //   const magneticItems = document.querySelectorAll(".magnetic-item");
+  //   const magicCursor = document.getElementById("magic-cursor");
 
-    if (!magicCursor || window.innerWidth <= 1024) return;
+  //   if (!magicCursor || window.innerWidth <= 1024) return;
 
-    gsap.config({
-      nullTargetWarn: false,
-      trialWarn: false,
-    });
+  //   gsap.config({
+  //     nullTargetWarn: false,
+  //     trialWarn: false,
+  //   });
 
-    const mouse = { x: 0, y: 0 };
-    const pos = { x: 0, y: 0 };
-    const ratio = 0.15;
-    let active = false;
-    const ballWidth = 20;
-    const ballHeight = 20;
-    const ballOpacity = 0.5;
+  //   const mouse = { x: 0, y: 0 };
+  //   const pos = { x: 0, y: 0 };
+  //   const ratio = 0.15;
+  //   let active = false;
+  //   const ballWidth = 20;
+  //   const ballHeight = 20;
+  //   const ballOpacity = 0.5;
 
-    gsap.set(ball, {
-      xPercent: -50,
-      yPercent: -50,
-      width: ballWidth,
-      height: ballHeight,
-      opacity: ballOpacity,
-    });
+  //   gsap.set(ball, {
+  //     xPercent: -50,
+  //     yPercent: -50,
+  //     width: ballWidth,
+  //     height: ballHeight,
+  //     opacity: ballOpacity,
+  //   });
 
-    document.addEventListener("mousemove", (e) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-    });
+  //   document.addEventListener("mousemove", (e) => {
+  //     mouse.x = e.clientX;
+  //     mouse.y = e.clientY;
+  //   });
 
-    gsap.ticker.add(() => {
-      if (!active) {
-        pos.x += (mouse.x - pos.x) * ratio;
-        pos.y += (mouse.y - pos.y) * ratio;
-        gsap.set(ball, { x: pos.x, y: pos.y });
-      }
-    });
+  //   gsap.ticker.add(() => {
+  //     if (!active) {
+  //       pos.x += (mouse.x - pos.x) * ratio;
+  //       pos.y += (mouse.y - pos.y) * ratio;
+  //       gsap.set(ball, { x: pos.x, y: pos.y });
+  //     }
+  //   });
 
-    magneticItems.forEach(item => {
-      const wrap = document.createElement("div");
-      wrap.className = "magnetic-wrap";
-      item.parentNode.insertBefore(wrap, item);
-      wrap.appendChild(item);
+  //   magneticItems.forEach(item => {
+  //     const wrap = document.createElement("div");
+  //     wrap.className = "magnetic-wrap";
+  //     item.parentNode.insertBefore(wrap, item);
+  //     wrap.appendChild(item);
 
-      wrap.addEventListener("mousemove", (e) => {
-        parallaxCursor(e, wrap, 2);
-        callParallax(e, wrap);
-      });
+  //     wrap.addEventListener("mousemove", (e) => {
+  //       parallaxCursor(e, wrap, 2);
+  //       callParallax(e, wrap);
+  //     });
 
-      wrap.addEventListener("mouseenter", () => {
-        active = true;
-        gsap.to(ball, { duration: 0.3, width: 70, height: 70, opacity: 1 });
-      });
+  //     wrap.addEventListener("mouseenter", () => {
+  //       active = true;
+  //       gsap.to(ball, { duration: 0.3, width: 70, height: 70, opacity: 1 });
+  //     });
 
-      wrap.addEventListener("mouseleave", () => {
-        active = false;
-        gsap.to(ball, {
-          duration: 0.3,
-          width: ballWidth,
-          height: ballHeight,
-          opacity: ballOpacity,
-        });
-      });
-    });
+  //     wrap.addEventListener("mouseleave", () => {
+  //       active = false;
+  //       gsap.to(ball, {
+  //         duration: 0.3,
+  //         width: ballWidth,
+  //         height: ballHeight,
+  //         opacity: ballOpacity,
+  //       });
+  //     });
+  //   });
 
-    function callParallax(e, parent) {
-      parallaxIt(e, parent, parent.querySelector(".magnetic-item"), 25);
-    }
+  //   function callParallax(e, parent) {
+  //     parallaxIt(e, parent, parent.querySelector(".magnetic-item"), 25);
+  //   }
 
-    function parallaxIt(e, parent, target, movement) {
-      const boundingRect = parent.getBoundingClientRect();
-      const relX = e.clientX - boundingRect.left;
-      const relY = e.clientY - boundingRect.top;
+  //   function parallaxIt(e, parent, target, movement) {
+  //     const boundingRect = parent.getBoundingClientRect();
+  //     const relX = e.clientX - boundingRect.left;
+  //     const relY = e.clientY - boundingRect.top;
 
-      gsap.to(target, {
-        duration: 0.3,
-        x: ((relX - boundingRect.width / 2) / boundingRect.width) * movement,
-        y: ((relY - boundingRect.height / 2) / boundingRect.height) * movement,
-        ease: "power2.out",
-      });
-    }
+  //     gsap.to(target, {
+  //       duration: 0.3,
+  //       x: ((relX - boundingRect.width / 2) / boundingRect.width) * movement,
+  //       y: ((relY - boundingRect.height / 2) / boundingRect.height) * movement,
+  //       ease: "power2.out",
+  //     });
+  //   }
 
-    function parallaxCursor(e, parent, movement) {
-      const rect = parent.getBoundingClientRect();
-      const relX = e.clientX - rect.left;
-      const relY = e.clientY - rect.top;
+  //   function parallaxCursor(e, parent, movement) {
+  //     const rect = parent.getBoundingClientRect();
+  //     const relX = e.clientX - rect.left;
+  //     const relY = e.clientY - rect.top;
 
-      pos.x = rect.left + rect.width / 2 + (relX - rect.width / 2) / movement;
-      pos.y = rect.top + rect.height / 2 + (relY - rect.height / 2) / movement;
-      gsap.to(ball, { duration: 0.3, x: pos.x, y: pos.y });
-    }
+  //     pos.x = rect.left + rect.width / 2 + (relX - rect.width / 2) / movement;
+  //     pos.y = rect.top + rect.height / 2 + (relY - rect.height / 2) / movement;
+  //     gsap.to(ball, { duration: 0.3, x: pos.x, y: pos.y });
+  //   }
 
-    return () => {
-      document.removeEventListener("mousemove", (e) => {
-        mouse.x = e.clientX;
-        mouse.y = e.clientY;
-      });
-      gsap.ticker.remove(); // Removed the undefined function call
-    };
-  }, []); // Runs only once on mount
+  //   return () => {
+  //     document.removeEventListener("mousemove", (e) => {
+  //       mouse.x = e.clientX;
+  //       mouse.y = e.clientY;
+  //     });
+  //     gsap.ticker.remove(); // Removed the undefined function call
+  //   };
+  // }, []); // Runs only once on mount
 
   return (
     <html lang="en">
@@ -355,17 +355,14 @@ export default function RootLayout({ children }) {
         {/* Fancybox for image gallery */}
         <Script src="/assets/js/jquery.fancybox.min.js" strategy="lazyOnload" />
       </head>
-      <body id="body" className={`tt-magic-cursor ${inter.variable} ${kanit.variable} ${notoKufiArabic.variable}`}>
-        <div id="magic-cursor">
-          <div id="ball"></div>
-        </div>
+      <body id="body" className={`${inter.variable} ${kanit.variable} ${notoKufiArabic.variable}`}>
         <div className="scroll-progress-wrap">
           <span>SCROLL</span>
           <div className="progress-container">
             <div id="progressbar" className="progress-bar" />
           </div>
         </div>
-        <AnimateCursor />
+        {/* <AnimateCursor /> */}
         <LanguageProvider>
           <AuthProvider>
             {children}

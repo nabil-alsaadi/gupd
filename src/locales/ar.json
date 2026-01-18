@@ -4,6 +4,7 @@
         "about": "من نحن",
         "projects": "المشاريع",
         "blogs": "المدونة",
+        "faq": "الأسئلة الشائعة",
         "contact": "اتصل بنا",
         "getInTouch": "تواصل معنا",
         "getQuote": "طلب عرض",
@@ -52,7 +53,14 @@
             "content": "التزامنا بدعم العملاء",
             "pageTitle": "سياسة الدعم",
             "pagename": "سياسة الدعم"
-        }
+        },
+        "faq": {
+            "content": "هل لديك أي سؤال",
+            "pageTitle": "الأسئلة الشائعة",
+            "pagename": "الأسئلة الشائعة"
+        },
+        "newProjectComingSoon": "مشروع جديد قريباً",
+        "checkBackForUpdates": "تحقق قريباً للحصول على التحديثات!"
     },
     "project": {
         "viewAllProjectDetails": "عرض جميع تفاصيل المشروع",
@@ -111,6 +119,7 @@
             "propertyDevelopment": "تطوير العقارات",
             "investmentOpportunities": "فرص الاستثمار",
             "propertyManagement": "إدارة العقارات",
+            "rentalFacilityManagement": "الإيجار وإدارة المرافق",
             "consultation": "استشارة",
             "residentialProjects": "المشاريع السكنية",
             "commercialProjects": "المشاريع التجارية"

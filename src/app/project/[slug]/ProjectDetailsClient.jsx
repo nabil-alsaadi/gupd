@@ -1,6 +1,6 @@
 "use client"
 import Breadcrum from '@/components/common/Breadcrum'
-import Footer1 from '@/components/Footer/Footer1'
+ 
 import Home1FooterTop from '@/components/Footer/Home1FooterTop'
 import Header1 from '@/components/header/Header1'
 import Link from 'next/link'
@@ -10,6 +10,7 @@ import WhatsNearby from '@/components/common/WhatsNearby'
 import PropertyAttachment from '@/components/common/PropertyAttachment'
 import { useLanguage } from "@/providers/LanguageProvider"
 import { useTranslation } from "react-i18next"
+import Footer1 from '@/components/Footer/Footer1'
 
 const ProjectDetailsClient = ({ project, slug }) => {
   const [activeLayoutIndex, setActiveLayoutIndex] = useState(1);
