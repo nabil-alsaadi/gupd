@@ -165,7 +165,7 @@ const ChairmanMessage = ({ chairmanMessage }) => {
                       bottom: "20px",
                       left: "30px",
                       background: "linear-gradient(135deg, #B149ED 0%, #7C3AED 100%)",
-                      padding: "25px 35px",
+                      padding: "15px",
                       borderRadius: "12px",
                       boxShadow: "0 15px 40px rgba(177, 73, 237, 0.4)",
                       color: "white",
@@ -383,7 +383,6 @@ const ChairmanMessage = ({ chairmanMessage }) => {
                           }}
                         >
                           {stat.value || ""}
-                          {stat.value || ""}
                         </h3>
                         <p
                           style={{
@@ -393,7 +392,6 @@ const ChairmanMessage = ({ chairmanMessage }) => {
                             letterSpacing: "1px"
                           }}
                         >
-                          {isRTL && stat.labelArabic ? stat.labelArabic : (stat.label || "")}
                           {isRTL && stat.labelArabic ? stat.labelArabic : (stat.label || "")}
                         </p>
                       </div>

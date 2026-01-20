@@ -158,7 +158,7 @@ export default function LoginPage() {
                         {isSignUp ? 'Login' : 'Sign Up'}
                       </button>
                     </p>
-                    <p style={{ marginTop: '15px', fontSize: '14px', color: '#666' }}>
+                    {/* <p style={{ marginTop: '15px', fontSize: '14px', color: '#666' }}>
                       Admin?{' '}
                       <Link 
                         href="/admin/login" 
@@ -170,7 +170,7 @@ export default function LoginPage() {
                       >
                         Admin Login
                       </Link>
-                    </p>
+                    </p> */}
                   </div>
                 </form>
               </div>
