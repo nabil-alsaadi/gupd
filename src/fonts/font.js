@@ -32,7 +32,9 @@ export const calibriLight = localFont({
     ],
     variable: "--font-arabic",
     display: "swap",
-    fallback: ["Arial", "sans-serif"]
+    fallback: ["Arial", "sans-serif"],
+    preload: true,
+    adjustFontFallback: false
 })
 
 /**
@@ -50,5 +52,7 @@ export const bahnschrift = localFont({
     ],
     variable: "--font-english",
     display: "swap",
-    fallback: ["Arial", "sans-serif"]
+    fallback: ["Arial", "sans-serif"],
+    preload: true,
+    adjustFontFallback: false
 })

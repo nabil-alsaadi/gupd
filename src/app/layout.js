@@ -354,6 +354,23 @@ export default function RootLayout({ children }) {
         
         {/* Fancybox for image gallery */}
         <Script src="/assets/js/jquery.fancybox.min.js" strategy="lazyOnload" />
+        
+        {/* Font overrides - Load after all CSS to ensure Bahnschrift is used for English */}
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            /* Force English font (Bahnschrift) for ALL LTR elements - Use Next.js variable */
+            html:not([dir="rtl"]) *,
+            html[dir="ltr"] *,
+            html:not([dir="rtl"]) body *,
+            html[dir="ltr"] body * {
+              font-family: var(--font-english), "Bahnschrift", "Arial", sans-serif !important;
+            }
+            html:not([dir="rtl"]) body,
+            html[dir="ltr"] body {
+              font-family: var(--font-english), "Bahnschrift", "Arial", sans-serif !important;
+            }
+          `
+        }} />
       </head>
       <body id="body" className={`${inter.variable} ${kanit.variable} ${calibriLight.variable} ${bahnschrift.variable}`}>
         <div className="scroll-progress-wrap">
