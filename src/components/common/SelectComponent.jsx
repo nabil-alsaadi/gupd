@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 import useCustomSelect from "../../customHooks/useCustomSelect";
 import { useLanguage } from "@/providers/LanguageProvider";
 
@@ -18,12 +18,12 @@ const SelectComponent = ({ options, placeholder, open, customClass, onSelect }) 
 
   const dropdownRef = useRef(null);
 
-  const handleClickOutside = (event) => {
+  const handleClickOutside = useCallback((event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       // Click is outside the dropdown, close the dropdown
       closeDropdown();
     }
-  };
+  }, [closeDropdown]);
 
   useEffect(() => {
     if (isOpen) {
@@ -35,7 +35,7 @@ const SelectComponent = ({ options, placeholder, open, customClass, onSelect }) 
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, [isOpen]);
+  }, [isOpen, handleClickOutside]);
 
   const handleOptionSelect = (option) => {
     selectOption(option);

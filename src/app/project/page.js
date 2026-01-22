@@ -1,6 +1,7 @@
 import Breadcrum from '@/components/common/Breadcrum'
  
 import Home1FooterTop from '@/components/Footer/Home1FooterTop'
+import Footer1 from '@/components/Footer/Footer1'
 import Header1 from '@/components/header/Header1'
 import Link from 'next/link'
 import React from 'react'

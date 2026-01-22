@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { collection, query, orderBy, onSnapshot, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '@/config/firebase';
 import { 
@@ -32,7 +32,7 @@ export default function AdminMessagesPage() {
   const [updating, setUpdating] = useState(false);
   const [deleting, setDeleting] = useState(null);
   const [newMessageIds, setNewMessageIds] = useState(new Set());
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const isInitialLoadRef = useRef(true);
 
   // Real-time listener for messages
   useEffect(() => {
@@ -71,8 +71,8 @@ export default function AdminMessagesPage() {
           // Detect new messages (messages that weren't in the previous list)
           setMessages(prevMessages => {
             // Skip new message detection on initial load
-            if (isInitialLoad) {
-              setIsInitialLoad(false);
+            if (isInitialLoadRef.current) {
+              isInitialLoadRef.current = false;
               return messagesData;
             }
             
@@ -140,7 +140,7 @@ export default function AdminMessagesPage() {
         setSelectedMessage(null);
       }
     }
-  }, [messages, selectedMessage?.id]);
+  }, [messages, selectedMessage]);
 
   useEffect(() => {
     if (messages && messages.length > 0) {

@@ -6,8 +6,8 @@ import { useLanguage } from "@/providers/LanguageProvider"
 import { useTranslation } from 'react-i18next'
 
 const BlogSidebarClient = ({ blogs = [], postsPerPage = 9 }) => {
-    // Ensure we have blogs array
-    const blogPosts = Array.isArray(blogs) ? blogs : [];
+    // Ensure we have blogs array - wrap in useMemo to prevent dependency changes
+    const blogPosts = useMemo(() => Array.isArray(blogs) ? blogs : [], [blogs]);
     const { locale } = useLanguage()
     const { t } = useTranslation()
     const isRTL = locale === 'ar'

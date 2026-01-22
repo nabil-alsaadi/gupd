@@ -1,5 +1,5 @@
 "use client"
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState, useCallback } from 'react'
 import { useLanguage } from "@/providers/LanguageProvider"
 
 const fallbackLayouts = [
@@ -17,10 +17,10 @@ const SketchSection = ({ externalActiveIndex = null, onLayoutChange = null, layo
     const isRTL = locale === 'ar'
 
     // Helper function to get text based on language
-    const getText = (field, arabicField) => {
+    const getText = useCallback((field, arabicField) => {
         if (isRTL && arabicField) return arabicField;
         return field || '';
-    };
+    }, [isRTL]);
 
     const layoutItems = useMemo(() => {
         if (Array.isArray(layouts) && layouts.length > 0) {
@@ -30,7 +30,7 @@ const SketchSection = ({ externalActiveIndex = null, onLayoutChange = null, layo
             }));
         }
         return fallbackLayouts;
-    }, [layouts, isRTL]);
+    }, [layouts, getText]);
 
     const rawActiveIndex = externalActiveIndex !== null ? externalActiveIndex : internalActiveIndex;
     const activeIndex = layoutItems.length > 0

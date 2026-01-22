@@ -4,7 +4,7 @@ import Breadcrum from '@/components/common/Breadcrum'
 import Home1FooterTop from '@/components/Footer/Home1FooterTop'
 import Header1 from '@/components/header/Header1'
 import Link from 'next/link'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import SketchSection from '@/components/architecture-project-components/SketchSection'
 import WhatsNearby from '@/components/common/WhatsNearby'
 import PropertyAttachment from '@/components/common/PropertyAttachment'
@@ -60,11 +60,11 @@ const ProjectDetailsClient = ({ project, slug }) => {
   };
 
   // Navigation tabs configuration
-  const navigationTabs = [
+  const navigationTabs = useMemo(() => [
     { id: 'layouts', label: t('project.unitLayouts'), icon: '/assets/img/icons/icons8-building-50.png' },
     { id: 'location', label: t('project.locationMap'), icon: '/assets/img/icons/icons8-location-50.png' },
     { id: 'gallery', label: t('project.photoGallery'), icon: '/assets/img/icons/icons8-gallery-48.png' }
-  ];
+  ], [t]);
 
   // Smooth scroll to section
   const scrollToSection = (sectionId) => {

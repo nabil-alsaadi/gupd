@@ -19,14 +19,18 @@ export const useWow = () => {
         });
         instance.init();
         setWow(instance);
+        return instance;
       }
     };
 
-    initWow();
+    let wowInstance = null;
+    initWow().then(instance => {
+      wowInstance = instance;
+    });
 
     return () => {
-      if (wow) {
-        wow.stop();
+      if (wowInstance) {
+        wowInstance.stop();
       }
     };
   }, []); // Empty dependency array to run only once on mount
