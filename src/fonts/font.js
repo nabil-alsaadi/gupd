@@ -18,26 +18,37 @@ export const inter = Inter({
 })
 
 /**
- * Arabic Font Configuration
+ * Arabic Font Configuration - CalibriLight
  * 
- * To change the Arabic font:
- * 1. Place your new font file in /public/assets/fonts/
- * 2. Update the 'src' path below to point to your new font file
- * 3. Update the 'variable' name if you want a different CSS variable name
- * 4. Update the fallback font in globals.css (--font-arabic-fallback)
- * 
- * Example for a different font:
- * src: "../../public/assets/fonts/YourArabicFont.ttf",
+ * CalibriLight is used for Arabic text (RTL)
  */
-export const notoKufiArabic = localFont({
+export const calibriLight = localFont({
     src: [
         {
-            path: "../../public/assets/fonts/NotoKufiArabic-VariableFont_wght.ttf",
-            weight: "100 900",
+            path: "../../public/assets/fonts/CalibriLight.ttf",
+            weight: "300",
             style: "normal",
         }
     ],
     variable: "--font-arabic",
+    display: "swap",
+    fallback: ["Arial", "sans-serif"]
+})
+
+/**
+ * English Font Configuration - Bahnschrift
+ * 
+ * Bahnschrift is used for English text (LTR)
+ */
+export const bahnschrift = localFont({
+    src: [
+        {
+            path: "../../public/assets/fonts/Bahnschrift.ttf",
+            weight: "100 900",
+            style: "normal",
+        }
+    ],
+    variable: "--font-english",
     display: "swap",
     fallback: ["Arial", "sans-serif"]
 })

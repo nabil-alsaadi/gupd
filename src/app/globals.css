@@ -6,14 +6,16 @@
     "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
   
   /**
-   * Arabic Font Configuration
+   * Font Configuration
    * 
-   * To change the Arabic font fallback:
-   * 1. Update the font name in the --font-arabic-fallback variable below
-   * 2. The main font is loaded via Next.js in src/fonts/font.js
-   * 3. This fallback is used if the main font fails to load
+   * Arabic Font: CalibriLight (for RTL/Arabic text)
+   * English Font: Bahnschrift (for LTR/English text)
+   * 
+   * The main fonts are loaded via Next.js in src/fonts/font.js
+   * These fallbacks are used if the main fonts fail to load
    */
-  --font-arabic-fallback: "Noto Kufi Arabic", "Arial", sans-serif;
+  --font-arabic-fallback: "Calibri Light", "Arial", sans-serif;
+  --font-english-fallback: "Bahnschrift", "Arial", sans-serif;
 
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -103,6 +105,8 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  /* Default to English font (Bahnschrift) for LTR */
+  font-family: var(--font-english), var(--font-english-fallback), var(--font-kanit), var(--font-inter), sans-serif;
 }
 
 a {
@@ -140,19 +144,19 @@ a {
   color: #0a0a0a;
 }
 
-/* RTL Support for Arabic */
+/* RTL Support for Arabic - CalibriLight */
 [dir="rtl"] {
   direction: rtl;
   font-family: var(--font-arabic), var(--font-arabic-fallback) !important;
 }
 
-/* Apply Arabic font to all RTL elements */
+/* Apply Arabic font (CalibriLight) to all RTL elements */
 html[dir="rtl"] body,
 html[dir="rtl"] * {
   font-family: var(--font-arabic), var(--font-arabic-fallback) !important;
 }
 
-/* Override specific font families in RTL to use Arabic font */
+/* Override specific font families in RTL to use Arabic font (CalibriLight) */
 html[dir="rtl"] .section-title,
 html[dir="rtl"] h1,
 html[dir="rtl"] h2,
@@ -166,6 +170,28 @@ html[dir="rtl"] a,
 html[dir="rtl"] li,
 html[dir="rtl"] button {
   font-family: var(--font-arabic), var(--font-arabic-fallback) !important;
+}
+
+/* LTR Support for English - Bahnschrift */
+html:not([dir="rtl"]) body,
+html:not([dir="rtl"]) * {
+  font-family: var(--font-english), var(--font-english-fallback), var(--font-kanit), var(--font-inter), sans-serif;
+}
+
+/* Apply English font (Bahnschrift) to LTR elements */
+html:not([dir="rtl"]) .section-title,
+html:not([dir="rtl"]) h1,
+html:not([dir="rtl"]) h2,
+html:not([dir="rtl"]) h3,
+html:not([dir="rtl"]) h4,
+html:not([dir="rtl"]) h5,
+html:not([dir="rtl"]) h6,
+html:not([dir="rtl"]) p,
+html:not([dir="rtl"]) span,
+html:not([dir="rtl"]) a,
+html:not([dir="rtl"]) li,
+html:not([dir="rtl"]) button {
+  font-family: var(--font-english), var(--font-english-fallback), var(--font-kanit), var(--font-inter), sans-serif;
 }
 
 /* Slider Pagination RTL Fix */

@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useWow } from '@/customHooks/useWow';
 
 // import useMagneticHover from "@/customHooks/useMagneticHover";
-import { kanit, inter, notoKufiArabic } from "@/fonts/font";
+import { kanit, inter, calibriLight, bahnschrift } from "@/fonts/font";
 import { usePathname } from 'next/navigation'; // Import usePathname
 import "../../public/assets/css/bootstrap-icons.css";
 import "../../public/assets/css/boxicons.min.css";
@@ -355,7 +355,7 @@ export default function RootLayout({ children }) {
         {/* Fancybox for image gallery */}
         <Script src="/assets/js/jquery.fancybox.min.js" strategy="lazyOnload" />
       </head>
-      <body id="body" className={`${inter.variable} ${kanit.variable} ${notoKufiArabic.variable}`}>
+      <body id="body" className={`${inter.variable} ${kanit.variable} ${calibriLight.variable} ${bahnschrift.variable}`}>
         <div className="scroll-progress-wrap">
           <span>SCROLL</span>
           <div className="progress-container">
