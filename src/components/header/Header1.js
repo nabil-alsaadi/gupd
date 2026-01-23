@@ -81,41 +81,57 @@ const Header1 = ({ style = "", fluid }) => {
         const { scrollY } = window;
         dispatch({ type: "setScrollY", payload: scrollY });
         
-        // Add smooth transition class when becoming sticky
-        const header = headerRef.current;
-        const body = document.body;
+        // Better approach: use wrapper to maintain space, no body padding needed
+        const wrapper = headerRef.current;
+        const header = wrapper?.querySelector('header');
         
-        if (header) {
-            // Use a threshold to prevent flickering
+        if (wrapper && header) {
             const threshold = 20;
             const isSticky = scrollY > threshold;
+            const wasSticky = header.classList.contains('sticky');
             
-            if (isSticky) {
-                header.classList.add('sticky-transition');
-                body.classList.add('header-sticky');
-            } else {
-                header.classList.remove('sticky-transition');
-                body.classList.remove('header-sticky');
+            // Only update if state actually changed
+            if (isSticky !== wasSticky) {
+                if (isSticky) {
+                    // Get header height before it becomes sticky
+                    const headerHeight = header.offsetHeight;
+                    // Set wrapper height to maintain space
+                    wrapper.style.height = `${headerHeight}px`;
+                    // Then make header sticky
+                    header.classList.add('sticky');
+                } else {
+                    // Remove sticky first
+                    header.classList.remove('sticky');
+                    // Then remove wrapper height
+                    wrapper.style.height = 'auto';
+                }
             }
         }
     };
 
-    // Debounce the scroll event to reduce the frequency of dispatches
-    const debounce = (func, delay) => {
-        let timeout;
-        return (...args) => {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => func.apply(this, args), delay);
-        };
-    };
-
     useEffect(() => {
-        const debouncedHandleScroll = debounce(handleScroll, 100); // Adjust delay as needed
-        window.addEventListener("scroll", debouncedHandleScroll);
+        // Use throttling with requestAnimationFrame for smooth scroll handling
+        let ticking = false;
+        const onScroll = () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    handleScroll();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        };
+        
+        window.addEventListener("scroll", onScroll, { passive: true });
+        // Initial call to set initial state
+        handleScroll();
+        
         return () => {
-            window.removeEventListener("scroll", debouncedHandleScroll);
-            // Cleanup: remove body class when component unmounts
-            document.body.classList.remove('header-sticky');
+            window.removeEventListener("scroll", onScroll);
+            // Cleanup: reset wrapper height
+            if (headerRef.current) {
+                headerRef.current.style.height = '';
+            }
         };
     }, []);
     const toggleMenu = (menu) => {
@@ -174,11 +190,11 @@ const Header1 = ({ style = "", fluid }) => {
                     <p>{t('navigation.sidebar.copyright')} {new Date().getFullYear()} <Link href="/">GUPD</Link> | {t('navigation.sidebar.poweredBy')} <a href="https://www.nabilalsaadi.com/">Nabil Alsaadi</a></p>
                 </div>
             </div>
-            <header 
-                ref={headerRef}
-                className={`header-area style-1 ${style} ${state.scrollY > 20 ? "sticky" : ""}`}
-            >
-                <div className={`${fluid} d-flex flex-nowrap align-items-center justify-content-between`}>
+            <div className="header-wrapper" ref={headerRef}>
+                <header 
+                    className={`header-area style-1 ${style} ${state.scrollY > 20 ? "sticky" : ""}`}
+                >
+                    <div className={`${fluid} d-flex flex-nowrap align-items-center justify-content-between`}>
                     <div className="header-logo">
                         <Link href={"/"}>
                             <img 
@@ -407,6 +423,7 @@ const Header1 = ({ style = "", fluid }) => {
                     </div>
                 </div>
             </header>
+            </div>
         </>
 
     )

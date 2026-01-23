@@ -1844,6 +1844,16 @@ header.style-1 {
     padding: 0;
   }
 }
+/* Header wrapper maintains space when header becomes sticky - prevents jump */
+.header-wrapper {
+  position: relative;
+  transition: height 0.15s ease-out;
+}
+
+header.style-1 {
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
 header.style-1.sticky {
   position: fixed;
   top: 0;
@@ -1854,20 +1864,8 @@ header.style-1.sticky {
   box-sizing: border-box;
   background-color: var(--primary-light);
   box-shadow: 5px 3px 40px rgba(0, 72, 88, 0.1);
-  /* z-index: 9999; */
-  /* transition: all 0.3s ease-in-out;
-  transform: translateY(0); */
-}
-
-/* Smooth transition for sticky header */
-/* header.style-1.sticky-transition {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  transform: translateY(0);
-} */
-
-/* Prevent layout shift by adding padding to body when header becomes sticky */
-body.header-sticky {
-  padding-top: 80px;
+  z-index: 9999;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
 }
 @media (min-width: 992px) {
   header.style-1.sticky .main-menu ul > li > a,
@@ -7778,7 +7776,7 @@ html[dir="rtl"] .home1-team-section .founder-card .founder-content {
   }
 }
 .home1-footer-top-banner-section .banner-content .button-area {
-  padding-top: 65px;
+  padding-top: 30px;
   display: flex;
   align-items: center;
   gap: 55px;
@@ -7870,7 +7868,7 @@ html[dir="rtl"] .home1-team-section .founder-card .founder-content {
   }
 }
 .footer-section .footer-wrapper .footer-logo-and-contact-area {
-  padding: 25px 110px;
+  padding: 25px;
   display: flex;
   justify-content: space-between;
   align-items: end;

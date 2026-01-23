@@ -7,14 +7,14 @@ const Home1FooterTop = () => {
     const { t } = useTranslation();
     return (
         <>
-            <div className="home1-footer-top-banner-section">
+            <div className="home1-footer-top-banner-section" style={{ padding: '50px' }}>
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-7">
                             <div className="banner-content">
                                 <div className="section-title white wow animate fadeInDown" data-wow-delay="200ms" data-wow-duration="1500ms">
                                     <span>{t('footerTop.eyebrow')}</span>
-                                    <h2>{t('footerTop.headline')}</h2>
+                                    <h2 style={{ fontSize: '30px' }}>{t('footerTop.headline')}</h2>
                                 </div>
                                 <div className="button-area wow animate fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
                                     <Link href="/contact" className="primary-btn2 white-bg">
