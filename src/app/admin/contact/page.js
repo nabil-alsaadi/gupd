@@ -393,7 +393,7 @@ export default function AdminContactPage() {
                     name="email.display"
                     value={formData.email.display}
                     onChange={handleInputChange}
-                    placeholder="info@gupd.ae"
+                    placeholder="info@jinan.ae"
                     required
                   />
                 </div>
@@ -405,7 +405,7 @@ export default function AdminContactPage() {
                     name="email.link"
                     value={formData.email.link}
                     onChange={handleInputChange}
-                    placeholder="mailto:info@gupd.ae"
+                    placeholder="mailto:info@jinan.ae"
                     required
                   />
                 </div>
@@ -489,7 +489,7 @@ export default function AdminContactPage() {
                   name="socialMedia.linkedin.url"
                   value={formData.socialMedia?.linkedin?.url || ""}
                   onChange={handleInputChange}
-                  placeholder="https://www.linkedin.com/company/gupd"
+                  placeholder="https://www.linkedin.com/company/jinan"
                 />
               </div>
 
@@ -501,7 +501,7 @@ export default function AdminContactPage() {
                   name="socialMedia.facebook.url"
                   value={formData.socialMedia?.facebook?.url || ""}
                   onChange={handleInputChange}
-                  placeholder="https://www.facebook.com/gupd.ae"
+                  placeholder="https://www.facebook.com/jinan.ae"
                 />
               </div>
 
@@ -513,7 +513,7 @@ export default function AdminContactPage() {
                   name="socialMedia.twitter.url"
                   value={formData.socialMedia?.twitter?.url || ""}
                   onChange={handleInputChange}
-                  placeholder="https://twitter.com/gupd_ae"
+                  placeholder="https://twitter.com/jinan_ae"
                 />
               </div>
 
@@ -525,7 +525,7 @@ export default function AdminContactPage() {
                   name="socialMedia.instagram.url"
                   value={formData.socialMedia?.instagram?.url || ""}
                   onChange={handleInputChange}
-                  placeholder="https://www.instagram.com/gupd.ae"
+                  placeholder="https://www.instagram.com/jinan.ae"
                 />
               </div>
 
@@ -537,7 +537,7 @@ export default function AdminContactPage() {
                   name="socialMedia.youtube.url"
                   value={formData.socialMedia?.youtube?.url || ""}
                   onChange={handleInputChange}
-                  placeholder="https://www.youtube.com/@gupd"
+                  placeholder="https://www.youtube.com/@jinan"
                 />
               </div>
             </div>

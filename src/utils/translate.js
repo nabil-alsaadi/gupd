@@ -62,3 +62,40 @@ export const translateMultipleToArabic = async (texts) => {
   return translations;
 };
 
+const SEGMENT_DELAY_MS = 100; // Small delay between segments to reduce rate-limit risk
+
+/**
+ * Translate HTML content to Arabic while preserving all tags and structure.
+ * Only text nodes are translated; tags and attributes are left unchanged.
+ *
+ * @param {string} html - HTML string (e.g. from rich text editor)
+ * @returns {Promise<string>} Same HTML with text content translated to Arabic
+ */
+export const translateHtmlToArabic = async (html) => {
+  if (!html || typeof html !== 'string' || html.trim() === '') {
+    return '';
+  }
+
+  // Split by tags: keeps delimiters, so we get [text, tag, text, tag, ...]
+  const parts = html.split(/(<[^>]+>)/g);
+  const translated = [];
+
+  for (let i = 0; i < parts.length; i++) {
+    const part = parts[i];
+    if (part.startsWith('<')) {
+      translated.push(part);
+      continue;
+    }
+    if (!part.trim()) {
+      translated.push(part);
+      continue;
+    }
+    translated.push(await translateToArabic(part));
+    if (i < parts.length - 1 && SEGMENT_DELAY_MS > 0) {
+      await new Promise((r) => setTimeout(r, SEGMENT_DELAY_MS));
+    }
+  }
+
+  return translated.join('');
+}
+

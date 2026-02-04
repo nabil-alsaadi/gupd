@@ -60,7 +60,7 @@ const Home1About = ({ sectionGap, aboutData }) => {
           </div>
           <div className="col-lg-7 d-lg-block d-none">
             <div className="about-img magnetic-item">
-              {about.image && <img src={about.image} alt="About GUPD" />}
+              {about.image && <img src={about.image} alt="About Jinan" />}
             </div>
           </div>
         </div>

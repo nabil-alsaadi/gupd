@@ -1,6 +1,6 @@
 "use client";
 import { Languages } from 'lucide-react';
-import { translateToArabic } from '@/utils/translate';
+import { translateToArabic, translateHtmlToArabic } from '@/utils/translate';
 import { useState } from 'react';
 
 const MAX_LENGTH = 30000;
@@ -10,7 +10,9 @@ export default function TranslateButton({
   onTranslate, 
   disabled = false, 
   englishText = '',
-  size = 'small' 
+  size = 'small',
+  /** When true, treats englishText as HTML and translates only text nodes, preserving tags */
+  preserveHtml = false
 }) {
   const [translating, setTranslating] = useState(false);
   const textLength = englishText ? englishText.length : 0;
@@ -32,18 +34,20 @@ export default function TranslateButton({
       return;
     }
 
-    // Warn user if text is long (will be chunked)
+    // Warn user if text is long (will be chunked or segmented)
     if (showWarning) {
-      const proceed = confirm(
-        `This text is ${textLength.toLocaleString()} characters long and will be translated in chunks. ` +
-        `This may take a moment. Continue?`
-      );
+      const message = preserveHtml
+        ? `This content is ${textLength.toLocaleString()} characters. Each text segment will be translated while keeping the same HTML structure. This may take a moment. Continue?`
+        : `This text is ${textLength.toLocaleString()} characters long and will be translated in chunks. This may take a moment. Continue?`;
+      const proceed = confirm(message);
       if (!proceed) return;
     }
 
     setTranslating(true);
     try {
-      const translated = await translateToArabic(englishText);
+      const translated = preserveHtml
+        ? await translateHtmlToArabic(englishText)
+        : await translateToArabic(englishText);
       onTranslate(translated);
     } catch (error) {
       alert(error.message || 'Translation failed. Please translate manually.');
@@ -71,9 +75,13 @@ export default function TranslateButton({
   const tooltip = isTooLong 
     ? `Text too long (${textLength.toLocaleString()}/${MAX_LENGTH.toLocaleString()} chars)`
     : showWarning
-    ? `Long text (${textLength.toLocaleString()} chars) - will be chunked`
+    ? preserveHtml
+      ? `Long content (${textLength.toLocaleString()} chars) - segments translated, HTML kept`
+      : `Long text (${textLength.toLocaleString()} chars) - will be chunked`
     : textLength > 0
-    ? `Translate (${textLength.toLocaleString()} chars)`
+    ? preserveHtml
+      ? `Translate to Arabic (keep HTML)`
+      : `Translate (${textLength.toLocaleString()} chars)`
     : 'Translate from English';
 
   return (

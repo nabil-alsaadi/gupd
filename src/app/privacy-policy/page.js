@@ -3,9 +3,10 @@ import Footer1 from '@/components/Footer/Footer1'
 import Home1FooterTop from '@/components/Footer/Home1FooterTop'
 import Header1 from '@/components/header/Header1'
 import PrivacyPolicyClient from './PrivacyPolicyClient'
-import privacyData from '@/data/privacy-policy.json'
+import { getPolicy } from '@/lib/getPolicy'
 
 const page = async () => {
+    const privacyData = await getPolicy('privacy')
     return (
         <>
             <Header1 fluid={"container-fluid"}/>

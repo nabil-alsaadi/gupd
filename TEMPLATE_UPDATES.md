@@ -1,12 +1,12 @@
 # Template Updates Documentation
 
 ## Overview
-This document tracks all modifications made to the GUPd template to customize it for GUPD's Al Faisal Tower project in Sharjah, focusing on tower development and apartment sales.
+This document tracks all modifications made to the template to customize it for Jinan's Al Faisal Tower project in Sharjah, focusing on tower development and apartment sales.
 
 ## Changes Made
 
 ### Company Focus: Al Faisal Tower Project
-Based on the company's goals and the Home1About component content, the banner has been specifically tailored for GUPD's flagship project - Al Faisal Tower in Sharjah. The content emphasizes:
+Based on the company's goals and the Home1About component content, the banner has been specifically tailored for Jinan's flagship project - Al Faisal Tower in Sharjah. The content emphasizes:
 - **Tower Development**: Focus on high-rise residential buildings
 - **Apartment Sales**: Direct marketing for apartment units
 - **Company Experience**: Highlighting 18+ years of trust since 2005
@@ -33,7 +33,7 @@ Based on the company's goals and the Home1About component content, the banner ha
 #### Created new data file with 4 slides:
 1. **Slide 1**: "Al Faisal Tower - Sharjah's New Landmark" - Focus on flagship tower project and apartment sales
 2. **Slide 2**: "Invest in Sharjah's Skyline" - Focus on high-rise living and investment opportunities
-3. **Slide 3**: "Building Trust Since 2005" - Focus on company experience and GUPD's track record
+3. **Slide 3**: "Building Trust Since 2005" - Focus on company experience and Jinan's track record
 4. **Slide 4**: "Modern Tower Living Redefined" - Focus on premium amenities and strategic location
 
 #### Data Structure:
@@ -108,7 +108,7 @@ Based on the company's goals and the Home1About component content, the banner ha
 - **Added dynamic project data**: Replaced static project content with dynamic data from JSON
 - **Enhanced project information**: Added project descriptions, stats, and detailed information
 - **Improved project presentation**: Added project statistics (floors, units, status)
-- **Updated section title**: Changed to focus on GUPD's tower projects
+- **Updated section title**: Changed to focus on Jinan's tower projects
 
 #### New Features:
 - Dynamic project titles, descriptions, and client information

@@ -1,7 +1,7 @@
 {
   "title": {
     "span": "Frequently Asked Questions",
-    "heading": "Got Questions About GUPD?",
+    "heading": "Got Questions About Jinan?",
     "description": "We understand you have questions about our real estate and construction services. Here are answers to the most common questions we receive."
   },
   "button": {
@@ -11,20 +11,20 @@
   "faqs": [
     {
       "id": "faq-1",
-      "question": "How can I buy an apartment through GUPD?",
-      "answer": "GUPD offers a comprehensive apartment buying process. You can browse our available properties online, schedule a viewing, and our experienced team will guide you through the entire purchase process including financing options, legal documentation, and property handover.",
+      "question": "How can I buy an apartment through Jinan?",
+      "answer": "Jinan offers a comprehensive apartment buying process. You can browse our available properties online, schedule a viewing, and our experienced team will guide you through the entire purchase process including financing options, legal documentation, and property handover.",
       "delay": "200ms"
     },
     {
       "id": "faq-2", 
-      "question": "What types of properties does GUPD offer?",
-      "answer": "GUPD specializes in residential and commercial properties including luxury apartments, villas, townhouses, office buildings, and retail spaces. We also offer custom construction services for unique property requirements.",
+      "question": "What types of properties does Jinan offer?",
+      "answer": "Jinan specializes in residential and commercial properties including luxury apartments, villas, townhouses, office buildings, and retail spaces. We also offer custom construction services for unique property requirements.",
       "delay": "400ms"
     },
     {
       "id": "faq-3",
       "question": "Do you provide financing options for property purchases?",
-      "answer": "Yes, GUPD partners with leading banks and financial institutions to provide competitive financing options. Our team can help you explore various mortgage plans, down payment options, and payment schedules that suit your budget.",
+      "answer": "Yes, Jinan partners with leading banks and financial institutions to provide competitive financing options. Our team can help you explore various mortgage plans, down payment options, and payment schedules that suit your budget.",
       "delay": "600ms"
     },
     {
@@ -36,19 +36,19 @@
     {
       "id": "faq-5",
       "question": "Do you offer property management services?",
-      "answer": "Yes, GUPD provides comprehensive property management services including maintenance, security, tenant relations, rent collection, and property upkeep. Our management team ensures your investment is well-maintained and profitable.",
+      "answer": "Yes, Jinan provides comprehensive property management services including maintenance, security, tenant relations, rent collection, and property upkeep. Our management team ensures your investment is well-maintained and profitable.",
       "delay": "800ms"
     },
     {
       "id": "faq-6",
       "question": "What warranties do you provide on new constructions?",
-      "answer": "GUPD offers comprehensive warranties on all new constructions including 10-year structural warranty, 2-year mechanical systems warranty, and 1-year finishing warranty. We also provide post-handover support and maintenance services.",
+      "answer": "Jinan offers comprehensive warranties on all new constructions including 10-year structural warranty, 2-year mechanical systems warranty, and 1-year finishing warranty. We also provide post-handover support and maintenance services.",
       "delay": "800ms"
     },
     {
       "id": "faq-7",
       "question": "Can I customize my apartment or villa design?",
-      "answer": "Absolutely! GUPD offers extensive customization options for interior layouts, finishes, fixtures, and design elements. Our design team works closely with you to create your dream home within your budget and timeline.",
+      "answer": "Absolutely! Jinan offers extensive customization options for interior layouts, finishes, fixtures, and design elements. Our design team works closely with you to create your dream home within your budget and timeline.",
       "delay": "800ms"
     },
     {

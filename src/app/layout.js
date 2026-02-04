@@ -326,23 +326,23 @@ export default function RootLayout({ children }) {
           rel="apple-touch-icon"
           href="/assets/img/fav-icon.svg?v=2"
         />
-        <meta name="description" content="Gulf Universal Property Development (GUPD) - A UAE-based real estate developer committed to building projects that combine quality, innovation, and long-term value. Shaping communities and delivering excellence in Sharjah and beyond." />
-        <meta name="keywords" content="GUPD, Gulf Universal Property Development, real estate developer, UAE, Sharjah, property development, residential projects, Al Faisal Tower, real estate investment" />
+        <meta name="description" content="Jinan - A UAE-based real estate developer committed to building projects that combine quality, innovation, and long-term value. Shaping communities and delivering excellence in Sharjah and beyond." />
+        <meta name="keywords" content="Jinan, real estate developer, UAE, Sharjah, property development, residential projects, Al Faisal Tower, real estate investment" />
         <meta name="author" content="Nabil Alsaadi Solutions" />
         <meta name="developer" content="Nabil Alsaadi Solutions" />
         <meta name="developer-url" content="https://nabilalsaadi.com" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="GUPD - Gulf Universal Property Development | Real Estate Developer in UAE" />
-        <meta property="og:description" content="Gulf Universal Property Development (GUPD) - Building trust since 2005. Shaping communities, delivering excellence in real estate development across Sharjah and the UAE." />
+        <meta property="og:title" content="Jinan | Real Estate Developer in UAE" />
+        <meta property="og:description" content="Jinan - Building trust since 2005. Shaping communities, delivering excellence in real estate development across Sharjah and the UAE." />
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="GUPD - Gulf Universal Property Development" />
-        <meta name="twitter:description" content="Gulf Universal Property Development (GUPD) - Building trust since 2005. Shaping communities, delivering excellence." />
+        <meta name="twitter:title" content="Jinan" />
+        <meta name="twitter:description" content="Jinan - Building trust since 2005. Shaping communities, delivering excellence." />
         
-        <title>GUPD - Gulf Universal Property Development | Real Estate Developer in UAE</title>
+        <title>Jinan | Real Estate Developer in UAE</title>
 
         {/* jQuery */}
         <Script src="/assets/js/jquery-3.7.1.min.js" strategy="beforeInteractive" />

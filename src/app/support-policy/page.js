@@ -3,9 +3,10 @@ import Footer1 from '@/components/Footer/Footer1'
 import Home1FooterTop from '@/components/Footer/Home1FooterTop'
 import Header1 from '@/components/header/Header1'
 import SupportPolicyClient from './SupportPolicyClient'
-import supportData from '@/data/support-policy.json'
+import { getPolicy } from '@/lib/getPolicy'
 
 const page = async () => {
+    const supportData = await getPolicy('support')
     return (
         <>
             <Header1 fluid={"container-fluid"}/>

@@ -23,7 +23,7 @@ const Footer1 = () => {
                             flexWrap: 'wrap'
                         }}>
                             <Link href="/" className="footer-logo" style={{ flexShrink: 0 }}>
-                                <img src="/assets/img/footer-logo.svg" alt="" style={{ maxWidth: '100px', height: 'auto' }} />
+                                <img src="/assets/img/footer-logo.svg" alt="" style={{ maxWidth: '250px', height: 'auto' }} />
                             </Link>
                             {/* <p style={{ 
                                 maxWidth: '400px',
@@ -46,7 +46,7 @@ const Footer1 = () => {
                     <div className="container">
                         <div className="footer-bottom">
                             <div className="copyright-area">
-                                <p>{t('footer.copyright')} {new Date().getFullYear()} <Link href="/">GUPD</Link> | {t('footer.poweredBy')} <a href="https://www.nabilalsaadi.com/">Nabil Alsaadi</a></p>
+                                <p>{t('footer.copyright')} {new Date().getFullYear()} <Link href="/">Jinan</Link> | {t('footer.poweredBy')} <a href="https://www.nabilalsaadi.com/">Nabil Alsaadi</a></p>
                             </div>
                             <div className="footer-bottom-right">
                                 <ul>

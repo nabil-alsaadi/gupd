@@ -14,7 +14,7 @@ import TranslateButton from '@/components/admin/TranslateButton';
 const fallbackFAQ = {
   title: {
     span: faqData.title?.span || "Frequently Asked Questions",
-    heading: faqData.title?.heading || "Got Questions About GUPD?",
+    heading: faqData.title?.heading || "Got Questions About Jinan?",
     description: faqData.title?.description || "We understand you have questions about our real estate and construction services. Here are answers to the most common questions we receive."
   },
   button: {
@@ -252,7 +252,7 @@ export default function AdminFAQPage() {
                   name="title.heading"
                   value={formData.title.heading}
                   onChange={handleInputChange}
-                  placeholder="e.g., Got Questions About GUPD?"
+                  placeholder="e.g., Got Questions About Jinan?"
                   required
                 />
               </div>
@@ -273,7 +273,7 @@ export default function AdminFAQPage() {
                   name="title.headingArabic"
                   value={formData.title.headingArabic}
                   onChange={handleInputChange}
-                  placeholder="مثل: لديك أسئلة حول GUPD؟"
+                  placeholder="مثل: لديك أسئلة حول جينان؟"
                   required
                 />
               </div>
@@ -404,7 +404,7 @@ export default function AdminFAQPage() {
                       id={`faq-${index}-question`}
                       value={faq.question}
                       onChange={(e) => handleFAQChange(index, 'question', e.target.value)}
-                      placeholder="e.g., How can I buy an apartment through GUPD?"
+                      placeholder="e.g., How can I buy an apartment through Jinan?"
                       required
                     />
                   </div>
@@ -421,7 +421,7 @@ export default function AdminFAQPage() {
                       id={`faq-${index}-questionArabic`}
                       value={faq.questionArabic}
                       onChange={(e) => handleFAQChange(index, 'questionArabic', e.target.value)}
-                      placeholder="مثل: كيف يمكنني شراء شقة من خلال GUPD؟"
+                      placeholder="مثل: كيف يمكنني شراء شقة من خلال جينان؟"
                       required
                     />
                   </div>

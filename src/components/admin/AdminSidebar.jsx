@@ -18,7 +18,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Info,
-  MessageSquare
+  MessageSquare,
+  Shield
 } from 'lucide-react';
 
 const AdminSidebar = () => {
@@ -74,6 +75,12 @@ const AdminSidebar = () => {
           label: 'FAQs',
           icon: HelpCircle,
           link: '/admin/faq'
+        },
+        {
+          id: 'policies',
+          label: 'Policies',
+          icon: Shield,
+          link: '/admin/policies'
         }
       ]
     },
@@ -119,7 +126,7 @@ const AdminSidebar = () => {
   return (
     <aside className={`admin-sidebar ${isOpen ? 'open' : 'closed'}`}>
       <div className="admin-sidebar-header">
-        <h2 className="admin-sidebar-logo">GUPD Admin</h2>
+        <h2 className="admin-sidebar-logo">Jinan Admin</h2>
         <button 
           className="admin-sidebar-toggle"
           onClick={() => setIsOpen(!isOpen)}

@@ -969,7 +969,7 @@ export default function AdminProjectsPage() {
                       value={formData.client}
                       onChange={handleInputChange}
                       required
-                      placeholder="e.g., GUPD Development"
+                      placeholder="e.g., Jinan Development"
                     />
                   </div>
 

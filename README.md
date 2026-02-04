@@ -1,4 +1,4 @@
-# GUPD - Content Management System
+# Jinan - Content Management System
 
 A Next.js-based content management system with Firebase integration for managing website content including banners, team members, blog posts, and more.
 
@@ -26,7 +26,7 @@ Before you begin, ensure you have the following installed:
 
 ```bash
 git clone <your-repository-url>
-cd gupd
+cd jinan
 ```
 
 ### 2. Install Dependencies
@@ -238,7 +238,7 @@ The setup page is already protected and will show a disabled state when an admin
 ## Project Structure
 
 ```
-gupd/
+jinan/
 ├── public/
 │   └── assets/          # Static assets (images, CSS, JS)
 ├── src/

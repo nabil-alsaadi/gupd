@@ -1,7 +1,7 @@
 {
   "company": {
-    "name": "Gulf Universal Property Development",
-    "shortName": "GUPD",
+    "name": "Jinan",
+    "shortName": "Jinan",
     "tagline": "Building Trust Since 2005",
     "description": "Shaping Communities, Delivering Excellence.",
     "logo": {
@@ -21,8 +21,8 @@
       "link": "https://wa.me/97161234567"
     },
     "email": {
-      "display": "info@gupd.ae",
-      "link": "mailto:info@gupd.ae"
+      "display": "info@jinan.ae",
+      "link": "mailto:info@jinan.ae"
     },
     "address": {
       "primary": "Sharjah, UAE",
@@ -33,23 +33,23 @@
   },
   "socialMedia": {
     "linkedin": {
-      "url": "https://www.linkedin.com/company/gupd",
+      "url": "https://www.linkedin.com/company/jinan",
       "icon": "bi bi-linkedin"
     },
     "facebook": {
-      "url": "https://www.facebook.com/gupd.ae",
+      "url": "https://www.facebook.com/jinan.ae",
       "icon": "bi bi-facebook"
     },
     "twitter": {
-      "url": "https://twitter.com/gupd_ae",
+      "url": "https://twitter.com/jinan_ae",
       "icon": "bi bi-twitter-x"
     },
     "instagram": {
-      "url": "https://www.instagram.com/gupd.ae",
+      "url": "https://www.instagram.com/jinan.ae",
       "icon": "bi bi-instagram"
     },
     "youtube": {
-      "url": "https://www.youtube.com/@gupd",
+      "url": "https://www.youtube.com/@jinan",
       "icon": "bi bi-youtube"
     }
   },
@@ -60,12 +60,12 @@
     },
     "sidebar": {
       "title": "Get In Touch With Us",
-      "subtitle": "Connect With GUPD",
+      "subtitle": "Connect With Jinan",
       "description": "Ready to take the first step towards unlocking opportunity, realizing goals, and embracing innovation in real estate development?"
     }
   },
   "footer": {
-    "copyright": "Copyright 2025 GUPD | Powered By Nabil Alsaadi Solutions",
-    "description": "Welcome to GUPD, where innovation meets our passion in real estate development that started with a dream to build exceptional communities."
+    "copyright": "Copyright 2025 Jinan | Powered By Nabil Alsaadi Solutions",
+    "description": "Welcome to Jinan, where innovation meets our passion in real estate development that started with a dream to build exceptional communities."
   }
 }

@@ -757,6 +757,60 @@ html[dir="rtl"] .admin-card {
   border-top: 1px solid #e5e7eb;
 }
 
+/* Policies page tabs */
+.admin-policies-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.admin-policies-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.admin-policies-tab:hover {
+  border-color: #cbd5e1;
+  color: #1e293b;
+  background: #f8fafc;
+}
+.admin-policies-tab.active {
+  border-color: #3b82f6;
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+.admin-policy-editor-wrapper .quill {
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+.admin-policy-editor-wrapper .ql-container {
+  min-height: 280px;
+  font-size: 16px;
+}
+.admin-policy-editor-wrapper .ql-editor {
+  min-height: 280px;
+}
+.admin-policy-editor-wrapper .ql-toolbar {
+  border: none;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f8fafc;
+  border-radius: 8px 8px 0 0;
+}
+.admin-policy-editor-wrapper .ql-container {
+  border: none;
+  border-radius: 0 0 8px 8px;
+}
+
 /* Image Upload */
 .admin-image-upload {
   position: relative;

@@ -1,6 +1,6 @@
 # How to Create Your First Admin Account
 
-This guide explains how to create your first admin account for the GUPD admin panel.
+This guide explains how to create your first admin account for the Jinan admin panel.
 
 ## Quick Start (3 Steps)
 

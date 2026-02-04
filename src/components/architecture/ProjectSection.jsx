@@ -26,7 +26,7 @@ const ProjectSection = ({ projectData }) => {
   }
 
   return (
-    <div className="home3-project-section mb-120 ">
+    <div className="home3-project-section ">
     <div className="container">
       <div className="row justify-content-center mb-70 wow animate fadeInDown" data-wow-delay="200ms" data-wow-duration="1500ms">
         <div className="col-xxl-7 col-xl-8 col-lg-9">
@@ -45,7 +45,7 @@ const ProjectSection = ({ projectData }) => {
           <div className="col-md-6 wow animate fadeInLeft" data-wow-delay="200ms" data-wow-duration="1500ms">
             <div className="project-content-wrap">
               <div className="project-content">
-                <span>Client: {isRTL && project.clientArabic ? project.clientArabic : project.client}</span>
+                {/* <span>Client: {isRTL && project.clientArabic ? project.clientArabic : project.client}</span> */}
                 <h2><Link href={`/project/${project.slug}`}>{isRTL && sections[0].titleArabic ? sections[0].titleArabic : sections[0].title}</Link></h2>
                 <h3 className="project-subtitle">{isRTL && sections[0].subtitleArabic ? sections[0].subtitleArabic : sections[0].subtitle}</h3>
                 <p className="project-description">{isRTL && sections[0].descriptionArabic ? sections[0].descriptionArabic : sections[0].description}</p>
@@ -91,7 +91,7 @@ const ProjectSection = ({ projectData }) => {
           <div className="col-md-6 order-md-2 order-1 wow animate fadeInLeft" data-wow-delay="200ms" data-wow-duration="1500ms">
             <div className="project-content-wrap">
               <div className="project-content">
-                <span>Client: {isRTL && project.clientArabic ? project.clientArabic : project.client}</span>
+                {/* <span>Client: {isRTL && project.clientArabic ? project.clientArabic : project.client}</span> */}
                 <h2><Link href={`/project/${project.slug}`}>{isRTL && sections[1].titleArabic ? sections[1].titleArabic : sections[1].title}</Link></h2>
                 <h3 className="project-subtitle">{isRTL && sections[1].subtitleArabic ? sections[1].subtitleArabic : sections[1].subtitle}</h3>
                 <p className="project-description">{isRTL && sections[1].descriptionArabic ? sections[1].descriptionArabic : sections[1].description}</p>
@@ -127,7 +127,7 @@ const ProjectSection = ({ projectData }) => {
           <div className="col-md-6 wow animate fadeInLeft" data-wow-delay="200ms" data-wow-duration="1500ms">
             <div className="project-content-wrap">
               <div className="project-content">
-                <span>Client: {isRTL && project.clientArabic ? project.clientArabic : project.client}</span>
+                {/* <span>Client: {isRTL && project.clientArabic ? project.clientArabic : project.client}</span> */}
                 <h2><Link href={`/project/${project.slug}`}>{isRTL && sections[2].titleArabic ? sections[2].titleArabic : sections[2].title}</Link></h2>
                 <h3 className="project-subtitle">{isRTL && sections[2].subtitleArabic ? sections[2].subtitleArabic : sections[2].subtitle}</h3>
                 <p className="project-description">{isRTL && sections[2].descriptionArabic ? sections[2].descriptionArabic : sections[2].description}</p>

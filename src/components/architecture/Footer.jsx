@@ -134,7 +134,7 @@ const Footer = () => {
                             </li>
                             <li className="single-address">
                               <span>UAE</span>
-                              <a href="#">Gulf Universal Property Development</a>
+                              <a href="#">Jinan</a>
                             </li>
                           </ul>
                         </div>
