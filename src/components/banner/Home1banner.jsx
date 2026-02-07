@@ -21,12 +21,10 @@ const Home1Banner = ({ banners }) => {
     const videoRefs = useRef({});
     
     // Only use banners from database - no fallback to default data
-    const slides = Array.isArray(banners) && banners.length > 0 ? banners : [];
-    
-    // Don't render if no banners from database
-    if (slides.length === 0) {
-        return null;
-    }
+    // Use useMemo to prevent dependency changes on every render
+    const slides = useMemo(() => {
+        return Array.isArray(banners) && banners.length > 0 ? banners : [];
+    }, [banners]);
 
     // Check if mobile on mount and resize
     useEffect(() => {
@@ -54,20 +52,22 @@ const Home1Banner = ({ banners }) => {
     }, [slides]);
 
     useEffect(() => {
-        if (activeSlide >= slides.length) {
+        if (slides.length > 0 && activeSlide >= slides.length) {
             setActiveSlide(0);
         }
     }, [activeSlide, slides.length]);
 
     // Play video for initial active slide
     useEffect(() => {
+        if (slides.length === 0) return;
+        
         const initialVideo = videoRefs.current[activeSlide];
         if (initialVideo) {
             initialVideo.play().catch((err) => {
                 console.log('Video autoplay prevented:', err);
             });
         }
-    }, [activeSlide]);
+    }, [activeSlide, slides.length]);
     
     const settings = useMemo(() => {
         return {
@@ -111,6 +111,11 @@ const Home1Banner = ({ banners }) => {
             swiperRef.current.slideTo(index);
         }
     };
+
+    // Don't render if no banners from database (after all hooks are called)
+    if (slides.length === 0) {
+        return null;
+    }
 
     return (
         <div className="home1-banner-section mb-130" style={{ position: 'relative' }}>
