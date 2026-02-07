@@ -158,7 +158,7 @@ const ChairmanMessage = ({ chairmanMessage }) => {
                     }}
                   />
 
-                  <div
+                  {/* <div
                     className="chairman-badge"
                     data-animate="slideInUp"
                     style={{
@@ -197,7 +197,7 @@ const ChairmanMessage = ({ chairmanMessage }) => {
                     >
                       {isRTL && chairmanContent.badge.labelArabic ? chairmanContent.badge.labelArabic : chairmanContent.badge.label}
                     </p>
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
@@ -361,7 +361,7 @@ const ChairmanMessage = ({ chairmanMessage }) => {
                   ))}
                 </div>
 
-                <div
+                {/* <div
                   className="row mb-40"
                   data-animate="slideInUp"
                   style={{ marginTop: "40px" }}
@@ -398,7 +398,7 @@ const ChairmanMessage = ({ chairmanMessage }) => {
                       </div>
                     </div>
                   ))}
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

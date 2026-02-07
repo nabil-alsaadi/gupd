@@ -406,9 +406,9 @@ export default function AdminTeamPage() {
       }
 
       await loadTeamData();
-      alert('Founder information updated successfully!');
+      alert('Manager information updated successfully!');
     } catch (err) {
-      setFormError(err.message || 'Failed to save founder information');
+      setFormError(err.message || 'Failed to save manager information');
     } finally {
       setSaving(false);
     }
@@ -628,7 +628,7 @@ export default function AdminTeamPage() {
           onClick={() => setActiveTab('founder')}
         >
           <User size={18} />
-          Founder
+          Manager
         </button>
         <button
           className={`admin-tab ${activeTab === 'chairman' ? 'active' : ''}`}
@@ -879,11 +879,11 @@ export default function AdminTeamPage() {
         </div>
       )}
 
-      {/* Founder Tab */}
+      {/* Manager Tab */}
       {activeTab === 'founder' && (
         <div className="admin-page-content admin-form-container">
           <div className="admin-form-header">
-            <h3>Founder Information</h3>
+            <h3>Manager Information</h3>
           </div>
 
           <form onSubmit={handleFounderSubmit} className="admin-form">
@@ -902,7 +902,7 @@ export default function AdminTeamPage() {
                 value={founderData.name}
                 onChange={handleFounderChange}
                 required
-                placeholder="Enter founder name"
+                placeholder="Enter manager name"
               />
             </div>
 
@@ -921,7 +921,7 @@ export default function AdminTeamPage() {
                 value={founderData.nameArabic}
                 onChange={handleFounderChange}
                 required
-                placeholder="أدخل اسم المؤسس"
+                placeholder="أدخل اسم المدير"
               />
             </div>
 
@@ -934,7 +934,7 @@ export default function AdminTeamPage() {
                 value={founderData.position}
                 onChange={handleFounderChange}
                 required
-                placeholder="e.g., CEO, Founder"
+                placeholder="e.g., CEO, Manager"
               />
             </div>
 
@@ -953,7 +953,7 @@ export default function AdminTeamPage() {
                 value={founderData.positionArabic}
                 onChange={handleFounderChange}
                 required
-                placeholder="مثل: الرئيس التنفيذي، المؤسس"
+                placeholder="مثل: الرئيس التنفيذي، المدير"
               />
             </div>
 
@@ -966,7 +966,7 @@ export default function AdminTeamPage() {
                 onChange={handleFounderChange}
                 required
                 rows="4"
-                placeholder="Enter founder quote"
+                placeholder="Enter manager quote"
               />
             </div>
 
@@ -985,7 +985,7 @@ export default function AdminTeamPage() {
                 onChange={handleFounderChange}
                 required
                 rows="4"
-                placeholder="أدخل اقتباس المؤسس"
+                placeholder="أدخل اقتباس المدير"
               />
             </div>
 
@@ -1053,7 +1053,7 @@ export default function AdminTeamPage() {
                 ) : (
                   <>
                     <Save size={20} />
-                    Update Founder
+                    Update Manager
                   </>
                 )}
               </button>

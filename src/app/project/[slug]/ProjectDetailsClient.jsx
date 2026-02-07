@@ -512,7 +512,7 @@ const ProjectDetailsClient = ({ project, slug }) => {
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{ display: 'block', cursor: 'pointer' }}
-                        title={t('project.openLocation') || 'Open location in maps'}
+                        title={t('project.openLocation')}
                       >
                         <img
                           src={`${foundProject.locationMap}`}
@@ -551,9 +551,20 @@ const ProjectDetailsClient = ({ project, slug }) => {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="primary-btn"
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '8px'
+                        }}
                       >
-                        {t('project.getDirections') || 'Get Directions'}
-                        <svg viewBox="0 0 13 20">
+                        <span>{t('project.getDirections')}</span>
+                        <svg 
+                          viewBox="0 0 13 20"
+                          style={{ 
+                            transform: isRTL ? 'scaleX(-1)' : 'none',
+                            display: 'inline-block'
+                          }}
+                        >
                           <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5" />
                         </svg>
                       </a>

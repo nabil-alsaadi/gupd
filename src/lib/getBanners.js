@@ -1,9 +1,8 @@
 import { getDocuments } from '@/utils/firestore';
-import bannerData from '@/data/banner-data.json';
 
 /**
- * Server-side function to fetch banner data
- * Falls back to static data if Firestore fetch fails
+ * Server-side function to fetch banner data from database only
+ * Returns empty array if no data available
  */
 export async function getBanners() {
   try {
@@ -11,12 +10,12 @@ export async function getBanners() {
       orderBy: { field: 'order', direction: 'asc' }
     });
     
-    // Return Firestore data if available, otherwise fall back to static data
-    return firestoreBanners.length > 0 ? firestoreBanners : bannerData;
+    // Return Firestore data if available, otherwise return empty array
+    return Array.isArray(firestoreBanners) ? firestoreBanners : [];
   } catch (error) {
     console.error('Error fetching banners from Firestore:', error);
-    // Fall back to static data on error
-    return bannerData;
+    // Return empty array on error - no fallback to default data
+    return [];
   }
 }
 

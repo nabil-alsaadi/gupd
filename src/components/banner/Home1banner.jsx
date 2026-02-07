@@ -9,7 +9,6 @@ import SwiperCore, {
     Pagination,
 } from "swiper";
 import Link from "next/link";
-import bannerData from "@/data/banner-data.json";
 import { useLanguage } from "@/providers/LanguageProvider";
 SwiperCore.use([Autoplay, EffectFade, Navigation, Pagination]);
 
@@ -21,8 +20,13 @@ const Home1Banner = ({ banners }) => {
     const swiperRef = useRef(null);
     const videoRefs = useRef({});
     
-    // Use banners prop if provided, otherwise fall back to static data
-    const slides = banners && banners.length > 0 ? banners : bannerData;
+    // Only use banners from database - no fallback to default data
+    const slides = Array.isArray(banners) && banners.length > 0 ? banners : [];
+    
+    // Don't render if no banners from database
+    if (slides.length === 0) {
+        return null;
+    }
 
     // Check if mobile on mount and resize
     useEffect(() => {

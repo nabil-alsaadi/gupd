@@ -12,7 +12,12 @@ const Home1About = ({ sectionGap, aboutData }) => {
   const isRTL = locale === 'ar'
 
   // Only use database data, no fallbacks
-  const about = aboutData || {};
+  // Don't render if no data from database
+  if (!aboutData) {
+    return null;
+  }
+
+  const about = aboutData;
 
   return (
     <div className="home1-about-section mb-130">

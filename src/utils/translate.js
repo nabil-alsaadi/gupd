@@ -98,4 +98,3 @@ export const translateHtmlToArabic = async (html) => {
 
   return translated.join('');
 }
-
