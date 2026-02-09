@@ -104,7 +104,7 @@
         "buttonUnit": "Minutes",
         "buttonText": "Talk With Us",
         "description": "Whether you're looking to buy your first apartment, invest in real estate, or need information about payment options and financing, our expert team is here to help. Contact us today to discover available apartments, discuss payment plans, and get answers to all your real estate questions.",
-        "connectWithTeam": "Connect with Jinan team.",
+        "connectWithTeam": "Connect with JINAN.",
         "fullName": "Full Name *",
         "email": "Email *",
         "phone": "Phone *",
@@ -130,10 +130,10 @@
             "pageTitle": "Contact Us",
             "pagename": "Contact"
         },
-        "callAnyTime": "CALL ANY TIME",
+        "callAnyTime": "CONTACT US",
         "whatsapp": "WHATSAPP",
         "address": "ADDRESS",
-        "sayHello": "SAY HELLO"
+        "sayHello": "GET IN TOUCH"
     },
     "methodology": {
         "title": "How We Work",
