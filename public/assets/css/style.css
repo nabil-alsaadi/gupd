@@ -1950,8 +1950,9 @@ header.style-1.sticky .nav-right .mobile-menu-btn:hover .sidebar-toggle-button p
   }
 }
 header.style-1 .header-logo a img {
-  width: 250px;
+  /* width: 250px; */
   padding: 0px;
+  height: 100px;
 }
 @media (min-width: 992px) and (max-width: 1199px) {
   header.style-1 .header-logo a img {

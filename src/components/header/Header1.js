@@ -156,7 +156,42 @@ const Header1 = ({ style = "", fluid }) => {
     };
     return (
         <>
-
+            <style dangerouslySetInnerHTML={{__html: `
+                .header-area {
+                    overflow: hidden;
+                }
+                .header-area > div {
+                    overflow: hidden;
+                }
+                .header-area .nav-right {
+                    flex-wrap: nowrap;
+                    overflow: visible;
+                    min-width: 0;
+                }
+                /* Hide buttons on screens smaller than 1900px to prevent cropping */
+                @media (max-width: 1899px) {
+                    .right-sidebar-button.d-none.d-xxl-flex,
+                    .primary-btn.d-none.d-xxl-flex,
+                    .user-menu.d-none.d-xxl-flex,
+                    .user-menu.d-lg-flex.d-none,
+                    a.d-lg-flex.d-none,
+                    a.d-none.d-xxl-flex {
+                        display: none !important;
+                    }
+                    .header-area .nav-right {
+                        gap: 8px;
+                    }
+                }
+                /* Only show buttons on very large screens (1900px and above) */
+                @media (min-width: 1900px) {
+                    .right-sidebar-button.d-none.d-xxl-flex,
+                    .primary-btn.d-none.d-xxl-flex,
+                    .user-menu.d-none.d-xxl-flex,
+                    a.d-none.d-xxl-flex {
+                        display: flex !important;
+                    }
+                }
+            `}} />
             <div className={`right-sidebar-menu ${state.isRightSidebar ? "show-right-menu" : ""
                 }`}>
 
@@ -357,7 +392,7 @@ const Header1 = ({ style = "", fluid }) => {
                     </div>
                     <div className="nav-right d-flex jsutify-content-end align-items-center">
                         
-                        <div className="right-sidebar-button d-lg-flex d-none" onClick={toggleRightSidebar}>
+                        <div className="right-sidebar-button d-none d-xxl-flex" onClick={toggleRightSidebar}>
                             <svg width={14} height={14} viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
                                 <rect width="11.2" height="1.4" rx="0.699998" />
                                 <rect x="2.80078" y="5.6" width="11.2" height="2.79999" rx="1.4" />
@@ -365,15 +400,15 @@ const Header1 = ({ style = "", fluid }) => {
                             </svg>
                             <span>{t('navigation.getInTouch')}</span>
                         </div>
-                        <Link href={companyData.navigation.cta.link} className="primary-btn d-lg-flex d-none">
+                        <Link href={companyData.navigation.cta.link} className="primary-btn d-none d-xxl-flex">
                             {t('navigation.getQuote')}
                             <svg viewBox="0 0 13 20">
                                 <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5" />
                             </svg>
                         </Link>
                         {user ? (
-                            <div className="user-menu d-lg-flex d-none align-items-center" style={{ marginRight: '20px', gap: '15px' }}>
-                                <span style={{ color: state.scrollY > 20 ? '#fff' : 'var(--title-color)', fontSize: '14px' }}>
+                            <div className="user-menu d-none d-xxl-flex align-items-center" style={{ marginRight: '20px', gap: '15px' }}>
+                                <span style={{ color: state.scrollY > 20 ? '#fff' : 'var(--title-color)', fontSize: '14px', whiteSpace: 'nowrap' }}>
                                     {t('auth.welcomeUser', { name: userData?.displayName || user.email?.split('@')[0] || 'User' })}
                                 </span>
                                 <button 
@@ -386,7 +421,8 @@ const Header1 = ({ style = "", fluid }) => {
                                         borderRadius: '4px',
                                         cursor: 'pointer',
                                         fontSize: '14px',
-                                        transition: 'all 0.3s'
+                                        transition: 'all 0.3s',
+                                        whiteSpace: 'nowrap'
                                     }}
                                     onMouseEnter={(e) => {
                                         if (state.scrollY > 20) {
@@ -407,7 +443,7 @@ const Header1 = ({ style = "", fluid }) => {
                                 </button>
                             </div>
                         ) : (
-                            <Link href="/login" className="d-lg-flex d-none" style={{ marginRight: '20px', color: 'var(--title-color)', textDecoration: 'none', fontSize: '14px', fontWeight: '500' }}>
+                            <Link href="/login" className="d-none d-xxl-flex" style={{ marginRight: '20px', color: 'var(--title-color)', textDecoration: 'none', fontSize: '14px', fontWeight: '500', whiteSpace: 'nowrap' }}>
                                 {t('auth.login')}
                             </Link>
                         )}

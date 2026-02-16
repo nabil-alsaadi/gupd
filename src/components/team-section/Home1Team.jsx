@@ -1,21 +1,10 @@
 "use client"
-import React, { useMemo, useEffect, useRef, useState } from "react";
+import React from "react";
 import { useLanguage } from "@/providers/LanguageProvider";
-
-import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, {
-  Autoplay,
-  EffectFade,
-  Navigation,
-  Pagination,
-} from "swiper";
-SwiperCore.use([Autoplay, EffectFade, Navigation, Pagination]);
 
 const Home1Team = ({ teamData }) => {
     const { locale } = useLanguage();
     const isRTL = locale === "ar";
-    const swiperRef = useRef(null);
-    const [swiperKey, setSwiperKey] = useState(0);
     
     // Only use database data, no fallbacks - check after all hooks
     const sectionTitle = teamData?.sectionTitle || {};
@@ -27,57 +16,6 @@ const Home1Team = ({ teamData }) => {
     // Flip animation classes for RTL
     const leftAnimation = isRTL ? "fadeInRight" : "fadeInLeft";
     const rightAnimation = isRTL ? "fadeInLeft" : "fadeInRight";
-
-    // Force Swiper remount when direction changes
-    useEffect(() => {
-        // Wait for DOM to update with new direction attribute
-        const timer = setTimeout(() => {
-            setSwiperKey(prev => prev + 1);
-        }, 100);
-        
-        return () => clearTimeout(timer);
-    }, [locale, isRTL]);
-
-    const settings = useMemo(() => {
-        return {
-          slidesPerView: "auto",
-          speed: 1500,
-          spaceBetween: 25,
-          autoplay: {
-            delay: 2500, // Autoplay duration in milliseconds
-            disableOnInteraction: false,
-          },
-          navigation: {
-            nextEl: ".team-slider-next",
-            prevEl: ".team-slider-prev",
-          },
-          breakpoints: {
-            280: {
-              slidesPerView: 1,
-            },
-            386: {
-              slidesPerView: 1,
-            },
-            576: {
-              slidesPerView: 2,
-              spaceBetween: 15,
-            },
-            768: {
-              slidesPerView: 3,
-              spaceBetween: 15,
-            },
-            992: {
-              slidesPerView: 3,
-            },
-            1200: {
-              slidesPerView: 4,
-            },
-            1400: {
-              slidesPerView: 4,
-            },
-          },
-        };
-      }, []);
     
     return (
         <div className="home1-team-section mb-130">
@@ -87,14 +25,6 @@ const Home1Team = ({ teamData }) => {
               <div className="section-title">
                 <span>{isRTL && sectionTitle?.taglineArabic ? sectionTitle.taglineArabic : sectionTitle?.tagline}</span>
                 <h2>{isRTL && sectionTitle?.titleArabic ? sectionTitle.titleArabic : sectionTitle?.title}</h2>
-              </div>
-              <div className="slider-btn-grp d-lg-flex d-none">
-                <div className="slider-btn team-slider-prev">
-                  <i className={`bi bi-arrow-${isRTL ? "right" : "left"}`} />
-                </div>
-                <div className="slider-btn team-slider-next">
-                  <i className={`bi bi-arrow-${isRTL ? "left" : "right"}`} />
-                </div>
               </div>
             </div>
             <div className={`col-xxl-7 col-lg-8 wow animate ${rightAnimation}`} data-wow-delay="200ms" data-wow-duration="1500ms">
@@ -112,43 +42,59 @@ const Home1Team = ({ teamData }) => {
                   </div>
                 </div>
               )}
-              <div className="slider-btn-grp d-lg-none d-flex">
-                <div className="slider-btn team-slider-prev">
-                  <i className={`bi bi-arrow-${isRTL ? "right" : "left"}`} />
-                </div>
-                <div className="slider-btn team-slider-next">
-                  <i className={`bi bi-arrow-${isRTL ? "left" : "right"}`} />
-                </div>
-              </div>
             </div>
           </div>
-          <div className="row">
-            <div className="col-lg-12">
-              <Swiper 
-                {...settings} 
-                className="swiper home1-team-slider"
-                onSwiper={(swiper) => {
-                  swiperRef.current = { swiper };
-                }}
-                key={`${locale}-${swiperKey}`}
+          <style dangerouslySetInnerHTML={{__html: `
+            .home1-team-section .team-grid {
+              display: flex;
+              flex-wrap: wrap;
+              margin: -15px;
+            }
+            .home1-team-section .team-grid-item {
+              padding: 15px;
+              flex: 0 0 100%;
+              max-width: 100%;
+            }
+            @media (min-width: 576px) {
+              .home1-team-section .team-grid-item {
+                flex: 0 0 50%;
+                max-width: 50%;
+              }
+            }
+            @media (min-width: 768px) {
+              .home1-team-section .team-grid-item {
+                flex: 0 0 33.333333%;
+                max-width: 33.333333%;
+              }
+            }
+            @media (min-width: 992px) {
+              .home1-team-section .team-grid-item {
+                flex: 0 0 20%;
+                max-width: 20%;
+              }
+            }
+          `}} />
+          <div className="team-grid">
+            {members.map((member, index) => (
+              <div 
+                key={member.id || index} 
+                className="team-grid-item"
               >
-                <div className="swiper-wrapper">
-                  {members.map((member, index) => (
-                    <SwiperSlide key={member.id || index} className="swiper-slide">
-                      <div className="team-card">
-                        <div className="team-img">
-                          <img src={member.image} alt={member.name || "Team member"} />
-                        </div>
-                        <div className="team-content">
-                          <span>{isRTL && member.positionArabic ? member.positionArabic : member.position}</span>
-                          <h5>{isRTL && member.nameArabic ? member.nameArabic : member.name}</h5>
-                        </div>
-                      </div>
-                    </SwiperSlide>
-                  ))}
+                <div className="team-card" style={{ height: '100%' }}>
+                  <div className="team-img" style={{ height: '300px', overflow: 'hidden' }}>
+                    <img 
+                      src={member.image} 
+                      alt={member.name || "Team member"} 
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                  </div>
+                  <div className="team-content">
+                    <span>{isRTL && member.positionArabic ? member.positionArabic : member.position}</span>
+                    <h5>{isRTL && member.nameArabic ? member.nameArabic : member.name}</h5>
+                  </div>
                 </div>
-              </Swiper>
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

@@ -23,7 +23,7 @@ const Footer1 = () => {
                             flexWrap: 'wrap'
                         }}>
                             <Link href="/" className="footer-logo" style={{ flexShrink: 0 }}>
-                                <img src="/assets/img/footer-logo.svg" alt="" style={{ maxWidth: '250px', height: 'auto' }} />
+                                <img src="/assets/img/footer-logo.svg" alt="" style={{ height: '100px' }} />
                             </Link>
                             {/* <p style={{ 
                                 maxWidth: '400px',
