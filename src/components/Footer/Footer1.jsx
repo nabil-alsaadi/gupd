@@ -46,7 +46,7 @@ const Footer1 = () => {
                     <div className="container">
                         <div className="footer-bottom">
                             <div className="copyright-area">
-                                <p>{t('footer.copyright')} {new Date().getFullYear()} <Link href="/">JINAN</Link> | {t('footer.poweredBy')} <a href="https://www.nabilalsaadi.com/">NABIL ALSAADI</a></p>
+                                <p>{t('footer.copyright')} {new Date().getFullYear()} <Link href="/">JINAN</Link> | {t('footer.poweredBy')} <a href="https://nabilalsaadi.com/">NABIL ALSAADI</a></p>
                             </div>
                             <div className="footer-bottom-right">
                                 <ul>

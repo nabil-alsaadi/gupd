@@ -222,7 +222,7 @@ const Header1 = ({ style = "", fluid }) => {
                     </ul>
                 </div>
                 <div className="sidebar-bottom-area">
-                    <p>{t('navigation.sidebar.copyright')} {new Date().getFullYear()} <Link href="/">Jinan</Link> | {t('navigation.sidebar.poweredBy')} <a href="https://www.nabilalsaadi.com/">Nabil Alsaadi</a></p>
+                    <p>{t('navigation.sidebar.copyright')} {new Date().getFullYear()} <Link href="/">Jinan</Link> | {t('navigation.sidebar.poweredBy')} <a href="https://nabilalsaadi.com/">Nabil Alsaadi</a></p>
                 </div>
             </div>
             <div className="header-wrapper" ref={headerRef}>
