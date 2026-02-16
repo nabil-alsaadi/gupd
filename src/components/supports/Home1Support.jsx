@@ -1,15 +1,26 @@
 "use client"
 import Link from 'next/link'
 import React from 'react'
-import contactData from '@/data/contactContent.json'   // 👈 new JSON
 import { useTranslation } from "react-i18next"
 import { useLanguage } from "@/providers/LanguageProvider"
 
-const Home1Support = () => {
+const Home1Support = ({ contactContent }) => {
   const { t } = useTranslation()
   const { locale } = useLanguage()
   const isRTL = locale === 'ar'
-  const contact = contactData.contact
+  
+  // Helper function to get text based on language
+  const getText = (english, arabic) => {
+    if (isRTL && arabic) return arabic;
+    return english || '';
+  };
+  
+  // Don't render if no contact content from database
+  if (!contactContent) {
+    return null;
+  }
+  
+  const contact = contactContent
 
   return (
     <div className="home1-support-section mb-130">
@@ -21,8 +32,8 @@ const Home1Support = () => {
         >
           <div className="col-xl-9 col-lg-10">
             <div className="section-title">
-              <span>{t('contact.yourDreamApartmentAwaits')}</span>
-              <h2>{t('contact.headline')}</h2>
+              <span>{getText(contact.tagline, contact.taglineArabic)}</span>
+              <h2>{getText(contact.headline, contact.headlineArabic)}</h2>
             </div>
           </div>
         </div>
@@ -31,12 +42,12 @@ const Home1Support = () => {
             <div className="support-content">
               <div className="btn_wrapper">
                 <Link href="/contact" className="contact-area">
-                  <h2>{contact.button.number}</h2>
-                  <span>{t('contact.buttonUnit')}</span>
-                  <p>{t('contact.buttonText')}</p>
+                  <h2>{contact.button?.number || '15'}</h2>
+                  <span>{getText(contact.button?.unit, contact.button?.unitArabic) || t('contact.buttonUnit')}</span>
+                  <p>{getText(contact.button?.text, contact.button?.textArabic) || t('contact.buttonText')}</p>
                 </Link>
               </div>
-              <p>{t('contact.description')}</p>
+              <p>{getText(contact.description, contact.descriptionArabic)}</p>
             </div>
           </div>
           <div className="col-lg-6 d-lg-block d-none">

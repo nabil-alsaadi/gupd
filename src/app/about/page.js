@@ -31,6 +31,7 @@ const AboutPage = () => {
   const { t } = useTranslation();
   const [aboutData, setAboutData] = useState(null);
   const [teamDataState, setTeamDataState] = useState(null);
+  const [contactContent, setContactContent] = useState(null);
 
   useEffect(() => {
     const fetchAboutData = async () => {
@@ -98,6 +99,32 @@ const AboutPage = () => {
     };
 
     fetchTeamData();
+  }, []);
+
+  useEffect(() => {
+    const fetchContactContent = async () => {
+      try {
+        const contactDocs = await getDocuments('contact');
+        
+        if (!contactDocs || contactDocs.length === 0) {
+          setContactContent(null);
+          return;
+        }
+
+        const doc = contactDocs[0];
+        
+        if (doc.supportContent) {
+          setContactContent(doc.supportContent);
+        } else {
+          setContactContent(null);
+        }
+      } catch (error) {
+        console.error('Error fetching contact content from Firestore:', error);
+        setContactContent(null);
+      }
+    };
+
+    fetchContactContent();
   }, []);
 
   const settings = useMemo(() => {
@@ -429,7 +456,7 @@ const AboutPage = () => {
       
       <ChairmanMessage chairmanMessage={teamDataState?.chairmanMessage} />
       {teamDataState && <Home1Team teamData={teamDataState} />}
-      <Home1Support />
+      <Home1Support contactContent={contactContent} />
       <ProcessSection />
       {/* <Home1Testimonial /> */}
 

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useFirestore } from "@/hooks/useFirebase";
 import { initFirebaseContact } from "@/utils/initFirebaseContact";
 import companyData from "@/data/companyData.json";
+import TranslateButton from '@/components/admin/TranslateButton';
 import {
   Save,
   Loader2,
@@ -13,7 +14,8 @@ import {
   Mail,
   Clock,
   Download,
-  Share2
+  Share2,
+  FileText
 } from "lucide-react";
 
 const fallbackContact = {
@@ -63,7 +65,22 @@ const toFormState = (data = {}) => ({
     link: data.address?.link || fallbackContact.address.link
   },
   workingHours: data.workingHours || fallbackContact.workingHours,
-  socialMedia: data.socialMedia || fallbackContact.socialMedia
+  socialMedia: data.socialMedia || fallbackContact.socialMedia,
+  supportContent: data.supportContent || {
+    tagline: "",
+    taglineArabic: "",
+    headline: "",
+    headlineArabic: "",
+    description: "",
+    descriptionArabic: "",
+    button: {
+      number: "",
+      unit: "",
+      unitArabic: "",
+      text: "",
+      textArabic: ""
+    }
+  }
 });
 
 export default function AdminContactPage() {
@@ -96,7 +113,22 @@ export default function AdminContactPage() {
         email: doc.email || fallbackContact.email,
         address: doc.address || fallbackContact.address,
         workingHours: doc.workingHours || fallbackContact.workingHours,
-        socialMedia: doc.socialMedia || fallbackContact.socialMedia
+        socialMedia: doc.socialMedia || fallbackContact.socialMedia,
+        supportContent: doc.supportContent || {
+          tagline: "",
+          taglineArabic: "",
+          headline: "",
+          headlineArabic: "",
+          description: "",
+          descriptionArabic: "",
+          button: {
+            number: "",
+            unit: "",
+            unitArabic: "",
+            text: "",
+            textArabic: ""
+          }
+        }
       };
       setFormData(toFormState(mergedData));
     } else {
@@ -137,6 +169,30 @@ export default function AdminContactPage() {
           [section]: {
             ...prev[section],
             [field]: value
+          }
+        }));
+      } else if (section === "supportContent") {
+        // Handle supportContent.field (e.g., supportContent.tagline, supportContent.headline)
+        setFormData((prev) => ({
+          ...prev,
+          supportContent: {
+            ...(prev.supportContent || {}),
+            [field]: value
+          }
+        }));
+      }
+    } else if (parts.length === 3 && parts[0] === "supportContent") {
+      // Handle supportContent.button.field (e.g., supportContent.button.number)
+      const [, section, field] = parts;
+      if (section === "button") {
+        setFormData((prev) => ({
+          ...prev,
+          supportContent: {
+            ...(prev.supportContent || {}),
+            button: {
+              ...(prev.supportContent?.button || {}),
+              [field]: value
+            }
           }
         }));
       }
@@ -194,6 +250,21 @@ export default function AdminContactPage() {
           youtube: {
             url: (formData.socialMedia?.youtube?.url || "").trim(),
             icon: formData.socialMedia?.youtube?.icon || "bi bi-youtube"
+          }
+        },
+        supportContent: {
+          tagline: formData.supportContent?.tagline?.trim() || "",
+          taglineArabic: formData.supportContent?.taglineArabic?.trim() || "",
+          headline: formData.supportContent?.headline?.trim() || "",
+          headlineArabic: formData.supportContent?.headlineArabic?.trim() || "",
+          description: formData.supportContent?.description?.trim() || "",
+          descriptionArabic: formData.supportContent?.descriptionArabic?.trim() || "",
+          button: {
+            number: formData.supportContent?.button?.number?.trim() || "15",
+            unit: formData.supportContent?.button?.unit?.trim() || "Minutes",
+            unitArabic: formData.supportContent?.button?.unitArabic?.trim() || "",
+            text: formData.supportContent?.button?.text?.trim() || "",
+            textArabic: formData.supportContent?.button?.textArabic?.trim() || ""
           }
         }
       };
@@ -539,6 +610,229 @@ export default function AdminContactPage() {
                   onChange={handleInputChange}
                   placeholder="https://www.youtube.com/@jinan"
                 />
+              </div>
+            </div>
+
+            {/* Support Content Section */}
+            <div className="admin-card">
+              <div className="admin-card-header">
+                <FileText size={20} />
+                <h3>Support Section Content</h3>
+                <p style={{ fontSize: '14px', color: '#666', marginTop: '4px' }}>
+                  Content displayed in the Home Support section
+                </p>
+              </div>
+
+              <div className="admin-form-group">
+                <label htmlFor="supportContent.tagline">Tagline (English) *</label>
+                <input
+                  type="text"
+                  id="supportContent.tagline"
+                  name="supportContent.tagline"
+                  value={formData.supportContent?.tagline || ''}
+                  onChange={handleInputChange}
+                  placeholder="Enter tagline..."
+                  required
+                />
+              </div>
+
+              <div className="admin-form-group">
+                <label htmlFor="supportContent.taglineArabic">
+                  Tagline (Arabic) *
+                  <TranslateButton
+                    onTranslate={(translated) => setFormData(prev => ({
+                      ...prev,
+                      supportContent: {
+                        ...prev.supportContent,
+                        taglineArabic: translated
+                      }
+                    }))}
+                    englishText={formData.supportContent?.tagline || ''}
+                  />
+                </label>
+                <input
+                  type="text"
+                  id="supportContent.taglineArabic"
+                  name="supportContent.taglineArabic"
+                  value={formData.supportContent?.taglineArabic || ''}
+                  onChange={handleInputChange}
+                  placeholder="Enter tagline (Arabic)..."
+                  required
+                />
+              </div>
+
+              <div className="admin-form-group">
+                <label htmlFor="supportContent.headline">Headline (English) *</label>
+                <textarea
+                  id="supportContent.headline"
+                  name="supportContent.headline"
+                  value={formData.supportContent?.headline || ''}
+                  onChange={handleInputChange}
+                  rows="3"
+                  placeholder="Enter headline..."
+                  required
+                />
+              </div>
+
+              <div className="admin-form-group">
+                <label htmlFor="supportContent.headlineArabic">
+                  Headline (Arabic) *
+                  <TranslateButton
+                    onTranslate={(translated) => setFormData(prev => ({
+                      ...prev,
+                      supportContent: {
+                        ...prev.supportContent,
+                        headlineArabic: translated
+                      }
+                    }))}
+                    englishText={formData.supportContent?.headline || ''}
+                  />
+                </label>
+                <textarea
+                  id="supportContent.headlineArabic"
+                  name="supportContent.headlineArabic"
+                  value={formData.supportContent?.headlineArabic || ''}
+                  onChange={handleInputChange}
+                  rows="3"
+                  placeholder="Enter headline (Arabic)..."
+                  required
+                />
+              </div>
+
+              <div className="admin-form-group">
+                <label htmlFor="supportContent.description">Description (English) *</label>
+                <textarea
+                  id="supportContent.description"
+                  name="supportContent.description"
+                  value={formData.supportContent?.description || ''}
+                  onChange={handleInputChange}
+                  rows="4"
+                  placeholder="Enter description..."
+                  required
+                />
+              </div>
+
+              <div className="admin-form-group">
+                <label htmlFor="supportContent.descriptionArabic">
+                  Description (Arabic) *
+                  <TranslateButton
+                    onTranslate={(translated) => setFormData(prev => ({
+                      ...prev,
+                      supportContent: {
+                        ...prev.supportContent,
+                        descriptionArabic: translated
+                      }
+                    }))}
+                    englishText={formData.supportContent?.description || ''}
+                  />
+                </label>
+                <textarea
+                  id="supportContent.descriptionArabic"
+                  name="supportContent.descriptionArabic"
+                  value={formData.supportContent?.descriptionArabic || ''}
+                  onChange={handleInputChange}
+                  rows="4"
+                  placeholder="Enter description (Arabic)..."
+                  required
+                />
+              </div>
+
+              <h4 style={{ marginTop: '24px', marginBottom: '16px' }}>Button Settings</h4>
+
+              <div className="admin-form-row">
+                <div className="admin-form-group">
+                  <label htmlFor="supportContent.button.number">Button Number *</label>
+                  <input
+                    type="text"
+                    id="supportContent.button.number"
+                    name="supportContent.button.number"
+                    value={formData.supportContent?.button?.number || ''}
+                    onChange={handleInputChange}
+                    placeholder="Enter button number..."
+                    required
+                  />
+                </div>
+                <div className="admin-form-group">
+                  <label htmlFor="supportContent.button.unit">Button Unit (English) *</label>
+                  <input
+                    type="text"
+                    id="supportContent.button.unit"
+                    name="supportContent.button.unit"
+                    value={formData.supportContent?.button?.unit || ''}
+                    onChange={handleInputChange}
+                    placeholder="Enter button unit..."
+                    required
+                  />
+                </div>
+                <div className="admin-form-group">
+                  <label htmlFor="supportContent.button.unitArabic">
+                    Button Unit (Arabic) *
+                    <TranslateButton
+                      onTranslate={(translated) => setFormData(prev => ({
+                        ...prev,
+                        supportContent: {
+                          ...prev.supportContent,
+                          button: {
+                            ...prev.supportContent?.button,
+                            unitArabic: translated
+                          }
+                        }
+                      }))}
+                      englishText={formData.supportContent?.button?.unit || ''}
+                    />
+                  </label>
+                  <input
+                    type="text"
+                    id="supportContent.button.unitArabic"
+                    name="supportContent.button.unitArabic"
+                    value={formData.supportContent?.button?.unitArabic || ''}
+                    onChange={handleInputChange}
+                    placeholder="Enter button unit (Arabic)..."
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="admin-form-row">
+                <div className="admin-form-group">
+                  <label htmlFor="supportContent.button.text">Button Text (English) *</label>
+                  <input
+                    type="text"
+                    id="supportContent.button.text"
+                    name="supportContent.button.text"
+                    value={formData.supportContent?.button?.text || ''}
+                    onChange={handleInputChange}
+                    placeholder="Enter button text..."
+                    required
+                  />
+                </div>
+                <div className="admin-form-group">
+                  <label htmlFor="supportContent.button.textArabic">
+                    Button Text (Arabic) *
+                    <TranslateButton
+                      onTranslate={(translated) => setFormData(prev => ({
+                        ...prev,
+                        supportContent: {
+                          ...prev.supportContent,
+                          button: {
+                            ...prev.supportContent?.button,
+                            textArabic: translated
+                          }
+                        }
+                      }))}
+                      englishText={formData.supportContent?.button?.text || ''}
+                    />
+                  </label>
+                  <input
+                    type="text"
+                    id="supportContent.button.textArabic"
+                    name="supportContent.button.textArabic"
+                    value={formData.supportContent?.button?.textArabic || ''}
+                    onChange={handleInputChange}
+                    placeholder="Enter button text (Arabic)..."
+                    required
+                  />
+                </div>
               </div>
             </div>
 
