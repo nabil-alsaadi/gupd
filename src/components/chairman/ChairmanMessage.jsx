@@ -201,7 +201,7 @@ const ChairmanMessage = ({ chairmanMessage }) => {
                 </div>
               </div>
 
-              <div
+              {/* <div
                 data-animate="slideInUp"
                 style={{
                   background:
@@ -286,7 +286,7 @@ const ChairmanMessage = ({ chairmanMessage }) => {
                     </p>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="col-lg-6 order-lg-2 order-1">
               <div className="why-choose-content">
@@ -343,7 +343,7 @@ const ChairmanMessage = ({ chairmanMessage }) => {
                     {`"${isRTL && chairmanContent.highlightQuoteArabic ? chairmanContent.highlightQuoteArabic : chairmanContent.highlightQuote}"`}
                   </div>
 
-                  {(isRTL && Array.isArray(chairmanContent.paragraphsArabic) && chairmanContent.paragraphsArabic.length > 0
+                  {/* {(isRTL && Array.isArray(chairmanContent.paragraphsArabic) && chairmanContent.paragraphsArabic.length > 0
                     ? chairmanContent.paragraphsArabic
                     : chairmanContent.paragraphs).map((paragraph, index) => (
                     <p
@@ -358,7 +358,7 @@ const ChairmanMessage = ({ chairmanMessage }) => {
                     >
                       {paragraph}
                     </p>
-                  ))}
+                  ))} */}
                 </div>
 
                 {/* <div
