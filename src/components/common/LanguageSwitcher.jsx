@@ -3,6 +3,7 @@
 import { useLanguage } from "@/providers/LanguageProvider";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState, useRef } from "react";
+import { createPortal } from "react-dom";
 
 const LanguageSwitcher = ({ className = "" }) => {
   const { locale, changeLanguage } = useLanguage();
@@ -10,6 +11,8 @@ const LanguageSwitcher = ({ className = "" }) => {
   const [mounted, setMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const buttonRef = useRef(null);
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, right: 0, left: 'auto' });
 
   // Prevent hydration mismatch by only rendering after mount
   useEffect(() => {
@@ -19,13 +22,19 @@ const LanguageSwitcher = ({ className = "" }) => {
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsOpen(false);
+      if (buttonRef.current && !buttonRef.current.contains(event.target)) {
+        const dropdown = document.querySelector('.language-dropdown-portal');
+        if (dropdown && !dropdown.contains(event.target)) {
+          setIsOpen(false);
+        }
       }
     };
 
     if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
+      // Use setTimeout to avoid immediate closure
+      setTimeout(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+      }, 0);
     }
 
     return () => {
@@ -45,6 +54,31 @@ const LanguageSwitcher = ({ className = "" }) => {
     setIsOpen(false);
   };
 
+  // Calculate dropdown position when opened (for portal positioning)
+  useEffect(() => {
+    if (isOpen && buttonRef.current) {
+      const updatePosition = () => {
+        const rect = buttonRef.current.getBoundingClientRect();
+        const isRTL = document.documentElement.dir === 'rtl';
+        
+        setDropdownPosition({
+          top: rect.bottom + 8,
+          right: isRTL ? 'auto' : window.innerWidth - rect.right,
+          left: isRTL ? rect.left : 'auto',
+        });
+      };
+      
+      updatePosition();
+      window.addEventListener('resize', updatePosition);
+      window.addEventListener('scroll', updatePosition, true);
+      
+      return () => {
+        window.removeEventListener('resize', updatePosition);
+        window.removeEventListener('scroll', updatePosition, true);
+      };
+    }
+  }, [isOpen]);
+
   // Inject styles once
   useEffect(() => {
     if (typeof document !== "undefined") {
@@ -56,6 +90,16 @@ const LanguageSwitcher = ({ className = "" }) => {
           .language-switcher-wrapper {
             position: relative;
             display: inline-block;
+            z-index: 9999;
+          }
+          .header-area .language-switcher-wrapper,
+          header .language-switcher-wrapper {
+            position: relative;
+            z-index: 9999;
+          }
+          /* Ensure dropdown is visible even when header has overflow hidden */
+          .language-switcher-wrapper {
+            overflow: visible;
           }
           .language-switcher-btn {
             display: flex;
@@ -92,29 +136,31 @@ const LanguageSwitcher = ({ className = "" }) => {
           .language-switcher-wrapper.open .language-arrow {
             transform: rotate(180deg);
           }
-          .language-dropdown {
-            position: absolute;
-            top: calc(100% + 8px);
-            right: 0;
+          .language-dropdown,
+          .language-dropdown-portal {
+            position: fixed;
             background: #fff;
             border-radius: 5px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            min-width: 140px;
-            z-index: 1000;
-            overflow: hidden;
+            min-width: 160px;
+            width: max-content;
+            z-index: 99999;
+            overflow: visible;
             opacity: 0;
             visibility: hidden;
             transform: translateY(-10px);
             transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+          }
+          .language-dropdown.open,
+          .language-dropdown-portal.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
           }
           [dir="rtl"] .language-dropdown {
             right: auto;
             left: 0;
-          }
-          .language-dropdown.open {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
           }
           .language-option {
             display: flex;
@@ -128,6 +174,9 @@ const LanguageSwitcher = ({ className = "" }) => {
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
             font-family: inherit;
             text-align: left;
+            white-space: nowrap;
+            overflow: visible;
+            min-height: 44px;
           }
           [dir="rtl"] .language-option {
             text-align: right;
@@ -194,30 +243,44 @@ const LanguageSwitcher = ({ className = "" }) => {
     );
   }
 
-  return (
-    <div className={`language-switcher-wrapper ${isOpen ? "open" : ""} ${className}`} ref={dropdownRef}>
-      <button
-        type="button"
-        className="language-switcher-btn"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        <span className="language-flag">{currentLanguage.flag}</span>
-        <span>{currentLanguage.name}</span>
-        <span className="language-arrow">▼</span>
-      </button>
-      <div className={`language-dropdown ${isOpen ? "open" : ""}`}>
-        {languages.map((lang) => (
-          <div
-            key={lang.code}
-            className={`language-option ${locale === lang.code ? "active" : ""}`}
-            onClick={() => handleLanguageChange(lang.code)}
-          >
-            <span className="language-flag">{lang.flag}</span>
-            <span>{lang.name}</span>
-          </div>
-        ))}
-      </div>
+  const dropdownContent = (
+    <div 
+      className={`language-dropdown-portal ${isOpen ? "open" : ""}`}
+      style={{
+        top: `${dropdownPosition.top}px`,
+        right: dropdownPosition.right === 'auto' ? 'auto' : `${dropdownPosition.right}px`,
+        left: dropdownPosition.left === 'auto' ? 'auto' : `${dropdownPosition.left}px`,
+      }}
+    >
+      {languages.map((lang) => (
+        <div
+          key={lang.code}
+          className={`language-option ${locale === lang.code ? "active" : ""}`}
+          onClick={() => handleLanguageChange(lang.code)}
+        >
+          <span className="language-flag">{lang.flag}</span>
+          <span style={{ display: 'inline-block', overflow: 'visible', whiteSpace: 'nowrap' }}>{lang.name}</span>
+        </div>
+      ))}
     </div>
+  );
+
+  return (
+    <>
+      <div className={`language-switcher-wrapper ${isOpen ? "open" : ""} ${className}`} ref={dropdownRef}>
+        <button
+          ref={buttonRef}
+          type="button"
+          className="language-switcher-btn"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          <span className="language-flag">{currentLanguage.flag}</span>
+          <span>{currentLanguage.name}</span>
+          <span className="language-arrow">▼</span>
+        </button>
+      </div>
+      {mounted && isOpen && createPortal(dropdownContent, document.body)}
+    </>
   );
 };
 
